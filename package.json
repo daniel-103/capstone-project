@@ -5,13 +5,17 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "cross-env NODE_ENV=production electron .",
+    "dev": "cross-env NODE_ENV=development electron ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "electron": "^33.2.1",
-    "electron-builder": "^25.1.8"
+    "electron-build": "^0.0.3",
+    "electron-builder": "^25.1.8",
+    "electronmon": "^2.0.3"
   }
 }

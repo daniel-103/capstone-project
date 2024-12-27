@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+    border: 1rem slategray solid;
+}
+
+#page {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: lightslategray;
+}
+
+#grid {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+
+    /* background-size: 100px 100px; */
+    background-image:
+        linear-gradient(to right, white 1px, transparent 1px),
+        linear-gradient(to bottom, white 1px, transparent 1px);
+
+    mask: radial-gradient(circle 0px at 50% 50%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+
+    transition: mask 1s ease-out;
+
+    pointer-events: none;
+}
+  
+.module {
+    position: absolute;
+    border: 1px solid transparent;
+    user-select: none;
+}
+  
+.module.selected {
+    border-color: #0078d7;
+    box-shadow: 0 0 5px rgba(0, 120, 215, 0.5);
+}
+  
+.resizable {
+    resize: both;
+    overflow: hidden;
+}
+
+.image-module {
+    width: 20rem;
+    height: auto;
+}

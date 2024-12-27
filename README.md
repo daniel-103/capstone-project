@@ -20,7 +20,7 @@ Instructor: [Dr. Thomas Bowman](https://www.latech.edu/faculty-staff/single-entr
 
 # Installation
 
-(Should just be an exe?)
+(Should need to install. Should just be able to run a compiled exe?)
 
 # Installation steps for development:
 
@@ -28,7 +28,7 @@ tldr; just run this:
 ```
 git clone https://github.com/daniel-103/capstone-project.git
 cd capstone-project
-npm install electron electron-builder --save-dev
+npm install
 ```
 ## Step by step
 
@@ -37,10 +37,9 @@ Download or clone the repository using:
 git clone https://github.com/daniel-103/capstone-project.git
 ```
 
-Download and install [Node.js](https://nodejs.org/en/download/package-manager). Node.js is needed to use npm (Node Package Manager) to download the required libraries. Once Node is installed, run the following in the repository's directory:
+Download and install [Node.js](https://nodejs.org/en/download/package-manager). Node.js is required for npm (Node Package Manager) to download the required libraries. Once Node is installed, run the following in the newly created repository's directory to download the necessary dependencies:
 ```
-npm install electron electron-builder --save-dev
+npm install
 ```
-The electron and electron-builder packages are only needed during the build process, so `--save-dev` is used.
 
-(Add any more things that might be needed.)
+(Add anything else that might be needed.)

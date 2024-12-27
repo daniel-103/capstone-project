@@ -2,21 +2,26 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('node:path')
 
-let mainWindow;
+const isDev = process.env.NODE_ENV !== 'production';
 
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: { 
       nodeIntegration: true,
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'src/preload.js')
     }
   });
 
+  // Open devtools if in dev env
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
+
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html');
+  mainWindow.loadFile('src/index.html');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
