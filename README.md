@@ -29,6 +29,7 @@ tldr; just run this:
 git clone https://github.com/daniel-103/capstone-project.git
 cd capstone-project
 npm install
+npm start
 ```
 ## Step by step
 
@@ -40,6 +41,21 @@ git clone https://github.com/daniel-103/capstone-project.git
 Download and install [Node.js](https://nodejs.org/en/download/package-manager). Node.js is required for npm (Node Package Manager) to download the required libraries. Once Node is installed, run the following in the newly created repository's directory to download the necessary dependencies:
 ```
 npm install
+```
+
+Start the application with:
+```
+npm start
+```
+
+or, alternatively, start the application in dev mode to enable certain tools:
+```
+npm run dev
+```
+
+For developement, use electronmon to automatically refresh the application after saving a file. This runs the application in dev mode and prevents having to manually close and relaunch it after every change:
+```
+npx electronmon .
 ```
 
 (Add anything else that might be needed.)

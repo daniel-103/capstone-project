@@ -1,6 +1,5 @@
 body {
     margin: 0;
-    border: 1rem slategray solid;
 }
 
 #page {
@@ -11,11 +10,12 @@ body {
 }
 
 #grid {
+    display: block;
     position: absolute;
     width: 100%;
     height: 100vh;
 
-    /* background-size: 100px 100px; */
+    background-size: 100px 100px;
     background-image:
         linear-gradient(to right, white 1px, transparent 1px),
         linear-gradient(to bottom, white 1px, transparent 1px);
@@ -46,4 +46,10 @@ body {
 .image-module {
     width: 20rem;
     height: auto;
+}
+
+.snap-line {
+    position: absolute;
+    background: red;
+    pointer-events: none;
 }
