@@ -5,3 +5,5 @@ const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('electron', {
     getAppPath: () => ipcRenderer.invoke('get-app-path'),
 });
+
+localStorage.setItem('theme', 'assets/themes/spaceDust.css');

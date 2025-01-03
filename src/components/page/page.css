@@ -29,18 +29,21 @@ body {
   
 .module {
     position: absolute;
-    border: 1px solid transparent;
+    border: 0.25rem solid transparent;
     user-select: none;
 }
   
 .module.selected {
     border-color: var(--page-module-selected-color);
-    box-shadow: 0 0 5px rgba(0, 120, 215, 0.5);
 }
   
 .resizable {
     resize: both;
     overflow: hidden;
+}
+
+.text-module {
+    color: var(--page-text-color);
 }
 
 .image-module {

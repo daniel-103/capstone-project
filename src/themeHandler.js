@@ -1,27 +1,40 @@
-// document.getElementById('theme-stylesheet').href = themeFile;
-// localStorege.setItem('theme', themeFile);
+let themePath;
 
-// Get theme from local storage (for later)
-const themeFile = localStorage.getItem('theme') || 'assets/themes/light.css';
-document.getElementById('theme-stylesheet').href = themeFile;
+// Get theme from local storage
+const themeFile = localStorage.getItem('theme') || 'assets/themes/dark.css';
 
 // Get path from ipc through context bridge
 window.electron.getAppPath().then(appPath => {
-    // For each imported object
-    document.querySelectorAll('.import').forEach(importedObject => {
-        // Wait until it's loaded
-        importedObject.onload = () => {
-            // Get the child document
-            const childDoc = importedObject.contentDocument || importedObject.contentWindow.document;
-            // Apply the link if the child document exists
-            if (childDoc) {
-                const link = childDoc.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = `${appPath}/src/${themeFile}`;
-                childDoc.head.appendChild(link);
-            }
-        }
-    });
+    // Construct theme path
+    themePath = `${appPath}/src/${themeFile}`;
+
+    // Start theme injection from the root document
+    injectTheme(document);
 });
 
+function injectTheme(object) {
+    // Inject theme for the current object (document or imported object)
+    const doc = object.contentDocument || object;
 
+    // Do nothing if no document
+    if (!doc) return;
+
+    // Create or update theme link 
+    const existingLink = doc.querySelector('#theme-link');
+    if (!existingLink) {
+        const link = doc.createElement('link');
+        link.id = 'theme-link';
+        link.rel = 'stylesheet';
+        link.href = themePath;
+        doc.head.appendChild(link);
+    } else {
+        existingLink.href = themePath;
+    }
+
+    // Recursively inject into nested imported objects
+    doc.querySelectorAll('.import').forEach(nestedObject => {
+        nestedObject.addEventListener('load', () => {
+            injectTheme(nestedObject);
+        });
+    });
+}

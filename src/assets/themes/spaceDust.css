@@ -1,0 +1,39 @@
+:root {
+    --background-color: #2F2F2F;
+
+    --header-section-color: #202020;
+    --header-button-color: transparent;
+    --header-text-color: #E93CAC;
+
+    --left-panel-section-color: #202020;
+    --left-panel-option-buttons-color: #BB29BB;
+
+    --hierarchy-folder-text-color: #A7C6ED;
+    --hierarchy-folder-icon-color: #753BBD;
+    --hierarchy-file-text-color: #A7C6ED;
+
+    --tab-section-color: #2F2F2F;
+    --tab-button-color: #202020;
+    --tab-text-color: #BB29BB;
+
+    --page-background-color: #202020;
+    --page-background-border-color: #202020;
+    --page-snap-line-color: #E93CAC;
+    --page-grid-color: #753BBD;
+    --page-text-color: #D0D0CE;
+    --page-module-selected-color: #151F6D;
+
+    /* Will add more things later. Colors and sizes */
+
+    /* 
+    color:      Estimate    Pantone     actual hex
+
+    pink:       EA3DAC      232C        E93CAC
+    magenta:    BC29BC      Purple C    BB29BB
+    purple:     753CBE      266C        753BBD
+    blue:       3180E2      2756c       151F6D
+    light blue: ?           2717c       A7C6ED
+    grey:       2F2F2F      GRAY 2c     D0D0CE
+
+    */
+}
