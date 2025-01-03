@@ -1,6 +1,6 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron');
-const path = require('node:path')
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path')
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -10,10 +10,14 @@ const createWindow = () => {
     width: 1200,
     height: 800,
     webPreferences: { 
-      nodeIntegration: true,
-      preload: path.join(__dirname, 'src/preload.js')
+      preload: path.join(__dirname, 'src/preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
     }
   });
+
+  // Hide the menu bar
+  mainWindow.setMenuBarVisibility(false)
 
   // Open devtools if in dev env
   if (isDev) {
@@ -49,3 +53,9 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+
+
+ipcMain.handle('get-app-path', () => {
+    return __dirname;
+})

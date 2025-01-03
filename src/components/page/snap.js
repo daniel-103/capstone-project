@@ -9,9 +9,15 @@
 // This just for me to ctrl+z to revert back to a working state when I wrote this.
 
 const SNAP_THRESHOLD = 20;
+
 const GRID_SIZE = 50;
+const GRID_COLOR = 'rgba(0, 0, 0, 0.1)';
+const GRID_THICKNESS = 1;
+
 const RADIUS_SCALER = 1;
 const RADIUS_EXTRA = 50;
+
+
 
 let isDragging = false;
 let initialMouseX, initialMouseY;
@@ -56,40 +62,43 @@ document.addEventListener('mousemove', (event) => {
         const initialLeft = selectedModule.initialLeft + deltaX;
         const initialTop = selectedModule.initialTop + deltaY;
 
+        // Push radial gradient masks for each selected module
+        masks.push(`radial-gradient(circle ${((selectedRect.width + selectedRect.height)/2) * RADIUS_SCALER + RADIUS_EXTRA}px at ${selectedRect.left + selectedRect.width/2}px ${selectedRect.top + selectedRect.height/2}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%)`);
+
         // Initialize variables
         let closestSnap = { x: null, y: null, distanceX: Infinity, distanceY: Infinity };
         let lineX = null;
         let lineY = null;
 
-        masks.push(`radial-gradient(circle ${((selectedRect.width + selectedRect.height)/2) * RADIUS_SCALER + RADIUS_EXTRA}px at ${selectedRect.left + selectedRect.width/2}px ${selectedRect.top + selectedRect.height/2}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%)`);
-        
+        // Axis snap points for selected element (left, center, right) / (top, center, bottom)
+        const selectedX = [initialLeft, initialLeft + selectedRect.width / 2, initialLeft + selectedRect.width];
+        const selectedY = [initialTop, initialTop + selectedRect.height / 2, initialTop + selectedRect.height];
+
+        // Find the closest snap point for both axes (grid)
+        selectedX.forEach((sx, sxIndex) => {
+            const snapDistanceX = Math.abs(sx - Math.round(sx / GRID_SIZE) * GRID_SIZE);
+            if (snapDistanceX <= closestSnap.distanceX && snapDistanceX < SNAP_THRESHOLD) {
+                closestSnap.x = (Math.round(sx / GRID_SIZE) * GRID_SIZE) - (sx - initialLeft);
+                closestSnap.distanceX = snapDistanceX;
+            }
+        });
+
+        selectedY.forEach((sy, syIndex) => {
+            const snapDistanceY = Math.abs(sy - Math.round(sy / GRID_SIZE) * GRID_SIZE);
+            if (snapDistanceY <= closestSnap.distanceY && snapDistanceY < SNAP_THRESHOLD) {
+                closestSnap.y = (Math.round(sy / GRID_SIZE) * GRID_SIZE) - (sy - initialTop);
+                closestSnap.distanceY = snapDistanceY;
+            }
+        });
+
         // For each unselected module
         unselectedModules.forEach(unselectedModule => {
             // Get bounding rect of unselected module
             const unselectedRect = unselectedModule.getBoundingClientRect();
 
-            // Axis snap points for selected element / unselected element (left, center, right) / (top, center, bottom)
-            const selectedX = [initialLeft, initialLeft + selectedRect.width / 2, initialLeft + selectedRect.width];
-            const selectedY = [initialTop, initialTop + selectedRect.height / 2, initialTop + selectedRect.height];
+            // Axis snap points for unselected element (left, center, right) / (top, center, bottom)
             const unselectedX = [unselectedRect.left, unselectedRect.left + unselectedRect.width / 2, unselectedRect.right];
             const unselectedY = [unselectedRect.top, unselectedRect.top + unselectedRect.height / 2, unselectedRect.bottom];
-
-            // Find the closest snap point for both axes (grid)
-            selectedX.forEach((sx, sxIndex) => {
-                const snapDistanceX = Math.abs(sx - Math.round(sx / GRID_SIZE) * GRID_SIZE);
-                if (snapDistanceX <= closestSnap.distanceX && snapDistanceX < SNAP_THRESHOLD) {
-                    closestSnap.x = (Math.round(sx / GRID_SIZE) * GRID_SIZE) - (sx - initialLeft);
-                    closestSnap.distanceX = snapDistanceX;
-                }
-            });
-
-            selectedY.forEach((sy, syIndex) => {
-                const snapDistanceY = Math.abs(sy - Math.round(sy / GRID_SIZE) * GRID_SIZE);
-                if (snapDistanceY <= closestSnap.distanceY && snapDistanceY < SNAP_THRESHOLD) {
-                    closestSnap.y = (Math.round(sy / GRID_SIZE) * GRID_SIZE) - (sy - initialTop);
-                    closestSnap.distanceY = snapDistanceY;
-                }
-            });
 
             // Find the closest snap point for both axes (unselected element)
             selectedX.forEach((sx, sxIndex) => {
@@ -171,8 +180,6 @@ document.addEventListener('mousemove', (event) => {
         // Update element position
         selectedModule.style.left = `${finalLeft}px`;
         selectedModule.style.top = `${finalTop}px`;
-
-        // grid.style.webkitMask = masks.join(', ');
         
         grid.style.mask = masks.join(', ');
     });

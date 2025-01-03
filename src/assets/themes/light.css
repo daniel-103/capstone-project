@@ -1,0 +1,27 @@
+:root {
+    --background-color: #dfdfdf;
+
+    --header-section-color: #cfcfcf;
+    --header-button-color: transparent;
+    --header-text-color: black;
+
+    --left-panel-section-color: #cfcfcf;
+    --left-panel-option-buttons-color: black;
+
+    --hierarchy-folder-text-color: black;
+    --hierarchy-folder-icon-color: black;
+    --hierarchy-file-text-color: black;
+
+    --tab-section-color: #cfcfcf;
+    --tab-button-color: #bfbfbf;
+    --tab-text-color: black;
+
+    --page-background-color: #cfcfcf;
+    --page-background-border-color: #bfbfbf;
+    --page-snap-line-color: black;
+    --page-grid-color: black;
+    --page-text-color: white;
+    --page-module-selected-color: #0078d7;
+
+    /* Will add more things later. Colors and sizes */
+}

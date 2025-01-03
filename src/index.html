@@ -5,18 +5,39 @@
         <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Creative Writing App</title>
+        <link rel="stylesheet" id="theme-stylesheet" href="assets/themes/dark.css">
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <h1>Welcome to CraftWorld!</h1>
-        We are using Node.js <span id="node-version"></span>,
-        Chromium <span id="chrome-version"></span>,
-        and Electron <span id="electron-version"></span>.
-        
-        <div class="page-window import"> <!--When you're importing an html, you don't need an import class on a wrapping div like this. I'm only doing this for the preamble thingy and bc I also want it to be maximized. Prob a better way but oh well. It still works.-->
-            <p>This is the page window. You can move this element around in the index.html for when whoever starts working on the ui. To do so, I made it easy for you. Just move the div with the page-window class on it to anywhere in your new html structure within index.html and it should work. It imports the html for the page into index.html and it imports its own css and js. Basically just an encapsulated page. I would advise you guys to build your stuff in a similar fassion just to have a healthy separation of functionality.</p>
-            <p>To achieve this html import method, create an object similar to mine and swap out the file with your own. It needs to have the 'import' class but it doesnt need to be wrapped in it's own div. I just did that to size it properly. Then, in your own html that you want to import into index.html, include your necessary css and js. Feel free to reference mine.</p>
-            <object type="text/html" data="components/page/page.html" class="import"></object>
+        <div id="main">
+            <div id="header">
+                <button>File</button>
+                <button>Edit</button>
+                <button>View</button>
+                <button>Insert</button>
+                <button>Format</button>
+                <button>Tools</button>
+                <button>etc...</button>
+            </div>
+            <div id="window">
+                <div id="leftPanel">
+                    <object type="text/html" data="components/hierarchy/hierarchy.html" class="import"></object>
+                </div>
+                <div id="panelResizer"></div>
+                <div id="rightPanel">
+                    <div id="tab-header">
+                        <button>Tab 1</button>
+                        <button>Tab 2</button>
+                        <button>Tab 3</button>
+                    </div>
+                    <div id="page-window" class="import">
+                        <object type="text/html" data="components/page/page.html" class="import"></object>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
+
+    <script src="themeHandler.js"></script>
+    <script src="resizer.js"></script>
 </html>

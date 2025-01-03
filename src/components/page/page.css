@@ -6,7 +6,7 @@ body {
     position: relative;
     width: 100%;
     height: 100vh;
-    background: lightslategray;
+    background: var(--page-background-color);
 }
 
 #grid {
@@ -17,8 +17,8 @@ body {
 
     background-size: 100px 100px;
     background-image:
-        linear-gradient(to right, white 1px, transparent 1px),
-        linear-gradient(to bottom, white 1px, transparent 1px);
+        linear-gradient(to right, var(--page-grid-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--page-grid-color) 1px, transparent 1px);
 
     mask: radial-gradient(circle 0px at 50% 50%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
 
@@ -34,7 +34,7 @@ body {
 }
   
 .module.selected {
-    border-color: #0078d7;
+    border-color: var(--page-module-selected-color);
     box-shadow: 0 0 5px rgba(0, 120, 215, 0.5);
 }
   
@@ -50,6 +50,6 @@ body {
 
 .snap-line {
     position: absolute;
-    background: red;
+    background: var(--page-snap-line-color);
     pointer-events: none;
 }

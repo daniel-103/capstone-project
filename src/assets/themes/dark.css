@@ -1,0 +1,27 @@
+:root {
+    --background-color: #202020;
+
+    --header-section-color: #303030;
+    --header-button-color: transparent;
+    --header-text-color: white;
+
+    --left-panel-section-color: #303030;
+    --left-panel-option-buttons-color: white;
+
+    --hierarchy-folder-text-color: white;
+    --hierarchy-folder-icon-color: white;
+    --hierarchy-file-text-color: white;
+
+    --tab-section-color: #303030;
+    --tab-button-color: #505050;
+    --tab-text-color: white;
+
+    --page-background-color: lightslategray;
+    --page-background-border-color: slategray;
+    --page-snap-line-color: white;
+    --page-grid-color: white;
+    --page-text-color: black;
+    --page-module-selected-color: #0078d7;
+
+    /* Will add more things later. Colors and sizes */
+}

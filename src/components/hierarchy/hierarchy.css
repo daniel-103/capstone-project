@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    margin-left: 0.25rem;
+    overflow: hidden;
+}
+
+#side-bar-options {
+    display: flex;
+    flex-direction: row;
+    height: 2rem;
+    width: 100%;
+    background-color: var(--left-panel-options-color);
+}
+
+#side-bar-options button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 0.25rem;
+}
+
+#side-bar-options svg {
+    height: 100%;
+    fill: var(--left-panel-option-buttons-color);
+}
+
+
+
+/* Hierarchy */
+#side-bar-hierarchy {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 1.5rem;
+
+    font-size: 1rem;
+    font-family: Helvetica;
+}
+
+ul.root {
+    margin: 0;
+    padding: 0;
+}
+
+.folder {
+    margin-top: 0.25rem;
+    position: relative;
+}
+
+.folder-name {
+    color: var(--hierarchy-folder-text-color);
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-block;
+    padding-left: 0.25rem;
+}
+
+.folder-name:hover {
+    text-decoration: underline;
+}
+
+.folder-icon {
+    vertical-align: middle;
+    display: inline-block;
+    width: 0.5rem;
+}
+
+.folder-icon svg {
+    fill: var(--hierarchy-folder-icon-color);
+    transition: transform 0.2s ease;
+}
+
+.file {
+    color: var(--hierarchy-file-text-color);
+}
+
+.folder.open > .folder-icon svg {
+    transform: rotate(90deg);
+}
+
+ul > li > ul {
+    display: none;
+}
+
+.folder.open > ul {
+    display: block;
+}
+
