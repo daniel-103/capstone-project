@@ -1,27 +1,48 @@
 :root {
-    --background-color: #dfdfdf;
+    --white0: #ffffff;
+    --white1: #efefef;
+    --white2: #dfdfdf;
+    --black0: #202020;
+    --black1: #404040;
 
-    --header-section-color: #cfcfcf;
+
+
+    --background-color: var(--white2);
+
+    --header-section-color: var(--white1);
     --header-button-color: transparent;
-    --header-text-color: black;
+    --header-text-color: var(--black0);
 
-    --left-panel-section-color: #cfcfcf;
-    --left-panel-option-buttons-color: black;
+    --left-panel-options-section-color: var(--white1);
+    --left-panel-options-button-color: transparent;
+    --left-panel-options-icon-color: var(--black1);
+    --left-panel-options-button-hover-color: var(--black1);
+    --left-panel-options-icon-hover-color: var(--white1);
 
-    --hierarchy-folder-text-color: black;
-    --hierarchy-folder-icon-color: black;
-    --hierarchy-file-text-color: black;
+    --hierarchy-folder-text-color: var(--black0);
+    --hierarchy-folder-icon-color: var(--black0);
+    --hierarchy-file-text-color: var(--black0);
 
-    --tab-section-color: #cfcfcf;
-    --tab-button-color: #bfbfbf;
-    --tab-text-color: black;
+    --hierarchy-section-color: var(--white1);
+    --hierarchy-folder-color: transparent;
+    --hierarchy-folder-text-color: var(--black0);
+    --hierarchy-folder-icon-color: var(--black1);
+    --hierarchy-open-folder-color: var(--white0);
+    --hierarchy-open-folder-text-color: var(--black0);
+    --hierarchy-open-folder-icon-color: var(--black1);
+    --hierarchy-file-color: transparent;
+    --hierarchy-file-text-color: var(--black0);;
+    --hierarchy-selected-file-color: var(--black0);
+    --hierarchy-selected-file-text-color: var(--white0);
 
-    --page-background-color: #cfcfcf;
-    --page-background-border-color: #bfbfbf;
-    --page-snap-line-color: black;
-    --page-grid-color: black;
-    --page-text-color: black;
+    --tab-section-color: var(--white2);
+    --tab-button-color: var(--white1);
+    --tab-text-color: var(--black0);
+
+    --page-background-color: var(--white1);
+    --page-background-border-color: var(--white1);
+    --page-snap-line-color: var(--black0);
+    --page-grid-color: var(--black0);
+    --page-text-color: var(--black0);
     --page-module-selected-color: #0078d7;
-
-    /* Will add more things later. Colors and sizes */
 }

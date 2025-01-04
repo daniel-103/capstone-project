@@ -1,16 +1,36 @@
 :root {
+    /* 
+    Too lazy to create the palette. :( 
+    Only reason light.css has one is bc I wanted to redo that one anyways.
+    */
+
     --background-color: #202020;
 
     --header-section-color: #303030;
     --header-button-color: transparent;
     --header-text-color: white;
 
-    --left-panel-section-color: #303030;
-    --left-panel-option-buttons-color: white;
+    --left-panel-options-section-color: #303030;
+    --left-panel-options-button-color: transparent;
+    --left-panel-options-icon-color: white;
+    --left-panel-options-button-hover-color: white;
+    --left-panel-options-icon-hover-color:#303030;
 
     --hierarchy-folder-text-color: white;
     --hierarchy-folder-icon-color: white;
     --hierarchy-file-text-color: white;
+
+    --hierarchy-section-color: #303030;
+    --hierarchy-folder-color: transparent;
+    --hierarchy-folder-text-color: white;
+    --hierarchy-folder-icon-color: white;
+    --hierarchy-open-folder-color: #505050;
+    --hierarchy-open-folder-text-color: white;
+    --hierarchy-open-folder-icon-color: white;
+    --hierarchy-file-color: transparent;
+    --hierarchy-file-text-color: #D0D0CE;
+    --hierarchy-selected-file-color: #D0D0CE;
+    --hierarchy-selected-file-text-color: #202020;
 
     --tab-section-color: #303030;
     --tab-button-color: #505050;
@@ -22,6 +42,4 @@
     --page-grid-color: white;
     --page-text-color: black;
     --page-module-selected-color: #0078d7;
-
-    /* Will add more things later. Colors and sizes */
 }
