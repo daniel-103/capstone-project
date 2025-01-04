@@ -33,8 +33,9 @@
     --hierarchy-selected-file-text-color: #202020;
 
     --tab-section-color: #303030;
-    --tab-button-color: #505050;
+    --tab-button-color: #63616a;
     --tab-text-color: white;
+    --tab-active-color: rgba(255, 255, 255, 0.462);
 
     --page-background-color: lightslategray;
     --page-background-border-color: slategray;

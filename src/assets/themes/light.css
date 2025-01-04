@@ -38,6 +38,8 @@
     --tab-section-color: var(--white2);
     --tab-button-color: var(--white1);
     --tab-text-color: var(--black0);
+    --tab-active-color: black;
+
 
     --page-background-color: var(--white1);
     --page-background-border-color: var(--white1);
