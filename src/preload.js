@@ -4,7 +4,10 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 // Expose protected methods that allow the renderer process to use
 contextBridge.exposeInMainWorld('electron', {
-    getAppPath: () => ipcRenderer.invoke('get-app-path'),
+    minimize: () => ipcRenderer.send('minimize-window'),
+    maximize: () => ipcRenderer.send('maximize-window'),
+    close: () => ipcRenderer.send('close-window'),
+    getAppPath: () => ipcRenderer.invoke('get-app-path')
 });
 
 // set theme manually. This is only needed once. After that, the theme is saved in localStorage

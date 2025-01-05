@@ -27,9 +27,25 @@
     /* Apply colors */
     --background-color: var(--light-black);
 
+
+
     --header-section-color: var(--black);
+
+    --header-logo-primary-color: var(--light-blue);
+    --header-logo-secondary-color: var(--pink);
+
     --header-button-color: transparent;
     --header-text-color: var(--pink);
+
+    --header-button-hover-color: var(--pink);
+    --header-hover-text-color: var(--black);
+
+    --header-window-controls-color: var(--black);
+    --header-window-controls-icon-color: var(--pink);
+    --header-window-controls-hover-color: var(--pink);
+    --header-window-controls-icon-hover-color: var(--black);
+    
+
 
     --left-panel-options-section-color: var(--black);
     --left-panel-options-button-color: transparent;
@@ -37,27 +53,65 @@
     --left-panel-options-button-hover-color: var(--magenta);
     --left-panel-options-icon-hover-color: var(--black);
 
+
+
     --hierarchy-section-color: var(--black);
+
     --hierarchy-folder-color: transparent;
-    --hierarchy-folder-text-color: var(--light-blue);
-    --hierarchy-folder-icon-color: var(--purple);
+    --hierarchy-folder-text-color: var(--purple);
+    --hierarchy-folder-icon-color: transparent;
+
+    --hierarchy-folder-hover-color: var(--light-black);
+    --hierarchy-folder-hover-text-color: var(--purple);
+    --hierarchy-folder-hover-icon-color: var(--purple);
+
     --hierarchy-open-folder-color: var(--purple);
     --hierarchy-open-folder-text-color: var(--black);
     --hierarchy-open-folder-icon-color: var(--black);
-    --hierarchy-new-folder-color: var(--magenta);
+    
+    --hierarchy-open-folder-hover-color: var(--magenta);
+    --hierarchy-open-folder-hover-text-color: var(--light-black);
+    --hierarchy-open-folder-hover-icon-color: var(--light-black);
+
+    --hierarchy-new-folder-color: var(--pink);
     --hierarchy-new-folder-text-color: var(--black);
     --hierarchy-new-folder-icon-color: var(--black);
+
+    --hierarchy-folder-path-color: var(--magenta);              /* Implement later */
+    --hierarchy-folder-path-text-color: var(--light-black);     /* Implement later */
+    --hierarchy-folder-path-icon-color: var(--light-black);     /* Implement later */
+
     --hierarchy-file-color: transparent;
     --hierarchy-file-text-color: var(--grey);
-    --hierarchy-selected-file-color: var(--grey);
-    --hierarchy-selected-file-text-color: var(--black);
+
+    --hierarchy-selected-file-color: var(--light-black);
+    --hierarchy-selected-file-text-color: var(--grey);
+
+
 
     --tab-section-color: var(--light-black);
+
     --tab-button-color: var(--black);
     --tab-text-color: var(--magenta);
+    --tab-icon-color: var(--magenta);
+
+    --tab-button-hover-color: var(--purple);
+    --tab-button-hover-text-color: var(--black);
+    --tab-icon-hover-color: red;
+
+    --tab-active-button-color: var(--magenta);
+    --tab-active-text-color: var(--black);
+    --tab-active-icon-color: var(--black);
+
+    --tab-active-button-hover-color: var(--magenta);
+    --tab-active-button-hover-text-color: var(--black);
+    --tab-active-icon-hover-color: red;
+
+
 
     --page-background-color: var(--black);
     --page-background-border-color: var(--black);
+
     --page-snap-line-color: var(--pink);
     --page-grid-color: var(--purple);
     --page-text-color: var(--grey);

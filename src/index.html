@@ -10,13 +10,29 @@
     <body>
         <div id="main">
             <div id="header">
-                <button>File</button>
-                <button>Edit</button>
-                <button>View</button>
-                <button>Insert</button>
-                <button>Format</button>
-                <button>Tools</button>
-                <button>etc...</button>
+                <div id="logo">
+                    🤓
+                </div>
+                <div id="header-options">
+                    <button>File</button>
+                    <button>Edit</button>
+                    <button>View</button>
+                    <button>Insert</button>
+                    <button>Format</button>
+                    <button>Tools</button>
+                    <button>etc...</button>
+                </div>
+                <div id="window-controls">
+                    <button id="minimize">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg>
+                    </button>
+                    <button id="maximize">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M384 80c8.8 0 16 7.2 16 16l0 320c0 8.8-7.2 16-16 16L64 432c-8.8 0-16-7.2-16-16L48 96c0-8.8 7.2-16 16-16l320 0zM64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32z"/></svg>
+                    </button>
+                    <button id="close">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg>
+                    </button>
+                </div>
             </div>
             <div id="window">
                 <div id="leftPanel">
@@ -25,13 +41,14 @@
                 <div id="panelResizer"></div>
                 <div id="rightPanel">
                     <div id="tab-header"></div>
-                    <div id="page-window" class="import"></div>
+                    <div id="page-window"></div>
                 </div>
             </div>
         </div>
     </body>
 
     <script src="themeHandler.js"></script>
+    <script src="windowControls.js"></script>
     <script src="resizer.js"></script>
     <script src="tabs.js"></script>
 </html>

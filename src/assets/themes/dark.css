@@ -6,9 +6,25 @@
 
     --background-color: #202020;
 
+
+
     --header-section-color: #303030;
+
+    --header-logo-primary-color: white;
+    --header-logo-secondary-color: #D0D0CE;
+
     --header-button-color: transparent;
     --header-text-color: white;
+
+    --header-button-hover-color: white;
+    --header-hover-text-color: #303030;
+
+    --header-window-controls-color: transparent;
+    --header-window-controls-icon-color: white;
+    --header-window-controls-hover-color: white;
+    --header-window-controls-icon-hover-color: #303030;
+
+
 
     --left-panel-options-section-color: #303030;
     --left-panel-options-button-color: transparent;
@@ -16,29 +32,65 @@
     --left-panel-options-button-hover-color: white;
     --left-panel-options-icon-hover-color:#303030;
 
-    --hierarchy-folder-text-color: white;
-    --hierarchy-folder-icon-color: white;
-    --hierarchy-file-text-color: white;
+
 
     --hierarchy-section-color: #303030;
+
     --hierarchy-folder-color: transparent;
     --hierarchy-folder-text-color: white;
     --hierarchy-folder-icon-color: white;
-    --hierarchy-open-folder-color: #505050;
+    
+    --hierarchy-folder-hover-color: #505050;
+    --hierarchy-folder-hover-text-color: white;
+    --hierarchy-folder-hover-icon-color: white;
+
+    --hierarchy-open-folder-color: #303030;
     --hierarchy-open-folder-text-color: white;
     --hierarchy-open-folder-icon-color: white;
-    --hierarchy-file-color: transparent;
-    --hierarchy-file-text-color: #D0D0CE;
-    --hierarchy-selected-file-color: #D0D0CE;
-    --hierarchy-selected-file-text-color: #202020;
+    
+    --hierarchy-open-folder-hover-color: #505050;
+    --hierarchy-open-folder-hover-text-color: white;
+    --hierarchy-open-folder-hover-icon-color: #505050;
+
+    --hierarchy-new-folder-color: #505050;
+    --hierarchy-new-folder-text-color: white;
+    --hierarchy-new-folder-icon-color: white;
+    
+    --hierarchy-folder-path-color: var(--magenta);              /* Implement later */
+    --hierarchy-folder-path-text-color: var(--light-black);     /* Implement later */
+    --hierarchy-folder-path-icon-color: var(--light-black);     /* Implement later */
+
+    --hierarchy-file-color: #505050;
+    --hierarchy-file-text-color: #D0D0D0;
+
+    --hierarchy-selected-file-color: #505050;
+    --hierarchy-selected-file-text-color: white;
+
+
 
     --tab-section-color: #303030;
-    --tab-button-color: #63616a;
+
+    --tab-button-color: #505050;
     --tab-text-color: white;
-    --tab-active-color: rgba(255, 255, 255, 0.462);
+    --tab-icon-color: white;
+
+    --tab-button-hover-color: #D0D0D0;
+    --tab-button-hover-text-color: #505050;
+    --tab-icon-hover-color: red;
+
+    --tab-active-button-color: #D0D0D0;
+    --tab-active-text-color: #505050;
+    --tab-active-icon-color: #505050;
+
+    --tab-active-button-hover-color: #D0D0D0;
+    --tab-active-button-hover-text-color: #505050;
+    --tab-active-icon-hover-color: red;
+
+
 
     --page-background-color: lightslategray;
     --page-background-border-color: slategray;
+    
     --page-snap-line-color: white;
     --page-grid-color: white;
     --page-text-color: black;

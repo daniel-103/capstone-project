@@ -39,15 +39,62 @@ p {
 
     background-color: var(--header-section-color);
     margin-bottom: 0.25rem;
+
+    -webkit-app-region: drag;
 }
 
-#header button {
+#logo {
+    margin: auto 0.25rem;
+}
+
+#header-options button {
     background-color: var(--header-button-color);
     border: none;
     cursor: pointer;
     padding: 0.5rem 0.25rem;
 
     color: var(--header-text-color);
+    -webkit-app-region: no-drag;
+    
+    transition: color 0.2s ease;
+    transition: background-color 0.2s ease;
+}
+
+#header-options button:hover {
+    color: var(--header-hover-text-color);
+    background-color: var(--header-button-hover-color);
+}
+
+#window-controls {
+    display: flex;
+    flex-direction: row;
+    
+    margin-left: auto;
+}
+
+#window-controls button {
+    padding: 0 0.75rem;
+    color: var(--header-window-controls-text-color);
+    background-color: var(--header-window-controls-color);
+    border: none;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+
+    transition: color 0.2s ease;
+    transition: background-color 0.2s ease;
+}
+
+#window-controls button:hover {
+    background-color: var(--header-window-controls-hover-color);
+}
+
+#window-controls svg {
+    height: 1rem;
+    fill: var(--header-window-controls-icon-color);
+}
+
+#window-controls button:hover svg {
+    fill: var(--header-window-controls-icon-hover-color);
 }
 
 #window {
@@ -109,6 +156,7 @@ p {
 .tab {
     display: flex;
     align-items: center;
+    padding: 0 0.25rem;
 
     clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
     border-top-left-radius: 0.75rem;
@@ -119,18 +167,61 @@ p {
     border: none;
 
     user-select: none;
+
+    transition: background-color 0.2s ease;
+}
+
+.tab:hover {
+    background-color: var(--tab-button-hover-color);
 }
 
 .tab.active {
-    background-color: var(--tab-active-color);
+    background-color: var(--tab-active-button-color);
+}
+
+.tab.active:hover {
+    background-color: var(--tab-active-button-hover-color);
 }
 
 .tab button {
+    padding: 0 0.25rem;
     color: var(--tab-text-color);
     background-color: transparent;
     border: none;
     user-select: none;
     cursor: pointer;
+    height: 100%;
+
+    transition: color 0.2s ease;
+}
+
+.tab:hover button {
+    color: var(--tab-button-hover-text-color);
+}
+
+.tab.active button {
+    color: var(--tab-active-text-color);
+}
+
+.tab.active:hover button {
+    color: var(--tab-active-button-hover-text-color);
+}
+
+.tab > button > svg {
+    height: 0.6rem;
+    fill: var(--tab-icon-color);
+}
+
+.tab.active > button > svg {
+    fill: var(--tab-active-icon-color);
+}
+
+.tab:hover > button > svg {
+    fill: var(--tab-icon-hover-color);
+}
+
+.tab.active:hover > button > svg {
+    fill: var(--tab-active-icon-hover-color);
 }
 
 

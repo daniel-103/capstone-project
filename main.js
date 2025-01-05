@@ -4,11 +4,14 @@ const path = require('path')
 
 const isDev = process.env.NODE_ENV !== 'production';
 
+let mainWindow;
+
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
+    frame: false,
     webPreferences: { 
       preload: path.join(__dirname, 'src/preload.js'),
       nodeIntegration: false,
@@ -53,6 +56,23 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+// Window controls
+ipcMain.on('minimize-window', () => {
+  mainWindow.minimize();
+});
+
+ipcMain.on('maximize-window', () => {
+  if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize();
+  } else {
+      mainWindow.maximize();
+  }
+});
+
+ipcMain.on('close-window', () => {
+  mainWindow.close();
+});
 
 
 
