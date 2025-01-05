@@ -37,6 +37,12 @@
     --tab-text-color: white;
     --tab-active-color: rgba(255, 255, 255, 0.462);
 
+    --default-page-background-color: #151515;
+    --default-page-module-border-color: white;
+    --default-page-module-background-color: #303030;
+    --default-page-module-background-color-hover: #7b7272;
+    --default-page-module-text-color: white;
+
     --page-background-color: lightslategray;
     --page-background-border-color: slategray;
     --page-snap-line-color: white;
