@@ -1,19 +1,14 @@
-const tabs = [
-    { title: "Tab 1", path: "components/page/page.html"},
-    { title: "Tab 2", path: "components/page/page.html"}
-];
+window.tabs = [];
 
-let currTabIndex = 0
+window.currTabIndex = 0
+
+const defaultPagePath = "components/default_page/default_page.html";
 
 function runTabs() {
     const tabHeader = document.getElementById("tab-header");
     const pageWindow = document.getElementById("page-window");
 
-    tabs.forEach((_,index) => {
-        createTab(index, tabHeader, pageWindow);
-    });
-
-    switchTab(currTabIndex);
+    addNewTab(`Tab 1`, defaultPagePath, tabHeader, pageWindow);
 
     initPlusButton(tabHeader, pageWindow);
 }
@@ -22,7 +17,7 @@ function initPlusButton(tabHeader, pageWindow) {
     window.plusButton = document.createElement("button");
     plusButton.textContent = "+";
     plusButton.addEventListener("click", () => {
-        addNewTab(`Tab ${tabs.length+1}`, "components/page/page.html", tabHeader, pageWindow);
+        addNewTab(`Tab ${tabs.length+1}`, defaultPagePath, tabHeader, pageWindow);
     });
 
     tabHeader.appendChild(plusButton);
