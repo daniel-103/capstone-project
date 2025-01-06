@@ -1,19 +1,43 @@
-body {
+/* html, body {
     margin: 0;
+    height: 100%;
+    background-color: var(--page-background-border-color);
+    overflow: auto;
 }
 
 #page {
     position: relative;
+    top: 1rem;
+    left: 1rem;
+    padding: 1rem;
+    min-width: calc(100% - 2rem);
+    min-height: calc(100% - 2rem);
     width: 100%;
-    height: 100vh;
-    background: var(--page-background-color);
+    background-color: var(--page-background-color);
+    box-sizing: border-box;
+} */
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+}
+
+#page {
+    background-color: red;
+}
+
+#page-content {
+    position: relative;
+    min-height: 100%;
 }
 
 #grid {
     display: block;
     position: absolute;
     width: 100%;
-    height: 100vh;
+    height: 100%;
 
     background-size: 100px 100px;
     background-image:
@@ -29,7 +53,6 @@ body {
   
 .module {
     position: absolute;
-    border: 0.25rem solid transparent;
     user-select: none;
 }
   

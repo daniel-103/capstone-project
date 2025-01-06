@@ -56,9 +56,9 @@ function createTab(index, tabHeader, pageWindow) {
     iframe.classList.add("import");
     iframe.src = currTab.path
     iframe.style.display = "none";
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    iframe.style.border = "none";
+    // iframe.style.width = "100%";
+    // iframe.style.height = "100%";
+    // iframe.style.border = "none";
 
     currTab.containerElem = tabContainer;
     currTab.closeElem = closeButton;
@@ -70,6 +70,11 @@ function createTab(index, tabHeader, pageWindow) {
     } else {
         tabHeader.appendChild(tabContainer);
     }
+
+    // Inject theme into iframe
+    iframe.addEventListener("load", () => {
+        injectTheme(iframe);
+    });
     
     pageWindow.appendChild(iframe); 
 }

@@ -13,6 +13,8 @@ window.electron.getAppPath().then(appPath => {
 });
 
 function injectTheme(object) {
+    console.log(`Injecting theme into object: ${object}`);
+
     // Inject theme for the current object (document or imported object)
     const doc = object.contentDocument || object;
 
@@ -22,12 +24,14 @@ function injectTheme(object) {
     // Create or update theme link 
     const existingLink = doc.querySelector('#theme-link');
     if (!existingLink) {
+        console.log('Creating new link');
         const link = doc.createElement('link');
         link.id = 'theme-link';
         link.rel = 'stylesheet';
         link.href = themePath;
         doc.head.appendChild(link);
     } else {
+        console.log('Updating existing link');
         existingLink.href = themePath;
     }
 

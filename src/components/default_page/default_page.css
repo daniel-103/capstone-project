@@ -32,12 +32,13 @@ html, body {
     justify-content: center;
 
     cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .page-module:hover {
     transform: scale(1.05);
     background-color: var(--default-page-module-background-color-hover);
+    border-color: var(--default-page-module-border-color-hover);
 }
 
 .page-module span {
@@ -45,4 +46,10 @@ html, body {
     font-weight: 500;
     color: var(--default-page-module-text-color);
     user-select: none;
+
+    transition: color 0.2s ease;
+}
+
+.page-module:hover span {
+    color: var(--default-page-module-text-color-hover);
 }

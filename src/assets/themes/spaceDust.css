@@ -108,6 +108,17 @@
     --tab-active-icon-hover-color: red;
 
 
+    
+    --default-page-background-color: var(--black1);
+
+    --default-page-module-background-color: var(--black1);
+    --default-page-module-text-color: var(--grey);
+    --default-page-module-border-color: var(--light-blue);
+
+    --default-page-module-background-color-hover: var(--light-blue);
+    --default-page-module-text-color-hover: var(--black);
+    --default-page-module-border-color-hover: var(--light-blue);
+
 
     --page-background-color: var(--black);
     --page-background-border-color: var(--black);

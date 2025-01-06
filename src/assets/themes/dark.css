@@ -1,104 +1,111 @@
 :root {
-    /* 
-    Too lazy to create the palette. :( 
-    Only reason light.css has one is bc I wanted to redo that one anyways.
-    */
-
-    --background-color: #202020;
-
+    --black0: #202020;
+    --black1: #303030;
+    --black2: #505050;
+    --white0: white;
+    --white1: #D0D0D0;
 
 
-    --header-section-color: #303030;
 
-    --header-logo-primary-color: white;
-    --header-logo-secondary-color: #D0D0CE;
+    --background-color: var(--black0);
+
+
+    --header-section-color: var(--black1);
+
+    --header-logo-primary-color: var(--white0);     /* Implement later */
+    --header-logo-secondary-color: var(--white1);   /* Implement later */
 
     --header-button-color: transparent;
-    --header-text-color: white;
+    --header-text-color: var(--white0);
 
-    --header-button-hover-color: white;
-    --header-hover-text-color: #303030;
+    --header-button-hover-color: var(--white0);
+    --header-hover-text-color: var(--black1);
 
     --header-window-controls-color: transparent;
-    --header-window-controls-icon-color: white;
-    --header-window-controls-hover-color: white;
-    --header-window-controls-icon-hover-color: #303030;
+    --header-window-controls-icon-color: var(--white0);
+    --header-window-controls-hover-color: var(--white0);
+    --header-window-controls-icon-hover-color: var(--black1);
 
 
 
-    --left-panel-options-section-color: #303030;
+    --left-panel-options-section-color: var(--black1);
     --left-panel-options-button-color: transparent;
-    --left-panel-options-icon-color: white;
-    --left-panel-options-button-hover-color: white;
-    --left-panel-options-icon-hover-color:#303030;
+    --left-panel-options-icon-color: var(--white0);
+    --left-panel-options-button-hover-color: var(--white0);
+    --left-panel-options-icon-hover-color:var(--black1);
 
 
 
-    --hierarchy-section-color: #303030;
+    --hierarchy-section-color: var(--black1);
 
     --hierarchy-folder-color: transparent;
-    --hierarchy-folder-text-color: white;
-    --hierarchy-folder-icon-color: white;
+    --hierarchy-folder-text-color: var(--white0);
+    --hierarchy-folder-icon-color: var(--white0);
     
-    --hierarchy-folder-hover-color: #505050;
-    --hierarchy-folder-hover-text-color: white;
-    --hierarchy-folder-hover-icon-color: white;
+    --hierarchy-folder-hover-color: var(--black2);
+    --hierarchy-folder-hover-text-color: var(--white0);
+    --hierarchy-folder-hover-icon-color: var(--white0);
 
-    --hierarchy-open-folder-color: #303030;
-    --hierarchy-open-folder-text-color: white;
-    --hierarchy-open-folder-icon-color: white;
+    --hierarchy-open-folder-color: var(--black1);
+    --hierarchy-open-folder-text-color: var(--white0);
+    --hierarchy-open-folder-icon-color: var(--white0);
     
-    --hierarchy-open-folder-hover-color: #505050;
-    --hierarchy-open-folder-hover-text-color: white;
-    --hierarchy-open-folder-hover-icon-color: #505050;
+    --hierarchy-open-folder-hover-color: var(--black2);
+    --hierarchy-open-folder-hover-text-color: var(--white0);
+    --hierarchy-open-folder-hover-icon-color: var(--black2);
 
-    --hierarchy-new-folder-color: #505050;
-    --hierarchy-new-folder-text-color: white;
-    --hierarchy-new-folder-icon-color: white;
+    --hierarchy-new-folder-color: var(--black2);
+    --hierarchy-new-folder-text-color: var(--white0);
+    --hierarchy-new-folder-icon-color: var(--white0);
     
     --hierarchy-folder-path-color: var(--magenta);              /* Implement later */
     --hierarchy-folder-path-text-color: var(--light-black);     /* Implement later */
     --hierarchy-folder-path-icon-color: var(--light-black);     /* Implement later */
 
-    --hierarchy-file-color: #505050;
-    --hierarchy-file-text-color: #D0D0D0;
+    --hierarchy-file-color: var(--black2);
+    --hierarchy-file-text-color: var(--white1);
 
-    --hierarchy-selected-file-color: #505050;
-    --hierarchy-selected-file-text-color: white;
-
-
-
-    --tab-section-color: #303030;
-
-    --tab-button-color: #505050;
-    --tab-text-color: white;
-    --tab-icon-color: white;
-
-    --tab-button-hover-color: #D0D0D0;
-    --tab-button-hover-text-color: #505050;
-    --tab-icon-hover-color: red;
-
-    --tab-active-button-color: #D0D0D0;
-    --tab-active-text-color: #505050;
-    --tab-active-icon-color: #505050;
-
-    --tab-active-button-hover-color: #D0D0D0;
-    --tab-active-button-hover-text-color: #505050;
-    --tab-active-icon-hover-color: red;
+    --hierarchy-selected-file-color: var(--black2);         /* Implement later */
+    --hierarchy-selected-file-text-color: var(--white0);    /* Implement later */
 
 
 
-    --default-page-background-color: #151515;
-    --default-page-module-border-color: white;
-    --default-page-module-background-color: #303030;
-    --default-page-module-background-color-hover: #7b7272;
-    --default-page-module-text-color: white;
+    --tab-section-color: var(--black0);
 
-    --page-background-color: lightslategray;
-    --page-background-border-color: slategray;
+    --tab-button-color: var(--black1);
+    --tab-text-color: var(--white1);
+    --tab-icon-color: var(--white1);
+
+    --tab-button-hover-color: var(--black2);
+    --tab-button-hover-text-color: var(--white0);
+    --tab-icon-hover-color: var(--white0);
+
+    --tab-active-button-color: var(--black2);
+    --tab-active-text-color: var(--white1);
+    --tab-active-icon-color: var(--white1);
+
+    --tab-active-button-hover-color: var(--black2);
+    --tab-active-button-hover-text-color: var(--white0);
+    --tab-active-icon-hover-color: var(--white0);
+
+
+
+    --default-page-background-color: var(--black0);
+
+    --default-page-module-background-color: var(--black1);
+    --default-page-module-text-color: var(--white1);
+    --default-page-module-border-color: var(--white1);
+
+    --default-page-module-background-color-hover: var(--black2);
+    --default-page-module-text-color-hover: var(--white0);
+    --default-page-module-border-color-hover: var(--white0);
+
+
+    --page-background-color: var(--black0);
+    --page-background-border-color: red;
     
-    --page-snap-line-color: white;
-    --page-grid-color: white;
-    --page-text-color: black;
+    --page-snap-line-color: red;
+    --page-grid-color: var(--white0);
+    --page-text-color: var(--white0);
     --page-module-selected-color: #0078d7;
 }
