@@ -2,7 +2,7 @@ window.tabs = [];
 
 window.currTabIndex = 0
 
-const defaultPagePath = "components/default_page/default_page.html";
+const defaultPagePath = "../default_page/default_page.html";
 
 function runTabs() {
     const tabHeader = document.getElementById("tab-header");
@@ -53,7 +53,7 @@ function createTab(index, tabHeader, pageWindow) {
 
     // Page associated with tab
     const iframe = document.createElement("iframe");
-    iframe.classList.add("import");
+    // iframe.classList.add("import");
     iframe.src = currTab.path
     iframe.style.display = "none";
     // iframe.style.width = "100%";
@@ -73,7 +73,7 @@ function createTab(index, tabHeader, pageWindow) {
 
     // Inject theme into iframe
     iframe.addEventListener("load", () => {
-        injectTheme(iframe);
+        window.parent.injectTheme(iframe);
     });
     
     pageWindow.appendChild(iframe); 
@@ -101,7 +101,7 @@ function addNewTab(title, path, tabHeader, pageWindow) {
 }
 
 function removeTab(index) {
-    console.log(index);
+    // console.log(index);
     const tabInfo = tabs[index];
 
     tabInfo.containerElem.remove();

@@ -188,8 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // stop dragging
     document.addEventListener('mouseup', async (event) => {
-        console.log(window.parent.db)
-
         isDragging = false;
 
         // Update initial position of modules

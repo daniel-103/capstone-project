@@ -4,7 +4,7 @@ const leftPanel = document.getElementById('leftPanel');
     let isResizing = false;
 
     resizer.addEventListener('mousedown', (event) => {
-        document.querySelector('object.import').style.pointerEvents = 'none';
+        document.querySelector('iframe').style.pointerEvents = 'none';
 
         isResizing = true;
         document.body.style.cursor = 'ew-resize';
@@ -15,7 +15,8 @@ const leftPanel = document.getElementById('leftPanel');
     function handleMouseMove(event) {
         if (!isResizing) return;
 
-        const windowWidth = document.getElementById('window').offsetWidth;
+        // const windowWidth = document.getElementById('window').offsetWidth;
+        const windowWidth = document.body;
         let newLeftPanelWidth = event.clientX;
 
         // Minimum and maximum widths for the left panel
@@ -34,7 +35,7 @@ const leftPanel = document.getElementById('leftPanel');
     }
 
     function stopResize() {
-        document.querySelector('object.import').style.pointerEvents = 'auto';
+        document.querySelector('iframe').style.pointerEvents = 'auto';
         
         isResizing = false;
         document.body.style.cursor = '';

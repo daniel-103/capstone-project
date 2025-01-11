@@ -1,5 +1,5 @@
 const pagePaths = [
-    { title: "Snapping Grid", path: "components/page/page.html"}
+    { title: "Snapping Grid", path: "../page/page.html"}
 ];
 
 function initDefaultPage() {

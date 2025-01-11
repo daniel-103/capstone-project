@@ -35,8 +35,9 @@ const createWindow = () => {
   console.log(`Database path: ${dbPath}`);
   db = new PouchDB(dbPath);
 
-  // Load the index.html of the app.
+  // and load the index.html of the app.
   mainWindow.loadFile('src/index.html');
+  // mainWindow.loadFile('src/components/template/template.html');
 };
 
 // This method will be called when Electron has finished

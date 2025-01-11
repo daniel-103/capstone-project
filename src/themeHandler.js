@@ -3,16 +3,26 @@ let themePath;
 // Get theme from local storage
 const themeFile = localStorage.getItem('theme') || 'assets/themes/dark.css';
 
+
 // Get path from ipc through context bridge
 window.electron.getAppPath().then(appPath => {
     // Construct theme path
     themePath = `${appPath}/src/${themeFile}`;
+});
 
-    // Start theme injection from the root document
+// Once document is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Inject theme for the root document
     injectTheme(document);
+
+    // document.getElementById('window').addEventListener('load', () => {
+    //     injectTheme(document.getElementById('window'));
+    // });
 });
 
 function injectTheme(object) {
+    console.log('injecting theme into object', object);
+
     // Inject theme for the current object (document or imported object)
     const doc = object.contentDocument || object;
 
@@ -31,10 +41,10 @@ function injectTheme(object) {
         existingLink.href = themePath;
     }
 
-    // Recursively inject into nested imported objects
-    doc.querySelectorAll('.import').forEach(nestedObject => {
-        nestedObject.addEventListener('load', () => {
-            injectTheme(nestedObject);
-        });
+    // Recursively inject into nested iframes
+    doc.querySelectorAll('iframe').forEach(nestedIframe => {
+        injectTheme(nestedIframe);
     });
 }
+
+window.injectTheme = injectTheme;
