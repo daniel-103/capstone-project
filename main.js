@@ -1,10 +1,12 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain } = require('electron');
-const path = require('path')
+const PouchDB = require('pouchdb');
+const path = require('path');
 
-const isDev = process.env.NODE_ENV !== 'production';
+const isDev = process.env.NODE_ENV === 'development';
 
 let mainWindow;
+let db;
 
 const createWindow = () => {
   // Create the browser window.
@@ -14,7 +16,7 @@ const createWindow = () => {
     frame: false,
     webPreferences: { 
       preload: path.join(__dirname, 'src/preload.js'),
-      nodeIntegration: false,
+      nodeIntegration: true,
       contextIsolation: true,
     }
   });
@@ -27,11 +29,14 @@ const createWindow = () => {
     mainWindow.webContents.openDevTools();
   }
 
-  // and load the index.html of the app.
-  mainWindow.loadFile('src/index.html');
+  // Create the database
+  const userDataPath = app.getPath('userData');
+  const dbPath = path.join(userDataPath, 'db'); // Rename 'db' to final name
+  console.log(`Database path: ${dbPath}`);
+  db = new PouchDB(dbPath);
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  // Load the index.html of the app.
+  mainWindow.loadFile('src/index.html');
 };
 
 // This method will be called when Electron has finished
@@ -79,3 +84,27 @@ ipcMain.on('close-window', () => {
 ipcMain.handle('get-app-path', () => {
     return __dirname;
 })
+
+
+
+ipcMain.handle('put', async (event, doc) => {
+  try {
+    const result = await db.put(doc);
+    return result;
+  } catch (error) {return error}
+});
+
+ipcMain.handle('get', async (event, id) => {
+  try {
+    const doc = await db.get(id);
+    return doc;
+  } catch (error) {return error}
+});
+
+ipcMain.handle('remove', async (event, id) => {
+  try {
+    const doc = await db.get(id);
+    const result = await db.remove(doc);
+    return result;
+  } catch (error) {return error}
+});

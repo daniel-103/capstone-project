@@ -7,8 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     selectedModules;
     unselectedModules = document.querySelectorAll('.module:not(.selected)');;
 
-    console.log(unselectedModules);
-
     // select module on left click
     modules.forEach(element => {
         element.addEventListener('mousedown', (event) => {

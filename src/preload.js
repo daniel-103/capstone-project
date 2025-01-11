@@ -10,6 +10,13 @@ contextBridge.exposeInMainWorld('electron', {
     getAppPath: () => ipcRenderer.invoke('get-app-path')
 });
 
+// Database methods
+contextBridge.exposeInMainWorld('db', {
+    put: (doc) => ipcRenderer.invoke('put', doc),
+    get: (id) => ipcRenderer.invoke('get', id),
+    remove: (id) => ipcRenderer.invoke('remove', id)
+});
+
 // set theme manually. This is only needed once. After that, the theme is saved in localStorage
 localStorage.setItem('theme', 'assets/themes/spaceDust.css');
 

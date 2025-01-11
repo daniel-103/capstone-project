@@ -38,6 +38,7 @@
     "electron": "^33.2.1",
     "electron-build": "^0.0.3",
     "electron-builder": "^25.1.8",
-    "electronmon": "^2.0.3"
+    "electronmon": "^2.0.3",
+    "pouchdb": "^9.0.0"
   }
 }
