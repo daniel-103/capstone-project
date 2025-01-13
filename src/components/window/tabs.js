@@ -2,7 +2,7 @@ window.tabs = [];
 
 window.currTabIndex = 0
 
-const defaultPagePath = "../default_page/default_page.html";
+const defaultPagePath = "../text_editor/text_editor.html";
 
 function runTabs() {
     const tabHeader = document.getElementById("tab-header");
