@@ -14,14 +14,10 @@ window.electron.getAppPath().then(appPath => {
 document.addEventListener('DOMContentLoaded', () => {
     // Inject theme for the root document
     injectTheme(document);
-
-    // document.getElementById('window').addEventListener('load', () => {
-    //     injectTheme(document.getElementById('window'));
-    // });
 });
 
 function injectTheme(object) {
-    console.log('injecting theme into object', object);
+    // console.log('injecting theme into object', object);
 
     // Inject theme for the current object (document or imported object)
     const doc = object.contentDocument || object;
@@ -43,7 +39,13 @@ function injectTheme(object) {
 
     // Recursively inject into nested iframes
     doc.querySelectorAll('iframe').forEach(nestedIframe => {
+        // Try to inject theme into nested iframe
         injectTheme(nestedIframe);
+
+        // Wait for it to load and try again just in case       this should be replaced so iframes arent injected twice
+        nestedIframe.addEventListener('load', () => {
+            injectTheme(nestedIframe);
+        });
     });
 }
 

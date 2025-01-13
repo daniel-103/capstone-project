@@ -18,7 +18,7 @@ const templates = [
     card.onclick = () => {
       const windowIframe = window.parent.document.getElementById('window');
       windowIframe.src = 'components/window/window.html';
-        injectTheme(windowIframe.contentDocument);
+        // window.parent.injectTheme(windowIframe);
 
       // window.location.href = '../../index.html';
     };
