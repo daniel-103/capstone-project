@@ -18,7 +18,7 @@ contextBridge.exposeInMainWorld('db', {
 });
 
 // set theme manually. This is only needed once. After that, the theme is saved in localStorage
-localStorage.setItem('theme', 'assets/themes/light.css');
+localStorage.setItem('theme', 'assets/themes/dark.css');
 
 // set theme to dark if it doesn't exist
 if (!localStorage.getItem('theme')) localStorage.setItem('theme', 'assets/themes/dark.css');
