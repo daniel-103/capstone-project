@@ -2,13 +2,14 @@ window.tabs = [];
 
 window.currTabIndex = 0
 
-const defaultPagePath = "../text_editor/text_editor.html";
+const defaultPagePath = "../default_page/default_page.html";
+const startPagePath = "../text_editor/text_editor.html";
 
 function runTabs() {
     const tabHeader = document.getElementById("tab-header");
     const pageWindow = document.getElementById("page-window");
 
-    addNewTab(`Tab 1`, defaultPagePath, tabHeader, pageWindow);
+    addNewTab(`Tab 1`, startPagePath, tabHeader, pageWindow);
 
     initPlusButton(tabHeader, pageWindow);
 }
