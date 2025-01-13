@@ -1,5 +1,6 @@
 const pagePaths = [
     { title: "Snapping Grid", path: "../page/page.html"},
+    { title: "Timeline", path: "../timeline/timeline.html"},
     { title: "Text Editor", path: "../text_editor/text_editor.html"}
 ];
 

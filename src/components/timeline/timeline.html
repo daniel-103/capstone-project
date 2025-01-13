@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Advanced Timeline</title>
+  <link rel="stylesheet" href="timeline.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="options-wrapper">
+    <div id="year-option">
+      <label for="startYear">Start Year:</label>
+      <input type="text" id="startYear" placeholder="Enter start year" />
+      
+      <label for="endYear">End Year:</label>
+      <input type="text" id="endYear" placeholder="Enter end year" />
+    </div>
+    
+    <div id="include-option">
+      <label for="includeText">Include:</label>
+      <div class="filter-element-container" id="includeContainer">
+        <input type="text" id="includeText" placeholder="Type an attribute or value" />
+      </div>
+    </div>
+    
+    <div id="exclude-option">
+      <label for="excludeText">Ignore:</label>
+      <div class="filter-element-container" id="excludeContainer">
+        <input type="text" id="excludeText" placeholder="Type an attribute or value" />
+      </div>
+    </div>
+  </div>
+  <div class="timeline-wrapper">
+    <svg id="timeline"></svg>
+    <div class="events-container" id="events-container"></div>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="timeline.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
