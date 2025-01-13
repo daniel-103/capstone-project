@@ -108,4 +108,21 @@
     --page-grid-color: var(--white0);
     --page-text-color: var(--white0);
     --page-module-selected-color: #0078d7;
+
+    
+    --timeline-page-timeline-color: white;
+    --compact-box-background-color: rgb(69, 45, 137);
+    --compact-box-border-color: rgb(204, 0, 0);
+    --expanded-box-background-color: rgb(69, 45, 137);
+    --expanded-box-border-color: rgb(204, 0, 0);
+
+    --options-bg-color: #2d2f33;   
+    --options-text-color: #f0f0f0;    
+    --options-border-color: #444;      
+    --options-highlight-color: #6db5ff;
+    
+    --options-input-bg: #3b3e43;
+    --options-input-text: #ffffff;
+    --options-hover-bg: #45494f;
+    --button-border-color: #666;
 }

@@ -128,6 +128,22 @@
     --page-text-color: var(--grey);
     --page-module-selected-color: var(--blue);
 
+    
+    --timeline-page-timeline-color: white;
+    --compact-box-background-color: var(--magenta);
+    --compact-box-border-color: var(--purple);
+    --expanded-box-background-color: var(--purple);
+    --expanded-box-border-color: var(var(--magenta));
+
+    --options-bg-color: #2d2f33;   
+    --options-text-color: #f0f0f0;    
+    --options-border-color: #444;      
+    --options-highlight-color: #6db5ff;
+    
+    --options-input-bg: #3b3e43;
+    --options-input-text: #ffffff;
+    --options-hover-bg: #45494f;
+    --button-border-color: #666;
     /* Will add more things later. Colors and sizes */
 }
 
