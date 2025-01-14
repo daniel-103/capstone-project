@@ -12,18 +12,22 @@
 	width: fit-content;
 	margin-left: auto;
 	margin-right: auto;
+    
 }
 
 .ck-content {
 	font-family: 'Lato';
 	line-height: 1.6;
 	word-break: break-word;
+
 }
 
 .editor-container_classic-editor .editor-container__editor {
 	min-width: 795px;
-	max-width: fit-content;
+	max-width: 795px;
 }
+
+.ck-editor__editable {min-height: 85dvh;}
 
 .editor-container_include-block-toolbar {
 	margin-left: 42px;
@@ -157,7 +161,8 @@
 }
 
 .editor_container__word-count .ck-word-count {
-	color: var(--ck-color-text);
+	color: black;
+    background: white;
 	display: flex;
 	height: 20px;
 	gap: var(--ck-spacing-small);
@@ -174,8 +179,10 @@
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 	border-top: none;
+    
 }
 
 .editor-container_include-word-count.editor-container_classic-editor .editor-container__editor .ck-editor .ck-editor__editable {
 	border-radius: 0;
+    
 }

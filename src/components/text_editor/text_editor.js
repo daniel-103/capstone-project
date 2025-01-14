@@ -67,7 +67,7 @@ const {
 } = window.CKEDITOR;
 
 const LICENSE_KEY =
-	'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3Mzc0MTc1OTksImp0aSI6IjIzMTNjMjcyLWIzYjEtNDU3NS1iZGRjLWI4YmE3MzFkNGQ1MCIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjViYmZkNjU4In0.SW1xzVH0AVnj5iW4cf__DVccGakqVib1rOqj8LylmDbGjQU8XaKgjQDZ4lwfkaTVKJVi44dNS2DhNMosFCqs5A';
+	'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3Njc3NDM5OTksImp0aSI6IjdkN2U0YWU3LWRhZGUtNGM2My04ZTYyLTc3OTdkZDE0YTQ1OCIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCJdLCJ2YyI6IjJkZTRhOWNkIn0._1HlqIhtwfpt6vkAEXS4QTDZxktT-z05GQ8X1BzXHv3GR6Y3pS3Xjx2_Uuxro9gDhirO-AAIuZwqS2K3QcPZAw';
 
 const editorConfig = {
 	toolbar: {
@@ -259,7 +259,7 @@ const editorConfig = {
 		]
 	},
 	initialData:
-		'<h2>Default Debug Text</h2>\n',
+		'',
 	licenseKey: LICENSE_KEY,
 	link: {
 		addTargetToExternalLinks: true,
@@ -284,7 +284,7 @@ const editorConfig = {
 	menuBar: {
 		isVisible: true
 	},
-	placeholder: 'Type or paste your content here!',
+	placeholder: '',
 	style: {
 		definitions: [
 			{
