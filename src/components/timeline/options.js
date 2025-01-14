@@ -1,5 +1,5 @@
-let timelineStartYear = null;
-let timelineEndYear = null;
+let timelineStartYear = 1970;
+let timelineEndYear = 2020;
 
 const includeList = [];
 const ignoreList = [];
@@ -33,43 +33,45 @@ function getSuggestions(input, isAttribute) {
   return [];
 }
 
-document.getElementById("startYear").addEventListener("input", (e) => {
-  const value = parseInt(e.target.value, 10);
-  if (!isNaN(value)) {
-    timelineStartYear = value;
+function updateStartYear(target) {
+  const parsedVal = parseInt(target.value, 10);
+  if (!isNaN(parsedVal)) {
+    timelineStartYear = parsedVal;
     updateEvents();
   } else {
-    timelineStartYear = 1970;
-    updateEvents();
+    target.value = timelineStartYear;
+  }
+}
+
+document.getElementById("startYear").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    updateStartYear(e.target);
   }
 });
 
 document.getElementById("startYear").addEventListener("blur", (e) => {
-  if (timelineStartYear !== null) {
-    e.target.value = timelineStartYear;
-  } else {
-    e.target.value = ""; 
-  }
+  updateStartYear(e.target);
 });
 
 
-document.getElementById("endYear").addEventListener("input", (e) => {
-  const value = parseInt(e.target.value, 10);
-  if (!isNaN(value)) {
-    timelineEndYear = value;
+function updateEndYear(target) {
+  const parsedVal = parseInt(target.value, 10);
+  if (!isNaN(parsedVal)) {
+    timelineEndYear = parsedVal;
     updateEvents();
   } else {
-    timelineEndYear = 2030;
-    updateEvents();
+    target.value = timelineEndYear;
+  }
+}
+
+document.getElementById("endYear").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    updateEndYear(e.target);
   }
 });
 
 document.getElementById("endYear").addEventListener("blur", (e) => {
-  if (timelineEndYear !== null) {
-    e.target.value = timelineEndYear;
-  } else {
-    e.target.value = ""; 
-  }
+  updateEndYear(e.target);
 });
 
 function positionDropdown(input, dropdown) {
@@ -277,13 +279,12 @@ function filterEvents(events, startYear, endYear, include, exclude) {
 
 function updateEvents() {
   let startYear = timelineStartYear;
-  
   let endYear = timelineEndYear;
+
   const newEvents = filterEvents(eventData, timelineStartYear, timelineEndYear, includeList, ignoreList );
-  if (!timelineStartYear || !timelineEndYear) {
-    startYear = Math.min(...newEvents.map(event => event.year));
-    endYear = Math.max(...newEvents.map(event => event.year));
-  }
+
+  document.getElementById("startYear").value = startYear;
+  document.getElementById("endYear").value = endYear;
 
   const data = { startYear: startYear, endYear: endYear, events: newEvents};
   window.dispatchEvent(new CustomEvent("updateTimeline", { detail: data }));

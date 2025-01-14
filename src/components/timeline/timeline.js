@@ -132,8 +132,14 @@ function createEvent(d, i, width, height, startYear, endYear) {
     .attr("class", "title")
     .text(d.title);
   expBox.append("div")
+    .attr("class", "character")
+    .text(`Character: ${d.character}`);
+  expBox.append("div")
+    .attr("class", "location")
+    .text(`Locatin: ${d.location}`);
+  expBox.append("div")
     .attr("class", "description")
-    .text(d.description);
+    .text(`Description: ${d.description}`);
 }
 
 
