@@ -12,7 +12,7 @@ body {
 }
 .timeline-wrapper {
     position: relative;
-    width: 80%;
+    width: 90%;
     height: 400px;
     background-color: var(--default-page-background-color);
     overflow: visible; 

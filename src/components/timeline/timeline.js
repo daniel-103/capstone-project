@@ -1,9 +1,7 @@
 const compactW = 80,  compactH = 40;   
 const expandedW = 200, expandedH = 120; 
 
-const timelineThickness = 2;
-const padding = 50;     
-const connectorLength = 60; 
+
 
 const data = [
   { title: "Event A", description: "Description A", year: 1970 },
@@ -21,6 +19,10 @@ let events = [];
 const svg = d3.select("#timeline");
 const eventsContainer = d3.select("#events-container");
 
+const timelineThickness = 2;
+const padding = parseFloat(svg.style("width"))*1/9;     
+const connectorLength = 60; 
+
 
 function getX(year, width, startYear, endYear) {
   return padding + ((year - startYear)/(endYear - startYear)) * (width - 2*padding);
@@ -34,6 +36,21 @@ function drawTimeline() {
   eventsContainer.selectAll("*").remove();
 
   drawHorozontalLine(width, height);
+  svg.append("text")
+    .attr("x", padding/2-5)
+    .attr("y", (height / 2)+5)
+    .attr("text-anchor", "middle")
+    .attr("font-size", "20px")
+    .attr("fill", "white")
+    .text(startYear);
+  
+    svg.append("text")
+    .attr("x", width-padding/2+5)
+    .attr("y", (height / 2)+5)
+    .attr("text-anchor", "middle")
+    .attr("font-size", "20px")
+    .attr("fill", "white")
+    .text(endYear);
 
   events.forEach((d, i) => {
     createEvent(d,i, width, height, startYear, endYear);
@@ -136,7 +153,7 @@ function createEvent(d, i, width, height, startYear, endYear) {
     .text(`Character: ${d.character}`);
   expBox.append("div")
     .attr("class", "location")
-    .text(`Locatin: ${d.location}`);
+    .text(`Location: ${d.location}`);
   expBox.append("div")
     .attr("class", "description")
     .text(`Description: ${d.description}`);
@@ -145,9 +162,9 @@ function createEvent(d, i, width, height, startYear, endYear) {
 
 function drawHorozontalLine(width, height) {
   svg.append("line")
-    .attr("x1", padding)
+    .attr("x1", padding*7/10)
     .attr("y1", height / 2)
-    .attr("x2", width - padding)
+    .attr("x2", width - padding*7/10)
     .attr("y2", height / 2)
     .attr("stroke", "white")
     .attr("stroke-width", timelineThickness);
