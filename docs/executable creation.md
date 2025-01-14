@@ -38,7 +38,7 @@ This part in "package.json" is the brain behind the building the executable file
    npm run dist
    ```
 
-   This will package your application and place the output in the directory you specified.
+   This will package the application and place the output in the directory you specified.
 
    The application will be built as a **portable** executable for Windows, a **DMG** file for macOS, and an **AppImage** for Linux.
 
