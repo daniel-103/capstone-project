@@ -1,14 +1,13 @@
 .options-wrapper {
     width: 100%;
     background-color: var(--options-bg-color);
+    border-top: 2px solid var(--background-color);
     color: var(--options-text-color);
     padding: 1rem;
     box-sizing: border-box;
     position: absolute;
     top: 0px;
-  
-    border-bottom: 1px solid var(--options-border-color);
-  
+    
     display: flex;
     flex-direction: row;
     align-items: flex-start;
