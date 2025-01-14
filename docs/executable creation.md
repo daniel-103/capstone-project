@@ -31,7 +31,7 @@ This part in "package.json" is the brain behind the building the executable file
 
 ### Run the Build Script
 
-1. Open a terminal (Command Prompt, PowerShell, or Terminal on macOS/Linux) and navigate to your project directory.
+1. Open a terminal (Command Prompt, PowerShell, or Terminal on macOS/Linux) and navigate to the project directory.
 
 2. Run the build script:
    ```bash

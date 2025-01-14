@@ -7,7 +7,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production electron .",
     "dev": "cross-env NODE_ENV=development electron .",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "clean": "rimraf dist"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
     },
     "files": [
       "main.js",
+      "node_modules/**/*",
       "package.json",
       "src/**/*"
     ],
@@ -33,12 +35,16 @@
       "target": "AppImage"
     }
   },
+  "dependencies": {
+    "pouchdb": "^9.0.0"
+  },
   "devDependencies": {
     "cross-env": "^7.0.3",
     "electron": "^33.2.1",
     "electron-build": "^0.0.3",
     "electron-builder": "^25.1.8",
     "electronmon": "^2.0.3",
-    "pouchdb": "^9.0.0"
+    "pouchdb": "^9.0.0",
+    "rimraf": "^6.0.1"
   }
 }
