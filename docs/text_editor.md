@@ -1,3 +1,5 @@
+# Text Editor Documentation
+
 The text editor is built upon the CKEditor 5 framework, starting with the CKEditor Builder
 Link to CKEditor 5 Documentation: https://ckeditor.com/docs/ckeditor5/latest/index.html
 Free License key allows 1000 load/month, which should be enough
