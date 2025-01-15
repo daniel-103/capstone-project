@@ -27,7 +27,7 @@ plugins: [
 ]
 ```
 
-where ... represents all of the plugins that the project is using
+where ... represents all of the plugins that the project is using.
 Note that all plugins used are under the free license for CKEditor 5, other functionalities that require premium access
 and are a planned addition will be implemented ourselves
 

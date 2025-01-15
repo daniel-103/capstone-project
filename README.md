@@ -1,6 +1,6 @@
-# capstone-project
+# Skriptor
 
-(Project description. Replace this part with an actual description. Also replace the header above this with the final title of the project.)
+(Project description)
 
 ## Additional Info
 
@@ -18,9 +18,9 @@ Instructor: [Dr. Thomas Bowman](https://www.latech.edu/faculty-staff/single-entr
 
 - Daniel Roy ([daniel-103](https://github.com/daniel-103))
 
-# Installation
+# Download
 
-(Should need to install. Should just be able to run a compiled exe?)
+No installation is required. Just download the provided .exe in the releases section (do later) and run it.
 
 # Installation steps for development:
 

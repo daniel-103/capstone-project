@@ -1,55 +1,36 @@
-Themes are primarily a color palette used to change the apperance of elements. They will also have the ability to change other visual aspects of the application in the future.
+Themes are primarily a color palette used to change the apperance of elements. They also have the ability to change other visual aspects of the application.
 
-Themes are a collection of css `:root` variables. Each theme is contained to its own css file. Here is light.css for example:
-> `light.css`
+Themes are a collection of css `:root` variables. Each theme is contained to its own css file. Here is a section dark.css for example:
+> `dark.css`
 > ```css
 > :root {
->     --white0: #ffffff;
->     --white1: #efefef;
->     --white2: #dfdfdf;
->     --black0: #202020;
->     --black1: #404040;
+>    --black0: #202020;
+>    --black1: #303030;
+>    --black2: #505050;
+>    --white0: white;
+>    --white1: #D0D0D0;
 >
 >
 >
->     --background-color: var(--white2);
+>    --background-color: var(--black0);
 >
->     --header-section-color: var(--white1);
->     --header-button-color: transparent;
->     --header-text-color: var(--black0);
+>    --header-section-color: var(--black1);
 >
->     --left-panel-options-section-color: var(--white1);
->     --left-panel-options-button-color: transparent;
->     --left-panel-options-icon-color: var(--black1);
->     --left-panel-options-button-hover-color: var(--black1);
->     --left-panel-options-icon-hover-color: var(--white1);
+>    --header-logo-primary-color: var(--white0);
+>    --header-logo-secondary-color: var(--white1);
 >
->     --hierarchy-folder-text-color: var(--black0);
->     --hierarchy-folder-icon-color: var(--black0);
->     --hierarchy-file-text-color: var(--black0);
+>    --header-button-color: transparent;
+>    --header-text-color: var(--white0);
 >
->     --hierarchy-section-color: var(--white1);
->     --hierarchy-folder-color: transparent;
->     --hierarchy-folder-text-color: var(--black0);
->     --hierarchy-folder-icon-color: var(--black1);
->     --hierarchy-open-folder-color: var(--white0);
->     --hierarchy-open-folder-text-color: var(--black0);
->     --hierarchy-open-folder-icon-color: var(--black1);
->     --hierarchy-file-color: transparent;
->     --hierarchy-file-text-color: var(--black0);;
->     --hierarchy-selected-file-color: var(--black0);
->     --hierarchy-selected-file-text-color: var(--white0);
+>    --header-button-hover-color: var(--white0);
+>    --header-hover-text-color: var(--black1);
 >
->     --tab-section-color: var(--white2);
->     --tab-button-color: var(--white1);
->     --tab-text-color: var(--black0);
+>    --header-window-controls-color: transparent;
+>    --header-window-controls-icon-color: var(--white0);
+>    --header-window-controls-hover-color: var(--white0);
+>    --header-window-controls-icon-hover-color: var(--black1);
 >
->     --page-background-color: var(--white1);
->     --page-background-border-color: var(--white1);
->     --page-snap-line-color: var(--black0);
->     --page-grid-color: var(--black0);
->     --page-text-color: var(--black0);
->     --page-module-selected-color: #0078d7;
+>    ...
 > }
 > ```
 
@@ -61,4 +42,4 @@ To create your own theme, simply duplicate a preexisting theme's css file and ch
 
 You may also notice that you can include custom css outside of `:root`. If you want to change something for your theme that isn't supported in the variables, you can manually set it here.
 
-There is no current way to change themes from the UI. To manually change the theme, go to `src/preload.js` and change the file name where `theme` is being set in `localStorage` on `line 11`. This will set it in the app's localStorage and will reference that theme from now on until it's changed.
+There is no current way to change themes from the UI. To manually change the theme, go to `src/preload.js` and change the file name where `theme` is being set in `localStorage` on `line 21`. This will set it in the app's localStorage and will reference that theme from now on until it's changed.
