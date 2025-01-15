@@ -12,8 +12,10 @@ the list will allow to user to see the page in the default_page (the page that o
 pressing the "+" button), allowing the user to switch the page the tab is containing to
 any available page: 
 
+```js
 const pagePaths = [ 
     { title: "Snapping Grid", path: "../page/page.html"},
     { title: "Timeline", path: "../timeline/timeline.html"},
     { title: "Text Editor", path: "../text_editor/text_editor.html"}
 ];
+```
