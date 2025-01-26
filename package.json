@@ -36,6 +36,8 @@
     }
   },
   "dependencies": {
+    "docx": "^9.1.1",
+    "pdf-lib": "^1.17.1",
     "pouchdb": "^9.0.0",
     "pouchdb-find": "^9.0.0"
   },

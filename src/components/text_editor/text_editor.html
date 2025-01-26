@@ -5,9 +5,21 @@
 		<title>CKEditor</title>
 		<link rel="stylesheet" href="./text_editor.css">
 		<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/44.1.0/ckeditor5.css" crossorigin>
+		<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/docx@7.1.0/build/index.min.js"></script>
 	</head>
 	<body>
 		<div class="main-container">
+			<!-- Export button and dropdown -->
+			<link rel="stylesheet" href="export.css">
+			<div class="export-container">
+				<button id="exportButton">Export</button>
+				<div id="exportDropdown" class="dropdown-content">
+					<a href="#" id="exportPDF">PDF</a>
+					<a href="#" id="exportDOCX">DOCX</a>
+					<a href="#" id="exportTXT">TXT</a>
+				</div>
+			</div>
 			<div
 				class="editor-container editor-container_classic-editor editor-container_include-style editor-container_include-block-toolbar editor-container_include-word-count"
 				id="editor-container"
@@ -18,5 +30,6 @@
 		</div>
 		<script src="https://cdn.ckeditor.com/ckeditor5/44.1.0/ckeditor5.umd.js" crossorigin></script>
 		<script src="./text_editor.js"></script>
+		<script src="export.js"></script>
 	</body>
 </html>
