@@ -1,0 +1,55 @@
+html, body {
+    margin: 0;
+}
+
+#default-page {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--default-page-background-color);
+    background-clip: padding-box;
+    overflow: hidden;
+}
+
+#page-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+    overflow: hidden;
+}  
+
+.page-module {
+    width: 220px;
+    height: 80px;
+    margin: 0.75rem 0;
+    border-radius: 0.75rem;
+    border: 2px solid var(--default-page-module-border-color);
+    background-color: var(--default-page-module-background-color);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+ 
+.page-module:hover {
+    transform: scale(1.05);
+    background-color: var(--default-page-module-background-color-hover);
+    border-color: var(--default-page-module-border-color-hover);
+}
+
+.page-module span {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--default-page-module-text-color);
+    user-select: none;
+
+    transition: color 0.2s ease;
+}
+
+.page-module:hover span {
+    color: var(--default-page-module-text-color-hover);
+}

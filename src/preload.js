@@ -14,11 +14,15 @@ contextBridge.exposeInMainWorld('electron', {
 contextBridge.exposeInMainWorld('db', {
     put: (doc) => ipcRenderer.invoke('put', doc),
     get: (id) => ipcRenderer.invoke('get', id),
-    remove: (id) => ipcRenderer.invoke('remove', id)
+    remove: (id) => ipcRenderer.invoke('remove', id),
+    find: (query) => ipcRenderer.invoke('find', query),
+    createIndex: (indexDef) => ipcRenderer.invoke('createIndex', indexDef),
+    allDocs: (options) => ipcRenderer.invoke('allDocs', options),
+    getIndexes: () => ipcRenderer.invoke('getIndexes'),
 });
 
 // set theme manually. This is only needed once. After that, the theme is saved in localStorage
 // localStorage.setItem('theme', 'assets/themes/dark.css');
-
+ 
 // set theme to dark if it doesn't exist
 if (!localStorage.getItem('theme')) localStorage.setItem('theme', 'assets/themes/dark.css');

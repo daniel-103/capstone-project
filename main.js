@@ -1,6 +1,8 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain } = require('electron');
 const PouchDB = require('pouchdb');
+PouchDB.plugin(require("pouchdb-find"));
+
 const path = require('path');
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -107,5 +109,34 @@ ipcMain.handle('remove', async (event, id) => {
     const doc = await db.get(id);
     const result = await db.remove(doc);
     return result;
+  } catch (error) {return error}
+});
+
+ipcMain.handle('find', async (event, query) => {
+  try {
+    const doc = await db.find(query);
+    const result = doc.docs;
+    return result;
+  } catch (error) {return error}
+});
+
+ipcMain.handle('createIndex', async (event, indexDef) => {
+  try {
+      const result = await db.createIndex(indexDef);
+      return result;
+  } catch (error) {return error}
+});
+
+ipcMain.handle('allDocs', async (event, options) => {
+  try {
+      const result = await db.allDocs(options);
+      return result;
+  } catch (error) {return error}
+});
+
+ipcMain.handle('getIndexes', async () => {
+  try {
+      const indexes = await db.getIndexes();
+      return indexes;
   } catch (error) {return error}
 });
