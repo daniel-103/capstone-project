@@ -27,3 +27,5 @@ const quill = new Quill('#editor', {
   placeholder: 'Placeholder',
 	theme: 'snow'
   });
+
+export { quill };
