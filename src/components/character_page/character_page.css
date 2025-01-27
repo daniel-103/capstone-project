@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    background-color: var(--default-page-background-color);
+}
+
+#character-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.character-module-box {
+    border: 2px solid var(--default-page-module-border-color);
+    border-radius: 0.75rem;
+    background-color: transparent;
+    padding: 1rem;
+    font-size: 1rem;
+    color: var(--default-page-module-text-color);
+
+}
+
+.character-module-box > div:first-child {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}

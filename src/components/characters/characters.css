@@ -17,7 +17,7 @@ html, body {
     align-items: center;
     margin-top: 2rem;
     overflow: hidden;
-}  
+}
 
 .page-module {
     width: 220px;
@@ -33,8 +33,9 @@ html, body {
 
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    position: relative;
 }
- 
+
 .page-module:hover {
     transform: scale(1.05);
     background-color: var(--default-page-module-background-color-hover);
@@ -46,10 +47,24 @@ html, body {
     font-weight: 500;
     color: var(--default-page-module-text-color);
     user-select: none;
-
     transition: color 0.2s ease;
 }
 
 .page-module:hover span {
     color: var(--default-page-module-text-color-hover);
+}
+
+.delete-button {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #999;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    color: red;
 }
