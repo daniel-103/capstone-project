@@ -5,22 +5,90 @@ document.getElementById('exportButton').addEventListener('click', () => {
   dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
 });
 
-document.getElementById('exportPDF').addEventListener('click', async () => {
+const settingsPopup = document.getElementById("exportSettingsPopup");
+const settingsContent = document.getElementById("settingsContent");
+const exportTitle = document.getElementById("exportSettingsTitle");
+const exportConfirm = document.getElementById("exportConfirm");
+const exportCancel = document.getElementById("exportCancel");
+
+// Shared settings
+let currentFormat = ""; // Tracks the file format (PDF/DOCX)
+
+// Populate settings popup content
+const populatePopupContent = (format) => {
+  currentFormat = format;
+
+  // Clear previous settings
+  settingsContent.innerHTML = "";
+
+  if (format === "PDF") {
+    exportTitle.textContent = "PDF Export Settings";
+
+    // PDF-specific settings
+    settingsContent.innerHTML = `
+      <div>
+        <label for="pageSize">Page Size:</label>
+        <select id="pageSize">
+          <option value="A4">A4</option>
+          <option value="Letter">Letter</option>
+          <option value="Legal">Legal</option>
+        </select>
+      </div>
+      <div>
+        <label for="orientation">Orientation:</label>
+        <select id="orientation">
+          <option value="portrait">Portrait</option>
+          <option value="landscape">Landscape</option>
+        </select>
+      </div>
+      <div>
+        <label for="margins">Margins:</label>
+        <input type="number" id="margins" value="50" min="10" max="100" />
+      </div>
+    `;
+  } else if (format === "DOCX") {
+    exportTitle.textContent = "DOCX Export Settings";
+
+    // DOCX-specific settings
+    settingsContent.innerHTML = `
+      <div>
+        <label for="includeTOC">Include Table of Contents:</label>
+        <input type="checkbox" id="includeTOC" />
+      </div>
+      <div>
+        <label for="includeHeaderFooter">Include Header/Footer:</label>
+        <input type="checkbox" id="includeHeaderFooter" />
+      </div>
+    `;
+  }
+
+  // Show the popup
+  settingsPopup.style.display = "block";
+};
+
+const exportPDF = async (settings) => {
   try {
-    const delta = quill.getContents(); // Get Quill delta (text + formatting)
+    const delta = quill.getContents();
 
     if (delta.ops.length === 0) {
       alert('The text editor is empty. Please write something before exporting.');
       return;
     }
 
-    // Initialize PDFLib and create a new PDF document
     const pdfDoc = await PDFLib.PDFDocument.create();
-    const page = pdfDoc.addPage([595.28, 841.89]); // A4 size
-    const pageWidth = page.getWidth();
-    const pageHeight = page.getHeight();
-    const margin = 50;
-    let y = pageHeight - margin;
+
+    const pageSizeMap = {
+      A4: [595.28, 841.89],
+      Letter: [612, 792],
+      Legal: [612, 1008]
+    };
+
+    const pageSize = pageSizeMap[settings.pageSize] || pageSizeMap.A4;
+    const orientation = settings.orientation === "landscape" ? [pageSize[1], pageSize[0]] : pageSize;
+    const page = pdfDoc.addPage(orientation);
+
+    const margin = settings.margins || 50;
+    let y = page.getHeight() - margin;
 
     const fontRegular = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica); // Sans serif
     const fontBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold); // Bold sans serif
@@ -102,12 +170,12 @@ document.getElementById('exportPDF').addEventListener('click', async () => {
           // Underline
           const underline = style.underline;
 
-          const wrappedLines = wrapText(line, font, fontSize, pageWidth - margin * 2);
+          const wrappedLines = wrapText(line, font, fontSize, page.getWidth() - margin * 2);
           for (const wrappedLine of wrappedLines) {
             if (y < margin + fontSize + 5) {
               // Add a new page if the text overflows
-              y = pageHeight - margin;
-              pdfDoc.addPage([595.28, 841.89]);
+              y = page.getHeight() - margin;
+              pdfDoc.addPage(orientation);
             }
 
             // Draw the text
@@ -151,7 +219,7 @@ document.getElementById('exportPDF').addEventListener('click', async () => {
     console.error('Error exporting as PDF:', error);
     alert('An error occurred while exporting the document. Please try again.');
   }
-});
+};
 
 
 // Convert hex color to RGB
@@ -242,6 +310,33 @@ document.getElementById('exportDOCX').addEventListener('click', async () => {
   }
 });
 
+// Event listeners for export buttons
+document.getElementById('exportPDF').addEventListener('click', () => populatePopupContent("PDF"));
+document.getElementById('exportDOCX').addEventListener('click', () => populatePopupContent("DOCX"));
+
+// Confirm export button logic
+exportConfirm.addEventListener('click', () => {
+  const settings = {};
+
+  if (currentFormat === "PDF") {
+    settings.pageSize = document.getElementById("pageSize").value;
+    settings.orientation = document.getElementById("orientation").value;
+    settings.margins = parseInt(document.getElementById("margins").value, 10);
+    exportPDF(settings);
+  } else if (currentFormat === "DOCX") {
+    settings.includeTOC = document.getElementById("includeTOC").checked;
+    settings.includeHeaderFooter = document.getElementById("includeHeaderFooter").checked;
+    settings.orientation = "portrait"; // You can expand this for DOCX orientation if needed
+    exportDOCX(settings);
+  }
+
+  settingsPopup.style.display = "none";
+});
+
+// Close popup
+exportCancel.addEventListener('click', () => {
+  settingsPopup.style.display = "none";
+});
 
 document.getElementById('exportTXT').addEventListener('click', async () => {
   try {
