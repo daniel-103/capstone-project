@@ -102,7 +102,7 @@ ipcMain.handle('post', async (event, doc) => {
     const result = await db.post(doc);
     return result;
   } catch (error) {return error}
-})
+});
 
 ipcMain.handle('get', async (event, id) => {
   try {

@@ -1,7 +1,21 @@
-// await window.top.db.createIndex({
-//     index: { fields: ['type'] }
-// });
+window.top.db.createIndex({
+    index: { fields: ['type'] }
+});
 
-window.db.put({  _id: 'character_1', type: 'character', name: 'bob'});
-window.db.put({  _id: 'character_2', type: 'character', name: 'bob2'});
-window.db.put({  _id: 'event1', type: 'event', name: 'eee'});
+window.db.post({
+    type: 'character',
+    modules: {
+        name:        { value: 'bob', position: {x: 0, y: 0} },
+        description: { value: 'Description',   position: {x: 0, y: 0} },
+        backstory:   { value: 'Backstory',     position: {x: 0, y: 0} }
+    }
+});
+
+window.db.post({
+    type: 'character',
+    modules: {
+        name:        { value: 'bob2', position: {x: 0, y: 0} },
+        description: { value: 'Description',   position: {x: 0, y: 0} },
+        backstory:   { value: 'Backstory',     position: {x: 0, y: 0} }
+    }
+});
