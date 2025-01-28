@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld('electron', {
 // Database methods
 contextBridge.exposeInMainWorld('db', {
     put: (doc) => ipcRenderer.invoke('put', doc),
+    post: (doc) => ipcRenderer.invoke('post', doc),
     get: (id) => ipcRenderer.invoke('get', id),
     remove: (id) => ipcRenderer.invoke('remove', id),
     find: (query) => ipcRenderer.invoke('find', query),

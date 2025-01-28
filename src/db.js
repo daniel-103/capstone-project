@@ -1,6 +1,6 @@
-await window.top.db.createIndex({
-    index: { fields: ['type'] }
-});
+// await window.top.db.createIndex({
+//     index: { fields: ['type'] }
+// });
 
 window.db.put({  _id: 'character_1', type: 'character', name: 'bob'});
 window.db.put({  _id: 'character_2', type: 'character', name: 'bob2'});

@@ -58,6 +58,8 @@ html, body {
     white-space: nowrap;
     
     background-color: var(--hierarchy-section-color);
+
+    overflow-y: auto;
 }
 
 ul {
@@ -75,6 +77,8 @@ ul.root {
 
 .folder {
     position: relative;
+    /* overflow: visible;
+    height: auto; */
 }
 
 .folder.open {
@@ -92,6 +96,59 @@ ul.root {
 
     transition: background-color 0.2s ease;
 }
+
+/* .folder.open > .folder-name::before {
+    --line-thickness: 3px;
+
+    position: absolute;
+    left: calc(0.5rem - var(--line-thickness)/2);
+    top: 0.5rem;
+    content: "";
+    width: 1rem;
+    height: calc(100% - 1rem);
+    border-left: var(--line-thickness) solid var(--hierarchy-folder-hover-color);
+}
+
+.folder.open > ul > li::before {
+    --line-thickness: 3px;
+
+    position: absolute;
+    left: -0.5rem;
+    top: 0rem;
+    content: "";
+    width: 1rem;
+    height: 0.5rem;
+    border-bottom: var(--line-thickness) solid var(--hierarchy-folder-hover-color);
+} */
+
+.folder.open > .folder-name::before {
+    --line-thickness: 2px;
+
+    position: absolute;
+    left: calc(0.48rem - var(--line-thickness)/2);
+    top: 0.5rem;
+    content: "";
+    width: 1rem;
+    height: calc(100% - 1rem);
+    border-left: var(--line-thickness) solid var(--hierarchy-folder-hover-color);
+}
+
+/* .file::before,
+.folder::before {
+    --line-thickness: 2px;
+
+    position: absolute;
+    left: -0.5rem;
+    top: 0rem;
+    content: "";
+    width: 1rem;
+    height: 0.5rem;
+    border-bottom: var(--line-thickness) solid var(--hierarchy-folder-hover-color);
+} */
+
+/* .folder-name::before {
+    content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTI0Ni42IDI3OC42YzEyLjUtMTIuNSAxMi41LTMyLjggMC00NS4zbC0xMjgtMTI4Yy05LjItOS4yLTIyLjktMTEuOS0zNC45LTYuOXMtMTkuOCAxNi42LTE5LjggMjkuNmwwIDI1NmMwIDEyLjkgNy44IDI0LjYgMTkuOCAyOS42czI1LjcgMi4yIDM0LjktNi45bDEyOC0xMjh6Ii8+PC9zdmc+");
+} */
 
 .folder-name:hover {
     color: var(--hierarchy-folder-hover-text-color);
@@ -140,18 +197,21 @@ ul.root {
     color: var(--hierarchy-open-folder-text-color);
     background-color: var(--hierarchy-open-folder-color);
 }
-
-.folder.open > .folder-items {
-    display: block;
-}
-
 .folder.open:hover > .folder-name {
     color: var(--hierarchy-open-folder-hover-text-color);
     background-color: var(--hierarchy-open-folder-hover-color);
 }
 
 .folder-items {
-    display: none;
+    height: 0;
+    overflow: hidden; 
+    interpolate-size: allow-keywords;      /* THIS IS A GODSEND. I SPENT 3 HOURS TRYING TO ANIMATE HEIGHT: AUTO; OMFG*/
+    transition: height 0.2s ease;
+}
+
+.folder.open > .folder-items {
+    height: auto;
+    overflow: visible;
 }
 
 .file {

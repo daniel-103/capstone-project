@@ -4,6 +4,9 @@ const folderNames = document.querySelectorAll('.folder-name');
 folderNames.forEach(folderName => {addFolderClickEvent(folderName)});
 
 document.getElementById('new-folder-btn').addEventListener('click', function() {
+    const selectedFolder = document.getElementsByClassName('folder selected');
+    selectedFolder[0].classList.add('open');
+
     const folder = document.createElement('li');
     folder.classList.add('folder');
 
@@ -46,12 +49,14 @@ document.getElementById('new-folder-btn').addEventListener('click', function() {
 
 function addFolderClickEvent(folderName) {
     folderName.addEventListener('click', () => {
-        const folderItem = folderName.parentElement;
-        folderItem.classList.toggle('open');
+        const folder = folderName.parentElement;
+        const folderItems = folder.querySelector('.folder-items');
+
+        folder.classList.toggle('open');
 
         document.querySelectorAll('.selected').forEach(selected => {
             selected.classList.remove('selected');
         });
-        folderItem.classList.add('selected');
+        folder.classList.add('selected');
     });
 }

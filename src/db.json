@@ -1,0 +1,49 @@
+{
+    "id": "NewWorld-1234567890",
+    "projectId": "NewWorld-1234567890",
+    "name": "NewWorldMain",
+    "type": "folder",
+    "parentId": null,
+    "childrenIds": [
+        "file1-0987654321",
+        "Characters-1234123412"
+    ]
+}
+
+{
+    "id": "file1-0987654321",
+    "projectId": "NewWorld-1234567890",
+    "name": "file1",
+    "type": "file",
+    "parentId": "NewWorld-1234567890",
+    "content" {}
+}
+
+{
+    "id": "Characters-1234123412",
+    "projectId": "NewWorld-1234567890",
+    "name": "Characters",
+    "type": "folder",
+    "parentId": "NewWorld-1234567890",
+    "childrenIds": [
+        "file2-6789678967"
+    ]
+}
+
+{
+    "id": "file2-6789678967",
+    "projectId": "NewWorld-1234567890",
+    "name": "file2",
+    "type": "file",
+    "parent": "Characters-1234123412",
+    "content": {}
+}
+
+{
+    "id": "MyScript-1111222233",
+    "projectId": "MyScript-1111222233",
+    "name": "Main",
+    "type": "folder",
+    "parentId": null,
+    "childrenIds": []
+}
