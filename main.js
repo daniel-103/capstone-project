@@ -33,7 +33,7 @@ const createWindow = () => {
 
   // Create the database
   const userDataPath = app.getPath('userData');
-  const dbPath = path.join(userDataPath, 'db'); // Rename 'db' to final name
+  const dbPath = path.join(userDataPath, 'Skrytor'); // Rename 'db' to final name
   console.log(`Database path: ${dbPath}`);
   db = new PouchDB(dbPath);
 
@@ -90,28 +90,45 @@ ipcMain.handle('get-app-path', () => {
 
 
 
-ipcMain.handle('put', async (event, doc) => {
+ipcMain.handle('put', async (_, doc) => {
   try {
     const result = await db.put(doc);
     return result;
-  } catch (error) {return error}
+  } catch (error) {throw error}
 });
 
-ipcMain.handle('post', async (event, doc) => {
+ipcMain.handle('post', async (_, doc) => {
   try {
     const result = await db.post(doc);
     return result;
-  } catch (error) {return error}
+  } catch (error) {throw error}
 });
 
-ipcMain.handle('get', async (event, id) => {
+// await window.db.update('docID', { name: 'Updated Name', data.last: new Date() });
+ipcMain.handle('update', async (_, id, updates) => {
+  try {
+      const doc = await db.get(id);
+      const updatedDoc = { ...doc, ...updates }; // Merge existing fields
+      const response = await db.put(updatedDoc);
+      return response;
+  } catch (error) {throw error}
+});
+
+ipcMain.handle('get', async (_, id) => {
   try {
     const doc = await db.get(id);
     return doc;
-  } catch (error) {return error}
+  } catch (error) {throw error}
 });
 
-ipcMain.handle('remove', async (event, id) => {
+ipcMain.handle('getAll', async () => {
+  try {
+    const result = await db.allDocs({ include_docs: true });
+    return result.rows.map(row => row.doc);
+  } catch (error) {throw error}
+});
+
+ipcMain.handle('remove', async (_, id) => {
   try {
     const doc = await db.get(id);
     const result = await db.remove(doc);
@@ -119,7 +136,7 @@ ipcMain.handle('remove', async (event, id) => {
   } catch (error) {return error}
 });
 
-ipcMain.handle('find', async (event, query) => {
+ipcMain.handle('find', async (_, query) => {
   try {
     const doc = await db.find(query);
     const result = doc.docs;
@@ -127,14 +144,14 @@ ipcMain.handle('find', async (event, query) => {
   } catch (error) {return error}
 });
 
-ipcMain.handle('createIndex', async (event, indexDef) => {
+ipcMain.handle('createIndex', async (_, indexDef) => {
   try {
       const result = await db.createIndex(indexDef);
       return result;
   } catch (error) {return error}
 });
 
-ipcMain.handle('allDocs', async (event, options) => {
+ipcMain.handle('allDocs', async (_, options) => {
   try {
       const result = await db.allDocs(options);
       return result;
@@ -147,3 +164,16 @@ ipcMain.handle('getIndexes', async () => {
       return indexes;
   } catch (error) {return error}
 });
+
+
+// Application specific
+
+ipcMain.handle('newProject', async (_, newProj) => {
+  try {
+    const newProjPostResponse = await db.post(newProj);
+    const programObject = await db.get('Skriptor');
+    programObject.projects.push(newProjPostResponse.id);
+    const programUpdateResponse = await db.put(programObject);
+    return { newProjPostResponse, programUpdateResponse };
+  } catch (error) {return error}
+})

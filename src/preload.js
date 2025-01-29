@@ -14,16 +14,20 @@ contextBridge.exposeInMainWorld('electron', {
 contextBridge.exposeInMainWorld('db', {
     put: (doc) => ipcRenderer.invoke('put', doc),
     post: (doc) => ipcRenderer.invoke('post', doc),
+    update: (id, updates) => ipcRenderer.invoke('update', id, updates),
     get: (id) => ipcRenderer.invoke('get', id),
+    getAll: () => ipcRenderer.invoke('getAll'),
     remove: (id) => ipcRenderer.invoke('remove', id),
     find: (query) => ipcRenderer.invoke('find', query),
     createIndex: (indexDef) => ipcRenderer.invoke('createIndex', indexDef),
     allDocs: (options) => ipcRenderer.invoke('allDocs', options),
     getIndexes: () => ipcRenderer.invoke('getIndexes'),
+
+    newProject: (doc) => ipcRenderer.invoke('newProject', doc),
 });
 
 // set theme manually. This is only needed once. After that, the theme is saved in localStorage
-// localStorage.setItem('theme', 'assets/themes/dark.css');
+localStorage.setItem('theme', 'assets/themes/dark.css');
  
 // set theme to dark if it doesn't exist
 if (!localStorage.getItem('theme')) localStorage.setItem('theme', 'assets/themes/dark.css');

@@ -11,10 +11,10 @@ projects.forEach(template => {
     const card = document.createElement('div');
     card.className = 'project-card';
     card.innerHTML = `
-      <div class="template-image" style="background-image: url('${template.image}');"></div>
+      <!-- <div class="template-image" style="background-image: url('${template.image}');"></div> -->
       <div class="template-title">${template.title}</div>
       <div class="template-description">${template.description}</div>
-    `;
+    `;                  // I commented out the image for now bc it's giving an error. The image path is not defined in template
     card.onclick = () => {
       const windowIframe = window.parent.document.getElementById('window');
       windowIframe.src = 'components/window/window.html';
