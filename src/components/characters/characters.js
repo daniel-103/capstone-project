@@ -14,7 +14,7 @@ async function initCharactersPage() {
 }
 
 async function getCharacters() {
-    const query = { selector: { type: 'character' } };
+    const query = { selector: { fileType: 'character' } };
 
     const characters = await window.top.db.find(query);
 
@@ -78,7 +78,8 @@ async function createNewCharacter() {
     const randomId = "character_" + Math.random().toString(36).substring(2, 9);
 
     const newCharacter = {
-        type: 'character',
+        type: 'folder',
+        fileType: 'character',
         modules: {
             name:        { value: 'New Character', position: {x: 0, y: 0} },
             description: { value: 'Description',   position: {x: 0, y: 0} },
