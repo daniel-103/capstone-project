@@ -1,8 +1,8 @@
-
 const folderNames = document.querySelectorAll('.folder-name');
 
 folderNames.forEach(folderName => {addFolderClickEvent(folderName)});
 
+// New folder
 document.getElementById('new-folder-btn').addEventListener('click', function() {
     const selectedFolder = document.getElementsByClassName('folder selected');
     selectedFolder[0].classList.add('open');
@@ -47,6 +47,7 @@ document.getElementById('new-folder-btn').addEventListener('click', function() {
     });
 });
 
+// Folder selection (last clicked)
 function addFolderClickEvent(folderName) {
     folderName.addEventListener('click', () => {
         const folder = folderName.parentElement;
@@ -59,4 +60,10 @@ function addFolderClickEvent(folderName) {
         });
         folder.classList.add('selected');
     });
+}
+
+// This doesnt work quite yet. Want to make it fast so it doesnt lag on larger projects.
+async function generateTree(childrenIds) {
+    const children = await Promise.all(childrenIds.map(childId => {window.top.db.get(childId)}));
+    console.log('children:', children);
 }

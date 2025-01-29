@@ -213,7 +213,7 @@ ul.root {
 
 .folder.open > .folder-items {
     height: auto;
-    overflow: visible;
+    /* overflow: visible; */
 }
 
 .file {
