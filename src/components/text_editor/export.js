@@ -90,12 +90,20 @@ const exportPDF = async (settings) => {
     const margin = settings.margins || 50;
     let y = page.getHeight() - margin;
 
-    const fontRegular = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica); // Sans serif
-    const fontBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold); // Bold sans serif
-    const fontItalic = await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRomanItalic); // Serif italic
-    const fontBoldItalic = await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRomanBoldItalic); // Bold serif
+    const fontSansSerif = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica); // Sans serif
+    const fontSansSerifItalic = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaOblique); // Sans serif italic
+    const fontSansSerifBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold); // Sans serif bold
+    const fontSansSerifBoldItalic = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBoldOblique); // Sans serif bold italic
+
+    const fontSerif = await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRoman); // Serif
+    const fontSerifItalic = await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRomanItalic); // Serif italic
+    const fontSerifBold = await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRomanBold); // Serif bold
+    const fontSerifBoldItalic = await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRomanBoldItalic); // Serif bold italic
+
     const fontMonospace = await pdfDoc.embedFont(PDFLib.StandardFonts.Courier); // Monospace
-    const fontSerif = await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRoman); // Regular serif
+    const fontMonospaceItalic = await pdfDoc.embedFont(PDFLib.StandardFonts.CourierOblique); // Monospace italic
+    const fontMonospaceBold = await pdfDoc.embedFont(PDFLib.StandardFonts.CourierBold); // Monospace bold
+    const fontMonospaceBoldItalic = await pdfDoc.embedFont(PDFLib.StandardFonts.CourierBoldOblique); // Monospace bold italic
 
     // Font size mapping
     const fontSizeMap = {
@@ -107,7 +115,7 @@ const exportPDF = async (settings) => {
 
     // Font family mapping (sans serif, serif, monospace)
     const fontFamilyMap = {
-      'sans serif': fontRegular,
+      'sans serif': fontSansSerif,
       'serif': fontSerif,
       'monospace': fontMonospace
     };
@@ -151,17 +159,27 @@ const exportPDF = async (settings) => {
           // Adjust for bold and italic styles
           if (style.bold && style.italic) {
             if (font === fontSerif) {
-              font = fontBoldItalic; // Bold italic for serif
-            } else {
-              font = fontBold; // Bold for non-serif
+              font = fontSerifBoldItalic; // Bold italic for serif
+            } else if (font === fontSansSerif) {
+              font = fontSansSerifBoldItalic; // Bold italic for sans serif
+            } else if (font === fontMonospace) {
+              font = fontMonospaceBoldItalic; // Bold italic for monospace
             }
           } else if (style.bold) {
-            font = fontBold; // Apply bold
+            if (font === fontSerif) {
+              font = fontSerifBold; // Bold for serif
+            } else if (font === fontSansSerif) {
+              font = fontSansSerifBold; // Bold for sans serif
+            } else if (font === fontMonospace) {
+              font = fontMonospaceBold; // Bold for monospace
+            }
           } else if (style.italic) {
             if (font === fontSerif) {
-              font = fontItalic; // Italic for serif
-            } else {
-              font = fontRegular; // Regular for non-serif (no italic)
+              font = fontSerifItalic; // Italic for serif
+            } else if (font === fontSansSerif) {
+              font = fontSansSerifItalic; // Italic for sans serif
+            } else if (font === fontMonospace) {
+              font = fontMonospaceItalic; // Italic for monospace
             }
           }
 
@@ -231,9 +249,9 @@ const hexToRgb = (hex) => {
   return PDFLib.rgb(r / 255, g / 255, b / 255);
 };
 
-document.getElementById('exportDOCX').addEventListener('click', async () => {
+const exportDOCX = async (settings) => {
   try {
-    const delta = quill.getContents(); // Get Quill delta (text + formatting)
+    const delta = quill.getContents();
 
     if (delta.ops.length === 0) {
       alert('The text editor is empty. Please write something before exporting.');
@@ -248,54 +266,45 @@ document.getElementById('exportDOCX').addEventListener('click', async () => {
     };
 
     const fontFamilyMap = {
-      'sans serif': 'Arial', // Sans-serif font
-      'serif': 'Times New Roman', // Serif font
-      'monospace': 'Courier New' // Monospace font
+      'sans serif': 'Arial',
+      'serif': 'Times New Roman',
+      'monospace': 'Courier New'
     };
 
     let paragraphs = [];
 
-    // Iterate over the delta and render text with styles
     for (const op of delta.ops) {
       if (typeof op.insert === 'string') {
         const lines = op.insert.split('\n');
         for (let i = 0; i < lines.length; i++) {
           const line = lines[i];
 
-          // Get styles for this operation
           const style = op.attributes || {};
-          const fontSizeName = style.size ? style.size : 'normal'; // Default to 'normal' if not defined
-          const fontSize = fontSizeMap[fontSizeName] || 12; // Use the font size mapping
-          
-          // Select font family (sans serif, serif, or monospace)
-          let fontFamily = fontFamilyMap[style.font || 'sans serif']; // Default to 'sans serif' if not defined
+          const fontSizeName = style.size ? style.size : 'normal';
+          const fontSize = fontSizeMap[fontSizeName] || 12;
+          let fontFamily = fontFamilyMap[style.font || 'sans serif'];
 
-          // Create a paragraph with the appropriate styles
-          const paragraph = new docx.Paragraph({
-            children: [
-              new docx.TextRun({
-                text: line,
-                font: fontFamily,
-                size: fontSize * 2, // DOCX uses 1/2 pt for font size, so multiply by 2
-                bold: style.bold,
-                italics: style.italic,
-                underline: style.underline,
-              }),
-            ],
+          const textRun = new docx.TextRun({
+            text: line,
+            font: fontFamily,
+            size: fontSize * 2,
+            bold: !!style.bold,
+            italics: !!style.italic,
+            underline: style.underline ? {} : undefined,
           });
 
-          paragraphs.push(paragraph);
+          paragraphs.push(new docx.Paragraph({
+            children: [textRun],
+          }));
         }
       }
     }
 
     const doc = new docx.Document({
-      sections: [
-        {
-          properties: {},
-          children: paragraphs,
-        },
-      ],
+      sections: [{
+        properties: {},
+        children: paragraphs,
+      }],
     });
 
     const blob = await docx.Packer.toBlob(doc);
@@ -308,7 +317,8 @@ document.getElementById('exportDOCX').addEventListener('click', async () => {
     console.error('Error exporting as DOCX:', error);
     alert('An error occurred while exporting the document. Please try again.');
   }
-});
+};
+
 
 // Event listeners for export buttons
 document.getElementById('exportPDF').addEventListener('click', () => populatePopupContent("PDF"));
