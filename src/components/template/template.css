@@ -34,13 +34,92 @@ h2 {
 }
 
 .project-card {
+  position: relative;
   background-color: #fff;
-  padding: 15px;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   text-align: center;
   cursor: pointer;
   transition: transform 0.2s;
+  overflow: hidden;
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+}
+
+.toolbar {
+  background-color: rgba(0, 0, 0, 0.25);
+  position: absolute;
+  left: 0rem;
+  bottom: -2rem;
+  width: 100%;
+  height: 2rem;
+  color: white;
+
+  cursor: default;
+  backdrop-filter: blur(0.1rem);
+
+  transition: bottom 0.2s ease;
+}
+
+.project-card:hover .toolbar {
+  bottom: 0rem;
+}
+
+.button-rack {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.toolbar button {
+  width: 2rem;
+  height: 1.75rem;
+  background-color: #000;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+
+  pointer-events: default;
+  cursor: pointer;
+
+  transition: transform 0.4s ease;
+}
+
+.toolbar button:hover svg {
+  fill: greenyellow;
+}
+
+.toolbar button.btn-delete:hover svg{
+  fill: red;
+}
+
+.delete-confirmation {
+  display: flex;
+  height: 2rem;
+  width: calc(100% - 3rem);
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.4s ease;
+}
+
+.delete-confirmation p {
+  color: #000;
+  font-weight: bold;
+  margin-left: 1rem;
+}
+
+.delete-confirmation button {
+  margin: 0.25rem;
+}
+
+svg {
+  height: 1rem;
+  fill: var(--hierarchy-folder-icon-color);
 }
 
 .dropbtn {
@@ -102,70 +181,4 @@ h2 {
 .template-title {
   font-size: 16px;
   font-weight: bold;
-}
-  
-/* Header */
-#header {
-  display: flex;
-  flex-direction: row;
-  height: 2rem;
-
-  background-color: var(--header-section-color);
-  margin-bottom: 0.25rem;
-
-  -webkit-app-region: drag;
-}
-
-#logo {
-  margin: auto 0.25rem;
-}
-
-#header-options button {
-  background-color: var(--header-button-color);
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem 0.25rem;
-
-  color: var(--header-text-color);
-  -webkit-app-region: no-drag;
-  
-  transition: color 0.2s ease;
-  transition: background-color 0.2s ease;
-}
-
-#header-options button:hover {
-  color: var(--header-hover-text-color);
-  background-color: var(--header-button-hover-color);
-}
-
-#window-controls {
-  display: flex;
-  flex-direction: row;
-  
-  margin-left: auto;
-}
-
-#window-controls button {
-  padding: 0 0.75rem;
-  color: var(--header-window-controls-text-color);
-  background-color: var(--header-window-controls-color);
-  border: none;
-  cursor: pointer;
-  -webkit-app-region: no-drag;
-
-  transition: color 0.2s ease;
-  transition: background-color 0.2s ease;
-}
-
-#window-controls button:hover {
-  background-color: var(--header-window-controls-hover-color);
-}
-
-#window-controls svg {
-  height: 1rem;
-  fill: var(--header-window-controls-icon-color);
-}
-
-#window-controls button:hover svg {
-  fill: var(--header-window-controls-icon-hover-color);
 }

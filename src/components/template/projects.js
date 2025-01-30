@@ -48,14 +48,43 @@ async function unnecessaryAsyncFunctionBecauseJavaScriptIsALittleBitchAndDoesntL
 
   const project_gallery = document.getElementById('projectGallery');
 
-  projects.forEach(project => {
+  for (project of projects) {
     const card = document.createElement('div');
     card.className = 'project-card';
     card.innerHTML = `
       <div class="template-image" style="background-image: url('../../assets/images/${project.image}');"></div>
       <div class="template-title">${project.name}</div>
       <div class="template-description">${project.description}</div>
+
+      <div class="toolbar">
+        <div class="button-rack">
+          <button title="Open ${project.name}" class="btn-open">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M88.7 223.8L0 375.8 0 96C0 60.7 28.7 32 64 32l117.5 0c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7L416 96c35.3 0 64 28.7 64 64l0 32-336 0c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224l400 0c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480L32 480c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"/></svg>
+          </button>
+          <button title="About ${project.name}" class="btn-info">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32l64 0c17.7 0 32 14.3 32 32l0 224 32 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 512c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-192-32 0c-17.7 0-32-14.3-32-32z"/></svg>
+          </button>
+          <button title="Rename ${project.name}" class="btn-rename">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M.1 29.3C-1.4 47 11.7 62.4 29.3 63.9l8 .7C70.5 67.3 96 95 96 128.3L96 224l-32 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l32 0 0 95.7c0 33.3-25.5 61-58.7 63.8l-8 .7C11.7 449.6-1.4 465 .1 482.7s16.9 30.7 34.5 29.2l8-.7c34.1-2.8 64.2-18.9 85.4-42.9c21.2 24 51.2 40 85.4 42.9l8 .7c17.6 1.5 33.1-11.6 34.5-29.2s-11.6-33.1-29.2-34.5l-8-.7C185.5 444.7 160 417 160 383.7l0-95.7 32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-32 0 0-95.7c0-33.3 25.5-61 58.7-63.8l8-.7c17.6-1.5 30.7-16.9 29.2-34.5S239-1.4 221.3 .1l-8 .7C179.2 3.6 149.2 19.7 128 43.7c-21.2-24-51.2-40-85.4-42.9l-8-.7C17-1.4 1.6 11.7 .1 29.3z"/></svg>  
+          </button>
+          <button title="Duplicate ${project.name}" class="btn-duplicate">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M288 448L64 448l0-224 64 0 0-64-64 0c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l224 0c35.3 0 64-28.7 64-64l0-64-64 0 0 64zm-64-96l224 0c35.3 0 64-28.7 64-64l0-224c0-35.3-28.7-64-64-64L224 0c-35.3 0-64 28.7-64 64l0 224c0 35.3 28.7 64 64 64z"/></svg>
+          </button>
+          <button title="Delete ${project.name}" class="btn-delete">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+          </button>
+        </div>
+
+        <div class="delete-confirmation">
+          <p>Confirm?</p>
+            <button title="Cancel Deletion" class="btn-delete-cancel">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/></svg>
+            </button>
+        </div>
+      </div>
     `;
+    card.setAttribute('projectId', project._id);
+
     card.onclick = () => {
       const windowIframe = window.parent.document.getElementById('window');
       windowIframe.src = 'components/window/window.html';
@@ -64,7 +93,96 @@ async function unnecessaryAsyncFunctionBecauseJavaScriptIsALittleBitchAndDoesntL
       // Leaving this here for now. Taking a break. Ill come back to it later.
     };
     project_gallery.appendChild(card);
-  });
+
+    // Button
+    const toolbar = card.querySelector('.toolbar')
+    const openButton = card.querySelector('.btn-open');
+    const infoButton = card.querySelector('.btn-info');
+    const renameButton = card.querySelector('.btn-rename');
+    const duplicateButton = card.querySelector('.btn-duplicate');
+    const deleteButton = card.querySelector('.btn-delete');
+
+    // Delete Confirmation div
+    const confirmation = card.querySelector('.delete-confirmation');
+
+    // Button drop animations
+    function dropButtons(buttons, amount) {
+      for (const button of buttons) {
+        setTimeout(() => {
+          button.style.transform = `translateY(${amount}) rotateZ(${Math.floor(Math.random() * 721) - 360}deg)`
+        }, Math.floor(Math.random() * 200))
+      }
+    }
+
+    function unDropButtons(buttons) {
+      for (const button of buttons) {
+        setTimeout(() => {
+          button.style.transform = `translateY(0rem)`
+        }, Math.floor(Math.random() * 200))
+      }
+    }
+
+    // Button click events
+
+    // Lobotomize toolbar
+		toolbar.addEventListener('click', async (event) => {
+			event.stopPropagation();
+		})
+
+    // Open
+
+    // Info
+
+    // Rename
+		renameButton.addEventListener('click', async (event) => {
+      console.log('rename')
+		})
+
+    // Duplicate
+		duplicateButton.addEventListener('click', async (event) => {
+      console.log('duplicate')
+		})
+
+    // Delete
+    let state = 'closed';
+    deleteButton.addEventListener('click', async (event) => {
+      if (state === 'closed') {
+        deleteButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M119.4 44.1c23.3-3.9 46.8-1.9 68.6 5.3l49.8 77.5-75.4 75.4c-1.5 1.5-2.4 3.6-2.3 5.8s1 4.2 2.6 5.7l112 104c2.9 2.7 7.4 2.9 10.5 .3s3.8-7 1.7-10.4l-60.4-98.1 90.7-75.6c2.6-2.1 3.5-5.7 2.4-8.8L296.8 61.8c28.5-16.7 62.4-23.2 95.7-17.6C461.5 55.6 512 115.2 512 185.1l0 5.8c0 41.5-17.2 81.2-47.6 109.5L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9L47.6 300.4C17.2 272.1 0 232.4 0 190.9l0-5.8c0-69.9 50.5-129.5 119.4-141z"/></svg>';
+        dropButtons([openButton, infoButton, renameButton, duplicateButton], '2.5rem')
+        confirmation.style.transform = 'translateY(-2rem)';
+        state = 'open';
+      } else {
+        console.log(`🛠 [2] Deleting project "${project.name}"...`);
+          window.top.db.remove(project._id)
+          .then(() => {
+              console.log(`✅ [2] Project "${project.name}" deleted.`);
+              card.remove();
+            })
+            .catch(error => {
+              console.log("❌ [2] Couldn't delete project:", error);
+            });
+        
+      }
+    })
+
+    // Cancel Delete
+    card.querySelector('.btn-delete-cancel').addEventListener('click', async (event) => {
+      deleteButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>'
+      dropButtons([])
+      unDropButtons([openButton, infoButton, renameButton, duplicateButton])
+      confirmation.style.transform = 'translateY(0rem)';
+      state = 'closed';
+    });
+
+    // Close delete confirmation
+    card.addEventListener('mouseleave', async (event) => {
+      deleteButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>'
+      dropButtons([])
+      unDropButtons([openButton, infoButton, renameButton, duplicateButton])
+      confirmation.style.transform = 'translateY(0rem)';
+      state = 'closed';
+    })
+  };
 }
 
 unnecessaryAsyncFunctionBecauseJavaScriptIsALittleBitchAndDoesntLikeAsyncCallsOutsideOfFunctions();
