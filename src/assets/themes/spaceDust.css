@@ -25,6 +25,29 @@
 
 
     /* Apply colors */
+
+    /* Hub */
+    --hub-background-color: var(--light-black);
+    --hub-header-text-color: var(--pink);
+
+    --hub-card-color: var(--light-black);
+    --hub-card-title-text-color: var(--grey);
+    --hub-card-desc-text-color: var(--light-blue);
+
+    --hub-card-hover-color: var(--black);
+    --hub-card-title-text-hover-color: var(--grey);
+    --hub-card-desc-text-hover-color: var(--light-blue);
+
+    --hub-card-options-section-color: transparent;
+    --hub-card-options-button-color: var(--black);
+    --hub-card-options-icon-color: var(--pink);
+
+    --hub-card-options-button-hover-color: var(--pink);
+    --hub-card-options-icon-hover-color: var(--black);
+
+    --hub-card-delete-confirmation-text-color: var(--white0);
+
+    /* Writing */
     --background-color: var(--light-black);
 
 
@@ -52,6 +75,14 @@
     --left-panel-options-icon-color: var(--magenta);
     --left-panel-options-button-hover-color: var(--magenta);
     --left-panel-options-icon-hover-color: var(--black);
+
+
+
+    --left-panel-slideout-section-color: rgba(0, 0, 0, 0.25);
+    --left-panel-slideout-text-color: var(--light-blue);
+    --left-panel-slideout-button-color: rgba(0, 0, 0, 0.25);
+    --left-panel-slideout-text-hover-color: var(--black);
+    --left-panel-slideout-button-hover-color: var(--light-blue);
 
 
 
@@ -148,8 +179,35 @@
 }
 
 /* import custom css here */
+/* Hub */
+.toolbar {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+}
+
+.toolbar button.btn-delete:hover {
+    background-color: red;
+}
+
+.toolbar button.btn-delete.active svg{
+    fill: red;
+}
+
+.toolbar button.btn-delete.active:hover svg{
+    fill: var(--black);
+}
+
+.toolbar button.btn-delete.active:hover{
+    background-color: red;
+}
+
+/* Writing */
 #side-bar-options {
     border-top-right-radius: 1rem;
+}
+
+#new-file-slide-out {
+    backdrop-filter: blur(4px);
 }
 
 .folder-name {

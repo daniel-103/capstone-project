@@ -7,6 +7,27 @@
 
 
 
+    /* Hub */
+    --hub-background-color: var(--black0);
+    --hub-header-text-color: var(--white0);
+    --hub-card-color: var(--black2);
+    --hub-card-title-text-color: var(--white0);
+    --hub-card-desc-text-color: var(--white1);
+
+    --hub-card-hover-color: var(--white0);
+    --hub-card-title-text-hover-color: var(--black1);
+    --hub-card-desc-text-hover-color: var(--black1);
+
+    --hub-card-options-section-color: var(--black2);
+    --hub-card-options-button-color: var(--black0);
+    --hub-card-options-icon-color: var(--white0);
+
+    --hub-card-options-button-hover-color: var(--white0);
+    --hub-card-options-icon-hover-color: var(--black1);
+
+    --hub-card-delete-confirmation-text-color: var(--white0);
+
+    /* Writing */
     --background-color: var(--black0);
 
 
@@ -36,6 +57,14 @@
 
 
 
+    --left-panel-slideout-section-color: var(--black1);
+    --left-panel-slideout-text-color: var(--white0);
+    --left-panel-slideout-button-color: var(--black2);
+    --left-panel-slideout-text-hover-color: var(--black2);
+    --left-panel-slideout-button-hover-color: var(--white0);
+
+
+
     --hierarchy-section-color: var(--black1);
 
     --hierarchy-folder-color: transparent;
@@ -57,16 +86,18 @@
     --hierarchy-new-folder-color: var(--black2);
     --hierarchy-new-folder-text-color: var(--white0);
     --hierarchy-new-folder-icon-color: var(--white0);
-    
-    --hierarchy-folder-path-color: var(--magenta);              /* Implement later */
-    --hierarchy-folder-path-text-color: var(--light-black);     /* Implement later */
-    --hierarchy-folder-path-icon-color: var(--light-black);     /* Implement later */
 
     --hierarchy-file-color: var(--black2);
     --hierarchy-file-text-color: var(--white1);
 
-    --hierarchy-selected-file-color: var(--black2);         /* Implement later */
-    --hierarchy-selected-file-text-color: var(--white0);    /* Implement later */
+    --hierarchy-selected-file-color: var(--black2);
+    --hierarchy-selected-file-text-color: var(--white0);
+
+    --hierarchy-tree-vertical-color: var(--black2);
+    --hierarchy-tree-vertical-thickness: 2px;
+    --hierarchy-tree-horizontal-color: var(--black2);       /* Implement later */
+    --hierarchy-tree-horizontal-thickness: 2px;             /* Implement later */
+
 
 
 

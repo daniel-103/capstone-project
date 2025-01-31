@@ -1,11 +1,96 @@
+const projectId = localStorage.getItem('projectId');
 const folderNames = document.querySelectorAll('.folder-name');
+
+// const defaultPagePath = "../default_page/default_page.html";
+const tabHeader = window.parent.document.getElementById("tab-header");
+const pageWindow = window.parent.document.getElementById("page-window");
 
 folderNames.forEach(folderName => {addFolderClickEvent(folderName)});
 
+
+// New file
+const slideOut = document.getElementById('new-file-slide-out');
+window.addEventListener('DOMContentLoaded', () => {
+    for (const button of slideOut.querySelectorAll('button')) {
+        // grab button attribute and create an eventListener to create the page with the module dictated by the attached attribute
+        // just going to create an empty page for now...
+        button.addEventListener('click', () => {
+            tabs = window.parent.tabs;
+
+            
+            window.parent.addNewTab(`Tab ${tabs.length + 1}`, defaultPagePath, tabHeader, pageWindow);
+        
+            // projectId should be in localStorage
+            // grab selected folder (_id will be in attribute)
+            const parentId = document.getElementsByClassName('folder selected')[0].id
+
+
+            const name = 'New File'         // get similarly to how folders are made
+                                                // I think this will involve creating the element first then doing db stuff.
+                                                // Will have to swap stuff around
+            const fileType = 'character'    // determine later
+
+            // push new page to db
+            console.log(`🛠 [3] Creating new ${fileType} page "${name}"...`);
+            window.top.db.post({
+                projectId: projectId,
+                name: name,
+                type: "file",
+                fileType: fileType,
+                parentId: parentId,
+                date: {
+                    created: new Date(),
+                    last: new Date(),
+                },
+                modules: {}               // determine later
+            })
+            .then((result) => {
+                console.log(`✅ [3] Created "${name}".`, result);
+                console.log(`🛠 [3.1] Fetching ${name}'s parent...`);
+                window.top.db.get(parentId)
+                   .then(parentFolder => {
+                        console.log(`✅ [3.1] Fetched ${name}'s parent:`, parentFolder);
+                        console.log(`🛠 [3.2] Appending ${name}'s id to its parent's childrenIds...`);
+                        parentFolder.childrenIds.push(result.id);
+                        window.top.db.put(parentFolder)
+                            .then((putResult) => {
+                                console.log(`✅ [3.2] Linked ${name} to its parent:`, putResult);
+                                growHierarchy([result.id]);
+                                document.getElementById(putResult.id).classList.add('open');
+                                slideOut.classList.remove('open');
+                            })
+                            .catch(error => {
+                                console.log(`❌ [3.2] Couldn't link ${name} to its parent:`, error);
+                            });
+                   })
+                   .catch(error => {
+                        console.log(`❌ [3.1] Couldn't fetch ${name}'s parent:`, error);
+                    });
+            })
+            .catch(error => {
+                console.log(`❌ [3] Couldn't create file:`, error);
+            });
+        });   
+    }
+})
+
+document.getElementById('new-file-btn').addEventListener('click', function() {
+    slideOut.classList.toggle('open');
+    
+});
+
+document.addEventListener('mouseleave', function(event) {
+    slideOut.classList.remove('open');
+})
+
+slideOut.addEventListener('mouseleave', function(event) {
+    slideOut.classList.remove('open');
+})
+
 // New folder
 document.getElementById('new-folder-btn').addEventListener('click', function() {
-    const selectedFolder = document.getElementsByClassName('folder selected');
-    selectedFolder[0].classList.add('open');
+    const selectedFolder = document.getElementsByClassName('folder selected')[0];
+    selectedFolder.classList.add('open');
 
     const folder = document.createElement('li');
     folder.classList.add('folder');
@@ -25,7 +110,7 @@ document.getElementById('new-folder-btn').addEventListener('click', function() {
     folder.appendChild(folderItems);
 
     document.querySelector('.selected').querySelector('.folder-items').appendChild(folder);
-    addFolderClickEvent(folderNameDiv);
+    addFolderClickEvent(folder);
 
     // Automatically focus and select the input
     span.focus();
@@ -38,6 +123,46 @@ document.getElementById('new-folder-btn').addEventListener('click', function() {
         if (!span.textContent.trim()) {
             span.textContent = 'New Folder';
         }
+
+        const name = span.textContent
+
+        console.log(`🛠 [3] Creating new folder "${name}"...`);
+        window.top.db.post({
+            projectId: projectId,
+            name: name,
+            type: "folder",
+            parentId: selectedFolder.id,
+            childrenIds: [],
+            date: {
+                created: new Date(),
+                last: new Date(),
+            },
+            modules: {}               // determine later
+        })
+            .then((result) => {
+                console.log(`✅ [3] Created "${name}".`, result);
+                console.log(`🛠 [3.1] Fetching ${name}'s parent...`);
+                window.top.db.get(selectedFolder.id)
+                    .then(parentFolder => {
+                        console.log(`✅ [3.1] Fetched ${name}'s parent:`, parentFolder);
+                        console.log(`🛠 [3.2] Appending ${name}'s id to its parent's childrenIds...`);
+                        parentFolder.childrenIds.push(result.id);
+                        window.top.db.put(parentFolder)
+                            .then((putResult) => {
+                                console.log(`✅ [3.2] Linked ${name} to its parent:`, putResult);
+                                selectedFolder.querySelector('.folder-items').innerHTML = '';   // Need a better way to order items than deleating everything and regenerating them
+                                growHierarchy(parentFolder.childrenIds);
+                                document.getElementById(putResult.id).classList.add('open');
+                                slideOut.classList.remove('open');
+                            })
+                            .catch(error => {
+                                console.log(`❌ [3.2] Couldn't link ${name} to its parent:`, error);
+                            });
+                    })
+                    .catch(error => {
+                        console.log(`❌ [3.1] Couldn't fetch ${name}'s parent:`, error);
+                    });
+            })
     });
 
     span.addEventListener('keydown', (event) => {
@@ -45,16 +170,14 @@ document.getElementById('new-folder-btn').addEventListener('click', function() {
             span.blur();
         }
     });
+
+    
 });
 
 // Folder selection (last clicked)
-function addFolderClickEvent(folderName) {
-    folderName.addEventListener('click', () => {
-        const folder = folderName.parentElement;
-        const folderItems = folder.querySelector('.folder-items');
-
+function addFolderClickEvent(folder) {
+    folder.querySelector('.folder-name').addEventListener('click', () => {
         folder.classList.toggle('open');
-
         document.querySelectorAll('.selected').forEach(selected => {
             selected.classList.remove('selected');
         });
@@ -62,8 +185,98 @@ function addFolderClickEvent(folderName) {
     });
 }
 
-// This doesnt work quite yet. Want to make it fast so it doesnt lag on larger projects.
-async function generateTree(childrenIds) {
-    const children = await Promise.all(childrenIds.map(childId => {window.top.db.get(childId)}));
-    console.log('children:', children);
+const hierarchy = document.getElementById('hierarchy');
+
+// Initialize the hierarchy by creating the root folder, then growing
+async function seedHierarchy() {
+    console.log(`🛠 [2] Starting Hierarchy Construction. Fetching project root with id "${projectId}"...`);
+    window.top.db.get(projectId)
+        .then(object => {
+            console.log(`✅ [2] Fetched project "${object.name}"`, object);
+            const folder = document.createElement('div');
+            folder.classList.add("folder", "root", "selected");
+            folder.id = object._id;
+            folder.innerHTML = `
+                <div class="folder-name">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
+                    <span>${object.name}</span>
+                </div>
+                <ul class="folder-items"></ul>
+            `;
+            addFolderClickEvent(folder)
+            hierarchy.appendChild(folder);
+
+            console.log(`🛠 [2.1] Constructing hierarchy for ${object.name}'s children...`);
+            growHierarchy(object.childrenIds)
+        })
+        .catch(error => {
+            console.log("❌ [2] Couldn't fetch project:", error);
+        })
 }
+
+async function growHierarchy(childrenIds) {
+    const children = await Promise.all(
+        childrenIds.map(childId => {
+            console.log(`🛠 [2.2] Fetching child with id: "${childId}"...`);
+            return window.top.db.get(childId)
+                .then(child => {
+                    console.log(`✅ [2.2] Fetched "${child.name}": `, child);
+                    return child;
+                })
+                .catch(error => {
+                    console.error(`❗ [2.2] Failed to fetch child with id "${childId}". Skipping...`, error);
+                    return null; // Prevent breaking the Promise.all chain
+                });
+        })
+    );
+
+    // Filter out failed fetches (null values)
+    const realChildren = children.filter(child => child !== null);
+
+    // Sort: Folders first, then files; both alphabetically
+    realChildren.sort((a, b) => {
+        if (a.type === b.type) {
+            return a.name.localeCompare(b.name); // Sort alphabetically
+        }
+        return a.type === "folder" ? -1 : 1; // Folders first
+    });
+
+    for (const child of realChildren) {
+        if (child.type === 'folder') {
+            const folder = document.createElement("li");
+            folder.classList.add("folder");
+            folder.id = child._id;
+            folder.innerHTML = `
+                <div class="folder-name">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
+                        <path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/>
+                    </svg>
+                    <span>${child.name}</span>
+                </div>
+                <ul class="folder-items"></ul>
+            `;
+
+            addFolderClickEvent(folder);
+            document.getElementById(child.parentId).querySelector('.folder-items').appendChild(folder);
+
+            if (child.childrenIds && child.childrenIds.length > 0) {
+                console.log(`🛠 [2.3] -> [2.1] Constructing hierarchy for ${child.name}'s children...`);
+                await growHierarchy(child.childrenIds);
+            }
+        } else if (child.type === 'file') {
+            const file = document.createElement("li");
+            file.classList.add("file");
+            file.id = child._id;
+            file.innerHTML = `<div class="file-name">${child.name}</div>`;
+
+            document.getElementById(child.parentId).querySelector('.folder-items').appendChild(file);
+        } else {
+            console.log(`❗ [2.3] ${child.name} has an unknown type "${child.type}". Skipping...`);
+        }
+    }
+}
+
+seedHierarchy(projectId)
+
+
+  

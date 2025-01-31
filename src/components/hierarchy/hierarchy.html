@@ -12,98 +12,114 @@
             <path d="M512 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l128 0c20.1 0 39.1 9.5 51.2 25.6l19.2 25.6c6 8.1 15.5 12.8 25.6 12.8l160 0c35.3 0 64 28.7 64 64l0 256zM232 376c0 13.3 10.7 24 24 24s24-10.7 24-24l0-64 64 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-64 0 0-64c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 64-64 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l64 0 0 64z"/>
         </svg>
     </button>
-    <button title="To Root Directory">
+    <button title="View Root Directory as Root">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
             <path d="M151.6 42.4C145.5 35.8 137 32 128 32s-17.5 3.8-23.6 10.4l-88 96c-11.9 13-11.1 33.3 2 45.2s33.3 11.1 45.2-2L96 146.3 96 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-301.7 32.4 35.4c11.9 13 32.2 13.9 45.2 2s13.9-32.2 2-45.2l-88-96zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32l32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-32 0zm0 128c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0zm0 128c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0zm0 128c-17.7 0-32 14.3-32 32s14.3 32 32 32l224 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-224 0z"/>
         </svg>
     </button>
-    <button title="To Current Directory">
+    <button title="View Current Directory as Root">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
             <path d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7 96 64c0-17.7 14.3-32 32-32s32 14.3 32 32l0 301.7 32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 32l32 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 128l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-96 0c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 128l160 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-160 0c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 128l224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-224 0c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/>
         </svg>
     </button>
 </div>
-<div id="side-bar-hierarchy">
-    <!-- Hierarchy. This will be automatically generated later. Just some dummy stuff here for now. -->
-    <div class="folder root selected">
-        <div class="folder-name">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
-            <span>Folder 0</span>
-        </div>
-        <ul class="folder-items">
-            <li class="folder">
-                <div class="folder-name">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
-                    <span>Folder 1</span>
-                </div>
-                <ul class="folder-items">
-                    <li class="file">
-                        <div class="file-name">File 1-1</div>
-                    </li>
-                    <li class="file">
-                        <div class="file-name">File 1-2</div>
-                    </li>
-                </ul>
-            </li>
-            <li class="folder">
-                <div class="folder-name">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
-                    <span>Folder 2</span>
-                </div>
-                <ul class="folder-items">
-                    <li class="file">
-                        <div class="file-name">File 2-1</div>
-                    </li>
-                    <li class="folder">
-                        <div class="folder-name">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
-                            <span>Folder 2-1</span>
-                        </div>
-                        <ul class="folder-items">
-                            <li class="file">
-                                <div class="file-name">File 2-1-1</div>
-                            </li>
-                            <li class="file">
-                                <div class="file-name">File 2-1-2</div>
-                            </li>
-                            <li class="folder">
-                                <div class="folder-name">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
-                                    <span>Folder 2-1-1</span>
-                                </div>
-                                <ul class="folder-items"></ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="folder">
-                <div class="folder-name">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
-                    <span>Folder 3</span>
-                </div>
-                <ul class="folder-items">
-                    <li class="file">
-                        <div class="file-name">File 3-1</div>
-                    </li>
-                    <li class="file">
-                        <div class="file-name">File 3-2</div>
-                    </li>
-                    <li class="file">
-                        <div class="file-name">File 3-3</div>
-                    </li>
-                </ul>
-            </li>
-            <li class="file">
-                <div class="file-name">File 1</div>
-            </li>
-            <li class="file">
-                <div class="file-name">File 2</div>
-            </li>
-        </ul>
+
+<!-- <div id="side-bar-body"> -->
+    <div id="new-file-slide-out">
+        <!-- These should be added dynamically based on the project template -->
+        <!-- Maybe add an attribute for a reference to create the corresponding page? This way we don't have to make a function for each type of button -->
+        <button title="Create a new Empty Page" id="btn-new-empty">Empty Page</button>
+        <button title="Create a new Writing Page" id="btn-new-writing">Writing Page</button>
+        <button title="Create a new Character" id="btn-new-character">Character</button>
+        <button title="Create a new Location" id="btn-new-location">Location</button>
+        <button title="Create a new Faction" id="btn-new-faction">Faction</button>
     </div>
-</div>
+    <div id="hierarchy">
+        <!-- Auto Generate -->
+        <!-- <div class="folder root selected">
+            <div class="folder-name">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
+                <span>Folder 0</span>
+            </div>
+            <ul class="folder-items">
+                <li class="folder">
+                    <div class="folder-name">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
+                        <span>Folder 1</span>
+                    </div>
+                    <ul class="folder-items">
+                        <li class="file">
+                            <div class="file-name">File 1-1</div>
+                        </li>
+                        <li class="file">
+                            <div class="file-name">File 1-2</div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="folder">
+                    <div class="folder-name">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
+                        <span>Folder 2</span>
+                    </div>
+                    <ul class="folder-items">
+                        <li class="file">
+                            <div class="file-name">File 2-1</div>
+                        </li>
+                        <li class="folder">
+                            <div class="folder-name">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
+                                <span>Folder 2-1</span>
+                            </div>
+                            <ul class="folder-items">
+                                <li class="file">
+                                    <div class="file-name">File 2-1-1</div>
+                                </li>
+                                <li class="file">
+                                    <div class="file-name">File 2-1-2</div>
+                                </li>
+                                <li class="folder">
+                                    <div class="folder-name">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
+                                        <span>Folder 2-1-1</span>
+                                    </div>
+                                    <ul class="folder-items"></ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="folder">
+                    <div class="folder-name">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
+                        <span>Folder 3</span>
+                    </div>
+                    <ul class="folder-items">
+                        <li class="file">
+                            <div class="file-name">File 3-1</div>
+                        </li>
+                        <li class="file">
+                            <div class="file-name">File 3-2</div>
+                        </li>
+                        <li class="file">
+                            <div class="file-name">File 3-3</div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="file">
+                    <div class="file-name">File 1</div>
+                </li>
+                <li class="file">
+                    <div class="file-name">File 2</div>
+                </li>
+            </ul>
+        </div> -->
+    </div>
+<!-- </div> -->
+<!-- <div id="side-bar-hierarchy">
+    
+</div> -->
 
 
 <link rel="stylesheet" href="hierarchy.css">
 <script src="hierarchy.js"></script>
+<script src="../window/tabs.js"></script>

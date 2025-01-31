@@ -1,49 +1,53 @@
+// Example of a root directory of a project
 {
-    "id": "NewWorld-1234567890",
-    "projectId": "NewWorld-1234567890",
+    "_id": "123",                               // Dont actually include this when creating a project. It will be generated automatically
     "name": "NewWorldMain",
-    "type": "folder",
-    "parentId": null,
+    "type": "folder",                           // Projects start as a root folder.
+    "parentId": null,                           // No parent because it is a root folder. Children will have their parent's _id here.
+    "image": "dog.jpg",                         //  Dont prepend '../../assets/images/' to image paths. They will be automatically prepended when needed. This field is only set for the root folder
+    "description": "This is a test project",    // The description is only for the root folder, similar to the image field. Children do not have these fields.
     "childrenIds": [
-        "file1-0987654321",
+        "file1-0987654321",                     // _id's of the children files or folders
         "Characters-1234123412"
-    ]
+    ],
+    "date": {
+        "created": "new Date() on creation",    // Date when the project was created
+        "last": "new Date() on change"          // Date when the project was last updated. Set to new Date() when changing something.
+    }
 }
 
+// Example of a file
 {
-    "id": "file1-0987654321",
-    "projectId": "NewWorld-1234567890",
-    "name": "file1",
+    "_id": "file1-0987654321",                  // Will be auto generated
+    "name": "This is a file",
     "type": "file",
-    "parentId": "NewWorld-1234567890",
-    "content" {}
-}
-
-{
-    "id": "Characters-1234123412",
-    "projectId": "NewWorld-1234567890",
-    "name": "Characters",
-    "type": "folder",
-    "parentId": "NewWorld-1234567890",
-    "childrenIds": [
-        "file2-6789678967"
-    ]
-}
-
-{
-    "id": "file2-6789678967",
-    "projectId": "NewWorld-1234567890",
-    "name": "file2",
-    "type": "file",
-    "parent": "Characters-1234123412",
-    "content": {}
-}
-
-{
-    "id": "MyScript-1111222233",
-    "projectId": "MyScript-1111222233",
-    "name": "Main",
-    "type": "folder",
-    "parentId": null,
-    "childrenIds": []
+    "fileType": "character",
+    "parentId": "123",
+    "date": {
+        "created": "new Date() on creation",
+        "last": "new Date() on change",
+    },
+    "modules": {
+        "name": {
+            "value": "bob",
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "description": {
+            "value": "Description",
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "backstory": {
+            "value": "Backstory",
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        }
+    }
 }

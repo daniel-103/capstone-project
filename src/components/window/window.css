@@ -10,7 +10,7 @@ body {
 
 /* Side Bar */
 #leftPanel {
-    width: 12rem;
+    /* width: 100%; */
     min-width: min-content;
     background-color: var(--left-panel-section-color);
 }

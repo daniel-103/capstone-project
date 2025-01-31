@@ -1,8 +1,9 @@
 html, body {
     margin: 0;
-    overflow: hidden;
+    overflow-x: hidden;
 
     height: 100%;
+    scrollbar-width: none;
 }
 
 #side-bar-options {
@@ -45,11 +46,51 @@ html, body {
 
 
 
-/* Hierarchy */
-#side-bar-hierarchy {
+#new-file-slide-out {
     display: flex;
     flex-direction: column;
-    height: 100%;
+
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 2rem);
+    margin: 0rem;
+    z-index: 1;
+
+    background-color: var(--left-panel-slideout-section-color);
+
+    transform: translateX(-100%);
+    transition: transform 0.2s cubic-bezier(1,0,.75,.5); 
+}
+
+#new-file-slide-out.open {
+    transform: translateX(0%); 
+    transition: transform 0.2s cubic-bezier(.25,.5,0,1);
+}
+
+#new-file-slide-out button{
+    padding: 0.25rem;
+    color: var(--left-panel-slideout-text-color);
+    background-color: var(--left-panel-slideout-button-color);
+    border: none;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 1rem;
+
+    transition: all 0.2s ease;
+}
+
+#new-file-slide-out button:hover{
+    color: var(--left-panel-slideout-text-hover-color);
+    background-color: var(--left-panel-slideout-button-hover-color);
+    padding-left: 0.5rem;
+}
+
+
+/* Hierarchy */
+#hierarchy {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 2rem);
     margin: 0;
     padding-left: 0.5rem;
 
@@ -122,15 +163,13 @@ ul.root {
 } */
 
 .folder.open > .folder-name::before {
-    --line-thickness: 2px;
-
     position: absolute;
-    left: calc(0.48rem - var(--line-thickness)/2);
+    left: calc(0.48rem - var(--hierarchy-tree-vertical-thickness)/2);
     top: 1.1rem;
     content: "";
     width: 1rem;
     height: calc(100% - (1.1rem + 0.5rem ));
-    border-left: var(--line-thickness) solid var(--hierarchy-folder-hover-color);
+    border-left: var(--hierarchy-tree-vertical-thickness) solid var(--hierarchy-tree-vertical-color);
 
     cursor: pointer;
 }

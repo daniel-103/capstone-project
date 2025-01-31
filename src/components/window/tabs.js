@@ -14,6 +14,9 @@ function runTabs() {
     initPlusButton(tabHeader, pageWindow);
 }
 
+window.defaultPagePath = defaultPagePath;
+window.addNewTab = addNewTab;
+
 function initPlusButton(tabHeader, pageWindow) {
     window.plusButton = document.createElement("button");
     plusButton.textContent = "+";
@@ -74,7 +77,7 @@ function createTab(index, tabHeader, pageWindow) {
 
     // Inject theme into iframe
     iframe.addEventListener("load", () => {
-        window.parent.injectTheme(iframe);
+        window.top.injectTheme(iframe);
     });
     
     pageWindow.appendChild(iframe); 
