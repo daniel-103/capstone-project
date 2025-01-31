@@ -1,7 +1,37 @@
 .ql-editor {
     background: white;
+    margin-right: 5%;
+    margin-left: 10%;
+    min-height: 500px;
+    margin-top: 5px;
+    
 }
 
-.ql-toolbar {
+.editor-container .ql-toolbar {
     background: white;
+    position: sticky;
+    z-index: 100;
+    top: 0;
+    min-height: 10px;
+    min-width: fit-content;
+    margin-right: 5%;
+    margin-left: 10%;
 }
+
+.editor-container .ql-toolbar.ql-snow,
+.editor-container .ql-container.ql-snow {
+    border: none;
+}
+
+.ql-sectionbtn {
+    font-size: 16px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .ql-sectionbtn:hover {
+    background-color: #e0e0e0;
+  }
+
