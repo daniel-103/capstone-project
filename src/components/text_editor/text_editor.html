@@ -1,13 +1,17 @@
 <!-- Include stylesheet -->
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+<!-- <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.bubble.css" rel="stylesheet" /> -->
 <link rel="stylesheet" href="./text_editor.css" />
 <link rel="stylesheet" href="export.css">
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx@7.1.0/build/index.min.js"></script>
+
 <!-- Create the editor container -->
-<div id="editor-container">
+<div class="editor-container">
 	<div id="editor"></div>
+	
 </div>
+
 <!-- Export button and dropdown -->
 <div class="export-container">
 	<button id="exportButton">Export</button>
@@ -27,6 +31,7 @@
 	  <button id="exportCancel">Cancel</button>
 	</div>
 </div>
+
 
 <!-- Include the Quill library -->
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
