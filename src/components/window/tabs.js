@@ -17,6 +17,7 @@ function runTabs() {
 window.defaultPagePath = defaultPagePath;
 window.addNewTab = addNewTab;
 
+// Plus button should be deprecated at some point now that the new file button in the hierarchy has been implemented.
 function initPlusButton(tabHeader, pageWindow) {
     window.plusButton = document.createElement("button");
     plusButton.textContent = "+";

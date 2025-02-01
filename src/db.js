@@ -6,6 +6,26 @@ const staticProgramObject = {
 };
 
 console.log("❓ [-1] Sorry for all of these logs. Debugging was a nightmare. Feel free to comment them out if they are too annoying. I'll try to remove them or make debug mode later")
+// Hey, looks like you either followed this message from the console or you stumbled upon this.
+// I'm using my own way of logging and debugging with the following format:
+
+// Symbol for type of log, easyily distinguishable
+    // 🛠: Doing something. 
+        // Shows the start of a process.
+    // ✅: Successfull response. 
+        // Process was successful. Return the result
+    // ❌: Error response. 
+        // Process was unsuccessful. Return the error
+    // ❗: Warning response. 
+        // Process was unsuccessful but it's ok. The process will either be skipped or has error handling to recover. Return the error
+// Tracker, kind of like an id to see where the log came from and any associated logs.
+    // Subsequent processes are shown in [] and represented using decimal versioning. (0.8, 0.9, 0.10, 0.11, ...)
+    // You can choose any number as long as it's locally unique. Like you can reause 0 outside of initial project loading since it's only used here.
+// Message, a brief description of what the log is about.
+// Return object, only for responses, not used when showing the start of a process.
+
+// See a few of the logs in this file and in components/hierarchy/hierarchy.js for example
+// Feel free to adopt this type of logging and debugging.
 
 // Fetch the 'Program Object' that keeps track of all of the projects. It's the highest level object. (the root)
 console.log('🛠 [0] Fetching Program Object...');
@@ -24,7 +44,6 @@ window.top.db.get(programId)
                 console.log("❌ [0.1] Couldn't create new Program Object:", error);
             })
     });
-
 
 window.top.db.createIndex({
     index: { fields: ['type'] }

@@ -4,6 +4,7 @@
     --black2: #505050;
     --white0: white;
     --white1: #D0D0D0;
+    --white2: #B0B0B0;
 
 
 
@@ -69,19 +70,23 @@
 
     --hierarchy-folder-color: transparent;
     --hierarchy-folder-text-color: var(--white0);
-    --hierarchy-folder-icon-color: var(--white0);
+    --hierarchy-folder-icon-color: var(--white2);
     
     --hierarchy-folder-hover-color: var(--black2);
     --hierarchy-folder-hover-text-color: var(--white0);
-    --hierarchy-folder-hover-icon-color: var(--white0);
+    --hierarchy-folder-hover-icon-color: var(--white2);
 
     --hierarchy-open-folder-color: var(--black1);
     --hierarchy-open-folder-text-color: var(--white0);
-    --hierarchy-open-folder-icon-color: var(--white0);
+    --hierarchy-open-folder-icon-color: var(--white2);
     
     --hierarchy-open-folder-hover-color: var(--black2);
     --hierarchy-open-folder-hover-text-color: var(--white0);
     --hierarchy-open-folder-hover-icon-color: var(--black2);
+
+    --hierarchy-selected-folder-color: var(--black1);
+    --hierarchy-selected-folder-text-color: var(--white0);
+    --hierarchy-selected-folder-icon-color: var(--white0);
 
     --hierarchy-new-folder-color: var(--black2);
     --hierarchy-new-folder-text-color: var(--white0);
@@ -97,7 +102,6 @@
     --hierarchy-tree-vertical-thickness: 2px;
     --hierarchy-tree-horizontal-color: var(--black2);       /* Implement later */
     --hierarchy-tree-horizontal-thickness: 2px;             /* Implement later */
-
 
 
 

@@ -8,87 +8,85 @@ const pageWindow = window.parent.document.getElementById("page-window");
 folderNames.forEach(folderName => {addFolderClickEvent(folderName)});
 
 
+
 // New file
-const slideOut = document.getElementById('new-file-slide-out');
-window.addEventListener('DOMContentLoaded', () => {
-    for (const button of slideOut.querySelectorAll('button')) {
-        // grab button attribute and create an eventListener to create the page with the module dictated by the attached attribute
-        // just going to create an empty page for now...
-        button.addEventListener('click', () => {
-            tabs = window.parent.tabs;
-
-            
-            window.parent.addNewTab(`Tab ${tabs.length + 1}`, defaultPagePath, tabHeader, pageWindow);
-        
-            // projectId should be in localStorage
-            // grab selected folder (_id will be in attribute)
-            const parentId = document.getElementsByClassName('folder selected')[0].id
-
-
-            const name = 'New File'         // get similarly to how folders are made
-                                                // I think this will involve creating the element first then doing db stuff.
-                                                // Will have to swap stuff around
-            const fileType = 'character'    // determine later
-
-            // push new page to db
-            console.log(`🛠 [3] Creating new ${fileType} page "${name}"...`);
-            window.top.db.post({
-                projectId: projectId,
-                name: name,
-                type: "file",
-                fileType: fileType,
-                parentId: parentId,
-                date: {
-                    created: new Date(),
-                    last: new Date(),
-                },
-                modules: {}               // determine later
-            })
-            .then((result) => {
-                console.log(`✅ [3] Created "${name}".`, result);
-                console.log(`🛠 [3.1] Fetching ${name}'s parent...`);
-                window.top.db.get(parentId)
-                   .then(parentFolder => {
-                        console.log(`✅ [3.1] Fetched ${name}'s parent:`, parentFolder);
-                        console.log(`🛠 [3.2] Appending ${name}'s id to its parent's childrenIds...`);
-                        parentFolder.childrenIds.push(result.id);
-                        window.top.db.put(parentFolder)
-                            .then((putResult) => {
-                                console.log(`✅ [3.2] Linked ${name} to its parent:`, putResult);
-                                growHierarchy([result.id]);
-                                document.getElementById(putResult.id).classList.add('open');
-                                slideOut.classList.remove('open');
-                            })
-                            .catch(error => {
-                                console.log(`❌ [3.2] Couldn't link ${name} to its parent:`, error);
-                            });
-                   })
-                   .catch(error => {
-                        console.log(`❌ [3.1] Couldn't fetch ${name}'s parent:`, error);
-                    });
-            })
-            .catch(error => {
-                console.log(`❌ [3] Couldn't create file:`, error);
-            });
-        });   
-    }
-})
-
-document.getElementById('new-file-btn').addEventListener('click', function() {
+document.getElementById('new-file-btn').addEventListener('click',(event) => {
     slideOut.classList.toggle('open');
-    
 });
 
-document.addEventListener('mouseleave', function(event) {
+const slideOut = document.getElementById('new-file-slide-out');
+for (const button of slideOut.querySelectorAll('button')) {
+    // grab button attribute and create an eventListener to create the page with the module dictated by the attached attribute
+    // just going to create an empty page for now...
+    button.addEventListener('click', () => {
+        tabs = window.parent.tabs;
+        
+        window.parent.addNewTab(`Tab ${tabs.length + 1}`, defaultPagePath, tabHeader, pageWindow);
+    
+        // projectId should be in localStorage
+        // grab selected folder (_id will be in attribute)
+        const parentId = document.getElementsByClassName('folder selected')[0].id
+
+        const name = 'New File'         // get similarly to how folders are made
+                                            // I think this will involve creating the element first then doing db stuff.
+                                            // Will have to swap stuff around
+        const fileType = 'character'    // determine later
+
+        // push new page to db
+        console.log(`🛠 [3] Creating new ${fileType} page "${name}"...`);
+        window.top.db.post({
+            projectId: projectId,
+            name: name,
+            type: "file",
+            fileType: fileType,
+            parentId: parentId,
+            date: {
+                created: new Date(),
+                last: new Date(),
+            },
+            modules: {}               // determine later
+        })
+        .then((result) => {
+            console.log(`✅ [3] Created "${name}".`, result);
+            console.log(`🛠 [3.1] Fetching ${name}'s parent...`);
+            window.top.db.get(parentId)
+                .then(parentFolder => {
+                    console.log(`✅ [3.1] Fetched ${name}'s parent:`, parentFolder);
+                    console.log(`🛠 [3.2] Appending ${name}'s id to its parent's childrenIds...`);
+                    parentFolder.childrenIds.push(result.id);
+                    window.top.db.put(parentFolder)
+                        .then((putResult) => {
+                            console.log(`✅ [3.2] Linked ${name} to its parent:`, putResult);
+                            growHierarchy([result.id]);
+                            document.getElementById(putResult.id).classList.add('open');
+                            slideOut.classList.remove('open');
+                        })
+                        .catch(error => {
+                            console.log(`❌ [3.2] Couldn't link ${name} to its parent:`, error);
+                        });
+                })
+                .catch(error => {
+                    console.log(`❌ [3.1] Couldn't fetch ${name}'s parent:`, error);
+                });
+        })
+        .catch(error => {
+            console.log(`❌ [3] Couldn't create file:`, error);
+        });
+    });   
+}
+
+document.addEventListener('mouseleave', (event) => {
     slideOut.classList.remove('open');
 })
 
-slideOut.addEventListener('mouseleave', function(event) {
+slideOut.addEventListener('mouseleave', (event) => {
     slideOut.classList.remove('open');
 })
+
+
 
 // New folder
-document.getElementById('new-folder-btn').addEventListener('click', function() {
+document.getElementById('new-folder-btn').addEventListener('click', (event) => {
     const selectedFolder = document.getElementsByClassName('folder selected')[0];
     selectedFolder.classList.add('open');
 
@@ -170,9 +168,25 @@ document.getElementById('new-folder-btn').addEventListener('click', function() {
             span.blur();
         }
     });
-
-    
 });
+
+
+
+// View Root Directory as Root
+const toTopBtn = document.getElementById('to-top-btn')
+toTopBtn.addEventListener('click', (event) => {
+
+})
+
+
+
+// View Current Directory as Root
+const toCurrentBtn = document.getElementById('to-current-btn')
+toCurrentBtn.addEventListener('click', (event) => {
+
+})
+
+
 
 // Folder selection (last clicked)
 function addFolderClickEvent(folder) {
@@ -214,6 +228,12 @@ async function seedHierarchy() {
         })
 }
 
+// Get children from set of ids, order them, populate the hierarchy, then do the same for each of their childen recursively 
+// Ideally, this would take in a single object, one already fetched from the db, and fetch its children, order them, fetch them, then pass each child to the same function.
+// I'll probably change it to do this later now that I'm thinking about it.
+
+// I initially avoided doing this because the way I was thinking about it was that I needed all of the children fetched together to order them, and thinking about only returning their ids recursizely which meant I needed to refetch each child at the top again.
+// But if I instead pass the entire fetched child, then there's no need to refetch each child, just grab the object's childrenIds, fetch, sort, and call on each child object.
 async function growHierarchy(childrenIds) {
     const children = await Promise.all(
         childrenIds.map(childId => {
