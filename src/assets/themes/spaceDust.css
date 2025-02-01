@@ -245,8 +245,9 @@
     transform: scaleX(var(--hierarchy-tree-hover-vertical-thickness));
 }
 
-li > .folder-name:hover::after,
-li > .file-name:hover::after {
+li:hover > .folder-name::after,
+li:hover > .file-name::after {
+    /* background-color: var(--hierarchy-tree-hover-horizontal-color); */
     background-color: var(--hierarchy-tree-hover-horizontal-color);
     transform: scaleY(var(--hierarchy-tree-hover-horizontal-thickness));
 }
