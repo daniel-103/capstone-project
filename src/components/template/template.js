@@ -10,25 +10,6 @@ const templates = [
     { id: 9, title: 'Fable', image: '../../assets/images/Fable.jpg', description: 'Compose a fable' },
     { id: 10, title: 'Autobiography', image: '../../assets/images/Autobiography.jpg', description: 'Write a autobiography' },	
 ];
-	
-const templateFoldersAndFiles = {
-	1: { folder: 'Short Story Project', files: ['story.txt', 'outline.txt', 'characters.txt'] },
-	2: { 
-		folder: 'Novel Project', 
-		files: ['outline.txt', 'characters.txt', 'worldbuilding.txt', 'notes.txt'],
-		subfolders: {
-		  'Chapters': ['chapter_1.txt', 'chapter_2.txt', 'chapter_3.txt']
-		}
-	  },
-	3: { folder: 'Poetry Collection', files: ['poem_1.txt', 'poem_2.txt', 'notes.txt'] },
-	4: { folder: 'Script Project', files: ['script.txt', 'characters.txt', 'scene_list.txt', 'notes.txt'] },
-	5: { folder: 'Flash Fiction Project', files: ['story.txt', 'notes.txt'] },
-	6: { folder: 'Memoir Project', files: ['chapters.txt', 'timeline.txt', 'notes.txt'] },
-	7: { folder: 'Fairy Tale Project', files: ['story.txt', 'characters.txt', 'moral.txt'] },
-	8: { folder: 'Myth Project', files: ['myth.txt', 'dieties.txt', 'origins.txt'] },
-	9: { folder: 'Fable Project', files: ['fable.txt', 'characters.txt', 'moral.txt'] },
-	10: { folder: 'Autobiography Project', files: ['life_story.txt', 'timeline.txt', 'photos.txt', 'reflections.txt'] }
-};
 
 const predefinedText = {
     1: {
