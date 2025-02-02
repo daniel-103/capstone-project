@@ -1,0 +1,11 @@
+## Overview
+We want to make the process of developing a new page as easy as possible, and as a result we've added many functions you can use to get the basics of a page working with the integrated modules.
+
+## Display
+The modules_display.js file gives access to the displayModules function, allowing a page to display all the modules of some entity. We've standardized the format of an entity to include a attribute modules, which defines certain attributes about the entity. displayModules takes in the entity object and the container for where the modules should be displayed (i our case, use "#page-container", and make sure the corresponding html element exists), and doing this will display all the modules in the object and integrate all the functionality (slection, resizing, snapping, etc.) to the modules.
+
+## Changes
+A major feature is having the ability to change aspects of the entities (characters, places, events, etc.) based off of some identifier (you could use time, chapters, scenes, whatever you want). Current this is integrated into a page using the displayChangesPanel, addNewChange, and DelteChange functions found in module_changes.js. Each one of these functions take in an object of an entity, and displayChangesPanel is the only one that needs to be referenced in ths .js file file for your page. Doing so will result in the display of a dropdown menu that allows you to create, delete, and switch between changes. Each one of these changes is essentially a version of the values of all the modules which are independant from one another, allowing the user to assign different values in different parts of the story.
+
+## Saving
+The function setUpSaveHandler, located in page_save.js is necessary to save the current values of an entity to the database. To use it, simply put invoke it in the main .js file for your entity, and give it the entity object and the database object (in most cases for this project, use window.top.db). This will allow the current page to be saved to the database when the user presses ctrl+s.
