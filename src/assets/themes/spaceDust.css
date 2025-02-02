@@ -25,6 +25,29 @@
 
 
     /* Apply colors */
+
+    /* Hub */
+    --hub-background-color: var(--light-black);
+    --hub-header-text-color: var(--pink);
+
+    --hub-card-color: var(--light-black);
+    --hub-card-title-text-color: var(--grey);
+    --hub-card-desc-text-color: var(--light-blue);
+
+    --hub-card-hover-color: var(--black);
+    --hub-card-title-text-hover-color: var(--grey);
+    --hub-card-desc-text-hover-color: var(--light-blue);
+
+    --hub-card-options-section-color: transparent;
+    --hub-card-options-button-color: var(--black);
+    --hub-card-options-icon-color: var(--pink);
+
+    --hub-card-options-button-hover-color: var(--pink);
+    --hub-card-options-icon-hover-color: var(--black);
+
+    --hub-card-delete-confirmation-text-color: var(--white0);
+
+    /* Writing */
     --background-color: var(--light-black);
 
 
@@ -55,8 +78,17 @@
 
 
 
+    --left-panel-slideout-section-color: rgba(0, 0, 0, 0.25);
+    --left-panel-slideout-text-color: var(--light-blue);
+    --left-panel-slideout-button-color: rgba(0, 0, 0, 0.25);
+    --left-panel-slideout-text-hover-color: var(--black);
+    --left-panel-slideout-button-hover-color: var(--light-blue);
+
+
+
     --hierarchy-section-color: var(--black);
 
+    /* Base */
     --hierarchy-folder-color: transparent;
     --hierarchy-folder-text-color: var(--purple);
     --hierarchy-folder-icon-color: transparent;
@@ -65,21 +97,36 @@
     --hierarchy-folder-hover-text-color: var(--purple);
     --hierarchy-folder-hover-icon-color: var(--purple);
 
+    /* Open */
     --hierarchy-open-folder-color: var(--purple);
     --hierarchy-open-folder-text-color: var(--black);
     --hierarchy-open-folder-icon-color: var(--black);
     
     --hierarchy-open-folder-hover-color: var(--magenta);
-    --hierarchy-open-folder-hover-text-color: var(--light-black);
+    --hierarchy-open-folder-hover-text-color: var(--black);
     --hierarchy-open-folder-hover-icon-color: var(--light-black);
+
+    /* Selected */
+    --hierarchy-selected-folder-color: transparent;
+    --hierarchy-selected-folder-text-color: var(--purple);
+    --hierarchy-selected-folder-icon-color: var(--light-blue);
+
+    --hierarchy-selected-folder-hover-color: var(--purple);
+    --hierarchy-selected-folder-hover-text-color: var(--black);
+    --hierarchy-selected-folder-hover-icon-color: var(--light-blue);
+    
+    /* Selected and Open */
+    --hierarchy-selected-open-folder-color: var(--purple);
+    --hierarchy-selected-open-folder-text-color: var(--black);
+    --hierarchy-selected-open-folder-icon-color: var(--light-blue);
+    
+    --hierarchy-selected-open-folder-hover-color: var(--magenta);
+    --hierarchy-selected-open-folder-hover-text-color: var(--black);
+    --hierarchy-selected-open-folder-hover-icon-color: var(--light-blue);
 
     --hierarchy-new-folder-color: var(--pink);
     --hierarchy-new-folder-text-color: var(--black);
     --hierarchy-new-folder-icon-color: var(--black);
-
-    --hierarchy-folder-path-color: var(--magenta);              /* Implement later */
-    --hierarchy-folder-path-text-color: var(--light-black);     /* Implement later */
-    --hierarchy-folder-path-icon-color: var(--light-black);     /* Implement later */
 
     --hierarchy-file-color: transparent;
     --hierarchy-file-text-color: var(--grey);
@@ -87,6 +134,15 @@
     --hierarchy-selected-file-color: var(--light-black);
     --hierarchy-selected-file-text-color: var(--grey);
 
+    --hierarchy-tree-vertical-color: var(--purple);
+    --hierarchy-tree-vertical-thickness: 4;
+    --hierarchy-tree-horizontal-color: var(--purple);
+    --hierarchy-tree-horizontal-thickness: 4;
+    
+    --hierarchy-tree-hover-vertical-color: var(--magenta);
+    --hierarchy-tree-hover-vertical-thickness: 8;
+    --hierarchy-tree-hover-horizontal-color: var(--magenta);
+    --hierarchy-tree-hover-horizontal-thickness: 8;
 
 
     --tab-section-color: var(--light-black);
@@ -148,11 +204,51 @@
 }
 
 /* import custom css here */
+/* Hub */
+.toolbar {
+    /* background: rgba(0, 0, 0, 0.25); */
+    backdrop-filter: blur(4px);
+}
+
+.toolbar button.btn-delete:hover {
+    background-color: red;
+}
+
+.toolbar button.btn-delete.active svg{
+    fill: red;
+}
+
+.toolbar button.btn-delete.active:hover svg{
+    fill: var(--black);
+}
+
+.toolbar button.btn-delete.active:hover{
+    background-color: red;
+}
+
+/* Writing */
 #side-bar-options {
     border-top-right-radius: 1rem;
+}
+
+#new-file-slide-out {
+    backdrop-filter: blur(4px);
 }
 
 .folder-name {
     border-top-left-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
 }
+
+.folder.open:hover > .folder-name::before {
+    background-color: var(--hierarchy-tree-hover-vertical-color);
+    transform: scaleX(var(--hierarchy-tree-hover-vertical-thickness));
+}
+
+li:hover > .folder-name::after,
+li:hover > .file-name::after {
+    /* background-color: var(--hierarchy-tree-hover-horizontal-color); */
+    background-color: var(--hierarchy-tree-hover-horizontal-color);
+    transform: scaleY(var(--hierarchy-tree-hover-horizontal-thickness));
+}
+

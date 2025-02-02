@@ -3,26 +3,29 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    background-color: var(--background-color);
-    overflow: hidden;
+    background-color: var(--hub-background-color);
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 h1 {
-  color: white;
+  color: var(--hub-header-text-color);
   text-align: center;
 }
 
 h2 {
   margin-top: 100px;
-  color: white;
+  color: var(--hub-header-text-color);
   text-align: center;
 }
 
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 0 63px;
+  gap: 1rem;
+  padding: 0 4rem;
 }
 
 .project_gallery {
@@ -35,31 +38,40 @@ h2 {
 
 .project-card {
   position: relative;
-  background-color: #fff;
+  color: var(--hub-card-title-text-color);
+  background-color: var(--hub-card-color);
   padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
   text-align: center;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.2s;
   overflow: hidden;
+}
+
+.template-description {
+  color: var(--hub-card-desc-text-color);
 }
 
 .project-card:hover {
   transform: scale(1.05);
+  color: var(--hub-card-title-text-hover-color);
+  background-color: var(--hub-card-hover-color);
+}
+
+.project-card:hover .template-description {
+  color: var(--hub-card-desc-text-hover-color);
 }
 
 .toolbar {
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: var(--hub-card-options-section-color);
   position: absolute;
   left: 0rem;
   bottom: -2rem;
   width: 100%;
   height: 2rem;
   color: white;
-
   cursor: default;
-  backdrop-filter: blur(0.1rem);
 
   transition: bottom 0.2s ease;
 }
@@ -78,7 +90,7 @@ h2 {
 .toolbar button {
   width: 2rem;
   height: 1.75rem;
-  background-color: #000;
+  background-color: var(--hub-card-options-button-color);
   border: none;
   cursor: pointer;
   padding: 0.25rem;
@@ -87,15 +99,20 @@ h2 {
   pointer-events: default;
   cursor: pointer;
 
-  transition: transform 0.4s ease;
+  transition: transform 0.4s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.toolbar button:hover {
+  background-color: var(--hub-card-options-button-hover-color);
+}
+
+svg {
+  height: 1rem;
+  fill: var(--hub-card-options-icon-color);
 }
 
 .toolbar button:hover svg {
-  fill: greenyellow;
-}
-
-.toolbar button.btn-delete:hover svg{
-  fill: red;
+  fill: var(--hub-card-options-icon-hover-color);
 }
 
 .delete-confirmation {
@@ -108,18 +125,13 @@ h2 {
 }
 
 .delete-confirmation p {
-  color: #000;
+  color: var(--hub-card-delete-confirmation-text-color);
   font-weight: bold;
   margin-left: 1rem;
 }
 
 .delete-confirmation button {
   margin: 0.25rem;
-}
-
-svg {
-  height: 1rem;
-  fill: var(--hierarchy-folder-icon-color);
 }
 
 .dropbtn {
@@ -140,7 +152,7 @@ svg {
   position: absolute;
   background-color: #f1f1f1;
   min-width: 80px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
   z-index: 1;
 }
 
@@ -158,27 +170,34 @@ svg {
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
 .template-card {
-  background-color: #fff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color: var(--hub-card-title-text-color);
+  background-color: var(--hub-card-color);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
   text-align: center;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.2s;
 }
 .template-card:hover {
   transform: scale(1.05);
+  color: var(--hub-card-title-text-hover-color);
+  background-color: var(--hub-card-hover-color);
 }
+
+.template-card:hover .template-description {
+  color: var(--hub-card-desc-text-hover-color);
+}
+
 .template-image {
   width: 100%;
-  height: 120px;
-  background-color: #ddd;
+  height: 8rem;
   background-size: cover;
   background-position: center;
-  border-radius: 4px;
-  margin-bottom: 10px;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 .template-title {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: bold;
 }

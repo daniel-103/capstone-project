@@ -33,13 +33,12 @@ const createWindow = () => {
 
   // Create the database
   const userDataPath = app.getPath('userData');
-  const dbPath = path.join(userDataPath, 'Skrytor'); // Rename 'db' to final name
+  const dbPath = path.join(userDataPath, 'Skryptor');
   console.log(`Database path: ${dbPath}`);
   db = new PouchDB(dbPath);
 
   // and load the index.html of the app.
   mainWindow.loadFile('src/index.html');
-  // mainWindow.loadFile('src/components/template/template.html');
 };
 
 // This method will be called when Electron has finished
@@ -167,6 +166,9 @@ ipcMain.handle('getIndexes', async () => {
 
 
 // Application specific
+// THESE SHOULD BE MOVED TO THEIR OWN FILES (if no two files need the same code)
+// This is only really needed if two separate files need to call the same function.
+// newProject is only called by project.js so it should be moved there at some point.
 
 ipcMain.handle('newProject', async (_, newProj) => {
   try {

@@ -14,6 +14,10 @@ function runTabs() {
     initPlusButton(tabHeader, pageWindow);
 }
 
+window.defaultPagePath = defaultPagePath;
+window.addNewTab = addNewTab;
+
+// Plus button should be deprecated at some point now that the new file button in the hierarchy has been implemented.
 function initPlusButton(tabHeader, pageWindow) {
     window.plusButton = document.createElement("button");
     plusButton.textContent = "+";
@@ -74,7 +78,7 @@ function createTab(index, tabHeader, pageWindow) {
 
     // Inject theme into iframe
     iframe.addEventListener("load", () => {
-        window.parent.injectTheme(iframe);
+        window.top.injectTheme(iframe);
     });
     
     pageWindow.appendChild(iframe); 
