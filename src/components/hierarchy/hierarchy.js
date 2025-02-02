@@ -365,3 +365,14 @@ async function populateFileHierarchy (templateId) {
         });
     }
 }
+
+window.addEventListener('message', (event) => {
+    // Check if the event data contains the templateId
+    if (event.data && event.data.templateId) {
+        const templateId = event.data.templateId;
+        console.log('Received Template ID in hierarchy.js:', templateId);
+        
+        // Use the templateId to populate the file hierarchy
+        populateFileHierarchy(templateId);
+    }
+});

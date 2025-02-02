@@ -1,12 +1,29 @@
 <div id="leftPanel">
     <!-- <object type="text/html" data="../hierarchy/hierarchy.html" class="import"></object> -->
-    <iframe src="../hierarchy/hierarchy.html" frameborder="0"></iframe>
+    <iframe id="hierarchyIframe" src="../hierarchy/hierarchy.html" frameborder="0"></iframe>
 </div>
 <div id="panelResizer"></div>
 <div id="rightPanel">
     <div id="tab-header"></div>
     <div id="page-window"></div>
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        // Parse the URL parameters to get the templateId
+        const urlParams = new URLSearchParams(window.location.search);
+        const templateId = urlParams.get('templateId');
+        console.log('Template ID:', templateId);
+
+        // Get the hierarchy iframe element
+        const hierarchyIframe = document.getElementById('hierarchyIframe');
+
+        // When the iframe has loaded, send the templateId to it
+        hierarchyIframe.onload = () => {
+            hierarchyIframe.contentWindow.postMessage({ templateId }, '*');
+        };
+    });
+</script>
 
 <link rel="stylesheet" href="window.css">
 <script src="resizer.js"></script>

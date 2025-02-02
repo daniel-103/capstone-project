@@ -345,7 +345,7 @@ async function initialize() {
 		`;
 		card.onclick = async () => {
 			const windowIframe = window.parent.document.getElementById('window');
-			windowIframe.src = 'components/window/window.html';
+            windowIframe.src = `components/window/window.html?templateId=${template.id}`;
 		};
 		gallery.appendChild(card);
 	});
