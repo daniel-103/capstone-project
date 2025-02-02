@@ -13,7 +13,7 @@ let db;
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1200,
+    width: 1250,
     height: 800,
     frame: false,
     webPreferences: { 

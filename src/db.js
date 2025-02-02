@@ -76,17 +76,23 @@ window.top.db.createIndex({
 
 // Comment this out if you are getting annoyed with the errors in the terminal.
 const date = new Date();
-window.db.put({
-    _id: "123",
-    name: "NewWorldMain",
-    type: "folder",
-    parentId: null,
-    image: "dog.jpg", //  ../../assets/images/'image'
-    description: "This is a test project",
-    childrenIds: [],
-    date: {
-        created: date,
-        last: date
-    }
-  })
-  .catch(error => {});  
+window.db.get("123")
+    .catch(error => {
+        if (error.status === 404) {
+            // Document does not exist, create it
+            return window.db.put({
+                _id: "123",
+                name: "NewWorldMain",
+                type: "folder",
+                parentId: null,
+                image: "dog.jpg",
+                description: "This is a test project",
+                childrenIds: [],
+                date: {
+                    created: date,
+                    last: date
+                }
+            }).then(() => console.log("✅ Document created"));
+        }
+    });
+
