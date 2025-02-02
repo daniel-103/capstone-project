@@ -87,11 +87,6 @@ window.addEventListener('message', (event) => {
     console.log('Received Template ID in text_editor.js:', templateId);
     console.log('Received Predefined Text in text_editor.js  j:', JSON.stringify(globalPredefinedText));
     console.log('Received Predefined Text in text_editor.js:', event.data.predefinedText);
-    
-    // Set the predefined text in the Quill editor if globalFileName is not empty
-    if (globalFileName) {
-      quill.setText(globalPredefinedText[globalFileName]);
-    }
   }
 
   // Check if the event data contains the fileClicked event
