@@ -23,15 +23,23 @@
     border: none;
 }
 
-.ql-sectionbtn {
-    font-size: 16px;
-    padding: 5px 10px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    cursor: pointer;
-  }
-  
-  .ql-sectionbtn:hover {
-    background-color: #e0e0e0;
-  }
+
+#counter {
+    color: white;
+    margin-right: 5%;
+    margin-left: 10%;
+    
+}
+
+
+#wrapper {
+    display: flex;
+    position: relative;
+}
+
+#line-container {
+    margin-top: 90px;
+    position:absolute;
+
+}
 

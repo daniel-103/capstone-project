@@ -1,3 +1,44 @@
+const BlockEmbed = Quill.import('blots/block');
+const Inline = Quill.import('blots/inline');
+const icons = Quill.import('ui/icons');
+
+
+class Counter {
+  constructor(quill, options) {
+    this.quill = quill;
+    this.options = options;
+    this.container = document.querySelector(options.container);
+    quill.on(Quill.events.TEXT_CHANGE, this.update.bind(this));
+  }
+
+  calculate() {
+    const text = this.quill.getText();
+
+    if (this.options.unit === 'word') {
+      const trimmed = text.trim();
+      // Splitting empty text returns a non-empty array
+      return trimmed.length > 0 ? trimmed.split(/\s+/).length : 0;
+    } else {
+      return text.length;
+    }
+  }
+
+  update() {
+    const length = this.calculate();
+    let label = this.options.unit;
+    if (length !== 1) {
+      label += 's';
+    }
+    this.container.innerText = `${length} ${label}`;
+  }
+}
+
+Quill.register('modules/counter', Counter);
+
+
+
+
+
 const toolbarOptions = [
   ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
   ['blockquote', 'code-block'],
@@ -16,59 +57,104 @@ const toolbarOptions = [
   [{ 'font': [] }],
   [{ 'align': [] }],
   
-  ['clean']                                         // remove formatting button
+  ['clean'],
+  ['section-button']
+
+                                         // remove formatting button
   
 ];
 
-
 const quill = new Quill('#editor', {
   modules: {
-    toolbar: toolbarOptions
+    toolbar: {
+      container: toolbarOptions,
+      handlers: {
+        'section-button': function() {
+          createSection();
+        }
+      }
+    },  
+    counter: {
+      container: '#counter',
+      unit: 'word'
+    }
   },
   theme: 'snow'
 });
+let sectionButton = document.querySelector('.ql-section-button');
+if (sectionButton) {
+  sectionButton.innerHTML = 'C';  // Set "C" as the button's icon text
 
-const Inline = Quill.import('blots/inline');
-
-class BoxBlot extends Inline {
-  static create(value) {
-    let node = super.create(value);
-    node.classList.add('ql-box');  // Add the 'ql-box' class to apply styling
-    node.style.border = '2px solid #000'; // Black border
-    node.style.padding = '2px 4px';       // Padding to create space around the text
-    node.style.backgroundColor = '#f0f0f0'; // Light background color
-    node.style.borderRadius = '4px';      // Optional: Rounded corners
-    node.style.zIndex = '99';
-    return node;
-  }
-
-  static formats(domNode) {
-    return domNode.style.border === '2px solid #000'; // Check if it's a box
-  }
 }
+function createSection() {
+  const range = quill.getSelection();
+  const text = quill.getText(range.index, range.length);
+  const startInd = range.index;
+  const endInd = range.index + range.length;
+  const startBounds = quill.getBounds(startInd);
+  const endBounds = quill.getBounds(endInd);
+  // Calculate the vertical position of the selection (accounting for scroll position)
+  const editor = document.querySelector('.ql-editor');
+  const editorScrollTop = editor.scrollTop; // Get the scroll position of the editor
+  const topPosition = startBounds.top + editorScrollTop; // Add scroll position to top
+  const bottomPosition = endBounds.top + endBounds.height + editorScrollTop; // Adjust for the bottom of the selection
 
-Quill.register('formats/box',BoxBlot);
+  // Create a line element in the left container
+  const lineElement = document.createElement('div');
+  lineElement.style.position = 'absolute';
+  lineElement.style.top = `${topPosition}px`; // Align the top of the line with the top of the selection
+  lineElement.style.left = '70px'; // A slight left margin
+  lineElement.style.width = '5px'; // Line width
+  lineElement.style.backgroundColor = 'red'; // Line color
+  lineElement.style.height = `${bottomPosition - topPosition}px`; // Line height based on the selection height
 
+  // Create a label box (editable text)
+  const labelBox = document.createElement('div');
+  labelBox.contentEditable = true; // Makes it editable
+  labelBox.style.position = 'absolute';
+  labelBox.style.top = `${topPosition}px`; // Slightly above the start of the line
+  labelBox.style.left = '0px'; // Space to the right of the line
+  labelBox.style.padding = '0px';
+  //labelBox.style.border = '1px solid black';
+  labelBox.style.backgroundColor = 'lightgray';
+  labelBox.style.width = '70px'; // Fixed width for the label
+  labelBox.textContent = 'Chapter'; // Default text
+  labelBox.style.zIndex = '99';
+  // Append the line element to the line container
+  const lineContainer = document.getElementById('line-container');
+  lineContainer.appendChild(lineElement);
+  lineContainer.appendChild(labelBox);
 
-const onClick = (selector, callback) => {
-  document.querySelector(selector).addEventListener('click', callback);
 };
 
-var toolbar = quill.getModule('toolbar');
-var sectionbtn = document.createElement('button');
-sectionbtn.innerText = 'C';  // Set the letter C
-sectionbtn.classList.add('ql-sectionbtn');  // Add class for styling if needed
-toolbar.container.appendChild(sectionbtn);
-onClick('.ql-sectionbtn', () => {
-  
+function updateLinePositionAndHeight() {
+  const range = quill.getSelection();
+  if (!range || range.length === 0) return; // If no selection, don't update
 
-    const range = quill.getSelection();
-    const text = quill.getText(range.index, range.length);
-    console.log(text);
-    quill.formatText(range.index, range.length, 'box', true);
-    quill.update();
-  
+  const startInd = range.index;
+  const endInd = range.index + range.length;
+  const startBounds = quill.getBounds(startInd);
+  const endBounds = quill.getBounds(endInd);
+
+  const editorScrollTop = editor.scrollTop;
+  const topPosition = startBounds.top + editorScrollTop;
+  const bottomPosition = endBounds.top + endBounds.height + editorScrollTop;
+
+  // Update the position and height of the line
+  lineElement.style.top = `${topPosition}px`;
+  lineElement.style.height = `${bottomPosition - topPosition}px`;
+
+  // Update label position
+  labelBox.style.top = `${topPosition}px`;
+}
+
+// Monitor for changes in the Quill editor
+quill.on('text-change', function(delta, oldDelta, source) {
+  updateLinePositionAndHeight();
 });
+
+// Update line position initially
+updateLinePositionAndHeight();
 
 
 
