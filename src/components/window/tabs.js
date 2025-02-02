@@ -58,6 +58,7 @@ function createTab(index, tabHeader, pageWindow) {
 
     // Page associated with tab
     const iframe = document.createElement("iframe");
+    iframe.id = "textEditorIframe";
     // iframe.classList.add("import");
     iframe.src = currTab.path
     iframe.style.display = "none";
