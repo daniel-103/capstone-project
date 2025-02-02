@@ -1,7 +1,6 @@
 const pagePaths = [
     { title: "Timeline", path: "../timeline/timeline.html"},
     { title: "Text Editor", path: "../text_editor/text_editor.html"},
-    { title: "Quill Text Editor", path: "../quill_text_editor/index.html"},
     { title: "Characters", path: "../characters/characters.html"},
     { title: "Relationships", path: "../relationships/relationships.html"},
 ];
