@@ -98,14 +98,14 @@ const predefinedText = {
     },
     3: {
         'poem_1.txt': `
-			[Your Poem Title]
+			[Your First Poem Title]
 
 			[Your first stanza...]  
 			[Your second stanza...]  
 
 		`,
         'poem_2.txt': `
-			[Your Poem Title]
+			[Your Second Poem Title]
 
 			[Your first stanza...]  
 			[Your second stanza...]  
@@ -113,6 +113,7 @@ const predefinedText = {
 		`,
         'notes.txt': `
 			Themes: [Love, Nature, Time, etc.]  
+
 			Style: [Free Verse, Haiku, Sonnet, etc.]  
 		`
     },
@@ -345,7 +346,8 @@ async function initialize() {
 		`;
 		card.onclick = async () => {
 			const windowIframe = window.parent.document.getElementById('window');
-            windowIframe.src = `components/window/window.html?templateId=${template.id}`;
+			const predefinedTextForTemplate = predefinedText[template.id];
+            windowIframe.src = `components/window/window.html?templateId=${template.id}&predefinedText=${encodeURIComponent(JSON.stringify(predefinedTextForTemplate))}`;
 		};
 		gallery.appendChild(card);
 	});

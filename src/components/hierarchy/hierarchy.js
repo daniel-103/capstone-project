@@ -341,6 +341,10 @@ async function populateFileHierarchy (templateId) {
             const fileElement = document.createElement('li');
             fileElement.classList.add("file");
             fileElement.innerHTML = `<div class="file-name">${file}</div>`;
+            fileElement.addEventListener('click', () => {
+                console.log(`File clicked: ${file}`);
+                window.parent.postMessage({ type: 'fileClicked', fileName: file }, '*');
+            });
             fileList.appendChild(fileElement);
         });
 
@@ -370,9 +374,11 @@ window.addEventListener('message', (event) => {
     // Check if the event data contains the templateId
     if (event.data && event.data.templateId) {
         const templateId = event.data.templateId;
-        console.log('Received Template ID in hierarchy.js:', templateId);
-        
+        console.log('Received Template ID in hierarchy.js h:', templateId);
+
         // Use the templateId to populate the file hierarchy
         populateFileHierarchy(templateId);
+    } else {
+        seedHierarchy();
     }
 });

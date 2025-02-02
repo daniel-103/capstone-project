@@ -5,7 +5,9 @@
 <div id="panelResizer"></div>
 <div id="rightPanel">
     <div id="tab-header"></div>
-    <div id="page-window"></div>
+    <div id="page-window">
+        <iframe id="textEditorIframe" src="../text_editor/text_editor.html" frameborder="0"></iframe>
+    </div>
 </div>
 
 <script>
@@ -13,15 +15,32 @@
         // Parse the URL parameters to get the templateId
         const urlParams = new URLSearchParams(window.location.search);
         const templateId = urlParams.get('templateId');
+        const predefinedText = JSON.parse(decodeURIComponent(urlParams.get('predefinedText')));
         console.log('Template ID:', templateId);
+        console.log('Predefined Text:', predefinedText);
 
         // Get the hierarchy iframe element
         const hierarchyIframe = document.getElementById('hierarchyIframe');
+
+        // Get the text editor iframe element
+        const textEditorIframe = document.getElementById('textEditorIframe');
 
         // When the iframe has loaded, send the templateId to it
         hierarchyIframe.onload = () => {
             hierarchyIframe.contentWindow.postMessage({ templateId }, '*');
         };
+
+        // When the iframe has loaded, send the templateId and predefinedText to it
+        textEditorIframe.onload = () => {
+            textEditorIframe.contentWindow.postMessage({ templateId, predefinedText }, '*');
+        };
+
+        // Forward the fileClicked message to the text editor iframe
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'fileClicked') {
+                textEditorIframe.contentWindow.postMessage(event.data, '*');
+            }
+        });
     });
 </script>
 
