@@ -1,37 +1,32 @@
 # Text Editor Documentation
+Framework for text editor is Quill
+Link to Quill Documentaion: https://quilljs.com/docs/quickstart/
+Link to Quill Github: https://github.com/slab/quill
+The text editor features a toolbar for formatting text (i.e. bold, italics, fonts, etc.)
 
-The text editor is built upon the CKEditor 5 framework, starting with the CKEditor Builder
-Link to CKEditor 5 Documentation: https://ckeditor.com/docs/ckeditor5/latest/index.html
-Free License key allows 1000 load/month, which should be enough
+## Files Overview
 
-The toolbar can be edited in text_editor.js
+### 1. `text_editor.js`
 
-`text_editor.js`
-``` js
-toolbar: {
-		items: [
-			...
-		],
-		shouldNotGroupWhenFull: false
-	}, 
-```
+**Key Components:**
+toolbarOptions: Array holding the name for buttons on the toolbar
 
-where ... represents each component of the text editor tool bar
+Section class: Class for creating objects 
+-	Class Vars: startInd, endInd, labelBox, lineElement
 
-Most functionality of the rich-text features comes from CKEditor's plugins, which are located below the toolbar items
+Creating a section: 
+Using Quill's getSelection(), we can use the users selected range of text which is used to find the 
+starting index, ending index for creating the section and its UI
 
-`text_editor.js`
-``` js
-plugins: [
-    ...
-]
-```
 
-where ... represents all of the plugins that the project is using.
-Note that all plugins used are under the free license for CKEditor 5, other functionalities that require premium access
-and are a planned addition will be implemented ourselves
+### 2. `text_editor.css`
+Used for styling the editor, toolbar, section UI, and word counters
 
-The style sheet for the customization of the text editor's appereance can be found in text_editor.css
+### 3. `text_editor.html`
+HTML for the editor and its components
+Links to `text_editor.js` for function
+Links to `text_editor.css` for styling
+
 
 ## Exporting Text to File Format
 In the text editor IFrame, there is a green Export button that allows the user to convert the text into file formats (PDF, DOCX, TXT). When the user clicks on the button, there is a dropdown menu that displays the file formats. Some of the file formats when clicked (PDF, DOCX for example) are particular exporting details such setting the margin size or including headers and footers.
