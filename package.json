@@ -14,8 +14,8 @@
   "author": "",
   "license": "ISC",
   "build": {
-    "appId": "com.example.craftworld",
-    "productName": "CraftWorld",
+    "appId": "com.example.skriptor",
+    "productName": "Skriptor",
     "directories": {
       "output": "dist"
     },

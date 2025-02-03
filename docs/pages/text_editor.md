@@ -32,3 +32,20 @@ Note that all plugins used are under the free license for CKEditor 5, other func
 and are a planned addition will be implemented ourselves
 
 The style sheet for the customization of the text editor's appereance can be found in text_editor.css
+
+## Exporting Text to File Format
+In the text editor IFrame, there is a green Export button that allows the user to convert the text into file formats (PDF, DOCX, TXT). When the user clicks on the button, there is a dropdown menu that displays the file formats. Some of the file formats when clicked (PDF, DOCX for example) are particular exporting details such setting the margin size or including headers and footers.
+
+**Key Components:**
+```
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx@7.1.0/build/index.min.js"></script>
+```
+These are the modules for PDF and DOCX
+
+```
+// Event listeners for export buttons
+document.getElementById('exportPDF').addEventListener('click', () => populatePopupContent("PDF"));
+document.getElementById('exportDOCX').addEventListener('click', () => populatePopupContent("DOCX"));
+```
+These are the event listeners for the exporting settings
