@@ -2,6 +2,37 @@ const BlockEmbed = Quill.import('blots/block');
 const Inline = Quill.import('blots/inline');
 const icons = Quill.import('ui/icons');
 
+class Section {
+  constructor(startInd,endInd, labelBox, lineElement) {
+    this.startInd = startInd;
+    this.endInd = endInd;
+    this.labelBox = labelBox;
+    this.lineElement = lineElement;
+  }
+
+  updateLineHeight() {
+    const editor = document.querySelector('.ql-editor');
+    const editorScrollTop = editor.scrollTop; // Get the scroll position of the editor
+    
+    const newStartBounds = quill.getBounds(this.startInd);
+    const newEndBounds = quill.getBounds(this.endInd);
+
+    const newTopPosition = newStartBounds.top + editorScrollTop;
+    const newBottomPosition = newEndBounds.top + newEndBounds.height + editorScrollTop;
+
+    // Update the height of the line element
+    this.lineElement.style.height = `${newBottomPosition - newTopPosition}px`;
+    this.labelBox.style.top = `${newTopPosition}px`; // Update the position of the label box
+  }
+
+  // Method to update the end index based on the content in the label box
+  updateEndIndex() {
+    const contentLength = quill.getText(this.startInd).length;
+    this.endInd = this.startInd + contentLength;
+  }
+}
+
+let sections = [];
 
 class Counter {
   constructor(quill, options) {
@@ -34,9 +65,6 @@ class Counter {
 }
 
 Quill.register('modules/counter', Counter);
-
-
-
 
 
 const toolbarOptions = [
@@ -99,6 +127,8 @@ function createSection() {
   const topPosition = startBounds.top + editorScrollTop; // Add scroll position to top
   const bottomPosition = endBounds.top + endBounds.height + editorScrollTop; // Adjust for the bottom of the selection
 
+
+
   // Create a line element in the left container
   const lineElement = document.createElement('div');
   lineElement.style.position = 'absolute';
@@ -107,7 +137,7 @@ function createSection() {
   lineElement.style.width = '5px'; // Line width
   lineElement.style.backgroundColor = 'red'; // Line color
   lineElement.style.height = `${bottomPosition - topPosition}px`; // Line height based on the selection height
-
+  
   // Create a label box (editable text)
   const labelBox = document.createElement('div');
   labelBox.contentEditable = true; // Makes it editable
@@ -125,36 +155,22 @@ function createSection() {
   lineContainer.appendChild(lineElement);
   lineContainer.appendChild(labelBox);
 
-};
+  const section = new Section(startInd, endInd,labelBox,lineElement);
+  sections.push(section);
 
-function updateLinePositionAndHeight() {
-  const range = quill.getSelection();
-  if (!range || range.length === 0) return; // If no selection, don't update
+  quill.on('text-change', (delta, oldDelta, source) => {
+    if (source === 'user') {
+      // If the text change is user-driven, check if the section's text was modified
+      section.updateLineHeight();
+    }
+  });
 
-  const startInd = range.index;
-  const endInd = range.index + range.length;
-  const startBounds = quill.getBounds(startInd);
-  const endBounds = quill.getBounds(endInd);
-
-  const editorScrollTop = editor.scrollTop;
-  const topPosition = startBounds.top + editorScrollTop;
-  const bottomPosition = endBounds.top + endBounds.height + editorScrollTop;
-
-  // Update the position and height of the line
-  lineElement.style.top = `${topPosition}px`;
-  lineElement.style.height = `${bottomPosition - topPosition}px`;
-
-  // Update label position
-  labelBox.style.top = `${topPosition}px`;
+  // Listen for input changes (when the label text is modified)
+  labelBox.addEventListener('input', () => {
+    section.updateEndIndex(); // Update the end index based on the new length of the label's text
+    section.updateLineHeight(); // Update the line height to match the new length
+  });
 }
-
-// Monitor for changes in the Quill editor
-quill.on('text-change', function(delta, oldDelta, source) {
-  updateLinePositionAndHeight();
-});
-
-// Update line position initially
-updateLinePositionAndHeight();
 
 
 
