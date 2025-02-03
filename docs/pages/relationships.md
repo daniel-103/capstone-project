@@ -3,18 +3,22 @@
 The relationships are a type of object in the databse, used to describe and keep track of whatever
 relationships the user want in their story. They are stoed in the database with the following format:
 
-```json 
+
 {
-    "_id": "id",
-    "_rev": "rev",
-    "type": "relationship",
-    "modules": {
-        "name":        { "value": "Name", "position": {"x": 0, "y": 0} },
-        "description": { "value": "Description", "position": {"x": 0, "y": 0} },
-        // and so on
-    }
+    type: 'folder',
+    fileType: 'relationship',
+    modules: {
+        name:            { value: ['New Relationship'],  position: { x:  31, y:  62 }, size: { width: "200px", height: "40px" } },
+        entities:        { value: ['Entities Involved'], position: { x: 465, y: 432 }, size: { width: "465px", height: "220px" } },
+        history:         { value: ['History'],           position: { x: 465, y:  62 }, size: { width: "465px", height: "260px" } },
+        dynamics:        { value: ['Dynamics'],          position: { x:  31, y: 167 }, size: { width: "325px", height: "125px" } },
+        conflict:        { value: ['Conflict'],          position: { x:  31, y: 550 }, size: { width: "325px", height: "125px" } },
+        potential:       { value: ['Potential'],         position: { x:  31, y: 350 }, size: { width: "325px", height: "145px" } },
+    },
+    changes: ['Beginning'],
+    changeIndex: 0
 }
-```
+
 
 The modules hold all of the editable attributes of a relationship, and these attributes can also be
 used for search queries in other parts of the application.
