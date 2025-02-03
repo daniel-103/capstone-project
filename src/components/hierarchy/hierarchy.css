@@ -153,19 +153,6 @@ ul.root {
     z-index: 9;
 }
 
-/* .file::before,
-.folder::before {
-    --line-thickness: 2px;
-
-    position: absolute;
-    left: -0.5rem;
-    top: 0rem;
-    content: "";
-    width: 1rem;
-    height: 0.5rem;
-    border-bottom: var(--line-thickness) solid var(--hierarchy-folder-hover-color);
-} */
-
 li > .folder-name::after,
 li > .file-name::after {
     --line-thickness: 4;

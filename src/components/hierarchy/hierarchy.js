@@ -172,15 +172,15 @@ document.getElementById('new-folder-btn').addEventListener('click', (event) => {
 
 
 
-// View Root Directory as Root
-const toTopBtn = document.getElementById('to-top-btn')
+// View Root as Root
+const toTopBtn = document.getElementById('to-root-btn')
 toTopBtn.addEventListener('click', (event) => {
 
 })
 
 
 
-// View Current Directory as Root
+// View Current as Root
 const toCurrentBtn = document.getElementById('to-current-btn')
 toCurrentBtn.addEventListener('click', (event) => {
 

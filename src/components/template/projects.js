@@ -80,10 +80,6 @@ async function unnecessaryAsyncFunctionBecauseJavaScriptIsALittleBitchAndDoesntL
     card.onclick = () => {
       const windowIframe = window.parent.document.getElementById('window');
       windowIframe.src = 'components/window/window.html';
-      // This is where the generateTree function will be called to create the hierarchy.
-      // WAIT nvm, just going to set a value on something and when the iframe changes, hierarchy.js will start and can grab that value to generate the hierarchy.
-      // Leaving this here for now. Taking a break. Ill come back to it later.
-    
       localStorage.setItem('projectId', project._id);
     };
     project_gallery.appendChild(card);

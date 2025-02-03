@@ -88,7 +88,7 @@
 
     --hierarchy-section-color: var(--black);
 
-    /* Base */
+    /* Folder */
     --hierarchy-folder-color: transparent;
     --hierarchy-folder-text-color: var(--purple);
     --hierarchy-folder-icon-color: transparent;
@@ -124,16 +124,19 @@
     --hierarchy-selected-open-folder-hover-text-color: var(--black);
     --hierarchy-selected-open-folder-hover-icon-color: var(--light-blue);
 
+    /* New */
     --hierarchy-new-folder-color: var(--pink);
     --hierarchy-new-folder-text-color: var(--black);
     --hierarchy-new-folder-icon-color: var(--black);
 
+    /* File */
     --hierarchy-file-color: transparent;
     --hierarchy-file-text-color: var(--grey);
 
     --hierarchy-selected-file-color: var(--light-black);
     --hierarchy-selected-file-text-color: var(--grey);
 
+    /* Tree */
     --hierarchy-tree-vertical-color: var(--purple);
     --hierarchy-tree-vertical-thickness: 4;
     --hierarchy-tree-horizontal-color: var(--purple);

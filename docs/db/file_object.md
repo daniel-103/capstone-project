@@ -44,6 +44,8 @@ Below is an example of a file object within the database:
 }
 ```
 
+Note: This is what we should be doing. Right now, we have modules as an object with each type of module being the object's fields. We should transition to using this structure instead.
+
 > `_id`:  
 > \<String>  
 > The id of the file. This is automatically generated when the project is created using `db.post()`. "c91a5499-26b4-400d-8dfb-2dd44c606aad" is an acurate example of what an id generated with `db.post()` will look like.

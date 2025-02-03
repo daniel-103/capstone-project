@@ -68,6 +68,7 @@
 
     --hierarchy-section-color: var(--black1);
 
+    /* Folder */
     --hierarchy-folder-color: transparent;
     --hierarchy-folder-text-color: var(--white0);
     --hierarchy-folder-icon-color: var(--white2);
@@ -76,32 +77,55 @@
     --hierarchy-folder-hover-text-color: var(--white0);
     --hierarchy-folder-hover-icon-color: var(--white2);
 
+    /* Open */
     --hierarchy-open-folder-color: var(--black1);
     --hierarchy-open-folder-text-color: var(--white0);
     --hierarchy-open-folder-icon-color: var(--white2);
     
     --hierarchy-open-folder-hover-color: var(--black2);
     --hierarchy-open-folder-hover-text-color: var(--white0);
-    --hierarchy-open-folder-hover-icon-color: var(--black2);
+    --hierarchy-open-folder-hover-icon-color: var(--white2);
 
+    /* Selected */
     --hierarchy-selected-folder-color: var(--black1);
     --hierarchy-selected-folder-text-color: var(--white0);
     --hierarchy-selected-folder-icon-color: var(--white0);
 
-    --hierarchy-new-folder-color: var(--black2);
-    --hierarchy-new-folder-text-color: var(--white0);
-    --hierarchy-new-folder-icon-color: var(--white0);
+    --hierarchy-selected-folder-hover-color: var(--black2);
+    --hierarchy-selected-folder-hover-text-color: var(--white0);
+    --hierarchy-selected-folder-hover-icon-color: var(--white0);
 
+    /* Selected and Open */
+    --hierarchy-selected-open-folder-color: var(--black1);
+    --hierarchy-selected-open-folder-text-color: var(--white0);
+    --hierarchy-selected-open-folder-icon-color: var(--white0);
+    
+    --hierarchy-selected-open-folder-hover-color: var(--black2);
+    --hierarchy-selected-open-folder-hover-text-color: var(--white0);
+    --hierarchy-selected-open-folder-hover-icon-color: var(--white0);
+
+    /* New */
+    --hierarchy-new-folder-color: var(--black1);
+    --hierarchy-new-folder-text-color: var(--white0);
+    --hierarchy-new-folder-icon-color: var(--white2);
+
+    /* File */
     --hierarchy-file-color: var(--black2);
     --hierarchy-file-text-color: var(--white1);
 
     --hierarchy-selected-file-color: var(--black2);
     --hierarchy-selected-file-text-color: var(--white0);
 
+    /* Tree */
     --hierarchy-tree-vertical-color: var(--black2);
-    --hierarchy-tree-vertical-thickness: 2px;
-    --hierarchy-tree-horizontal-color: var(--black2);       /* Implement later */
-    --hierarchy-tree-horizontal-thickness: 2px;             /* Implement later */
+    --hierarchy-tree-vertical-thickness: 2;
+    --hierarchy-tree-horizontal-color: var(--black2);
+    --hierarchy-tree-horizontal-thickness: 2;
+    
+    --hierarchy-tree-hover-vertical-color: var(--magenta);      /* Not used? */
+    --hierarchy-tree-hover-vertical-thickness: 8;               /* Not used? */
+    --hierarchy-tree-hover-horizontal-color: var(--magenta);    /* Not used? */
+    --hierarchy-tree-hover-horizontal-thickness: 8;             /* Not used? */
 
 
 
