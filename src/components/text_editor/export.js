@@ -69,8 +69,9 @@ const populatePopupContent = (format) => {
 const exportPDF = async (settings) => {
   try {
     const delta = quill.getContents();
+    const ops = Array.isArray(delta) ? delta : delta.ops;
 
-    if (delta.ops.length === 0) {
+    if (ops.length === 0) {
       alert('The text editor is empty. Please write something before exporting.');
       return;
     }
@@ -122,10 +123,13 @@ const exportPDF = async (settings) => {
 
     // Helper to wrap text within a line width
     const wrapText = (text, font, fontSize, maxWidth) => {
+      // Replace tabs with spaces
+      text = text.replace(/\t/g, '    ');
+    
       const words = text.split(' ');
       const lines = [];
       let currentLine = '';
-
+    
       words.forEach((word) => {
         const testLine = currentLine + (currentLine ? ' ' : '') + word;
         const testWidth = font.widthOfTextAtSize(testLine, fontSize);
@@ -136,13 +140,13 @@ const exportPDF = async (settings) => {
           currentLine = word;
         }
       });
-
+    
       if (currentLine) lines.push(currentLine);
       return lines;
     };
 
     // Iterate over the delta and render text with styles
-    for (const op of delta.ops) {
+    for (const op of ops) {
       if (typeof op.insert === 'string') {
         const lines = op.insert.split('\n');
         for (let i = 0; i < lines.length; i++) {
