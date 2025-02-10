@@ -30,6 +30,8 @@
 
     /* Writing */
     --background-color: var(--black0);
+    --background-icon-color: transparent;
+    --background-icon-scale: 0;
 
 
     --header-section-color: var(--black1);

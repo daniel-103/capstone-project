@@ -4,14 +4,18 @@
         <meta charset="UTF-8">
         <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Creative Writing App</title>
+        <title>Skryptor</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <div id="main">
             <div id="header">
                 <div id="logo">
-                    🤓
+                    <button id="logo-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="467" height="354" viewBox="0 0 467 354">
+                            <path id="Color_Fill_1" data-name="Color Fill 1" class="cls-1" d="M161,0a105.156,105.156,0,0,1,72,30,105.011,105.011,0,0,0,0,147,105.145,105.145,0,0,1-72,30c-28.652.333-58.333-11.283-79-35-17.878-20.517-25.386-46.258-25-70,0.428-26.312,10.767-55.882,35-77A103.125,103.125,0,0,1,161,0Zm45,0c0.006,0,123.99,0,124,0h0s7.709,0.948,13,2c29.369,5.842,50,28,50,28h0l74,73a100.431,100.431,0,0,1-30,21,103.838,103.838,0,0,1-43,9,105.374,105.374,0,0,1-46-10c-11.94-5.735-22.682-14.832-27-19-20.273-19.566-63.671-61.577-76-76h0c-1.877-1.871-12.764-13.042-22-19a146.258,146.258,0,0,0-17-9h0ZM307,147a102.88,102.88,0,0,1,73,30c20.731,20.714,30.124,48.116,30,74-0.125,26.092-9.945,53.515-31,74a103.848,103.848,0,0,1-145-1,105.98,105.98,0,0,0,30-73c0.2-19.863-4.452-37.748-13-52a103.213,103.213,0,0,0-18-22h0a111.724,111.724,0,0,1,33-22A105.486,105.486,0,0,1,307,147ZM75,220a103.235,103.235,0,0,1,33,6c17.806,6.4,32.241,18.551,38,24,23.387,22.127,47.858,46.55,72,71,2.978,3.016,5.957,6,9,9a89.585,89.585,0,0,0,36,24c-35.068-.018-86.742-0.054-105,0h-1c-21.54-.055-40.458-3.568-51-8-14.524-6.107-24.626-15.826-31-22-25.506-24.707-49.731-48.92-74-74A99.233,99.233,0,0,1,75,220Z"/>
+                        </svg>
+                    </button>
                 </div>
                 <div id="header-options">
                     <button id="fileButton">File</button>
@@ -37,17 +41,8 @@
                     </button>
                 </div>
             </div>
+            <div id="background"></div>
             <iframe id="window" src="components/template/template.html" frameborder="0"></iframe>
-            <!-- <div id="window">
-                <div id="leftPanel">
-                    <object type="text/html" data="components/hierarchy/hierarchy.html" class="import"></object>
-                </div>
-                <div id="panelResizer"></div>
-                <div id="rightPanel">
-                    <div id="tab-header"></div>
-                    <div id="page-window"></div>
-                </div>
-            </div> -->
         </div>
     </body>
 
@@ -56,5 +51,6 @@
     <script src="db.js"></script>
     <script type="module" src="filedropdown.js"></script>
     <script type="module" src="./components/text_editor/export.js"></script>
+    <script src="./components/menus/themes.js"></script>   <!-- Hey Stephan. You're plobably editting this to implement menus. If so, take this out and load it wherever you are loading the other scripts for the various menus and stuff in the header menus.-->
     <script src="redirect.js"></script>
 </html>

@@ -30,7 +30,7 @@
     --hub-background-color: var(--light-black);
     --hub-header-text-color: var(--pink);
 
-    --hub-card-color: var(--light-black);
+    --hub-card-color: transparent;
     --hub-card-title-text-color: var(--grey);
     --hub-card-desc-text-color: var(--light-blue);
 
@@ -49,6 +49,8 @@
 
     /* Writing */
     --background-color: var(--light-black);
+    --background-icon-color: #2B2B2B;
+    --background-icon-scale: 0.75;
 
 
 
