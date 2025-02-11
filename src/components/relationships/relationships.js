@@ -26,7 +26,7 @@ function createRelationshipPageModule(relationship) {
     const container = document.createElement("div");
     container.classList.add("page-module");
 
-    const relationshipName = relationship.modules?.name?.value[0] || "no name";
+    const relationshipName = relationship.modules[0]?.value[[relationship.changeIndex || 0]] || "no name";
     const pageName = document.createElement("span");
     pageName.textContent = relationshipName;
     container.appendChild(pageName);
@@ -79,14 +79,14 @@ async function createnewRelationship() {
     const newRelationship = {
         type: 'folder',
         fileType: 'relationship',
-        modules: {
-          name:            { value: ['New Relationship'],  position: { x:  31, y:  62 }, size: { width: "200px", height: "40px" } },
-          entities:        { value: ['Entities Involved'], position: { x: 465, y: 432 }, size: { width: "465px", height: "220px" } },
-          history:         { value: ['History'],           position: { x: 465, y:  62 }, size: { width: "465px", height: "260px" } },
-          dynamics:        { value: ['Dynamics'],          position: { x:  31, y: 167 }, size: { width: "325px", height: "125px" } },
-          conflict:        { value: ['Conflict'],          position: { x:  31, y: 550 }, size: { width: "325px", height: "125px" } },
-          potential:       { value: ['Potential'],         position: { x:  31, y: 350 }, size: { width: "325px", height: "145px" } },
-        },
+        modules: [
+            { type: "name",      value: ['New Relationship'],  position: { x:  31, y:  62 }, size: { width: "200px", height: "40px" } },
+            { type: "entities",  value: ['Entities Involved'], position: { x: 465, y: 432 }, size: { width: "465px", height: "220px" } },
+            { type: "history",   value: ['History'],           position: { x: 465, y:  62 }, size: { width: "465px", height: "260px" } },
+            { type: "dynamics",  value: ['Dynamics'],          position: { x:  31, y: 167 }, size: { width: "325px", height: "125px" } },
+            { type: "conflict",  value: ['Conflict'],          position: { x:  31, y: 550 }, size: { width: "325px", height: "125px" } },
+            { type: "potential", value: ['Potential'],         position: { x:  31, y: 350 }, size: { width: "325px", height: "145px" } },
+        ],
         changes: ['Beginning'],
         changeIndex: 0
       }
