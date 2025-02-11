@@ -8,7 +8,8 @@
     "start": "cross-env NODE_ENV=production electron .",
     "dev": "cross-env NODE_ENV=development electron .",
     "dist": "electron-builder",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "clearDB": "node scripts/clearDB.js"
   },
   "keywords": [],
   "author": "",
