@@ -55,11 +55,24 @@ for (const dropdownOption of headerOptions.children) {
 }
 
 // Button functionality
+
+// Logo
+
+const redirectButton = document.getElementById('logo-btn');
+const windowIframe = document.getElementById('window');
+
+if (redirectButton && windowIframe) {
+  redirectButton.addEventListener('click', () => {
+	windowIframe.src = 'components/template/template.html';
+  });
+}
+
 // File
 //      Save
 
 // 		Save as
 const exportButton = document.getElementById("file-save-as-btn")
+
 
 //		Settings
 const settingsButton = document.getElementById("file-settings-btn");
@@ -69,6 +82,10 @@ settingsButton.addEventListener("click", () => {
 
 // Edit
 //		Undo
+const undoButton = document.getElementById("edit-undo-btn");
+undoButton.addEventListener("click", () => {
+	window.quill.history.undo();
+});
 
 //		Redo
 
