@@ -1,0 +1,109 @@
+html, body, p {
+    margin: 0;
+    font-family: Helvetica;
+    transition: all 0.2s ease;
+}
+
+body {
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+}
+
+#theme-section {
+    position: relative;
+    height: 25rem;
+    width: 15rem;
+    background-color: var(--hierarchy-section-color);
+    overflow: auto;
+    padding: 1rem;
+}
+
+#theme-section button {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    border: none;
+    cursor: pointer;
+    color: var(--hierarchy-open-folder-text-color);
+    background-color: var(--hierarchy-open-folder-color);
+    padding: 0.25rem;
+}
+
+#theme-section button:hover {
+    border: none;
+    cursor: pointer;
+    color: var(--hierarchy-open-folder-hover-text-color);
+    background-color: var(--hierarchy-open-folder-hover-color);
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+.folder > ul {
+    position: relative;
+    padding-left: 1rem;
+}
+
+.file,
+.folder {
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+.folder {
+    background-color: transparent;
+    color: white;
+}
+
+.folder > ul {
+    height: 0;
+    overflow: hidden;
+    cursor: pointer;
+    interpolate-size: allow-keywords;
+    transition: height 0.2s ease;
+}
+
+.folder.open > ul {
+    height: auto;
+}
+
+
+
+.folder > p {
+    padding-left: 0.25rem;
+    color: var(--hierarchy-folder-text-color);
+    background-color: var(--hierarchy-folder-color);
+}
+
+.folder:hover > p {
+    color: var(--hierarchy-folder-hover-text-color);
+    background-color: var(--hierarchy-folder-hover-color);
+}
+
+.folder.open > p {
+    color: var(--hierarchy-open-folder-text-color);
+    background-color: var(--hierarchy-open-folder-color);
+}
+
+.folder:hover.open > p {
+    color: var(--hierarchy-open-folder-hover-text-color);
+    background-color: var(--hierarchy-open-folder-hover-color);
+}
+
+.file p {
+    padding-left: 0.25rem;
+    color: var(--hierarchy-file-text-color);
+    background-color: var(--hierarchy-file-color);
+}
+
+.file p:hover {
+    color: var(--hierarchy-file-hover-text-color);
+    background-color: var(--hierarchy-file-hover-color);
+}

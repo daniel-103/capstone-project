@@ -7,7 +7,10 @@ contextBridge.exposeInMainWorld('electron', {
     minimize: () => ipcRenderer.send('minimize-window'),
     maximize: () => ipcRenderer.send('maximize-window'),
     close: () => ipcRenderer.send('close-window'),
-    getAppPath: () => ipcRenderer.invoke('get-app-path')
+
+    getAppPath: () => ipcRenderer.invoke('get-app-path'),
+    
+    getThemes: () => ipcRenderer.invoke('getThemes'),
 });
 
 // Database methods

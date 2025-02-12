@@ -4,6 +4,7 @@ const PouchDB = require('pouchdb');
 PouchDB.plugin(require("pouchdb-find"));
 
 const path = require('path');
+const fs = require('fs');
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -179,3 +180,23 @@ ipcMain.handle('newProject', async (_, newProj) => {
     return { newProjPostResponse, programUpdateResponse };
   } catch (error) {return error}
 })
+
+ipcMain.handle('getThemes', async () => {
+  const themesPath = path.join(__dirname, 'src/assets/themes');
+  return getThemes(themesPath)
+})
+
+function getThemes(dir) {
+  let results = [];
+  const files = fs.readdirSync(dir, { withFileTypes: true });
+
+  for (const file of files) {
+      const filePath = path.join(dir, file.name);
+      if (file.isDirectory()) {
+          results.push({ folder: file.name, children: getThemes(filePath) });
+      } else if (file.isFile() && file.name.endsWith('.css')) {
+          results.push({ file: file.name, path: filePath });
+      }
+  }
+  return results;
+}

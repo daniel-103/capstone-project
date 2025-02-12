@@ -142,9 +142,9 @@
     /* File */
     --hierarchy-file-color: transparent;
     --hierarchy-file-text-color: var(--grey);
-
-    --hierarchy-selected-file-color: var(--light-black);
-    --hierarchy-selected-file-text-color: var(--grey);
+    
+    --hierarchy-file-hover-color: var(--light-black);
+    --hierarchy-file-hover-text-color: var(--grey);
 
     /* Tree */
     --hierarchy-tree-vertical-color: var(--purple);

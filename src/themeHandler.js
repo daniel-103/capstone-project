@@ -1,14 +1,14 @@
 let themePath;
 
 // Get theme from local storage
-const themeFile = localStorage.getItem('theme') || 'assets/themes/dark.css';
+// const themeFile = localStorage.getItem('theme') || 'assets/themes/dark.css';
 
 
 // Get path from ipc through context bridge
-window.electron.getAppPath().then(appPath => {
-    // Construct theme path
-    themePath = `${appPath}/src/${themeFile}`;
-});
+// window.electron.getAppPath().then(appPath => {
+//     // Construct theme path
+//     themePath = `${appPath}/src/${themeFile}`;
+// });
 
 // Once document is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function injectTheme(object) {
-    // console.log('injecting theme into object', object);
+    themePath = localStorage.getItem('theme')
 
     // Inject theme for the current object (document or imported object)
     const doc = object.contentDocument || object;

@@ -30,9 +30,6 @@ for (const dropdownOption of headerOptions.children) {
 		const openFoldoutButton = foldoutOption.querySelector("button");
 		const foldout = foldoutOption.querySelector(".foldout-wrapper");
 
-		console.log(openFoldoutButton)
-		console.log(foldout)
-
 		// Click button, open foldout
 		openFoldoutButton.addEventListener("click", () => {
 			foldout.classList.toggle("open");
@@ -65,8 +62,10 @@ for (const dropdownOption of headerOptions.children) {
 const exportButton = document.getElementById("file-save-as-btn")
 
 //		Settings
-
-// 		Preferences
+const settingsButton = document.getElementById("file-settings-btn");
+settingsButton.addEventListener("click", () => {
+	document.getElementById("overlay").classList.toggle("open")
+})
 
 // Edit
 //		Undo
@@ -89,18 +88,6 @@ const exportButton = document.getElementById("file-save-as-btn")
 // 		Zoom out
 
 //      Reset
-
-// 		Themes
-document.getElementById('view-theme-btn').addEventListener('click', () => {
-	if (localStorage.getItem('theme') === 'assets/themes/dark.css') {
-		localStorage.setItem('theme', 'assets/themes/spaceDust.css');
-	} else {
-		localStorage.setItem('theme', 'assets/themes/dark.css');
-	}
-	injectTheme(document);
-	console.log('Theme changed');
-	location.reload();
-});
 
 // Insert
 //      Image

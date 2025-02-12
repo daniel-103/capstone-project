@@ -286,11 +286,12 @@ li > .file-name::after {
 .file {
     position: relative;
     padding-left: 1.25rem;
-    color: var(--hierarchy-file-text-color);
     cursor: pointer;
+    color: var(--hierarchy-file-text-color);
+    background-color: var(--hierarchy-file-color);
 }
 
 .file:hover {
-    background-color: var(--hierarchy-selected-file-color);
-    color: var(--hierarchy-selected-file-text-color);
+    color: var(--hierarchy-file-hover-text-color);
+    background-color: var(--hierarchy-file-hover-color);
 }

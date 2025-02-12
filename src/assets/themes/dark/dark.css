@@ -83,18 +83,18 @@
     --hierarchy-folder-text-color: var(--white0);
     --hierarchy-folder-icon-color: var(--white2);
     
-    --hierarchy-folder-hover-color: var(--black2);
+    --hierarchy-folder-hover-color: var(--black2);  /**/
     --hierarchy-folder-hover-text-color: var(--white0);
     --hierarchy-folder-hover-icon-color: var(--white2);
 
     /* Open */
-    --hierarchy-open-folder-color: var(--black1);
+    --hierarchy-open-folder-color: var(--black2);
     --hierarchy-open-folder-text-color: var(--white0);
-    --hierarchy-open-folder-icon-color: var(--white2);
+    --hierarchy-open-folder-icon-color: var(--white1);
     
-    --hierarchy-open-folder-hover-color: var(--black2);
+    --hierarchy-open-folder-hover-color: var(--white2);
     --hierarchy-open-folder-hover-text-color: var(--white0);
-    --hierarchy-open-folder-hover-icon-color: var(--white2);
+    --hierarchy-open-folder-hover-icon-color: var(--white1);
 
     /* Selected */
     --hierarchy-selected-folder-color: var(--black1);
@@ -106,11 +106,11 @@
     --hierarchy-selected-folder-hover-icon-color: var(--white0);
 
     /* Selected and Open */
-    --hierarchy-selected-open-folder-color: var(--black1);
+    --hierarchy-selected-open-folder-color: var(--black2);
     --hierarchy-selected-open-folder-text-color: var(--white0);
     --hierarchy-selected-open-folder-icon-color: var(--white0);
     
-    --hierarchy-selected-open-folder-hover-color: var(--black2);
+    --hierarchy-selected-open-folder-hover-color: var(--white2);
     --hierarchy-selected-open-folder-hover-text-color: var(--white0);
     --hierarchy-selected-open-folder-hover-icon-color: var(--white0);
 
@@ -120,11 +120,11 @@
     --hierarchy-new-folder-icon-color: var(--white2);
 
     /* File */
-    --hierarchy-file-color: var(--black2);
+    --hierarchy-file-color: transparent;
     --hierarchy-file-text-color: var(--white1);
 
-    --hierarchy-selected-file-color: var(--black2);
-    --hierarchy-selected-file-text-color: var(--white0);
+    --hierarchy-file-hover-color: var(--black2);
+    --hierarchy-file-hover-text-color: var(--white0);
 
     /* Tree */
     --hierarchy-tree-vertical-color: var(--black2);

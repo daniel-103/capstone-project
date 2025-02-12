@@ -36,7 +36,6 @@
                                 </div>
                                 <div class="divider"></div>
                                 <button id="file-settings-btn">Settings</button>
-                                <button id="file-preferences-btn">Preferences</button>
                                 <div class="divider"></div>
                                 <button id="redirectprojecthubButton">Project Hub</button>
                             </div>
@@ -66,8 +65,6 @@
                                 <button id="view-zoom-in-btn">Zoom In</button>
                                 <button id="view-zoom-out-btn">Zoom Out</button>
                                 <button id="view-reset-zoom-btn">Reset</button>
-                                <div class="divider"></div>
-                                <button id="view-theme-btn">Themes</button>
                             </div>
                         </div>
                     </div>
@@ -119,20 +116,17 @@
                 </div>
             </div>
             <div id="background"></div>
-            <iframe id="window" src="components/template/template.html" frameborder="0"></iframe>
+            <div id="main-window">
+                <iframe id="overlay" src="components/settings/settings.html" frameborder="0"></iframe>
+                <iframe id="window" src="components/template/template.html" frameborder="0"></iframe>
+            </div>
         </div>
     </body>
 
     <script src="themeHandler.js"></script>
     <script src="windowControls.js"></script>
     <script src="db.js"></script>
-    <!-- <script type="module" src="./components/menus/file.js"></script>
-    <script type="module" src="./components/menus/edit.js"></script>
-    <script type="module" src="./components/menus/format.js"></script>
-    <script type="module" src="./components/menus/tools.js"></script>
-    <script type="module" src="./components/menus/view.js"></script> -->
     <script src="header.js"></script>
     <script type="module" src="./components/text_editor/export.js"></script>
-    <script src="./components/menus/themes.js"></script>   <!-- Hey Stephan. You're plobably editting this to implement menus. If so, take this out and load it wherever you are loading the other scripts for the various menus and stuff in the header menus.-->
     <script src="redirect.js"></script>
 </html>
