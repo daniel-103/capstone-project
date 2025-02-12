@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Skryptor</title>
         <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="./components/menus/dropdown.css">
+        <!-- <link rel="stylesheet" href="./components/menus/dropdown.css"> -->
     </head>
     <body>
         <div id="main">
@@ -19,62 +19,92 @@
                     </button>
                 </div>
                 <div id="header-options">
-                    <div id="fileDropdown" class="header-dropdown">
-                        <button id="fileButton">File</button>
-                        <div class="header-dropdown-content">
-                            <a href="#" id="new">New</a>
-                            <a href="#" id="copy">Make a copy</a>
-                            <a href="#" id="rename">Rename</a>
+                    <div class="header-option">
+                        <button>File</button>
+                        <div class="header-dropdown-wrapper">
+                            <div class="header-dropdown">
+                                <button id="file-save-btn">Save</button>
+                                <div class="option-foldout">
+                                    <button id="file-save-as-btn">Save As...</button>   <!--Stephan's Export-->
+                                    <div class="foldout-wrapper">
+                                        <div class="foldout">
+                                            <button id="file-save-as-pdf-btn">.pdf</button>
+                                            <button id="file-save-as-docx-btn">.docx</button>
+                                            <button id="file-save-as-txt-btn">.txt</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                <button id="file-settings-btn">Settings</button>
+                                <button id="file-preferences-btn">Preferences</button>
+                                <div class="divider"></div>
+                                <button id="redirectprojecthubButton">Project Hub</button>
+                            </div>
+                        </div>
+                    </div>    
+                    <div class="header-option">
+                        <button>Edit</button>
+                        <div class="header-dropdown-wrapper">
+                            <div class="header-dropdown">
+                                <button id="edit-undo-btn">Undo</button>
+                                <button id="edit-redo-btn">Redo</button>
+                                <div class="divider"></div>
+                                <button id="edit-cut-btn">Cut</button>
+                                <button id="edit-copy-btn">Copy</button>
+                                <button id="edit-paste-btn">Paste</button>
+                                <div class="divider"></div>
+                                <button id="edit-find-btn">Find</button>
+                                <button id="edit-replace-btn">Replace</button>
+
+                            </div>
                         </div>
                     </div>
-                    <div id="editDropdown" class="header-dropdown">
-                        <button id="editButton">Edit</button>
-                        <div class="header-dropdown-content">
-                            <a href="#" id="undo">Undo</a>
-                            <a href="#" id="redo">Redo</a>
-                            <a href="#" id="cut">Cut</a>
-                            <a href="#" id="copy">Copy</a>
-                            <a href="#" id="paste">Paste</a>
+                    <div class="header-option">
+                        <button>View</button>
+                        <div class="header-dropdown-wrapper">
+                            <div class="header-dropdown">
+                                <button id="view-zoom-in-btn">Zoom In</button>
+                                <button id="view-zoom-out-btn">Zoom Out</button>
+                                <button id="view-reset-zoom-btn">Reset</button>
+                                <div class="divider"></div>
+                                <button id="view-theme-btn">Themes</button>
+                            </div>
                         </div>
                     </div>
-                    <div id="viewDropdown" class="header-dropdown">
-                        <button id="viewButton">View</button>
-                        <div class="header-dropdown-content">
-                            <a href="#" id="zoomIn">Zoom In</a>
-                            <a href="#" id="zoomOut">Zoom Out</a>
-                            <a href="#" id="resetZoom">Reset Zoom</a>
-                            <a href="#" id="toggleFullScreen">Full Screen</a>
-                            <a href="#" id="theme">Themes</a>
+                    <div class="header-option">
+                        <button>Insert</button>
+                        <div class="header-dropdown-wrapper">
+                            <div class="header-dropdown">
+                                <button id="insert-image-btn">Image</button>
+                                <button id="insert-table-btn">Table</button>
+                                <button id="insert-drawing-btn">Drawing</button>
+                                <button id="insert-chart-btn">Chart</button>
+                            </div>
                         </div>
                     </div>
-                    <div id="insertDropdown" class="header-dropdown">
-                        <button id="insertButton">Insert</button>
-                        <div class="header-dropdown-content">
-                            <a href="#" id="image">Image</a>
-                            <a href="#" id="table">Table</a>
-                            <a href="#" id="drawing">Drawing</a>
-                            <a href="#" id="chart">Chart</a>
+                    <div class="header-option">
+                        <button>Format</button>
+                        <div class="header-dropdown-wrapper">
+                            <div class="header-dropdown">
+                                <button id="format-footer-btn">Headers & footers</button>
+                                <button id="format-page-numbers-btn">Page Numbers</button>
+                                <div class="divider"></div>
+                                <button id="format-drawing-btn">Drawing</button>
+                                <button id="format-chart-btn">Chart</button>
+                            </div>
                         </div>
                     </div>
-                    <div id="formatDropdown" class="header-dropdown">
-                        <button id="formatButton">Format</button>
-                        <div class="header-dropdown-content">
-                            <a href="#" id="headerFooter">Headers & footers</a>
-                            <a href="#" id="pageNumbers">Page Numbers</a>
-                            <a href="#" id="drawing">Drawing</a>
-                            <a href="#" id="chart">Chart</a>
+                    <div class="header-option">
+                        <button>Tools</button>
+                        <div class="header-dropdown-wrapper">
+                            <div class="header-dropdown">
+                                <button id="tools-spelling-btn">Spelling & Grammar</button>
+                                <button id="tools-word-count-btn">Word Count</button>
+                                <div class="divider"></div>
+                                <button id="tools-find-file-btn">Find File</button>
+                            </div>
                         </div>
                     </div>
-                    <div id="toolDropdown" class="header-dropdown">
-                        <button id="toolButton">Tools</button>
-                        <div class="header-dropdown-content">
-                            <a href="#" id="spelling">Spelling & Grammar</a>
-                            <a href="#" id="wordCount">Word Count</a>
-                            <a href="#" id="findReplace">Find & Replace</a>
-                        </div>
-                    </div>
-                    <button>etc...</button>
-                    <button id="redirectprojecthubButton">Project Hub</button>
                 </div>
                 <div id="window-controls">
                     <button id="minimize">
@@ -96,11 +126,12 @@
     <script src="themeHandler.js"></script>
     <script src="windowControls.js"></script>
     <script src="db.js"></script>
-    <script type="module" src="./components/menus/file.js"></script>
+    <!-- <script type="module" src="./components/menus/file.js"></script>
     <script type="module" src="./components/menus/edit.js"></script>
     <script type="module" src="./components/menus/format.js"></script>
     <script type="module" src="./components/menus/tools.js"></script>
-    <script type="module" src="./components/menus/view.js"></script>
+    <script type="module" src="./components/menus/view.js"></script> -->
+    <script src="header.js"></script>
     <script type="module" src="./components/text_editor/export.js"></script>
     <script src="./components/menus/themes.js"></script>   <!-- Hey Stephan. You're plobably editting this to implement menus. If so, take this out and load it wherever you are loading the other scripts for the various menus and stuff in the header menus.-->
     <script src="redirect.js"></script>

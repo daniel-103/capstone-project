@@ -1,9 +1,9 @@
 import { quill } from './text_editor.js';
 
-document.getElementById('exportButton').addEventListener('click', () => {
-  const dropdown = document.getElementById('exportDropdown');
-  dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-});
+// window.top.document.getElementById('file-save-as-btn').addEventListener('click', () => {
+//   const dropdown = document.getElementById('exportDropdown');
+//   dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+// });
 
 const settingsPopup = document.getElementById("exportSettingsPopup");
 const settingsContent = document.getElementById("settingsContent");
@@ -325,8 +325,8 @@ const exportDOCX = async (settings) => {
 
 
 // Event listeners for export buttons
-document.getElementById('exportPDF').addEventListener('click', () => populatePopupContent("PDF"));
-document.getElementById('exportDOCX').addEventListener('click', () => populatePopupContent("DOCX"));
+window.top.document.getElementById('file-save-as-pdf-btn').addEventListener('click', () => populatePopupContent("PDF"));
+window.top.document.getElementById('file-save-as-docx-btn').addEventListener('click', () => populatePopupContent("DOCX"));
 
 // Confirm export button logic
 exportConfirm.addEventListener('click', () => {
@@ -352,7 +352,7 @@ exportCancel.addEventListener('click', () => {
   settingsPopup.style.display = "none";
 });
 
-document.getElementById('exportTXT').addEventListener('click', async () => {
+window.top.document.getElementById('file-save-as-txt-btn').addEventListener('click', async () => {
   try {
     const delta = quill.getContents(); // Get Quill delta (text + formatting)
 

@@ -30,7 +30,7 @@
     --hub-background-color: var(--light-black);
     --hub-header-text-color: var(--pink);
 
-    --hub-card-color: transparent;
+    --hub-card-color: rgba(0, 0, 0, 0.1);
     --hub-card-title-text-color: var(--grey);
     --hub-card-desc-text-color: var(--light-blue);
 
@@ -49,7 +49,7 @@
 
     /* Writing */
     --background-color: var(--light-black);
-    --background-icon-color: #2B2B2B;
+    --background-icon-color: rgba(0, 0, 0, 0.25);
     --background-icon-scale: 0.75;
 
 
@@ -64,6 +64,14 @@
 
     --header-button-hover-color: var(--pink);
     --header-hover-text-color: var(--black);
+
+    --header-dropdown-color: var(--black);
+    --header-dropdown-text-color: var(--pink);
+
+    --header-dropdown-hover-color: var(--pink);
+    --header-dropdown-hover-text-color: var(--black);
+
+    --header-dropdown-divider-color: var(--pink);
 
     --header-window-controls-color: var(--black);
     --header-window-controls-icon-color: var(--pink);

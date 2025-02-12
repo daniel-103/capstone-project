@@ -45,6 +45,14 @@
     --header-button-hover-color: var(--white0);
     --header-hover-text-color: var(--black1);
 
+    --header-dropdown-color: var(--black2);
+    --header-dropdown-text-color: var(--white0);
+
+    --header-dropdown-hover-color: var(--white0);
+    --header-dropdown-hover-text-color: var(--black0);
+
+    --header-dropdown-divider-color: var(--white2);
+
     --header-window-controls-color: transparent;
     --header-window-controls-icon-color: var(--white0);
     --header-window-controls-hover-color: var(--white0);
