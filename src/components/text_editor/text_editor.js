@@ -107,8 +107,14 @@ const quill = new Quill('#editor', {
       unit: 'word'
     }
   },
-  theme: 'snow'
+  theme: 'snow',
+  history: {
+    delay: 2000,
+    maxStack: 500,
+    userOnly: true
+  }
 });
+
 let sectionButton = document.querySelector('.ql-section-button');
 if (sectionButton) {
   sectionButton.innerHTML = 'C';  // Set "C" as the button's icon text

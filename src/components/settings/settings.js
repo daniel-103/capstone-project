@@ -5,7 +5,7 @@ themeSection.querySelector('p').addEventListener('click', (event) => {
     themeList.parentElement.classList.toggle('open')
 })
 
-window.top.document.getElementById('overlay').classList.add('open')
+//window.top.document.getElementById('overlay').classList.add('open')
 
 window.top.electron.getThemes()
    .then(themes => {

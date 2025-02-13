@@ -83,11 +83,10 @@ settingsButton.addEventListener("click", () => {
 // Edit
 //		Undo
 const undoButton = document.getElementById("edit-undo-btn");
-undoButton.addEventListener("click", () => {
-	window.quill.history.undo();
-});
+
 
 //		Redo
+const redoButton = document.getElementById("edit-redo-btn");
 
 //		Cut
 
