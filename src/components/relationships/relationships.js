@@ -1,3 +1,5 @@
+import relationshipData from "../entity_types/relationship.js"
+
 async function initrelationshipsPage() {    
     
     const relationships = await getRelationships();
@@ -22,7 +24,7 @@ async function getRelationships() {
 }
 
 function createRelationshipPageModule(relationship) {
-    const path = "../relationship_page/relationship_page.html";
+    const path = "../base_page/base_page.html";
     const container = document.createElement("div");
     container.classList.add("page-module");
 
@@ -64,45 +66,30 @@ function createAddRelationshipModule() {
     container.appendChild(pageName);
 
     container.addEventListener("click", async () => {
-        const newRelationship = await createnewRelationship();
-        const relationshipName = newRelationship.modules?.name?.value[1] || "no name";
+        const newRelationship = await initNewRelationship(relationshipData);
         console.log("some id: ", newRelationship._id);
-        const path = "../relationship_page/relationship_page.html?id= "+ encodeURIComponent(newRelationship._id)
     });
 
     return container;
 };
 
-async function createnewRelationship() {
-    const randomId = "relationship_" + Math.random().toString(36).substring(2, 9);
-
-    const newRelationship = {
-        type: 'folder',
-        fileType: 'relationship',
-        modules: [
-            { type: "name",      value: ['New Relationship'],  position: { x:  31, y:  62 }, size: { width: "200px", height: "40px" } },
-            { type: "entities",  value: ['Entities Involved'], position: { x: 465, y: 432 }, size: { width: "465px", height: "220px" } },
-            { type: "history",   value: ['History'],           position: { x: 465, y:  62 }, size: { width: "465px", height: "260px" } },
-            { type: "dynamics",  value: ['Dynamics'],          position: { x:  31, y: 167 }, size: { width: "325px", height: "125px" } },
-            { type: "conflict",  value: ['Conflict'],          position: { x:  31, y: 550 }, size: { width: "325px", height: "125px" } },
-            { type: "potential", value: ['Potential'],         position: { x:  31, y: 350 }, size: { width: "325px", height: "145px" } },
-        ],
-        changes: ['Beginning'],
-        changeIndex: 0
-      }
-      
-
-    const result = await window.top.db.post(newRelationship);
-    console.log("new info:", result);
-    newRelationship._rev = result.rev;
-    newRelationship._id = result.id;
-
+async function initNewRelationship(entityData) {
+    const newrelationship = await createNewRelationship(entityData);
 
     const pageList = document.getElementById("page-list");
-    const newModule = createRelationshipPageModule(newRelationship);
+    const newModule = createRelationshipPageModule(newrelationship);
     pageList.insertBefore(newModule, pageList.lastChild);
 
-    return newRelationship;
+    return newrelationship;
+}
+
+async function createNewRelationship(newrelationship) {
+
+    const result = await window.top.db.post(newrelationship);
+    newrelationship._rev = result.rev;
+    newrelationship._id = result.id;
+
+    return newrelationship;
 }
 
 function replaceCurrentTab(title, path) {
