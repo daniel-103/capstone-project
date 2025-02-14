@@ -6,10 +6,10 @@ Below is an example of a file object within the database:
 
 ```js
 {
-    _id: "d6150676-e85d-433e-b293-b07c7141bed9"
+    _id: "d6150676-e85d-433e-b293-b07c7141bed9",
     parentId: "c91a5499-26b4-400d-8dfb-2dd44c606aad",
     type: "file",
-    fileType: "character"
+    fileType: "character",
     name: "Bobathy",
     date: {
         created: new Date(),
@@ -17,7 +17,7 @@ Below is an example of a file object within the database:
     },
     modules: [
         {
-            type: "title"
+            type: "title",
             name: "Bob (Short for Bobathy)",
             position: {
                 x: 0,

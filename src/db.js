@@ -78,18 +78,59 @@ window.top.db.createIndex({
 const date = new Date();
 window.db.get("123")
     .catch(error => {
-        return window.db.put({
+        window.db.put({
             _id: "123",
             name: "NewWorldMain",
             type: "folder",
             parentId: null,
             image: "dog.jpg",
             description: "This is a test project",
-            childrenIds: [],
+            childrenIds: ["456"],
             date: {
                 created: date,
                 last: date
             }
-        }).then(() => console.log("✅ Document created"));
+        })
+        .then(() => {
+            window.db.put({
+                _id: "456",
+                parentId: "123",
+                type: "file",
+                fileType: "character",
+                name: "Bobathy",
+                date: {
+                    created: new Date(),
+                    last: new Date(),
+                },
+                modules: [
+                    {
+                        type: "title",
+                        name: "Bob (Short for Bobathy)",
+                        position: {
+                            x: 0,
+                            y: 0
+                        },
+                        scripts: ["thing.js"]
+                    },
+                    {
+                        type: "textBox",
+                        content: "Bob is just a really cool guy.",
+                        position: {
+                            x: 8,
+                            y: 16
+                        }
+                    },
+                    {
+                        type: "textBox",
+                        content: "In 1989, Bob has incurred 19.5 million dollars in debt to the IRS over multiple counts of tax fraud.",
+                        position: {
+                            x: 8,
+                            y: 64
+                        }
+                    }
+                ]
+            })
+        })
+        .then(console.log("✅ Document created"));
     });
 
