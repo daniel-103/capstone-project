@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Skriptor</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="modal.css">
         <!-- <link rel="stylesheet" href="./components/menus/dropdown.css"> -->
     </head>
     <body>
@@ -53,7 +54,6 @@
                                 <div class="divider"></div>
                                 <button id="edit-find-btn">Find</button>
                                 <button id="edit-replace-btn">Replace</button>
-
                             </div>
                         </div>
                     </div>
@@ -118,6 +118,32 @@
             <div id="main-window">
                 <iframe id="overlay" src="components/settings/settings.html" frameborder="0"></iframe>
                 <iframe id="window" src="components/template/template.html" frameborder="0"></iframe>
+            </div>
+        </div>
+
+        <!-- Find & Replace Modal -->
+        <div id="search-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="modal-title">Find</h2>
+                <input type="text" id="search-input" placeholder="Enter text to find...">
+                <div id="replace-section" style="display: none;">
+                    <input type="text" id="replace-input" placeholder="Enter replacement text...">
+                </div>
+                <div class="modal-buttons">
+                    <button id="find-next-btn">Find Next</button>
+                    <button id="find-prev-btn">Find Previous</button>
+                    <button id="replace-btn" style="display: none;">Replace</button>
+                    <button id="replace-all-btn" style="display: none;">Replace All</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Modal for No Matches Found -->
+        <div id="notification-modal" class="modal">
+            <div class="modal-content">
+                <p id="notification-message"></p>
+                <button id="close-notification">OK</button>
             </div>
         </div>
     </body>
