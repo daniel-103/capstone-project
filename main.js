@@ -34,7 +34,7 @@ const createWindow = () => {
 
   // Create the database
   const userDataPath = app.getPath('userData');
-  const dbPath = path.join(userDataPath, 'Skryptor');
+  const dbPath = path.join(userDataPath, 'Skriptor');
   console.log(`Database path: ${dbPath}`);
   db = new PouchDB(dbPath);
 

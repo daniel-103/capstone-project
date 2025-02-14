@@ -1,52 +1,109 @@
+let appPath;
 let themePath;
 
 // Get theme from local storage
-// const themeFile = localStorage.getItem('theme') || 'assets/themes/dark.css';
+let themeFile = localStorage.getItem('theme');
+// No theme?
+if (!themeFile) {
+    // Mewing is my default theme
+    themeFile = 'assets/themes/dark/dark.css';
+    // Send that sigma to the skibidi ohio office and have him edged!
+    localStorage.setItem('theme', themeFile);
+}
 
+// Get absolute path to theme. Have to do this because the htmls in iframes have different locations. Cant use realtive paths. (this is where I started making comments. I'm sorry...)
+async function setAppPath() {
+    appPath = await window.electron.getAppPath();
+    // Replace backslashes with forward slashes because Windows has an extra chromosome
+    appPath = appPath.replace(/\\/g, '/');
+}
 
-// Get path from ipc through context bridge
-// window.electron.getAppPath().then(appPath => {
-//     // Construct theme path
-//     themePath = `${appPath}/src/${themeFile}`;
-// });
+// Because js is stupid
+function waitForHead(doc) {
+    // Pinky promise I'll give you head. WAIT I mean THE head, not head. Unless??
+    return new Promise(resolve => {
+        // See bro, here it is, I didn't lie
+        if (doc.head) return resolve(doc.head);
 
-// Once document is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Inject theme for the root document
-    injectTheme(document);
-});
-
-function injectTheme(object) {
-    themePath = localStorage.getItem('theme')
-
-    // Inject theme for the current object (document or imported object)
-    const doc = object.contentDocument || object;
-
-    // Do nothing if no document
-    if (!doc) return;
-
-    // Create or update theme link 
-    const existingLink = doc.querySelector('#theme-link');
-    if (!existingLink) {
-        const link = doc.createElement('link');
-        link.id = 'theme-link';
-        link.rel = 'stylesheet';
-        link.href = themePath;
-        doc.head.appendChild(link);
-    } else {
-        existingLink.href = themePath;
-    }
-
-    // Recursively inject into nested iframes
-    doc.querySelectorAll('iframe').forEach(nestedIframe => {
-        // Try to inject theme into nested iframe
-        injectTheme(nestedIframe);
-
-        // Wait for it to load and try again just in case       this should be replaced so iframes arent injected twice
-        nestedIframe.addEventListener('load', () => {
-            injectTheme(nestedIframe);
+        // There is no head, take off your clothes.
+        const observer = new MutationObserver(() => {
+            // The doc got undecapitated? Magic?
+            if (doc.head) {
+                // Idk, don't question it
+                observer.disconnect();
+                // Found the head. :)
+                resolve(doc.head);
+            }
         });
+
+        // Trust me bro, I'll get you the head, just trust.
+        observer.observe(doc, { childList: true, subtree: true });
     });
 }
 
-window.injectTheme = injectTheme;
+// 'call' 'call' 'call' 'call' 'call' get injected get injected get injected get injected
+async function injectTheme(object) {
+    // Get someone's doxx on twitter
+    themePath = localStorage.getItem('theme');
+
+    // What's up
+    let doc;
+    try {
+        // It's like one of these, idk
+        doc = object.contentDocument || object;
+    } catch (error) {
+        // I lied 😈😈😈
+        console.warn(error);
+        return;
+    }
+
+    // fuck outa here with yo no doc lookin ass
+    if (!doc) return;
+
+    // Head? 😳
+    const head = await waitForHead(doc);
+
+    // Create or update theme link
+    const existingLink = head.querySelector('#theme-link');
+    const fullLinkPath = `file://${appPath}/src/${themeFile}`;
+
+    // No link?
+    if (!existingLink) {
+        // Then build it in a cave with a box of scraps!
+        const linkObject = doc.createElement('link');
+        linkObject.id = 'theme-link';
+        linkObject.rel = 'stylesheet';
+        linkObject.href = fullLinkPath;
+
+        // LINK THAT SHIT
+        head.appendChild(linkObject);
+    } else {
+        // Yes link, change it
+        existingLink.href = fullLinkPath;
+    }
+
+    // Now do it again, recursively
+    for (const nestedIframe of doc.querySelectorAll('iframe')) {
+        // Sowwy, but the ifwame might not be woaded qwite yet...
+        nestedIframe.addEventListener('load', async () => {
+            // Now it is 😈
+            await injectTheme(nestedIframe);
+        });
+    }
+}
+
+// It's chewsday?
+async function init() {
+    try {
+        // Jarvis, Doxx my location 
+        await setAppPath();
+        // Inject black tar heroin into the top doc
+        await injectTheme(window.top.document);
+    } catch (error) {
+        // Uh oh
+        console.log(`Couldn't set app path:`, error);
+    }
+}
+
+// Bo'oh'o'wa'er
+init();
