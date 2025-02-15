@@ -37,6 +37,8 @@ Root
     Events
         The Scorching
         The Second Calamity
+    Items
+        
 ```
 They can select a folder such as "Locations" and be presented with the resulting hierarchy:
 ```

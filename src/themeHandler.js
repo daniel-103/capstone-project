@@ -1,21 +1,9 @@
 let appPath;
 let themePath;
 
-// Get theme from local storage
-let themeFile = localStorage.getItem('theme');
-// No theme?
-if (!themeFile) {
-    // Mewing is my default theme
-    themeFile = 'assets/themes/dark/dark.css';
-    // Send that sigma to the skibidi ohio office and have him edged!
-    localStorage.setItem('theme', themeFile);
-}
-
 // Get absolute path to theme. Have to do this because the htmls in iframes have different locations. Cant use realtive paths. (this is where I started making comments. I'm sorry...)
 async function setAppPath() {
     appPath = await window.electron.getAppPath();
-    // Replace backslashes with forward slashes because Windows has an extra chromosome
-    appPath = appPath.replace(/\\/g, '/');
 }
 
 // Because js is stupid
@@ -65,7 +53,6 @@ async function injectTheme(object) {
 
     // Create or update theme link
     const existingLink = head.querySelector('#theme-link');
-    const fullLinkPath = `file://${appPath}/src/${themeFile}`;
 
     // No link?
     if (!existingLink) {
@@ -73,13 +60,13 @@ async function injectTheme(object) {
         const linkObject = doc.createElement('link');
         linkObject.id = 'theme-link';
         linkObject.rel = 'stylesheet';
-        linkObject.href = fullLinkPath;
+        linkObject.href = themePath;
 
         // LINK THAT SHIT
         head.appendChild(linkObject);
     } else {
         // Yes link, change it
-        existingLink.href = fullLinkPath;
+        existingLink.href = themePath;
     }
 
     // Now do it again, recursively
@@ -97,8 +84,20 @@ async function init() {
     try {
         // Jarvis, Doxx my location 
         await setAppPath();
+
+        // Get theme from local storage
+        let themeFile = localStorage.getItem('theme');
+        // No theme?
+        if (!themeFile) {
+            // Mewing is my default theme
+            themeFile = `${appPath}/src/assets/themes/dark/dark.css`;
+            // Send that sigma to the skibidi ohio office and have him edged!
+            localStorage.setItem('theme', themeFile);
+        }
+
         // Inject black tar heroin into the top doc
         await injectTheme(window.top.document);
+
     } catch (error) {
         // Uh oh
         console.log(`Couldn't set app path:`, error);

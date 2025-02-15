@@ -4,6 +4,8 @@ let unselectedModules;
 
 document.addEventListener("DOMContentLoaded", () => {
     modules = document.querySelectorAll('.module');
+    console.log('hi')
+    console.log(modules)
     selectedModules;
     unselectedModules = document.querySelectorAll('.module:not(.selected)');;
 

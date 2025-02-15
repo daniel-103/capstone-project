@@ -1,0 +1,9 @@
+.textBox {
+    background-color:darkslategrey
+}
+
+.textBox p {
+    color: tomato;
+    font-size: 1rem;
+    margin: 0;
+}

@@ -1,3 +1,7 @@
+const DUBUG = localStorage.getItem('DEBUG') == 'true';
+window.electron.getAppPath()
+    .then((appPath) => window.appPath = appPath);
+
 const programId = 'Skriptor'
 
 const staticProgramObject = {
@@ -5,7 +9,7 @@ const staticProgramObject = {
     projects: []
 };
 
-console.log("❓ [-1] Sorry for all of these logs. Debugging was a nightmare. Feel free to comment them out if they are too annoying. I'll try to remove them or make debug mode later")
+// console.log("❓ [-1] Sorry for all of these logs. Debugging was a nightmare. Feel free to comment them out if they are too annoying. I'll try to remove them or make debug mode later")
 // Hey, looks like you either followed this message from the console or you stumbled upon this.
 // I'm using my own way of logging and debugging with the following format:
 
@@ -28,20 +32,20 @@ console.log("❓ [-1] Sorry for all of these logs. Debugging was a nightmare. Fe
 // Feel free to adopt this type of logging and debugging.
 
 // Fetch the 'Program Object' that keeps track of all of the projects. It's the highest level object. (the root)
-console.log('🛠 [0] Fetching Program Object...');
+if (DUBUG) console.log('🛠 [0] Fetching Program Object...');
 window.top.db.get(programId)
     .then(programObject => {
-        console.log("✅ [0] Fetched Program Object:", programObject);
+        if (DUBUG) console.log("✅ [0] Fetched Program Object:", programObject);
     })
     .catch(error => {
-        console.log("❗ [0] Couldn't fetch Program Object:", error);
-        console.log("🛠 [0.1] Creating new Program Object...");
+        if (DUBUG) console.log("❗ [0] Couldn't fetch Program Object:", error);
+        if (DUBUG) console.log("🛠 [0.1] Creating new Program Object...");
         window.top.db.put(staticProgramObject)
             .then(response => {
-                console.log("✅ [0.1] Created new Program Object:", response);
+                if (DUBUG) console.log("✅ [0.1] Created new Program Object:", response);
             })
             .catch(error => {
-                console.log("❌ [0.1] Couldn't create new Program Object:", error);
+                if (DUBUG) console.log("❌ [0.1] Couldn't create new Program Object:", error);
             })
     });
 
@@ -107,30 +111,41 @@ window.db.get("123")
                         type: "title",
                         name: "Bob (Short for Bobathy)",
                         position: {
-                            x: 0,
-                            y: 0
+                            x: '0rem',
+                            y: '1rem'
                         },
-                        scripts: ["thing.js"]
+                        size: {
+                            x: '4rem',
+                            y: '4rem'
+                        }
                     },
                     {
                         type: "textBox",
                         content: "Bob is just a really cool guy.",
                         position: {
-                            x: 8,
-                            y: 16
+                            x: '4rem',
+                            y: '4rem'
+                        },
+                        size: {
+                            x: '8rem',
+                            y: '8rem'
                         }
                     },
                     {
                         type: "textBox",
                         content: "In 1989, Bob has incurred 19.5 million dollars in debt to the IRS over multiple counts of tax fraud.",
                         position: {
-                            x: 8,
-                            y: 64
+                            x: '4rem',
+                            y: '16rem'
+                        },
+                        size: {
+                            x: '16rem',
+                            y: '8rem'
                         }
                     }
                 ]
             })
         })
-        .then(console.log("✅ Document created"));
+        .then(() => {if (DUBUG) console.log("✅ Document created")});
     });
 
