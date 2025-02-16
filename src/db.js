@@ -89,7 +89,7 @@ window.db.get("123")
             parentId: null,
             image: "dog.jpg",
             description: "This is a test project",
-            childrenIds: ["456"],
+            childrenIds: ["456", "789"],
             date: {
                 created: date,
                 last: date
@@ -134,6 +134,56 @@ window.db.get("123")
                     {
                         type: "textBox",
                         content: "In 1989, Bob has incurred 19.5 million dollars in debt to the IRS over multiple counts of tax fraud.",
+                        position: {
+                            x: '4rem',
+                            y: '16rem'
+                        },
+                        size: {
+                            x: '16rem',
+                            y: '8rem'
+                        }
+                    }
+                ]
+            })
+
+            window.db.put({
+                _id: "789",
+                parentId: "123",
+                type: "file",
+                fileType: "character",
+                name: "Timothy",
+                date: {
+                    created: new Date(),
+                    last: new Date(),
+                },
+                modules: [
+                    {
+                        type: "title",
+                        name: "Timothy",
+                        position: {
+                            x: '0rem',
+                            y: '1rem'
+                        },
+                        size: {
+                            x: '4rem',
+                            y: '4rem'
+                        }
+                    },
+                    {
+                        type: "textBox",
+                        content: "Boy, I sure wish I had a cookie right about now!",
+                        position: {
+                            x: '4rem',
+                            y: '4rem'
+                        },
+                        size: {
+                            x: '8rem',
+                            y: '8rem'
+                        }
+                    },
+                    {
+                        type: "textBox",
+                        content: "\"Hello\", said the cookie eater, as the cookie eater eats a cookie in front of Timothy.",
                         position: {
                             x: '4rem',
                             y: '16rem'
