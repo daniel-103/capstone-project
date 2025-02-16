@@ -85,8 +85,7 @@ export function displayChangesPanel(characterData) {
     const newIndex = currentIndex + 1;
     const newChangeName = "Chapter " + (newIndex + 1);
     characterData.changes.splice(newIndex, 0, newChangeName);
-    Object.keys(characterData.modules).forEach(key => {
-      const mod = characterData.modules[key];
+    characterData.modules.forEach(mod => {
       if (Array.isArray(mod.value)) {
         const currentVal = mod.value[currentIndex] || "";
         mod.value.splice(newIndex, 0, currentVal);

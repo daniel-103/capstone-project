@@ -6,53 +6,18 @@ export function displayModules(characterData, containerSelector) {
   const modules = characterData.modules || [];
   console.log(modules);
   modules.forEach(modData => {
-  
-      // Create the outer module element.
-      const moduleElem = document.createElement("div");
-      moduleElem.classList.add("module", "text-module");
-      moduleElem.style.left = (modData.position.x || 0) + "px";
-      moduleElem.style.top = (modData.position.y || 0) + "px";
-      moduleElem.dataset.moduleKey = modData.type;
-      moduleElem.style.zIndex = currentZ;
-      moduleElem.style.width = modData.size?.width || "200px";
-      moduleElem.style.height = modData.size?.height || "100px";
-  
-  
-      // Initialize resizing 
-      if (typeof initModuleResize === "function") {
-        initModuleResize(moduleElem);
-      }
-  
-      // Bring module to front on click.
-      moduleElem.addEventListener("click", function(e) {
-        bringToFront(moduleElem);
+
+      
+      modData.scripts.forEach(script => {
+        const scriptElem = document.createElement("script");
+        scriptElem.src = "../scripts/text.js";
+        scriptElem.setAttribute("data-modData", JSON.stringify(modData));
+        scriptElem.setAttribute("data-container", containerSelector);
+        scriptElem.setAttribute("data-characterData", JSON.stringify(characterData));
+        
+        document.querySelector(containerSelector).appendChild(scriptElem);
       });
-  
-      // Create and insert module type element.
-      const typeElem = document.createElement("div");
-      typeElem.classList.add("module-type");
-      typeElem.textContent = modData.type;
-      moduleElem.appendChild(typeElem);
-  
-      // Create and insert the module value element
-      const valueElem = document.createElement("div");
-      valueElem.classList.add("module-value");
-      valueElem.contentEditable = "true";
-      const changeIndex = characterData.changeIndex || 0;
-      valueElem.textContent = (modData.value && modData.value[changeIndex]) || "";
-      moduleElem.appendChild(valueElem);
-  
-      // Add the transparent overlay for drag detection.
-      const dragRegion = document.createElement("div");
-      dragRegion.classList.add("module-border-drag-region");
-      moduleElem.appendChild(dragRegion);
-  
-      container.appendChild(moduleElem);
-    
-  
-    if (typeof initializeSnapping === "function") {
-      initializeSnapping();
-    }
+
   });
   
 }

@@ -6,10 +6,12 @@ async function initCharactersPage() {
 
     const pageList = document.getElementById("page-list");
     pageList.innerHTML = "";
-
     characters.forEach((character) => {
-        const module = createCharacterPageModule(character);
-        pageList.appendChild(module);
+        if (character.modules[0].value) {
+            const module = createCharacterPageModule(character);
+            pageList.appendChild(module);
+        }
+        
     });
 
     pageList.append(createAddCharacterModule());
@@ -28,7 +30,7 @@ function createCharacterPageModule(character) {
     const container = document.createElement("div");
     container.classList.add("page-module");
 
-    const characterName = character.modules[0].value[character.changeIndex || 0] || "no name";
+    const characterName = character.modules[0]?.value[character.changeIndex || 0] || "no name";
     const pageName = document.createElement("span");
     pageName.textContent = characterName;
     container.appendChild(pageName);
@@ -94,7 +96,6 @@ async function createNewCharacter(newCharacter) {
 
 
 function replaceCurrentTab(title, path) {
-    console.log("path: ", path);
     const currTabIndex = window.parent.currTabIndex;
     const currTab = window.parent.tabs[currTabIndex];
 
