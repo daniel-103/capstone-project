@@ -141,3 +141,136 @@ findNextBtn.addEventListener("click", () => findText(true));
 findPrevBtn.addEventListener("click", () => findText(false));
 replaceOneBtn.addEventListener("click", () => replaceText(false));
 replaceAllBtn.addEventListener("click", () => replaceText(true));
+
+// Zoom In & Zoom Out & Reset
+
+// Get buttons
+const zoomInBtn = window.top.document.getElementById("view-zoom-in-btn");
+const zoomOutBtn = window.top.document.getElementById("view-zoom-out-btn");
+const resetZoomBtn = window.top.document.getElementById("view-reset-zoom-btn");
+
+// Get the editor container (adjust if needed)
+const editorContainer = document.getElementById("editor");
+
+let currentZoom = 1; // Default zoom level
+const zoomStep = 0.1; // Zoom step for each button click
+const maxZoom = 2; // Maximum zoom level
+const minZoom = 0.5; // Minimum zoom level
+
+// Function to apply zoom
+function applyZoom() {
+    editorContainer.style.transform = `scale(${currentZoom})`;
+    editorContainer.style.transformOrigin = "top left"; // Keep scaling consistent
+}
+
+// Zoom In
+zoomInBtn.addEventListener("click", () => {
+    if (currentZoom < maxZoom) {
+        currentZoom += zoomStep;
+        applyZoom();
+    }
+});
+
+// Zoom Out
+zoomOutBtn.addEventListener("click", () => {
+    if (currentZoom > minZoom) {
+        currentZoom -= zoomStep;
+        applyZoom();
+    }
+});
+
+// Reset Zoom
+resetZoomBtn.addEventListener("click", () => {
+    currentZoom = 1;
+    applyZoom();
+});
+
+// Keyboard Shortcuts for Zoom
+document.addEventListener("keydown", (event) => {
+    if (event.ctrlKey) {
+        switch (event.key) {
+            case "+": 
+                if (currentZoom < maxZoom) {
+                    currentZoom += zoomStep;
+                    applyZoom();
+                }
+                event.preventDefault(); // Prevent browser zoom
+                break;
+            case "-":
+                if (currentZoom > minZoom) {
+                    currentZoom -= zoomStep;
+                    applyZoom();
+                }
+                event.preventDefault(); // Prevent browser zoom
+                break;
+            case "0":
+                currentZoom = 1;
+                applyZoom();
+                event.preventDefault(); // Prevent browser zoom reset
+                break;
+        }
+    }
+});
+
+// Insert 
+// Image & Table
+
+// Get buttons
+const insertImageBtn = window.top.document.getElementById("insert-image-btn");
+const insertTableBtn = window.top.document.getElementById("insert-table-btn");
+
+// Function to insert an image
+function insertImage() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*"; // Only accept images
+
+    input.addEventListener("change", () => {
+        const file = input.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const imageUrl = e.target.result;
+                const range = quill.getSelection();
+                quill.insertEmbed(range.index, "image", imageUrl);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    input.click(); // Open file picker
+}
+
+// Function to insert a table
+function insertTable(rows = 3, cols = 3) {
+    let tableHTML = `<table border='1' style='border-collapse: separate; border-spacing: 20px; width: 60%; font-size: 16px; margin: 0 auto;'>`;
+    
+    for (let r = 0; r < rows; r++) {
+        tableHTML += "<tr>";
+        for (let c = 0; c < cols; c++) {
+            tableHTML += "<td style='border: 2px solid black; padding: 30px; height: 100px; width: 150px; min-width: 150px; text-align: center;'> </td>"; // Set fixed height and width, padding, no resizing
+        }
+        tableHTML += "</tr>";
+    }
+    
+    tableHTML += "</table>";
+
+    const range = quill.getSelection();
+    quill.clipboard.dangerouslyPasteHTML(range.index, tableHTML);
+
+    // Apply a CSS style after insertion to lock the cell size
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .ql-editor table td {
+            height: 60px !important;
+            width: 120px !important;
+            padding: 15px !important;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+
+// Event listeners
+insertImageBtn.addEventListener("click", insertImage);
+insertTableBtn.addEventListener("click", () => insertTable(3, 3)); // Default 3x3 table

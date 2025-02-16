@@ -80,23 +80,6 @@ settingsButton.addEventListener("click", () => {
 	document.getElementById("overlay").classList.toggle("open")
 })
 
-// Edit
-//		Undo
-const undoButton = document.getElementById("edit-undo-btn");
-
-
-//		Redo
-const redoButton = document.getElementById("edit-redo-btn");
-
-//		Cut
-
-//      Copy
-
-// 		Paste
-
-//      Find
-
-// 		Replace
 
 // View
 //      Zoom in
