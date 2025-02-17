@@ -85,7 +85,7 @@ ipcMain.on('close-window', () => {
 
 
 ipcMain.handle('get-app-path', () => {
-    return __dirname;
+    return __dirname.replace(/\\/g, '/');
 })
 
 
