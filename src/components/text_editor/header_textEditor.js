@@ -46,7 +46,7 @@ let lastSearchIndex = -1;
 
 // Function to show notification modal
 function showNotification(message) {
-    notificationMessage.textContent = message;
+    notificationMessage.innerHTML = message;
     notificationModal.style.display = "block";
 }
 
@@ -329,3 +329,68 @@ function insertPageNumbers() {
 const formatPageNumbersBtn = window.top.document.getElementById("insert-page-number-btn");
 formatPageNumbersBtn.addEventListener("click", insertPageNumbers);
 
+
+// Tools
+// Spelling & Grammer
+const spellingBtn = window.top.document.getElementById("tools-spelling-btn");
+
+// Function to check spelling & grammar using LanguageTool API
+async function checkSpellingGrammar() {
+    const text = quill.getText(); // Get the content of the editor
+
+    if (!text.trim()) {
+        showNotification("The document is empty. Please type something first.");
+        return;
+    }
+
+    try {
+        const response = await fetch("https://api.languagetool.org/v2/check", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ text: text, language: "en-US" })
+        });
+
+        const result = await response.json();
+
+        if (result.matches.length === 0) {
+            showNotification("No spelling or grammar issues found!");
+            return;
+        }
+
+        // Format errors & suggestions
+        let message = "<strong>Issues found:</strong><br><br>";
+        result.matches.forEach((error, index) => {
+            message += `<strong>${index + 1}. ${error.message}</strong><br>`;
+            message += `❌ <span style="color: red;">${error.context.text}</span><br>`;
+            if (error.replacements.length > 0) {
+                message += `✅ Suggested: <span style="color: green;">${error.replacements.map(r => r.value).join(", ")}</span><br><br>`;
+            }
+        });
+
+        showNotification(message);
+
+    } catch (error) {
+        console.error("Error checking spelling & grammar:", error);
+        showNotification("Failed to check spelling & grammar. Please try again later.");
+    }
+}
+
+// Attach event listener
+spellingBtn.addEventListener("click", checkSpellingGrammar);
+
+
+// Word Count
+// Get the button
+const wordCountBtn = window.top.document.getElementById("tools-word-count-btn");
+
+// Function to count words in the editor
+function countWords() {
+    const text = quill.getText().trim(); // Get text from Quill and remove extra spaces
+    const words = text.length > 0 ? text.split(/\s+/).length : 0; // Split by whitespace & count
+
+    // Show the word count in the notification modal
+    showNotification(`<strong>Word Count:</strong> ${words}`);
+}
+
+// Add event listener to the button
+wordCountBtn.addEventListener("click", countWords);
