@@ -274,3 +274,58 @@ function insertTable(rows = 3, cols = 3) {
 // Event listeners
 insertImageBtn.addEventListener("click", insertImage);
 insertTableBtn.addEventListener("click", () => insertTable(3, 3)); // Default 3x3 table
+
+// Format
+// Header, Footer & Page Numbers
+
+const insertHeaderBtn = window.top.document.getElementById("insert-header-btn");
+const insertFooterBtn = window.top.document.getElementById("insert-footer-btn");
+
+// Function to insert a header with a separator line
+function insertHeader() {
+    const headerHTML = `
+        <div style="text-align: center; font-size: 18px; font-weight: bold; padding: 10px;">
+            [Header]
+        </div>
+        <hr style="border: 2px solid black; margin-bottom: 10px;">`; // Line below header
+
+    quill.clipboard.dangerouslyPasteHTML(0, headerHTML); // Insert at the beginning
+}
+
+// Function to insert a footer with a separator line
+function insertFooter() {
+    const footerHTML = `
+        <hr style="border: 2px solid black; margin-top: 10px;"> <!-- Line above footer -->
+        <div style="text-align: center; font-size: 16px; font-style: italic; padding: 10px;">
+            [Footer]
+        </div>`; 
+
+    quill.clipboard.dangerouslyPasteHTML(quill.getLength(), footerHTML); // Insert at the end
+}
+
+// Event Listeners
+insertHeaderBtn.addEventListener("click", insertHeader);
+insertFooterBtn.addEventListener("click", insertFooter);
+
+
+// Function to insert page numbers
+function insertPageNumbers() {
+    const totalPages = Math.ceil(quill.getLength() / 1000); // Assuming 1000 characters per page for simplicity
+    let pageNumberHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumberHTML += `
+            <div style="text-align: right; font-size: 12px; padding: 10px;">
+                ${i}
+            </div>
+            <hr style="border: 2px solid black; margin-bottom: 10px;"> <!-- Line below header -->
+        `;
+    }
+
+    quill.clipboard.dangerouslyPasteHTML(quill.getLength(), pageNumberHTML); // Insert at the end
+}
+
+// Event Listeners
+const formatPageNumbersBtn = window.top.document.getElementById("insert-page-number-btn");
+formatPageNumbersBtn.addEventListener("click", insertPageNumbers);
+
