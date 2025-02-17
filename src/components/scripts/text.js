@@ -25,6 +25,12 @@
     valueElem.contentEditable = "true";
     const changeIndex = characterData.changeIndex || 0;
     valueElem.textContent = (modData.value && modData.value[changeIndex]) || "";
+    valueElem.dataset.saveContent = JSON.stringify(modData.value);
+    valueElem.addEventListener("input", () => {
+      modData.value[changeIndex] = valueElem.textContent;
+      valueElem.dataset.saveContent = JSON.stringify(modData.value);
+    });
+    
     moduleElem.appendChild(valueElem);
 
     // Add the transparent overlay for drag detection.
@@ -40,7 +46,7 @@
       }
     
     if (typeof initializeSnapping === "function") {
-    initializeSnapping();
+      initializeSnapping();
     }
 
 })();

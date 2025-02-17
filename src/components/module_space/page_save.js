@@ -13,7 +13,7 @@ export function setupSaveHandler(characterData, db) {
           const yPos = parseInt(elem.style.top, 10) || 0;
           const width = elem.style.width;
           const height = elem.style.height;
-          characterData.modules[i].value[characterData.changeIndex] = valueElem.textContent;
+          characterData.modules[i].value = JSON.parse(valueElem.dataset.saveContent);
           characterData.modules[i].position.x = xPos;
           characterData.modules[i].position.y = yPos;
           characterData.modules[i].size = { width, height };
