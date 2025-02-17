@@ -1,6 +1,8 @@
 const projectId = localStorage.getItem('projectId');
 const folderNames = document.querySelectorAll('.folder-name');
 
+window.top.injectTheme(document);
+
 // const defaultPagePath = "../default_page/default_page.html";
 const tabHeader = window.parent.document.getElementById("tab-header");
 const pageWindow = window.parent.document.getElementById("page-window");
