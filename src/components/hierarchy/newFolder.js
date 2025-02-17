@@ -62,8 +62,7 @@ document.getElementById('new-folder-btn').addEventListener('click', (event) => {
                                 if (DUBUG) console.log(`✅ [3.2] Linked ${name} to its parent:`, putResult);
                                 selectedFolder.querySelector('.folder-items').innerHTML = '';   // Need a better way to order items than deleating everything and regenerating them
                                 growHierarchy(parentFolder.childrenIds);
-                                document.getElementById(putResult.id).classList.add('open');
-                                slideOut.classList.remove('open');
+                                document.getElementById(putResult.id).classList.add('open', 'selected');
                             })
                             .catch(error => {
                                 if (DUBUG) console.log(`❌ [3.2] Couldn't link ${name} to its parent:`, error);

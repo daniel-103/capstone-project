@@ -24,8 +24,6 @@ function createTab(tabName, pageId) {
 
         // Is the staged page tab being closed?
         if (window.top.stagedPage._id == this.parentElement.dataset.pageId) {
-            console.log('DINGDINGDINGDING')
-
             // Need to save it before closing.
 
             // Make the open the next available tab
@@ -42,8 +40,13 @@ function createTab(tabName, pageId) {
             if (!updatedTabs.length == 0) {
                 // If tab was the last tab, next tab is the previous, else it's the next 
                 const nextIndex = index >= updatedTabs.length ? index - 1 : index;
+
+                // Get the next tab
+                const nextTab = updatedTabs[nextIndex];
                 // Get the next tab's id
-                const nextPageId = updatedTabs[nextIndex].dataset.pageId;
+                const nextPageId = nextTab.dataset.pageId;
+                // Set it as the active tab
+                nextTab.classList.add('active');
                 // Get the next tab's page
                 window.top.db.get(nextPageId)
                     .then(page => {

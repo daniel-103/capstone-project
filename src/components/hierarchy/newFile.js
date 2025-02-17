@@ -1,5 +1,6 @@
 const slideOut = document.getElementById('new-file-slide-out');
-console.log(slideOut)
+localStorage.setItem('DEBUG', 'true');
+const DEBUG = localStorage.getItem('DEBUG') == 'true';
 
 // New file
 document.getElementById('new-file-btn').addEventListener('click',(event) => {
@@ -7,17 +8,23 @@ document.getElementById('new-file-btn').addEventListener('click',(event) => {
 });
 
 // Different kinds of new pages
+// Dont want to do this for every single page. Going to make this a function and just pass it the new file object
+// ^ Task for future me
+
+// Empty page
 const newEmptyPageBtn = document.getElementById('btn-new-empty');
 newEmptyPageBtn.addEventListener('click', (event) => {
-    console.log('empty')
+    if (DUBUG) console.log(`🛠 [3] Creating new file...`);
+    const selectedFolder = document.getElementsByClassName('folder selected')[0];
+    selectedFolder.classList.add('open');
 
     // Get name
     const fileName = 'test'
 
     window.top.db.post({
-        parentId: "123",    // selected folder
+        parentId: selectedFolder.id,    // selected folder
         type: "file",       
-        fileType: "character",  // ?
+        fileType: "empty",      // ?
         name: fileName,         // uh
         date: {
             created: new Date(),
@@ -26,15 +33,49 @@ newEmptyPageBtn.addEventListener('click', (event) => {
         modules: []
     })
         .then((postResult) => {
+            if (DUBUG) console.log(`✅ [3] Created "${fileName}":`, postResult);
+            if (DUBUG) console.log(`🛠 [3.1] Fetching "${fileName}" from db...`);
             window.top.db.get(postResult.id)
                 .then(page => {
-                    console.log(page)
+                    if (DUBUG) console.log(`✅ [3.1] Fetched "${fileName}":`, page);
+                    if (DUBUG) console.log(`🛠 [3.2] Fetching "${fileName}"'s parent...`);
+                    
                     constructPage(page)
+
+                    
+                    window.top.db.get(selectedFolder.id)
+                        .then((parentFolder) => {
+                            if (DUBUG) console.log(`✅ [3.2] Fetched "${fileName}"'s parent:`, parentFolder);
+                            if (DUBUG) console.log(`🛠 [3.3] Appending "${fileName}" to its parent's childrenIds...`);
+                            parentFolder.childrenIds.push(page._id)
+                            window.top.db.put(parentFolder)
+                                .then((putResult) => {
+                                    if (DUBUG) console.log(`✅ [3.3] Appended "${fileName}" to its parent's childrenIds:`, parentFolder);
+                                    selectedFolder.querySelector('.folder-items').innerHTML = '';   // Need a better way to order items than deleating everything and regenerating them
+                                    growHierarchy(parentFolder.childrenIds);
+                                    document.getElementById(putResult.id).classList.add('open');
+                                    slideOut.classList.remove('open');
+                                })
+                                .catch(error => {
+                                    if (DUBUG) console.log(`❌ [3.3] Couldn't append "${fileName}" to its parent's childrenIds:`, error);
+                                })
+                        })
+                        .catch(error => {
+                            if (DUBUG) console.log(`❌ [3.2] Couldn't fetch "${fileName}"'s parent:`, error);
+                        })
+                })
+                .catch(error => {
+                    if (DUBUG) console.log(`❌ [3.1] Couldn't fetch "${fileName}":`, error);
                 })
         })
+        .catch(error => {
+            if (DUBUG) console.log(`❌ [3] Couldn't create "${fileName}":`, error);
+        });
 
+    
 })
 
+// Writing page
 const newWritingPageBtn = document.getElementById('btn-new-writing');
 newWritingPageBtn.addEventListener('click', (event) => {
     console.log('writing')
@@ -54,15 +95,15 @@ newFactionPageBtn.addEventListener('click', (event) => {
     console.log('faction')
 })
 
-// const newRelationshipPageBtn = document.getElementById('btn-new-relationship');
-// newRelationshipPageBtn.addEventListener('click', (event) => {
+const newRelationshipPageBtn = document.getElementById('btn-new-relationship');
+newRelationshipPageBtn.addEventListener('click', (event) => {
 
-// })
+})
 
-// const newTimelinePageBtn = document.getElementById('btn-new-timeline');
-// newTimelinePageBtn.addEventListener('click', (event) => {
+const newTimelinePageBtn = document.getElementById('btn-new-timeline');
+newTimelinePageBtn.addEventListener('click', (event) => {
 
-// })
+})
 
 
 
