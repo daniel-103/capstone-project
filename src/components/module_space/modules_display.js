@@ -4,13 +4,12 @@ export function displayModules(characterData, containerSelector) {
   const container = document.querySelector(containerSelector);
   container.innerHTML = "";
   const modules = characterData.modules || [];
-  console.log(modules);
   modules.forEach(modData => {
 
       
       modData.scripts.forEach(script => {
         const scriptElem = document.createElement("script");
-        scriptElem.src = "../scripts/text.js";
+        scriptElem.src = script;
         scriptElem.setAttribute("data-modData", JSON.stringify(modData));
         scriptElem.setAttribute("data-container", containerSelector);
         scriptElem.setAttribute("data-characterData", JSON.stringify(characterData));

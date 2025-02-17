@@ -1,5 +1,4 @@
 export function setupSaveHandler(characterData, db) {
-    console.log("old stuff ", characterData);
     document.addEventListener("keydown", async (event) => {
       if (!(event.ctrlKey && event.key === "s")) { return; }
       event.preventDefault();
@@ -14,7 +13,6 @@ export function setupSaveHandler(characterData, db) {
           const yPos = parseInt(elem.style.top, 10) || 0;
           const width = elem.style.width;
           const height = elem.style.height;
-          console.log(characterData.modules[i].value[characterData.changeIndex], "=====", valueElem.textContent);
           characterData.modules[i].value[characterData.changeIndex] = valueElem.textContent;
           characterData.modules[i].position.x = xPos;
           characterData.modules[i].position.y = yPos;
@@ -23,7 +21,6 @@ export function setupSaveHandler(characterData, db) {
         });
         const result = await db.put(characterData);
         characterData._rev = result.rev;
-        console.log("new stuff", characterData);
       } catch (err) {
         console.error("Error saving document:", err);
       }
