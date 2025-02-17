@@ -46,7 +46,7 @@ let lastSearchIndex = -1;
 
 // Function to show notification modal
 function showNotification(message) {
-    notificationMessage.textContent = message;
+    notificationMessage.innerHTML = message;
     notificationModal.style.display = "block";
 }
 
@@ -274,3 +274,123 @@ function insertTable(rows = 3, cols = 3) {
 // Event listeners
 insertImageBtn.addEventListener("click", insertImage);
 insertTableBtn.addEventListener("click", () => insertTable(3, 3)); // Default 3x3 table
+
+// Format
+// Header, Footer & Page Numbers
+
+const insertHeaderBtn = window.top.document.getElementById("insert-header-btn");
+const insertFooterBtn = window.top.document.getElementById("insert-footer-btn");
+
+// Function to insert a header with a separator line
+function insertHeader() {
+    const headerHTML = `
+        <div style="text-align: center; font-size: 18px; font-weight: bold; padding: 10px;">
+            [Header]
+        </div>
+        <hr style="border: 2px solid black; margin-bottom: 10px;">`; // Line below header
+
+    quill.clipboard.dangerouslyPasteHTML(0, headerHTML); // Insert at the beginning
+}
+
+// Function to insert a footer with a separator line
+function insertFooter() {
+    const footerHTML = `
+        <hr style="border: 2px solid black; margin-top: 10px;"> <!-- Line above footer -->
+        <div style="text-align: center; font-size: 16px; font-style: italic; padding: 10px;">
+            [Footer]
+        </div>`; 
+
+    quill.clipboard.dangerouslyPasteHTML(quill.getLength(), footerHTML); // Insert at the end
+}
+
+// Event Listeners
+insertHeaderBtn.addEventListener("click", insertHeader);
+insertFooterBtn.addEventListener("click", insertFooter);
+
+
+// Function to insert page numbers
+function insertPageNumbers() {
+    const totalPages = Math.ceil(quill.getLength() / 1000); // Assuming 1000 characters per page for simplicity
+    let pageNumberHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumberHTML += `
+            <div style="text-align: right; font-size: 12px; padding: 10px;">
+                ${i}
+            </div>
+            <hr style="border: 2px solid black; margin-bottom: 10px;"> <!-- Line below header -->
+        `;
+    }
+
+    quill.clipboard.dangerouslyPasteHTML(quill.getLength(), pageNumberHTML); // Insert at the end
+}
+
+// Event Listeners
+const formatPageNumbersBtn = window.top.document.getElementById("insert-page-number-btn");
+formatPageNumbersBtn.addEventListener("click", insertPageNumbers);
+
+
+// Tools
+// Spelling & Grammer
+const spellingBtn = window.top.document.getElementById("tools-spelling-btn");
+
+// Function to check spelling & grammar using LanguageTool API
+async function checkSpellingGrammar() {
+    const text = quill.getText(); // Get the content of the editor
+
+    if (!text.trim()) {
+        showNotification("The document is empty. Please type something first.");
+        return;
+    }
+
+    try {
+        const response = await fetch("https://api.languagetool.org/v2/check", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ text: text, language: "en-US" })
+        });
+
+        const result = await response.json();
+
+        if (result.matches.length === 0) {
+            showNotification("No spelling or grammar issues found!");
+            return;
+        }
+
+        // Format errors & suggestions
+        let message = "<strong>Issues found:</strong><br><br>";
+        result.matches.forEach((error, index) => {
+            message += `<strong>${index + 1}. ${error.message}</strong><br>`;
+            message += `❌ <span style="color: red;">${error.context.text}</span><br>`;
+            if (error.replacements.length > 0) {
+                message += `✅ Suggested: <span style="color: green;">${error.replacements.map(r => r.value).join(", ")}</span><br><br>`;
+            }
+        });
+
+        showNotification(message);
+
+    } catch (error) {
+        console.error("Error checking spelling & grammar:", error);
+        showNotification("Failed to check spelling & grammar. Please try again later.");
+    }
+}
+
+// Attach event listener
+spellingBtn.addEventListener("click", checkSpellingGrammar);
+
+
+// Word Count
+// Get the button
+const wordCountBtn = window.top.document.getElementById("tools-word-count-btn");
+
+// Function to count words in the editor
+function countWords() {
+    const text = quill.getText().trim(); // Get text from Quill and remove extra spaces
+    const words = text.length > 0 ? text.split(/\s+/).length : 0; // Split by whitespace & count
+
+    // Show the word count in the notification modal
+    showNotification(`<strong>Word Count:</strong> ${words}`);
+}
+
+// Add event listener to the button
+wordCountBtn.addEventListener("click", countWords);
