@@ -394,3 +394,84 @@ function countWords() {
 
 // Add event listener to the button
 wordCountBtn.addEventListener("click", countWords);
+
+// Get the editor and the custom context menu
+const contextMenu = window.top.document.getElementById("custom-context-menu");
+
+// Get menu buttons
+const cutBtn = window.top.document.getElementById("context-cut");
+const copyBtn = window.top.document.getElementById("context-copy");
+const pasteBtn = window.top.document.getElementById("context-paste");
+const deleteBtn = window.top.document.getElementById("context-delete");
+const insertImageConBtn = window.top.document.getElementById("context-insert-image");
+const insertTableConBtn = window.top.document.getElementById("context-insert-table");
+
+// Prevent the default right-click menu and show our custom menu
+editorContainer.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+
+    const selection = quill.getSelection();
+    const hasSelection = selection && selection.length > 0;
+
+    // Show different options based on text selection
+    cutBtn.style.display = hasSelection ? "block" : "none";
+    copyBtn.style.display = hasSelection ? "block" : "none";
+    deleteBtn.style.display = hasSelection ? "block" : "none";
+    
+    pasteBtn.style.display = "block"; // Always show paste
+    insertImageConBtn.style.display = hasSelection ? "none" : "block";
+    insertTableConBtn.style.display = hasSelection ? "none" : "block";
+
+    // Calculate the position of the context menu to be in the middle of the screen
+    const menuWidth = contextMenu.offsetWidth;
+    const menuHeight = contextMenu.offsetHeight;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    const left = (windowWidth - menuWidth) / 2;
+    const top = (windowHeight - menuHeight) / 2;
+
+    // Position the menu at the cursor's position
+    contextMenu.style.left = `${left}px`;
+    contextMenu.style.top = `${top}px`;
+    contextMenu.style.display = "block";
+});
+
+// Hide the menu when clicking elsewhere
+document.addEventListener("click", () => {
+    contextMenu.style.display = "none";
+});
+
+// Clipboard operations
+cutBtn.addEventListener("click", () => {
+    document.execCommand('cut');
+    contextMenu.style.display = "none";
+});
+
+copyBtn.addEventListener("click", () => {
+    document.execCommand('copy');
+    contextMenu.style.display = "none";
+});
+
+pasteBtn.addEventListener("click", async () => {
+    document.execCommand('paste');
+    contextMenu.style.display = "none";
+});
+
+deleteBtn.addEventListener("click", () => {
+    const selection = quill.getSelection();
+    if (selection) {
+        quill.deleteText(selection.index, selection.length);
+    }
+    contextMenu.style.display = "none";
+});
+
+insertImageConBtn.addEventListener("click", () => {
+    insertImage();
+    contextMenu.style.display = "none";
+})
+
+insertTableConBtn.addEventListener("click", () => {
+    insertTable();
+    contextMenu.style.display = "none";
+})
