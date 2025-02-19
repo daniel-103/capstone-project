@@ -150,8 +150,8 @@ const zoomOutBtn = window.top.document.getElementById("view-zoom-out-btn");
 const resetZoomBtn = window.top.document.getElementById("view-reset-zoom-btn");
 
 // Get the editor container (adjust if needed)
-const editor = document.querySelector(".editor-container");
-const editorContainer = document.getElementById("editor");
+const editorContainer = document.querySelector(".editor-container");
+const editor = document.getElementById("editor");
 
 let currentZoom = 1; // Default zoom level
 const zoomStep = 0.1; // Zoom step for each button click
@@ -160,8 +160,8 @@ const minZoom = 0.5; // Minimum zoom level
 
 // Function to apply zoom
 function applyZoom() {
-    editor.style.transform = `scale(${currentZoom})`;
-    editor.style.transformOrigin = "top left"; // Keep scaling consistent
+    editorContainer.style.transform = `scale(${currentZoom})`;
+    editorContainer.style.transformOrigin = "top left"; // Keep scaling consistent
 }
 
 // Zoom In
@@ -408,7 +408,7 @@ const insertImageConBtn = window.top.document.getElementById("context-insert-ima
 const insertTableConBtn = window.top.document.getElementById("context-insert-table");
 
 // Prevent the default right-click menu and show our custom menu
-editorContainer.addEventListener("contextmenu", (event) => {
+editor.addEventListener("contextmenu", (event) => {
     event.preventDefault();
 
     const selection = quill.getSelection();
