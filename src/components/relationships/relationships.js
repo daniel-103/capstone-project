@@ -1,7 +1,7 @@
 import relationshipData from "../entity_types/relationship.js"
 
 async function initrelationshipsPage() {    
-    
+    window.top.injectTheme(window.top.document);
     const relationships = await getRelationships();
 
     const pageList = document.getElementById("page-list");

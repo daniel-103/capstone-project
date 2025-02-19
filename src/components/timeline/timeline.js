@@ -29,6 +29,7 @@ function getX(year, width, startYear, endYear) {
 }
 
 function drawTimeline() {
+  window.top.injectTheme(window.top.document);
   const width = parseFloat(svg.style("width"));
   const height = parseFloat(svg.style("height"));
 
