@@ -43,6 +43,7 @@ function createList(items, parentElement) {
             name.addEventListener('click', (event) => {
                 localStorage.setItem('theme', item.path);
                 window.top.injectTheme(window.top.document);
+                console.log('click')
             });
             li.appendChild(name);
         }

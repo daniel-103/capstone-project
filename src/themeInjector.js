@@ -1,10 +1,21 @@
 // Theme injector V2
 
-// Get the current theme from localStorage
-const theme = localStorage.getItem('theme');
+// If no theme in localStorage
+async function init() {
+    if (!localStorage.getItem('theme')) {
+        const appPath = await window.electron.getAppPath();
+        localStorage.setItem('theme', `${appPath}/src/assets/themes/dark/dark.css`)
+    }
+} 
+
+init();
+
 
 // Inject theme on document
 function injectTheme(documentElement) {
+    // Get theme from localStorage
+    const theme = localStorage.getItem('theme');
+
     // Get head of document  
     const head = documentElement.head;
 

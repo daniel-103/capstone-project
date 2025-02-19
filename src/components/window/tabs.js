@@ -78,9 +78,9 @@ function createTab(index, tabHeader, pageWindow) {
     }
 
     // Inject theme into iframe
-    // iframe.addEventListener("load", () => {
-    //     window.top.injectTheme(iframe.contentDocument);
-    // });
+    iframe.addEventListener("load", () => {
+        window.top.injectTheme(iframe.contentDocument);
+    });
     
     pageWindow.appendChild(iframe); 
 }

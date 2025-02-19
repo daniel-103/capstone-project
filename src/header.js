@@ -62,9 +62,13 @@ const redirectButton = document.getElementById('logo-btn');
 const windowIframe = document.getElementById('window');
 
 if (redirectButton && windowIframe) {
-  redirectButton.addEventListener('click', () => {
-	windowIframe.src = 'components/template/template.html';
-  });
+    redirectButton.addEventListener('click', () => {
+        windowIframe.src = 'components/template/template.html';
+        // window.top.injectTheme(window.top.document);
+        // windowIframe.contentWindow.addEventListener('DOMContentLoaded', () => {
+        //     console.log('loaded')
+        // })
+    });
 }
 
 // File
