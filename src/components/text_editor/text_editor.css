@@ -1,9 +1,12 @@
 .ql-editor {
+    /* counter-reset: line; */
     background: white;
     margin-right: 5%;
     margin-left: 10%;
     min-height: 500px;
     margin-top: 5px;
+    word-wrap: break-word;
+    max-width: 1250px;
     
 }
 
@@ -42,4 +45,15 @@
     position:absolute;
 
 }
+
+
+/* .ql-editor p:before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    padding: 0 .5em;
+    margin-right: .5em;
+    color: #888
+  } */
 
