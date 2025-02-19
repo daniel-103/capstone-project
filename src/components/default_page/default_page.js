@@ -6,7 +6,6 @@ const pagePaths = [
 ];
 
 function initDefaultPage() {
-    window.top.injectTheme(window.top.document);
     const pageList = document.getElementById("page-list");
 
     pagePaths.forEach(({title, path}) => {

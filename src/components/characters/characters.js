@@ -1,7 +1,6 @@
 import characterData from "../entity_types/character.js"
 
 async function initCharactersPage() {    
-    window.top.injectTheme(window.top.document);
     const characters = await getCharacters();
 
     const pageList = document.getElementById("page-list");

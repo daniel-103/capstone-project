@@ -6,7 +6,6 @@ let entityData = null;
 let entityId = null;
 
 async function init() {
-  window.top.injectTheme(window.top.document);
   const urlParams = new URLSearchParams(window.location.search);
   entityId = urlParams.get("id");
   if (!entityId) {
