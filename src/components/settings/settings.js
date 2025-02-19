@@ -13,6 +13,8 @@ window.top.electron.getThemes()
         createList(themes, themeList);
     })
 
+const oldTheme = localStorage.getItem('theme');
+console.log(oldTheme)
 
 function createList(items, parentElement) {
     items.forEach(item => {
@@ -54,4 +56,14 @@ document.getElementById("theme-refresh-btn").addEventListener("click", () => {
             themeList.innerHTML = '';
             createList(themes, themeList);
         })
+});
+
+document.getElementById('cancel-settings-btn').addEventListener("click", () => {
+    localStorage.setItem('theme', oldTheme);
+    window.frameElement.classList.remove('open');
+    window.top.injectTheme(window.top.document);
+});
+
+document.getElementById('submit-settings-btn').addEventListener("click", () => {
+    window.frameElement.classList.remove('open')
 });

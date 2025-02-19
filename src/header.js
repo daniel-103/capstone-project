@@ -78,6 +78,9 @@ const exportButton = document.getElementById("file-save-as-btn")
 const settingsButton = document.getElementById("file-settings-btn");
 settingsButton.addEventListener("click", () => {
 	document.getElementById("overlay").classList.toggle("open")
+	for (const wrapper of document.getElementsByClassName("header-dropdown-wrapper")) {
+		wrapper.classList.remove("open")
+	}
 })
 
 
