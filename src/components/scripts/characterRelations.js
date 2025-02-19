@@ -39,12 +39,6 @@
     // Inject inline CSS to style the scrollbar (WebKit-specific + some standard properties):
     const scrollbarStyle = document.createElement("style");
     scrollbarStyle.textContent = `
-    /* For Firefox (thin scrollbar) */
-    .module-value {
-        scrollbar-width: thin;
-        scrollbar-color: #888 #f1f1f1;
-    }
-    /* For WebKit browsers (Chrome, Safari, etc.) */
     .module-value::-webkit-scrollbar {
         width: 6px;
     }

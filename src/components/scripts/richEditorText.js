@@ -6,7 +6,7 @@
   
     // Create the outer module element.
     const moduleElem = document.createElement("div");
-    moduleElem.classList.add("module", "text-module");
+    moduleElem.classList.add("module", "text-module", "rich-text");
     moduleElem.style.left = (modData.position.x || 0) + "px";
     moduleElem.style.top = (modData.position.y || 0) + "px";
     moduleElem.dataset.moduleKey = modData.type;
@@ -85,37 +85,28 @@
     const style = document.createElement("style");
     style.textContent = `
       /* Ensure the editor area doesn't force scrollbars if content is small. */
-      .module-value {
+      .rich-text .module-value {
         box-sizing: border-box;
-        overflow-y: auto; 
-      }
-      
-  
-      /* Custom scrollbar with curved edges (WebKit-based) */
-      .module-value::-webkit-scrollbar {
-        width: 6px;
-        displat: none;
-      }
-      .module-value::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 10px;
-      }
-      .module-value::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        overflow-y: none; 
+        height: calc(100% - 10px) !important;
       }
   
-        /* Remove the border from the entire Quill editor */
       .ql-container {
+        
         border: none !important;
+        height: auto !important;
       }
   
-      /* Remove the border from the Quill text area */
       .ql-editor {
         border: none !important;
         outline: none !important; /* Also removes focus outline */
       }
-  
+
+      .ql-toolbar {
+        position: relative !important;
+      }
     `;
+    
     document.head.appendChild(style);
 
     // Add the transparent overlay for drag detection (if used).
