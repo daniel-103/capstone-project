@@ -150,6 +150,7 @@ const zoomOutBtn = window.top.document.getElementById("view-zoom-out-btn");
 const resetZoomBtn = window.top.document.getElementById("view-reset-zoom-btn");
 
 // Get the editor container (adjust if needed)
+const editor = document.querySelector(".editor-container");
 const editorContainer = document.getElementById("editor");
 
 let currentZoom = 1; // Default zoom level
@@ -159,8 +160,8 @@ const minZoom = 0.5; // Minimum zoom level
 
 // Function to apply zoom
 function applyZoom() {
-    editorContainer.style.transform = `scale(${currentZoom})`;
-    editorContainer.style.transformOrigin = "top left"; // Keep scaling consistent
+    editor.style.transform = `scale(${currentZoom})`;
+    editor.style.transformOrigin = "top left"; // Keep scaling consistent
 }
 
 // Zoom In
