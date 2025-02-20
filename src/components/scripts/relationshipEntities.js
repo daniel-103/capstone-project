@@ -60,23 +60,14 @@
     `;
     document.head.appendChild(scrollbarStyle);
     entityIds = entityData.modules[1].value[entityData.changeIndex];
-    entityIds.forEach(id => {
+    [...new Set(entityIds)].forEach(id => {
         window.top.db.get(id).then(newEntityData => {
-            const nameModule = newEntityData.modules.find(m => m.type === "name");
-            const name = (nameModule && nameModule.value && nameModule.value[0]) || "no name";
+            
+            const relationshipModule = newEntityData.modules.find(m => m.type === "relationships");
 
-            const itemDiv = document.createElement("div");
-            itemDiv.textContent = name;
-            itemDiv.style.height = "35px";
-            itemDiv.style.width = "100%";
-            itemDiv.style.boxSizing = "border-box";
-            itemDiv.addEventListener("click", function (e) {
-                e.stopPropagation();
-                const tabHeader = window.parent.document.getElementById("tab-header");
-                const pageWindow = window.parent.document.getElementById("page-window");
+            if (!(relationshipModule.value[0].includes(entityData._id))) return;
 
-                window.parent.addNewTab(name, "../base_page/base_page.html?id=" + encodeURIComponent(id), tabHeader, pageWindow);
-            });
+            const itemDiv = getItemDiv(id, newEntityData);
 
             valueElem.appendChild(itemDiv);
 
@@ -88,11 +79,100 @@
         })
     })
 
+    const getItemDiv = (id, newEntityData) => {
+      const nameModule = newEntityData.modules.find(m => m.type === "name");
+      const name = (nameModule && nameModule.value && nameModule.value[0]) || "no name";
+      const relationshipModule = newEntityData.modules.find(m => m.type === "relationships");
+      const itemDiv = document.createElement("div");
+      itemDiv.textContent = name;
+      itemDiv.style.cssText = `
+          height: 35px;
+          width: 95%;
+          box-sizing: border-box;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 10px;
+          cursor: pointer;
+          background-color: rgb(52, 52, 52);
+          color: white;
+          transition: background-color 0.3s, color 0.3s;
+          border-radius: 10px;
+      `;
+      itemDiv.onmouseover = () => {
+          itemDiv.style.backgroundColor = "rgb(110, 110, 110)";
+          itemDiv.style.color = "black";
+      };
+        
+      itemDiv.onmouseout = () => {
+          itemDiv.style.backgroundColor = "rgb(52, 52, 52)";
+          itemDiv.style.color = "white";
+      };
+
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "X";
+      deleteButton.style.cssText = `
+          background: transparent;
+          border: none;
+          color: rgb(178, 178, 178);
+          font-size: 16px;
+          cursor: pointer;
+      `;
+      deleteButton.onmouseover = () => {
+          itemDiv.style.backgroundColor = "rgb(255, 0, 0)";
+      };
+
+      deleteButton.onmouseout = () => {
+          itemDiv.style.backgroundColor = "rgb(178, 178, 178)";
+      };
+
+      deleteButton.addEventListener("click", (event) => {
+          event.stopPropagation();
+          entityData.modules[1].value[0] = entityIds.filter(newId => newId !== id);
+          relationshipModule.value[0] = relationshipModule.value.filter(newId => newId !== entityData._id);
+          window.top.db.put(entityData);
+          window.top.db.put(newEntityData);
+          itemDiv.remove();
+      });
+
+      itemDiv.appendChild(deleteButton);
+
+      itemDiv.addEventListener("click", function (e) {
+          e.stopPropagation();
+          const tabHeader = window.parent.document.getElementById("tab-header");
+          const pageWindow = window.parent.document.getElementById("page-window");
+
+          window.parent.addNewTab(name, "../base_page/base_page.html?id=" + encodeURIComponent(id), tabHeader, pageWindow);
+      });
+
+      return itemDiv;
+    }
+
     const newEntityDiv = document.createElement("div");
     newEntityDiv.textContent = "Add Entity";
-    newEntityDiv.style.height = "35px";
-    newEntityDiv.style.width = "100%";
-    newEntityDiv.style.boxSizing = "border-box";
+    newEntityDiv.style.cssText = `
+        height: 35px;
+        width: 95%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+        cursor: pointer;
+        background-color: rgb(52, 52, 52);
+        color: white;
+        transition: background-color 0.3s, color 0.3s;
+        border-radius: 10px;
+    `;
+    newEntityDiv.onmouseover = () => {
+      newEntityDiv.style.backgroundColor = "rgb(110, 110, 110)";
+      newEntityDiv.style.color = "black";
+    };
+      
+    newEntityDiv.onmouseout = () => {
+      newEntityDiv.style.backgroundColor = "rgb(52, 52, 52)";
+      newEntityDiv.style.color = "white";
+    };
 
     newEntityDiv.addEventListener("click", function (e) {
         e.stopPropagation();
@@ -145,8 +225,9 @@
             const term = input.value.trim().toLowerCase();
             let filtered = candidates;
             filtered = candidates.filter(doc => {
-            const nameModule = doc.modules.find(m => m.type === "name");
-            return nameModule && nameModule.value[0].toLowerCase().includes(term) && !entityIds.includes(doc._id);
+              const nameModule = doc.modules.find(m => m.type === "name");
+              const relationshipIds = doc.modules.find(m => m.type === "relationships");
+              return nameModule && nameModule.value[0].toLowerCase().includes(term) && !relationshipIds.value[0].includes(entityData._id);
             });
             const suggestions = term ? filtered : filtered.slice(0, 5);
             suggestions.forEach(doc => {
@@ -166,21 +247,8 @@
           const selectCandidate = (doc) => {
             const name = doc.modules.find(m => m.type === "name").value[0];
             modData.value.push(doc._id);
-            const newItem = document.createElement("div");
-            newItem.textContent = name;
-            Object.assign(newItem.style, {
-              height: "35px",
-              width: "100%",
-              boxSizing: "border-box"
-            });
-            newItem.addEventListener("click", function (e) {
-                e.stopPropagation();
-                const tabHeader = window.parent.document.getElementById("tab-header");
-                const pageWindow = window.parent.document.getElementById("page-window");
-
-                window.parent.addNewTab(name, "../base_page/base_page.html?id=" + encodeURIComponent(doc._id), tabHeader, pageWindow);
-            });
-            // Insert new item before the "Add Entity" div.
+            const newItem = getItemDiv(doc._id, doc);
+            
             valueElem.insertBefore(newItem, newEntityDiv);
             closeDropdown();
 

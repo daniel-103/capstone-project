@@ -58,16 +58,68 @@
     changeIndex = characterData.changeIndex
     relationIds = characterData.modules[relationIndex].value[changeIndex];
     document.head.appendChild(scrollbarStyle);
-    relationIds.forEach(id => {
-        window.top.db.get(id).then(newEntityData => {
-            const nameModule = newEntityData.modules.find(m => m.type === "name");
+    [...new Set(relationIds)].forEach(id => {
+        window.top.db.get(id).then(relationData => {
+            const nameModule = relationData.modules.find(m => m.type === "name");
             const name = (nameModule && nameModule.value && nameModule.value[0]) || "no name";
+            const characterModule = relationData.modules.find(m => m.type === "entities");
+
+            if (!(characterModule.value[0].includes(characterData._id))) return;
 
             const itemDiv = document.createElement("div");
             itemDiv.textContent = name;
-            itemDiv.style.height = "35px";
-            itemDiv.style.width = "100%";
-            itemDiv.style.boxSizing = "border-box";
+            itemDiv.style.cssText = `
+                height: 35px;
+                width: 95%;
+                box-sizing: border-box;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 10px;
+                cursor: pointer;
+                background-color: rgb(52, 52, 52);
+                color: white;
+                transition: background-color 0.3s, color 0.3s;
+                border-radius: 10px;
+            `;
+            itemDiv.onmouseover = () => {
+                itemDiv.style.backgroundColor = "rgb(110, 110, 110)";
+                itemDiv.style.color = "black";
+            };
+              
+            itemDiv.onmouseout = () => {
+                itemDiv.style.backgroundColor = "rgb(52, 52, 52)";
+                itemDiv.style.color = "white";
+            };
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "X";
+            deleteButton.style.cssText = `
+                background: transparent;
+                border: none;
+                color: rgb(178, 178, 178);
+                font-size: 16px;
+                cursor: pointer;
+            `;
+            deleteButton.onmouseover = () => {
+                itemDiv.style.backgroundColor = "rgb(255, 0, 0)";
+            };
+
+            deleteButton.onmouseout = () => {
+                itemDiv.style.backgroundColor = "rgb(178, 178, 178)";
+            };
+
+            deleteButton.addEventListener("click", (event) => {
+                event.stopPropagation();
+                characterData.modules[relationIndex].value[changeIndex] = relationIds.filter(newId => newId !== id);
+                characterModule.value[0] = characterModule.value.filter(newId => newId !== characterData._id);
+                window.top.db.put(characterData);
+                window.top.db.put(relationData);
+                itemDiv.remove();
+            });
+              
+            itemDiv.appendChild(deleteButton);
+
             itemDiv.addEventListener("click", function (e) {
                 e.stopPropagation();
                 const tabHeader = window.parent.document.getElementById("tab-header");
