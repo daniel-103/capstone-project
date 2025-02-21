@@ -57,3 +57,9 @@ When the user clicks on a file in the file hierarchy, the following occures:
 3. Add a click event listener to the tab div which:
     1. Get the pageId from the tab div's dataset and fetch the file object from the database.
     2. Pass the file object to `constructPage()`.
+
+# Current page handling:
+![Current page handling diagram](../images/pageCurrent.png)
+
+# Updated page handling:
+![Updated page handling diagram](../images/pageUpdated.png)
