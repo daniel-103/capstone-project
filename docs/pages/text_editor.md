@@ -12,12 +12,27 @@ The text editor features a toolbar for formatting text (i.e. bold, italics, font
 toolbarOptions: Array holding the name for buttons on the toolbar
 
 Section class: Class for creating objects 
--	Class Vars: startInd, endInd, labelBox, lineElement
+-	Class Vars: startInd, endInd, labelBox, lineElement, labelMoveTab
 
 Creating a section: 
 Using Quill's getSelection(), we can use the users selected range of text which is used to find the 
 starting index, ending index for creating the section and its UI
 
+Creating a subsection: Within an already created section, make a selection with that section can create a new 
+section. This will add the new section to the children list of the larger section.
+
+Section moving: Clicking and dragging the white box next to the section label will allow
+the section and the text within to be moved to another spot within the text.
+If a section contains a subsection, both the section and its child subsection will move. The 
+subsection's position stays the same relative to its parent section but moves 
+in tandem with its parent relative to the overall text.
+
+Section data storage: Not currently in data base. A section alone is stored in the sections array.
+A subsection will instead be appended to its parent section children list. Sections are treated 
+similar to a tree. The text editor itself is can be considered the root, and each section is a node with subsections
+branching from their respective sections. This should be similar to other storage methods in the database 
+with other functions of the program.
+Class variables should be sufficient for storing the data into the database when that is implemented in the future.
 
 ### 2. `text_editor.css`
 Used for styling the editor, toolbar, section UI, and word counters
