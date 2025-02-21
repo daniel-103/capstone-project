@@ -336,8 +336,6 @@ const predefinedText = {
 const gallery = document.getElementById('templateGallery');
 
 async function initialize() {
-    window.top.injectTheme(window.top.document)
-
 	templates.forEach(template => {
 		const card = document.createElement('div');
 		card.className = 'template-card';
