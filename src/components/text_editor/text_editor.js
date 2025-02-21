@@ -9,6 +9,7 @@ class Section {
     this.labelBox = labelBox;
     this.lineElement = lineElement;
     this.children = [];
+    this.parent = null;
   }
 
   updateLineHeight() {
@@ -77,6 +78,12 @@ class Section {
     this.startInd = Math.max(0, this.startInd);
     this.endInd = Math.max(this.startInd, this.endInd);
     this.updateLineHeight();
+  }
+
+  setParent(parentSection) {
+    this.parent = parentSection;
+    parentSection.children.push(this);
+    console.log(`Subsection created under parent: ${parentSection.labelBox.textContent}`);
   }
 
 }
@@ -214,7 +221,13 @@ function createSection() {
   lineContainer.appendChild(labelBox);
 
   const section = new Section(startInd, endInd, labelBox, lineElement);
-  sections.push(section);
+  // Check if the new section is inside an existing section (subsection)
+  const parentSection = findParentSection(section);
+  if (parentSection) {
+    section.setParent(parentSection);
+  } else {
+    sections.push(section);
+  }
 
   const editorLength = quill.getLength();
   if (endInd >= editorLength - 1) {
@@ -230,6 +243,18 @@ function createSection() {
       sections.forEach(section => section.updateLineHeight());
     }
   });
+}
+
+function findParentSection(newSection) {
+  // Check if the new section is within the bounds of any existing section
+  for (let i = 0; i < sections.length; i++) {
+    let section = sections[i];
+    if (newSection.startInd >= section.startInd && newSection.endInd <= section.endInd) {
+      console.log(`Section is inside another section: ${section.labelBox.textContent}`);
+      return section; // This section is a subsection
+    }
+  }
+  return null; // No parent found, so it's a top-level section
 }
 
 function getDimensions() {
