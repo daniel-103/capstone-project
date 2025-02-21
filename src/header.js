@@ -86,36 +86,3 @@ settingsButton.addEventListener("click", () => {
 		wrapper.classList.remove("open")
 	}
 })
-
-
-// View
-//      Zoom in
-
-// 		Zoom out
-
-//      Reset
-
-// Insert
-//      Image
-
-// 		Table
-
-//      Drawing
-
-// 		Chart
-
-// Format
-//      Headers & Footers
-
-// 		Page numbers
-
-//      Drowing
-
-// 		Chart
-
-// Tools
-//      Spelling & Grammer
-
-// 		Word Count
-
-//      Find File

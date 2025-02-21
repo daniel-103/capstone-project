@@ -396,7 +396,7 @@ function countWords() {
 // Add event listener to the button
 wordCountBtn.addEventListener("click", countWords);
 
-// Get the editor and the custom context menu
+// Get the editor and the custom context menu for right-click operations
 const contextMenu = window.top.document.getElementById("custom-context-menu");
 
 // Get menu buttons
