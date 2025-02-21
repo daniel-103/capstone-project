@@ -3,10 +3,11 @@ const Inline = Quill.import('blots/inline');
 const icons = Quill.import('ui/icons');
 
 class Section {
-  constructor(startInd,endInd, labelBox, lineElement) {
+  constructor(startInd,endInd, labelBox, lineElement, labelMoveTab) {
     this.startInd = startInd;
     this.endInd = endInd;
     this.labelBox = labelBox;
+    this.labelMoveTab = labelMoveTab;
     this.lineElement = lineElement;
     this.children = [];
     this.parent = null;
@@ -29,7 +30,7 @@ class Section {
 
     this.lineElement.style.height = `${newBottomPosition - newTopPosition}px`;
     this.labelBox.style.top = `${newTopPosition}px`; // Update the position of the label box
-
+    this.labelMoveTab.style.top = `${newTopPosition}px`;
     console.log("Updated Section:", {
       start: this.startInd,
       end: this.endInd,
@@ -209,18 +210,39 @@ function createSection() {
   labelBox.style.top = `${labelTop}px`; // Slightly above the start of the line
   labelBox.style.left = '20px'; // Space to the right of the line
   labelBox.style.padding = '0px';
-  //labelBox.style.border = '1px solid black';
   labelBox.style.backgroundColor = 'lightgray';
   labelBox.style.width = '70px'; // Fixed width for the label
   labelBox.textContent = 'Chapter'; // Default text
   labelBox.style.zIndex = '99';
+
+  // Create a labelMoveTab (square to the left of labelBox)
+  const labelMoveTab = document.createElement('div');
+  labelMoveTab.style.position = 'absolute';
+  labelMoveTab.style.top = `${labelTop}px`; // Same top position as labelBox
+  labelMoveTab.style.left = '5px'; // Positioned to the left of labelBox
+  labelMoveTab.style.width = '15px'; // Smaller width for the square
+  labelMoveTab.style.height = '20px'; // Match height with labelBox
+  labelMoveTab.style.backgroundColor = '#eeeeee'; // Different color to distinguish
+  labelMoveTab.style.border = `1px solid black`;
+  labelMoveTab.style.cursor = 'grab';
+  labelMoveTab.style.zIndex = '100';
+  labelMoveTab.style.textAlign = 'center'; // Center text horizontally
+  labelMoveTab.style.lineHeight = '20px'; // Align | vertically
+  labelMoveTab.style.fontWeight = 'bold'; // Make | more visible
+  labelMoveTab.style.fontSize = '14px'; // Adjust font size for better fit
+  labelMoveTab.style.userSelect = 'none';
+
+  // Add the "|" symbol
+  labelMoveTab.textContent = '|';
+
   
   // Append the line element to the line container
   const lineContainer = document.getElementById('line-container');
   lineContainer.appendChild(lineElement);
   lineContainer.appendChild(labelBox);
+  lineContainer.appendChild(labelMoveTab);
 
-  const section = new Section(startInd, endInd, labelBox, lineElement);
+  const section = new Section(startInd, endInd, labelBox, lineElement, labelMoveTab);
   // Check if the new section is inside an existing section (subsection)
   const parentSection = findParentSection(section);
   if (parentSection) {
@@ -234,7 +256,7 @@ function createSection() {
     quill.insertText(editorLength, '\n');
   }
 
-  makeDraggable(labelBox, section);
+  makeDraggable(labelMoveTab, labelBox, section);
 
   quill.on('text-change', (delta, oldDelta, source) => {
     if (source === 'user') {
@@ -274,19 +296,19 @@ function getDimensions() {
   return [startInd, endInd, topPosition, bottomPosition, labelTop];
 }
 
-function makeDraggable(labelBox, section) {
+function makeDraggable(labelMoveTab, labelBox, section) {
   let startY = 0;
   let startTop = 0;
   let ghostElement = null;
   let editor = document.querySelector('.ql-editor');
 
-  labelBox.style.cursor = 'grab';
+  labelMoveTab.style.cursor = 'grab';
 
-  labelBox.addEventListener('mousedown', (e) => {
+  labelMoveTab.addEventListener('mousedown', (e) => {
     e.preventDefault();
     startY = e.clientY;
-    startTop = parseFloat(labelBox.style.top) || 0;
-    labelBox.style.cursor = 'grabbing';
+    startTop = parseFloat(labelMoveTab.style.top) || 0;
+    labelMoveTab.style.cursor = 'grabbing';
 
     let contents = quill.getContents(section.startInd, section.endInd - section.startInd);
     let length = section.endInd - section.startInd;
@@ -295,7 +317,7 @@ function makeDraggable(labelBox, section) {
 
     ghostElement = document.createElement('div');
     ghostElement.style.position = 'absolute';
-    ghostElement.style.opacity = '.7';
+    ghostElement.style.opacity = '.3';
     ghostElement.style.pointerEvents = 'none';
     ghostElement.style.background = '#ffffff';
     ghostElement.style.border = '1px dashed gray';
@@ -318,6 +340,7 @@ function makeDraggable(labelBox, section) {
       if (newTop > maxTop) newTop = maxTop;
 
       labelBox.style.top = `${newTop}px`;
+      labelMoveTab.style.top = `${newTop}px`;
       let closestIndex = section.startInd;
       let closestDistance = Infinity;
 
@@ -339,7 +362,7 @@ function makeDraggable(labelBox, section) {
     }
 
     function onMouseUp() {
-      labelBox.style.cursor = 'grab';
+      labelMoveTab.style.cursor = 'grab';
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
       if (ghostElement) {
@@ -353,7 +376,7 @@ function makeDraggable(labelBox, section) {
       for (let i = 0; i < quill.getLength(); i++) {
         let bounds = quill.getBounds(i);
         let position = bounds.top + editor.scrollTop + editorRect.top;
-        let distance = Math.abs(position - parseFloat(labelBox.style.top));
+        let distance = Math.abs(position - parseFloat(labelMoveTab.style.top));
 
         if (distance < closestDistance) {
           closestDistance = distance;
