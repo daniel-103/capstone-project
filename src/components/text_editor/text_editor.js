@@ -235,12 +235,76 @@ function createSection() {
   // Add the "|" symbol
   labelMoveTab.textContent = '|';
 
-  
+  // Create a color dropdown button
+  const colorDropdown = document.createElement('select');
+  colorDropdown.style.position = 'absolute';
+  colorDropdown.style.top = `${labelTop}px`; // Align with labelBox
+  colorDropdown.style.left = `${parseInt(labelBox.style.left) + parseInt(labelBox.style.width) + 5}px`; // Place next to labelBox
+  colorDropdown.style.width = '25px'; // Small square dropdown
+  colorDropdown.style.height = '22px'; // Match labelBox height
+  colorDropdown.style.border = '1px solid black';
+  colorDropdown.style.padding = '0';
+  colorDropdown.style.cursor = 'pointer';
+  colorDropdown.style.backgroundColor = 'black'; // Default color
+  colorDropdown.style.zIndex = '100';
+  // Define color options
+  const colors = [
+    "black", "red", "lightblue", "green", "orange", "lightpurple",
+    "yellow", "cyan", "magenta", "gray", "brown", "pink",
+    "lime", "teal", "navy", "gold", "silver", "maroon",
+    "olive", "indigo", "violet", "turquoise", "beige"
+  ];
+
+  // Populate dropdown with color choices
+  colors.forEach(color => {
+    let option = document.createElement('option');
+    option.value = color;
+    option.style.backgroundColor = color; // Set background color of option
+    option.textContent = " "; // Empty text so only color is shown
+    colorDropdown.appendChild(option);
+  });
+
+  // Change line color & dropdown background when selecting a color
+  colorDropdown.addEventListener('change', () => {
+    lineElement.style.borderColor = colorDropdown.value;
+    colorDropdown.style.backgroundColor = colorDropdown.value; // Change dropdown to selected color
+  });
+
+  // Create a line type dropdown button
+  const lineTypeDropdown = document.createElement('select');
+  lineTypeDropdown.style.position = 'absolute';
+  lineTypeDropdown.style.top = `${parseInt(colorDropdown.style.top) + parseInt(colorDropdown.style.height) + 5}px`; // Below the color dropdown
+  lineTypeDropdown.style.left = colorDropdown.style.left; // Same left position
+  lineTypeDropdown.style.width = '25px'; // Slightly wider for line type selection
+  lineTypeDropdown.style.height = '22px'; // Match height of color dropdown
+  lineTypeDropdown.style.border = '1px solid black';
+  lineTypeDropdown.style.padding = '0';
+  lineTypeDropdown.style.cursor = 'pointer';
+  lineTypeDropdown.style.backgroundColor = 'white'; // Default background
+  lineTypeDropdown.style.zIndex = '99';
+  // Define line type options
+  const lineTypes = ["solid", "dotted", "dashed", "double", "groove", "ridge", "inset", "outset"];
+
+  // Populate dropdown with line type options
+  lineTypes.forEach(type => {
+      let option = document.createElement('option');
+      option.value = type;
+      option.textContent = type; // Show line type name
+      lineTypeDropdown.appendChild(option);
+  });
+
+  // Change line style when selecting a line type
+  lineTypeDropdown.addEventListener('change', () => {
+      lineElement.style.borderStyle = lineTypeDropdown.value; // Update line style
+  });
+
   // Append the line element to the line container
   const lineContainer = document.getElementById('line-container');
   lineContainer.appendChild(lineElement);
   lineContainer.appendChild(labelBox);
   lineContainer.appendChild(labelMoveTab);
+  lineContainer.appendChild(colorDropdown);
+  lineContainer.appendChild(lineTypeDropdown);
 
   const section = new Section(startInd, endInd, labelBox, lineElement, labelMoveTab);
   // Check if the new section is inside an existing section (subsection)
