@@ -290,7 +290,9 @@ function makeDraggable(labelBox, section) {
 
     let contents = quill.getContents(section.startInd, section.endInd - section.startInd);
     let length = section.endInd - section.startInd;
+    let initialStartInd = section.startInd;
     
+
     ghostElement = document.createElement('div');
     ghostElement.style.position = 'absolute';
     ghostElement.style.opacity = '.7';
@@ -364,6 +366,16 @@ function makeDraggable(labelBox, section) {
       section.startInd = closestIndex;
       section.endInd = closestIndex + length;
       section.updateLineHeight();
+      if (section.children.length > 0) {
+
+        section.children.forEach(child => {
+          let childOffset = child.startInd - initialStartInd;
+          let childLength = child.endInd - child.startInd;
+          child.startInd = closestIndex + childOffset;
+          child.endInd = closestIndex + childLength + childOffset;
+          child.updateLineHeight();
+        });
+      }
     }
 
     document.addEventListener('mousemove', onMouseMove);
