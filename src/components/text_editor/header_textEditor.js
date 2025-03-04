@@ -403,7 +403,6 @@ const contextMenu = window.top.document.getElementById("custom-context-menu");
 const cutBtn = window.top.document.getElementById("context-cut");
 const copyBtn = window.top.document.getElementById("context-copy");
 const pasteBtn = window.top.document.getElementById("context-paste");
-const deleteBtn = window.top.document.getElementById("context-delete");
 const insertImageConBtn = window.top.document.getElementById("context-insert-image");
 const insertTableConBtn = window.top.document.getElementById("context-insert-table");
 
@@ -417,7 +416,6 @@ editor.addEventListener("contextmenu", (event) => {
     // Show different options based on text selection
     cutBtn.style.display = hasSelection ? "block" : "none";
     copyBtn.style.display = hasSelection ? "block" : "none";
-    deleteBtn.style.display = hasSelection ? "block" : "none";
     
     pasteBtn.style.display = "block"; // Always show paste
     insertImageConBtn.style.display = hasSelection ? "none" : "block";
@@ -456,14 +454,6 @@ copyBtn.addEventListener("click", () => {
 
 pasteBtn.addEventListener("click", async () => {
     document.execCommand('paste');
-    contextMenu.style.display = "none";
-});
-
-deleteBtn.addEventListener("click", () => {
-    const selection = quill.getSelection();
-    if (selection) {
-        quill.deleteText(selection.index, selection.length);
-    }
     contextMenu.style.display = "none";
 });
 
