@@ -478,6 +478,16 @@ export { quill };
 let globalFileName = '';
 let globalPredefinedText = {};
 
+// Function to save the current content of the editor
+function saveCurrentContent() {
+  if (globalFileName) {
+    const currentContent = quill.getText();
+    globalPredefinedText[globalFileName] = currentContent;
+    console.log('globalPredefinedText:', globalPredefinedText);
+    console.log('globalPredefinedText[globalFileName]:', currentContent);
+  }
+}
+
 window.addEventListener('message', (event) => {
   // Check if the event data contains the templateId and predefinedText
   if (event.data && event.data.templateId && event.data.predefinedText) {
@@ -492,6 +502,10 @@ window.addEventListener('message', (event) => {
   if (event.data.type === 'fileClicked') {
     const fileName = event.data.fileName;
     console.log(`Received file name: ${fileName}`);
+
+    // Save the current content of the editor before switching files
+    saveCurrentContent();
+
     globalFileName = fileName;
 
     // Navigate through the globalPredefinedText to find the file content
