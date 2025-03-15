@@ -154,7 +154,7 @@ document.getElementById('new-folder-btn').addEventListener('click', (event) => {
                             .then((putResult) => {
                                 console.log(`✅ [3.2] Linked ${name} to its parent:`, putResult);
                                 selectedFolder.querySelector('.folder-items').innerHTML = '';   // Need a better way to order items than deleating everything and regenerating them
-                                growHierarchy(parentFolder.childrenIds);
+                                growHierarchy(parentFolder);
                                 document.getElementById(putResult.id).classList.add('open');
                                 slideOut.classList.remove('open');
                             })
@@ -218,7 +218,7 @@ async function seedHierarchy() {
             hierarchy.appendChild(folder);
 
             console.log(`🛠 [2.1] Constructing hierarchy for ${object.name}'s children...`);
-            growHierarchy(object.childrenIds)
+            growHierarchy(object)
         })
         .catch(error => {
             console.log("❌ [2] Couldn't fetch project:", error);
@@ -315,7 +315,7 @@ window.addEventListener('message', (event) => {
 
 // Support running growHierarchy from other places in the project
 window.top.addEventListener("growHierarchyEvent", (event) => {
-    growHierarchy(JSON.parse(event.detail.childIds));
+    growHierarchy(JSON.parse(event.detail.parentFolder));
 })
 
 // Support running seedHierarchy from other places in the project

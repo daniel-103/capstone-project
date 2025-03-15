@@ -3,7 +3,7 @@ async function attachToParent (parentId, fileId) {
         parentFolder.childrenIds.push(fileId);
         parentFolder.childrenIds = [...new Set(parentFolder.childrenIds)];
         window.top.db.put(parentFolder).then(() => {
-            window.top.growHierarchy(parentFolder.childrenIds);
+            window.top.growHierarchy(parentFolder);
         }); 
     });
 }

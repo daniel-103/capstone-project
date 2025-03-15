@@ -6,7 +6,15 @@ import addFolderClickEvent from "./addFolderClickEvent.js"
 
 // I initially avoided doing this because the way I was thinking about it was that I needed all of the children fetched together to order them, and thinking about only returning their ids recursizely which meant I needed to refetch each child at the top again.
 // But if I instead pass the entire fetched child, then there's no need to refetch each child, just grab the object's childrenIds, fetch, sort, and call on each child object.
-async function growHierarchy(childrenIds) {
+async function growHierarchy(parentFolder) {
+    console.log(Array.isArray(parentFolder));
+    if (!Array.isArray(parentFolder)) {
+        console.log("123456789876543: ", document.getElementById(`${parentFolder._id}`));
+        document.getElementById(`${parentFolder._id}`).querySelector('.folder-items').innerHTML = ''; 
+    } else {
+        console.log(parentFolder);
+    }
+    const childrenIds = Array.isArray(parentFolder)?parentFolder:parentFolder.childrenIds;
     const children = await Promise.all(
         childrenIds.map(childId => {
             console.log(`🛠 [2.2] Fetching child with id: "${childId}"...`);

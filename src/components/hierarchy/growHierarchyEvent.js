@@ -1,7 +1,7 @@
-function growHierarchy (childIds) {
-    const stringifiedIds = JSON.stringify(childIds);
+function growHierarchy (parentFolder) {
+    const stringifiedIds = JSON.stringify(parentFolder);
     const growHierarchyEvent = new CustomEvent('growHierarchyEvent', {
-        detail: { childIds: stringifiedIds }
+        detail: { parentFolder: stringifiedIds }
     });
     window.top.dispatchEvent(growHierarchyEvent);
 }
