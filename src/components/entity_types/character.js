@@ -1,4 +1,6 @@
+const projectId = localStorage.getItem('projectId');
 const characterData = {
+    parentId: projectId,
     type: 'file',
     fileType: 'character',
     modules: [

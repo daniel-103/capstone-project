@@ -1,4 +1,5 @@
 import characterData from "../entity_types/character.js"
+import attachToParent from "../entity_types/attachToParent.js";
 
 async function initCharactersPage() {    
     const characters = await getCharacters();
@@ -76,6 +77,8 @@ function createAddCharacterModule() {
 
 async function initNewCharacter(entityData) {
     const newCharacter = await createNewCharacter(entityData);
+
+    await attachToParent(entityData.parentId, entityData._id);
 
     const pageList = document.getElementById("page-list");
     const newModule = createCharacterPageModule(newCharacter);

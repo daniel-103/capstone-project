@@ -1,4 +1,5 @@
 import relationshipData from "../entity_types/relationship.js"
+import attachToParent from "../entity_types/attachToParent.js";
 
 async function initrelationshipsPage() {
     const relationships = await getRelationships();
@@ -74,6 +75,9 @@ function createAddRelationshipModule() {
 
 async function initNewRelationship(entityData) {
     const newrelationship = await createNewRelationship(entityData);
+
+    await attachToParent(entityData.parentId, entityData._id);
+
 
     const pageList = document.getElementById("page-list");
     const newModule = createRelationshipPageModule(newrelationship);
