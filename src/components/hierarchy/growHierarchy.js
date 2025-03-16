@@ -7,13 +7,9 @@ import addFolderClickEvent from "./addFolderClickEvent.js"
 // I initially avoided doing this because the way I was thinking about it was that I needed all of the children fetched together to order them, and thinking about only returning their ids recursizely which meant I needed to refetch each child at the top again.
 // But if I instead pass the entire fetched child, then there's no need to refetch each child, just grab the object's childrenIds, fetch, sort, and call on each child object.
 async function growHierarchy(parentFolder) {
-    console.log(Array.isArray(parentFolder));
     if (!Array.isArray(parentFolder)) {
-        console.log("123456789876543: ", document.getElementById(`${parentFolder._id}`));
         document.getElementById(`${parentFolder._id}`).querySelector('.folder-items').innerHTML = ''; 
-    } else {
-        console.log(parentFolder);
-    }
+    } 
     const childrenIds = Array.isArray(parentFolder)?parentFolder:parentFolder.childrenIds;
     const children = await Promise.all(
         childrenIds.map(childId => {
@@ -71,6 +67,18 @@ async function growHierarchy(parentFolder) {
             file.classList.add("file");
             file.id = child._id;
             file.innerHTML = `<div class="file-name">${childName}</div>`;
+            file.addEventListener('click', () => {
+                if (!child.fileType) {
+                    return;
+                }
+                const pagePath = window.top.pagePaths[child.fileType] + "?id=" + encodeURIComponent(child._id);
+                console.log("selecter page path: ", pagePath);
+                const pageWindow = window.parent.document.getElementById("page-window");
+                const tabHeader = window.parent.document.getElementById("tab-header");
+
+                window.parent.addNewTab(childName, pagePath, tabHeader, pageWindow);
+                console.log(`This file's id is: ${file.id}`);
+            });
 
             document.getElementById(child.parentId).querySelector('.folder-items').appendChild(file);
         } else {

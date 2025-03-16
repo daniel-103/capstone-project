@@ -4,6 +4,9 @@ window.currTabIndex = 0
 
 const defaultPagePath = "../default_page/default_page.html";
 const startPagePath = "../text_editor/text_editor.html";
+const basePage = "../base_page/base_page.html"
+
+window.top.pagePaths = {"character" : basePage, "relationship" : basePage, "textDocument" : startPagePath};
 
 function runTabs() {
     const tabHeader = document.getElementById("tab-header");
