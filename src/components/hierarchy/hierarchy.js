@@ -1,5 +1,9 @@
 import growHierarchy from "./growHierarchy.js";
 import addFolderClickEvent from "./addFolderClickEvent.js"
+import addEntity from "../enity_add/addEntity.js";
+import characterData from "../entity_types/character.js";
+import relationshipData from "../entity_types/relationship.js";
+import textDocumentData from "../entity_types/textDocument.js";
 
 const projectId = localStorage.getItem('projectId');
 const folderNames = document.querySelectorAll('.folder-name');
@@ -12,7 +16,11 @@ const pageWindow = window.parent.document.getElementById("page-window");
 
 folderNames.forEach(folderName => {addFolderClickEvent(folderName)});
 
-
+// temporary way of mapping paths and default data to buttons
+const buttonPaths = {"btn-new-writing" : ["../text_editor/text_editor.html", textDocumentData], 
+                    "btn-new-character" : ["../base_page/base_page.html", characterData],
+                    "btn-new-relationship" : ["../base_page/base_page.html", relationshipData],
+};
 
 // New file
 document.getElementById('new-file-btn').addEventListener('click',(event) => {
@@ -21,60 +29,16 @@ document.getElementById('new-file-btn').addEventListener('click',(event) => {
 
 const slideOut = document.getElementById('new-file-slide-out');
 for (const button of slideOut.querySelectorAll('button')) {
+    console.log(button);
     // grab button attribute and create an eventListener to create the page with the module dictated by the attached attribute
     // just going to create an empty page for now...
-    button.addEventListener('click', () => {
+    button.addEventListener('click', async () => {
         tabs = window.parent.tabs;
-        
-        window.parent.addNewTab(`Tab ${tabs.length + 1}`, defaultPagePath, tabHeader, pageWindow);
-    
-        // projectId should be in localStorage
+
         // grab selected folder (_id will be in attribute)
         const parentId = document.getElementsByClassName('folder selected')[0].id
-
-        const name = 'New File'         // get similarly to how folders are made
-                                            // I think this will involve creating the element first then doing db stuff.
-                                            // Will have to swap stuff around
-        const fileType = 'character'    // determine later
-
-        // push new page to db
-        console.log(`🛠 [3] Creating new ${fileType} page "${name}"...`);
-        window.top.db.post({
-            projectId: projectId,
-            name: name,
-            type: "file",
-            fileType: fileType,
-            parentId: parentId,
-            date: {
-                created: new Date(),
-                last: new Date(),
-            },
-            modules: {}               // determine later
-        })
-        .then((result) => {
-            console.log(`✅ [3] Created "${name}".`, result);
-            console.log(`🛠 [3.1] Fetching ${name}'s parent...`);
-            window.top.db.get(parentId)
-                .then(parentFolder => {
-                    console.log(`✅ [3.1] Fetched ${name}'s parent:`, parentFolder);
-                    console.log(`🛠 [3.2] Appending ${name}'s id to its parent's childrenIds...`);
-                    parentFolder.childrenIds.push(result.id);
-                    window.top.db.put(parentFolder)
-                        .then((putResult) => {
-                            console.log(`✅ [3.2] Linked ${name} to its parent:`, putResult);
-                            growHierarchy([result.id]);
-                            document.getElementById(putResult.id).classList.add('open');
-                            slideOut.classList.remove('open');
-                        })
-                        .catch(error => {
-                            console.log(`❌ [3.2] Couldn't link ${name} to its parent:`, error);
-                        });
-                })
-                .catch(error => {
-                    console.log(`❌ [3.1] Couldn't fetch ${name}'s parent:`, error);
-                });
-        })
-        .catch(error => {
+        
+        await addEntity(buttonPaths[button.id][0], buttonPaths[button.id][1], parentId).catch(error => {
             console.log(`❌ [3] Couldn't create file:`, error);
         });
     });   

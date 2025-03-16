@@ -1,6 +1,25 @@
+import saveTextDocument from "./text_editor_save.js";
 const BlockEmbed = Quill.import('blots/block');
 const Inline = Quill.import('blots/inline');
 const icons = Quill.import('ui/icons');
+
+// Get text data from database
+const urlParams = new URLSearchParams(window.location.search);
+const entityId = urlParams.get("id");
+let initialTextData = "{\"ops\":[{\"insert\":\"123456789\\n\"}]}";
+if (!entityId) {
+  console.error("No entity ID in URL.");
+} else {
+  try {
+      const entityData = await window.top.db.get(entityId);
+      initialTextData = entityData.textData;
+
+    } catch (err) {
+      console.error("Failed to fetch document:", err);
+    }
+}
+
+initialTextData = JSON.parse(initialTextData);
 
 class Section {
   constructor(startInd,endInd, labelBox, lineElement, labelMoveTab) {
@@ -171,6 +190,9 @@ const quill = new Quill('#editor', {
     userOnly: true
   }
 });
+
+// Update initial information 
+quill.setContents(initialTextData);
 
 let sectionButton = document.querySelector('.ql-section-button');
 if (sectionButton) {
@@ -531,5 +553,21 @@ window.addEventListener('message', (event) => {
     }
 
     quill.setText(fileContent);
+  }
+});
+
+document.addEventListener("keydown", async (event) => {
+  if (!(event.ctrlKey && event.key === "s")) { return; }
+  event.preventDefault();
+  if (!entityId) {
+    console.error("No entity ID in URL.");
+  } else {
+    try {
+        const entityData = await window.top.db.get(entityId);
+        saveTextDocument(entityData,JSON.stringify(quill.getContents()));
+  
+      } catch (err) {
+        console.error("Failed to fetch document:", err);
+      }
   }
 });

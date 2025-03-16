@@ -16,6 +16,7 @@ async function growHierarchy(parentFolder) {
             console.log(`🛠 [2.2] Fetching child with id: "${childId}"...`);
             return window.top.db.get(childId)
                 .then(child => {
+                    console.log(child);
                     console.log(`✅ [2.2] Fetched "${child.name?child.name:child.modules[0].value[0]}": `, child);
                     return child;
                 })
@@ -72,12 +73,10 @@ async function growHierarchy(parentFolder) {
                     return;
                 }
                 const pagePath = window.top.pagePaths[child.fileType] + "?id=" + encodeURIComponent(child._id);
-                console.log("selecter page path: ", pagePath);
                 const pageWindow = window.parent.document.getElementById("page-window");
                 const tabHeader = window.parent.document.getElementById("tab-header");
 
                 window.parent.addNewTab(childName, pagePath, tabHeader, pageWindow);
-                console.log(`This file's id is: ${file.id}`);
             });
 
             document.getElementById(child.parentId).querySelector('.folder-items').appendChild(file);
