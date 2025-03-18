@@ -51,7 +51,16 @@
     </div>
 </div>
 
-
+<div id="research-modal" class="modal" style="display: none;">
+	<div class="modal-content">
+	  <span class="close">&times;</span>
+	  <h2>Research</h2>
+	  <input type="text" id="research-input" placeholder="Enter search term...">
+	  <button id="wikipedia-search">Wikipedia Search</button>
+	  <button id="google-search">Google Search</button>
+	  <button id="dictionary-search">Dictionary Search</button>
+	</div>
+  </div>
 
 <!-- Include the Quill library -->
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
@@ -59,3 +68,4 @@
 <script type="module" src="./export.js"></script>
 <script type="module" src="./header_textEditor.js"></script>
 <script type="module" src="./ai.mjs"></script>
+<script type="module" src="./research.js"></script>

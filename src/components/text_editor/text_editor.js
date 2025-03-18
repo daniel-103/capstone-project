@@ -163,7 +163,8 @@ const toolbarOptions = [
   
   ['clean'],
   ['section-button'],
-  ['ai-assistant']
+  ['ai-assistant'],
+  ['research-button']
 
                                          // remove formatting button
   
@@ -179,7 +180,25 @@ const quill = new Quill('#editor', {
         },
         'ai-assistant': function() {
           const aiAssistantModal = document.getElementById("ai-assistant-modal");
-          aiAssistantModal.style.display = "block";
+          const editorContainer = document.querySelector('.editor-container');
+          editorContainer.classList.toggle('expanded');
+          aiAssistantModal.classList.toggle('expanded');
+          if (aiAssistantModal.style.display === "block") {
+            aiAssistantModal.style.display = "none";
+          } else {
+            aiAssistantModal.style.display = "block";
+          }
+        },
+        'research-button': function() {
+          const researchModal = document.getElementById('research-modal');
+          const editorContainer = document.querySelector('.editor-container');
+          editorContainer.classList.toggle('expanded');
+          researchModal.classList.toggle('expanded');
+          if (researchModal.style.display === "block") {
+            researchModal.style.display = "none";
+          } else {
+            researchModal.style.display = "block";
+          }
         }
       }
     },  
@@ -202,6 +221,11 @@ quill.setContents(initialTextData);
 let aiButton = document.querySelector('.ql-ai-assistant');
 if (aiButton) {
   aiButton.innerHTML = '🤖'; 
+}
+
+let researchButton = document.querySelector('.ql-research-button');
+if (researchButton) {
+  researchButton.innerHTML = '🔍'; 
 }
 
 let sectionButton = document.querySelector('.ql-section-button');

@@ -7,6 +7,7 @@ const aiSubmit = document.getElementById("ai-submit");
 const aiResponse = document.getElementById("ai-response");
 const aiAssistantModal = document.getElementById("ai-assistant-modal");
 const closeAiAssistant = document.getElementById("close-ai-assistant");
+const editorContainer = document.querySelector('.editor-container');
 
 let savedRange = null;
 
@@ -65,6 +66,8 @@ aiSubmit.addEventListener("click", run);
 
 // Close AI Assistant Modal
 closeAiAssistant.addEventListener("click", () => {
+    editorContainer.classList.toggle('expanded');
+    aiAssistantModal.classList.toggle('expanded');
     aiAssistantModal.style.display = "none";
 });
 
