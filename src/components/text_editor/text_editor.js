@@ -162,7 +162,8 @@ const toolbarOptions = [
   [{ 'align': [] }],
   
   ['clean'],
-  ['section-button']
+  ['section-button'],
+  ['ai-assistant']
 
                                          // remove formatting button
   
@@ -175,6 +176,10 @@ const quill = new Quill('#editor', {
       handlers: {
         'section-button': function() {
           createSection();
+        },
+        'ai-assistant': function() {
+          const aiAssistantModal = document.getElementById("ai-assistant-modal");
+          aiAssistantModal.style.display = "block";
         }
       }
     },  
@@ -193,6 +198,11 @@ const quill = new Quill('#editor', {
 
 // Update initial information 
 quill.setContents(initialTextData);
+
+let aiButton = document.querySelector('.ql-ai-assistant');
+if (aiButton) {
+  aiButton.innerHTML = '🤖'; 
+}
 
 let sectionButton = document.querySelector('.ql-section-button');
 if (sectionButton) {

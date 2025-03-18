@@ -5,9 +5,22 @@ import { quill } from './text_editor.js';
 const aiInput = document.getElementById("ai-input");
 const aiSubmit = document.getElementById("ai-submit");
 const aiResponse = document.getElementById("ai-response");
-const aiAssistantButton = document.getElementById("ai-assistant-button");
 const aiAssistantModal = document.getElementById("ai-assistant-modal");
 const closeAiAssistant = document.getElementById("close-ai-assistant");
+
+let savedRange = null;
+
+// Save the selection range before the AI input is focused
+aiInput.addEventListener("focus", () => {
+    savedRange = quill.getSelection();
+});
+
+// Restore the selection range after the AI input is blurred
+aiInput.addEventListener("blur", () => {
+    if (savedRange) {
+        quill.setSelection(savedRange);
+    }
+});
 
 // Function to send request to AI model
 const run = async () => {
@@ -18,21 +31,24 @@ const run = async () => {
 
         const quillContent = quill.getText().trim();
 
+        // Get the highlighted text
+        const range = savedRange || quill.getSelection();
+        const highlightedText = range ? quill.getText(range.index, range.length).trim() : '';
+
         const prompt = `
         You are an AI assistant designed to help a user write a creative writing piece. 
         Here is what they wrote: ${quillContent}. 
+        Here is the highlighted text: ${highlightedText}.
         Here is their question for you: ${aiInput.value.trim()}
         `;
+        console.log(prompt);
         // Set a timeout to reject the request if it takes too long
         const result = await Promise.race([
             client.predict("/predict", { 
                 inputs: prompt,
                 top_p: 0, 		
                 temperature: 0
-            }),
-            new Promise((_, reject) =>
-                setTimeout(() => reject(new Error("Request timeout")), 10000) // 10s timeout
-            )
+            })
         ]);
 
         // Extract and display AI response
@@ -46,14 +62,6 @@ const run = async () => {
 
 // Attach event listener to the submit button
 aiSubmit.addEventListener("click", run);
-
-// Attach event listener to the submit button
-aiSubmit.addEventListener("click", run);
-
-// Open AI Assistant Modal
-aiAssistantButton.addEventListener("click", () => {
-    aiAssistantModal.style.display = "block";
-});
 
 // Close AI Assistant Modal
 closeAiAssistant.addEventListener("click", () => {
