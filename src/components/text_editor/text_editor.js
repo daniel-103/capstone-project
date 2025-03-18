@@ -1,4 +1,5 @@
 import saveTextDocument from "./text_editor_save.js";
+import { extractTextFromImage } from './multimedia.js';
 const BlockEmbed = Quill.import('blots/block');
 const Inline = Quill.import('blots/inline');
 const icons = Quill.import('ui/icons');
@@ -164,7 +165,8 @@ const toolbarOptions = [
   ['clean'],
   ['section-button'],
   ['ai-assistant'],
-  ['research-button']
+  ['research-button'],
+  ['import-image']
 
                                          // remove formatting button
   
@@ -199,6 +201,31 @@ const quill = new Quill('#editor', {
           } else {
             researchModal.style.display = "block";
           }
+        },
+        'import-image': function() {
+          const input = document.createElement("input");
+          input.type = "file";
+          input.accept = "image/*";
+          input.addEventListener("change", async (event) => {
+              const file = event.target.files[0];
+              if (!file) return;
+
+              const reader = new FileReader();
+              reader.onload = async function () {
+                const imageData = reader.result;
+                console.log("imageData: ", imageData);
+                try {
+                    const extractedText = await extractTextFromImage(imageData);
+                    const range = quill.getSelection(true);
+                    quill.insertText(range.index, extractedText, true);
+                } catch (error) {
+                    console.error("Error extracting text from image:", error);
+                }
+            };
+              reader.readAsDataURL(file);
+          });
+
+          input.click();
         }
       }
     },  
@@ -228,11 +255,17 @@ if (researchButton) {
   researchButton.innerHTML = '🔍'; 
 }
 
+let importButton = document.querySelector('.ql-import-image');
+if (importButton) {
+  importButton.innerHTML = '📝'; 
+}
+
 let sectionButton = document.querySelector('.ql-section-button');
 if (sectionButton) {
   sectionButton.innerHTML = 'C';  // Set "C" as the button's icon text
 
 }
+
 function createSection() {
   const dim = getDimensions();
   const startInd = dim[0];
