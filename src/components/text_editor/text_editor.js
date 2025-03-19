@@ -208,22 +208,25 @@ const quill = new Quill('#editor', {
           input.type = "file";
           input.accept = "image/*";
           input.addEventListener("change", async (event) => {
-              const file = event.target.files[0];
-              if (!file) return;
+            const file = event.target.files[0];
+            const fileType = file.type;
+            if (!file) return;
 
-              const reader = new FileReader();
-              reader.onload = async function () {
-                  const imageData = reader.result;
-                  console.log("imageData: ", imageData);
-                  try {
-                      const extractedText = await extractTextFromImage(imageData);
-                      const range = quill.getSelection(true);
-                      quill.insertText(range.index, extractedText, true);
-                  } catch (error) {
-                      console.error("Error extracting text from image:", error);
-                  }
-              };
-              reader.readAsDataURL(file);
+            const reader = new FileReader();
+
+            reader.onload = async function () {
+              const arrayBuffer = reader.result;
+              console.log("arrayBuffer: ", arrayBuffer);
+              try {
+                  const extractedText = await extractTextFromImage(arrayBuffer, fileType);
+                  const range = quill.getSelection(true);
+                  quill.insertText(range.index, extractedText, true);
+              } catch (error) {
+                  console.error("Error extracting text from image:", error);
+              }
+            };
+
+            reader.readAsArrayBuffer(file);
           });
 
           input.click();
