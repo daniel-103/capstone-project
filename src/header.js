@@ -1,3 +1,4 @@
+const mainWindow = window.top.document.getElementById('window')
 const headerOptions = document.getElementById('header-options');
 
 for (const dropdownOption of headerOptions.children) {
@@ -77,13 +78,48 @@ if (redirectButton && windowIframe) {
 // 		Save as
 const exportButton = document.getElementById("file-save-as-btn")
 
+// 		Open
+const openButton = document.getElementById("file-open-btn")
+openButton.addEventListener("click", () => {
+	if (mainWindow.src.includes('template.html')) {
+		window.top.error('[ERROR] Can only import pages to an open project. Please open a project to import a page.', 8);
+		return;
+	}
+	openOverlay("components/header-menus/open-file.html")
+})
 
 //		Settings
 const settingsButton = document.getElementById("file-settings-btn");
 settingsButton.addEventListener("click", () => {
-	document.getElementById("overlay").classList.toggle("open")
+	openOverlay("components/header-menus/settings.html")
+})
+
+
+
+// If a header button needs to open a menu, open it with this.
+const overlay = document.getElementById("overlay");
+function openOverlay(fileSrc) {
+	// menu is open, close it then try again
+	if (overlay.classList.contains("open")) {
+		overlay.classList.remove("open");
+
+		setTimeout(() => {
+			if (overlay.src.includes(fileSrc)) {
+				overlay.classList.remove("open")
+				return
+			}
+			openOverlay(fileSrc);
+		}, 200)
+		return;
+	}
+
+	// menu isn't open, open it
+	overlay.src = fileSrc;
+	overlay.classList.add("open")
+	
+	// close any header options
 	for (const headerOption of document.getElementsByClassName("header-option")) {
 		headerOption.querySelector('button').classList.remove("open");
 		headerOption.querySelector('.header-dropdown-wrapper').classList.remove("open");
 	}
-})
+}

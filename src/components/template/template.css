@@ -10,12 +10,15 @@ body::-webkit-scrollbar {
 }
 
 h1 {
+  margin: 0rem;
+  padding-top: 2rem;
   color: var(--hub-header-text-color);
   text-align: center;
 }
 
 h2 {
-  margin-top: 100px;
+  margin: 0rem;
+  padding-top: 2rem;
   color: var(--hub-header-text-color);
   text-align: center;
 }
