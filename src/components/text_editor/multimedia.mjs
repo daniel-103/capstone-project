@@ -1,7 +1,4 @@
-//import { createWorker } from "https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/+esm";
-//import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
-import { Client, handle_file } from "../../../node_modules/@gradio/client/dist/index.js";
-//const Tesseract = require('tesseract.js');
+import { Client } from "../../../node_modules/@gradio/client/dist/index.js";
 
 const researchModal = document.getElementById('research-modal');
 const researchInput = document.getElementById('research-input');
@@ -47,29 +44,6 @@ if (DictionarySearch) {
         const query = researchInput.value;
         window.open(`https://www.dictionary.com/browse/${encodeURIComponent(query)}`, '_blank');
     });
-}
-
-export async function extractTextFromImage(arrayBuffer, fileType) {
-    try {
-        const blobRef = handle_file(new Blob([arrayBuffer], { type: fileType }));
-        console.log("blobRef: ", blobRef);
-        
-        const client = await Client.connect("prithivMLmods/Qwen2.5-VL-7B-Instruct");
-
-        // Send the image to the model using handle_file
-        const result = await client.predict("/chat", { 
-            message: {
-                text: "What does this say", 
-                files: [blobRef]  // Pass the file to handle_file
-            }
-        });
-
-        const text = result.data[0];
-        console.log("text: ", text);
-        return text;
-    } catch (error) {
-        console.error("Error:", error.message);
-    }
 }
 
 export async function textToSpeech(quillContent) {

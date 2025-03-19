@@ -2,7 +2,6 @@ import saveTextDocument from "./text_editor_save.js";
 const BlockEmbed = Quill.import('blots/block');
 const Inline = Quill.import('blots/inline');
 const icons = Quill.import('ui/icons');
-import { extractTextFromImage } from './multimedia.mjs';
 import { textToSpeech } from './multimedia.mjs';
 // Get text data from database
 const urlParams = new URLSearchParams(window.location.search);
@@ -166,7 +165,6 @@ const toolbarOptions = [
   ['section-button'],
   ['ai-assistant'],
   ['research-button'],
-  ['import-image'],
   ['text-to-speech']
 
                                          // remove formatting button
@@ -202,34 +200,6 @@ const quill = new Quill('#editor', {
           } else {
             researchModal.style.display = "block";
           }
-        },
-        'import-image': function() {
-          const input = document.createElement("input");
-          input.type = "file";
-          input.accept = "image/*";
-          input.addEventListener("change", async (event) => {
-            const file = event.target.files[0];
-            const fileType = file.type;
-            if (!file) return;
-
-            const reader = new FileReader();
-
-            reader.onload = async function () {
-              const arrayBuffer = reader.result;
-              console.log("arrayBuffer: ", arrayBuffer);
-              try {
-                  const extractedText = await extractTextFromImage(arrayBuffer, fileType);
-                  const range = quill.getSelection(true);
-                  quill.insertText(range.index, extractedText, true);
-              } catch (error) {
-                  console.error("Error extracting text from image:", error);
-              }
-            };
-
-            reader.readAsArrayBuffer(file);
-          });
-
-          input.click();
         },
         'text-to-speech': async function() {
           const audioPlayer = document.getElementById('audio-player');
@@ -274,11 +244,6 @@ if (aiButton) {
 let researchButton = document.querySelector('.ql-research-button');
 if (researchButton) {
   researchButton.innerHTML = '🔍'; 
-}
-
-let importButton = document.querySelector('.ql-import-image');
-if (importButton) {
-  importButton.innerHTML = '📝'; 
 }
 
 let textToSpeechButton = document.querySelector('.ql-text-to-speech');
