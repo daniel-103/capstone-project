@@ -1,4 +1,5 @@
-import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
+//import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
+import { Client } from "../../../node_modules/@gradio/client/dist/index.js";
 import { quill } from './text_editor.js';
 
 // Get elements

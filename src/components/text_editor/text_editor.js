@@ -1,9 +1,9 @@
 import saveTextDocument from "./text_editor_save.js";
-import { extractTextFromImage } from './multimedia.js';
 const BlockEmbed = Quill.import('blots/block');
 const Inline = Quill.import('blots/inline');
 const icons = Quill.import('ui/icons');
-
+import { extractTextFromImage } from './multimedia.mjs';
+import { textToSpeech } from './multimedia.mjs';
 // Get text data from database
 const urlParams = new URLSearchParams(window.location.search);
 const entityId = urlParams.get("id");
@@ -166,7 +166,8 @@ const toolbarOptions = [
   ['section-button'],
   ['ai-assistant'],
   ['research-button'],
-  ['import-image']
+  ['import-image'],
+  ['text-to-speech']
 
                                          // remove formatting button
   
@@ -212,20 +213,37 @@ const quill = new Quill('#editor', {
 
               const reader = new FileReader();
               reader.onload = async function () {
-                const imageData = reader.result;
-                console.log("imageData: ", imageData);
-                try {
-                    const extractedText = await extractTextFromImage(imageData);
-                    const range = quill.getSelection(true);
-                    quill.insertText(range.index, extractedText, true);
-                } catch (error) {
-                    console.error("Error extracting text from image:", error);
-                }
-            };
+                  const imageData = reader.result;
+                  console.log("imageData: ", imageData);
+                  try {
+                      const extractedText = await extractTextFromImage(imageData);
+                      const range = quill.getSelection(true);
+                      quill.insertText(range.index, extractedText, true);
+                  } catch (error) {
+                      console.error("Error extracting text from image:", error);
+                  }
+              };
               reader.readAsDataURL(file);
           });
 
           input.click();
+        },
+        'text-to-speech': async function() {
+          const audioPlayer = document.getElementById('audio-player');
+          const audioSource = document.getElementById('audio-source');
+          const audio = document.getElementById('audio');
+
+          if (audioPlayer.style.display === "block") {
+            audioPlayer.style.display = "none";
+          } else {
+            audioPlayer.style.display = "block";
+          }
+
+          const quillContent = quill.getText().trim();
+          const audioUrl = await textToSpeech(quillContent);
+          audioSource.src = audioUrl;
+          audio.load();
+          audio.play();
         }
       }
     },  
@@ -258,6 +276,11 @@ if (researchButton) {
 let importButton = document.querySelector('.ql-import-image');
 if (importButton) {
   importButton.innerHTML = '📝'; 
+}
+
+let textToSpeechButton = document.querySelector('.ql-text-to-speech');
+if (textToSpeechButton) {
+  textToSpeechButton.innerHTML = '🔊'; 
 }
 
 let sectionButton = document.querySelector('.ql-section-button');
