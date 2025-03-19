@@ -40,9 +40,11 @@
     "docx": "^9.1.1",
     "pdf-lib": "^1.17.1",
     "pouchdb": "^9.0.0",
-    "pouchdb-find": "^9.0.0"
+    "pouchdb-find": "^9.0.0",
+    "tesseract.js": "^6.0.0"
   },
   "devDependencies": {
+    "@gradio/client": "^1.13.1",
     "cross-env": "^7.0.3",
     "electron": "^33.2.1",
     "electron-build": "^0.0.3",

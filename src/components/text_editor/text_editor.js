@@ -2,7 +2,8 @@ import saveTextDocument from "./text_editor_save.js";
 const BlockEmbed = Quill.import('blots/block');
 const Inline = Quill.import('blots/inline');
 const icons = Quill.import('ui/icons');
-
+import { extractTextFromImage } from './multimedia.mjs';
+import { textToSpeech } from './multimedia.mjs';
 // Get text data from database
 const urlParams = new URLSearchParams(window.location.search);
 const entityId = urlParams.get("id");
@@ -162,7 +163,11 @@ const toolbarOptions = [
   [{ 'align': [] }],
   
   ['clean'],
-  ['section-button']
+  ['section-button'],
+  ['ai-assistant'],
+  ['research-button'],
+  ['import-image'],
+  ['text-to-speech']
 
                                          // remove formatting button
   
@@ -175,6 +180,73 @@ const quill = new Quill('#editor', {
       handlers: {
         'section-button': function() {
           createSection();
+        },
+        'ai-assistant': function() {
+          const aiAssistantModal = document.getElementById("ai-assistant-modal");
+          const editorContainer = document.querySelector('.editor-container');
+          editorContainer.classList.toggle('expanded');
+          aiAssistantModal.classList.toggle('expanded');
+          if (aiAssistantModal.style.display === "block") {
+            aiAssistantModal.style.display = "none";
+          } else {
+            aiAssistantModal.style.display = "block";
+          }
+        },
+        'research-button': function() {
+          const researchModal = document.getElementById('research-modal');
+          const editorContainer = document.querySelector('.editor-container');
+          editorContainer.classList.toggle('expanded');
+          researchModal.classList.toggle('expanded');
+          if (researchModal.style.display === "block") {
+            researchModal.style.display = "none";
+          } else {
+            researchModal.style.display = "block";
+          }
+        },
+        'import-image': function() {
+          const input = document.createElement("input");
+          input.type = "file";
+          input.accept = "image/*";
+          input.addEventListener("change", async (event) => {
+            const file = event.target.files[0];
+            const fileType = file.type;
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onload = async function () {
+              const arrayBuffer = reader.result;
+              console.log("arrayBuffer: ", arrayBuffer);
+              try {
+                  const extractedText = await extractTextFromImage(arrayBuffer, fileType);
+                  const range = quill.getSelection(true);
+                  quill.insertText(range.index, extractedText, true);
+              } catch (error) {
+                  console.error("Error extracting text from image:", error);
+              }
+            };
+
+            reader.readAsArrayBuffer(file);
+          });
+
+          input.click();
+        },
+        'text-to-speech': async function() {
+          const audioPlayer = document.getElementById('audio-player');
+          const audioSource = document.getElementById('audio-source');
+          const audio = document.getElementById('audio');
+
+          if (audioPlayer.style.display === "block") {
+            audioPlayer.style.display = "none";
+          } else {
+            audioPlayer.style.display = "block";
+          }
+
+          const quillContent = quill.getText().trim();
+          const audioUrl = await textToSpeech(quillContent);
+          audioSource.src = audioUrl;
+          audio.load();
+          audio.play();
         }
       }
     },  
@@ -194,11 +266,32 @@ const quill = new Quill('#editor', {
 // Update initial information 
 quill.setContents(initialTextData);
 
+let aiButton = document.querySelector('.ql-ai-assistant');
+if (aiButton) {
+  aiButton.innerHTML = '🤖'; 
+}
+
+let researchButton = document.querySelector('.ql-research-button');
+if (researchButton) {
+  researchButton.innerHTML = '🔍'; 
+}
+
+let importButton = document.querySelector('.ql-import-image');
+if (importButton) {
+  importButton.innerHTML = '📝'; 
+}
+
+let textToSpeechButton = document.querySelector('.ql-text-to-speech');
+if (textToSpeechButton) {
+  textToSpeechButton.innerHTML = '🔊'; 
+}
+
 let sectionButton = document.querySelector('.ql-section-button');
 if (sectionButton) {
   sectionButton.innerHTML = 'C';  // Set "C" as the button's icon text
 
 }
+
 function createSection() {
   const dim = getDimensions();
   const startInd = dim[0];
@@ -496,66 +589,7 @@ function makeDraggable(labelMoveTab, labelBox, section) {
 // This ensures the editor works as expected.
 export { quill };
 
-// Define global variables to hold the fileName and predefinedText
-let globalFileName = '';
-let globalPredefinedText = {};
-
-// Function to save the current content of the editor
-function saveCurrentContent() {
-  if (globalFileName) {
-    const currentContent = quill.getText();
-    globalPredefinedText[globalFileName] = currentContent;
-    console.log('globalPredefinedText:', globalPredefinedText);
-    console.log('globalPredefinedText[globalFileName]:', currentContent);
-  }
-}
-
-window.addEventListener('message', (event) => {
-  // Check if the event data contains the templateId and predefinedText
-  if (event.data && event.data.templateId && event.data.predefinedText) {
-    const templateId = event.data.templateId;
-    globalPredefinedText = event.data.predefinedText; // Assign to global variable
-    console.log('Received Template ID in text_editor.js:', templateId);
-    console.log('Received Predefined Text in text_editor.js  j:', JSON.stringify(globalPredefinedText));
-    console.log('Received Predefined Text in text_editor.js:', event.data.predefinedText);
-  }
-
-  // Check if the event data contains the fileClicked event
-  if (event.data.type === 'fileClicked') {
-    const fileName = event.data.fileName;
-    console.log(`Received file name: ${fileName}`);
-
-    // Save the current content of the editor before switching files
-    saveCurrentContent();
-
-    globalFileName = fileName;
-
-    // Navigate through the globalPredefinedText to find the file content
-    let fileContent = null;
-    for (const key in globalPredefinedText) {
-      if (globalPredefinedText.hasOwnProperty(key)) {
-        const value = globalPredefinedText[key];
-        
-        if (typeof value === 'string') {
-          // The key is a file
-          if (key === fileName) {
-            fileContent = value;
-            break;
-          }
-        } else if (typeof value === 'object') {
-          // The key is a folder
-          if (value.hasOwnProperty(fileName)) {
-            fileContent = value[fileName];
-            break;
-          }
-        }
-      }
-    }
-
-    quill.setText(fileContent);
-  }
-});
-
+// Save text when pressing ctrl+s
 document.addEventListener("keydown", async (event) => {
   if (!(event.ctrlKey && event.key === "s")) { return; }
   event.preventDefault();

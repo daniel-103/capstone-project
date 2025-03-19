@@ -26,6 +26,15 @@
     border: none;
 }
 
+.editor-container.expanded {
+    width: 80%; /* Adjust the width as needed */
+    transition: width 0.3s; /* Smooth transition */
+}
+
+.modal.expanded {
+    left: calc(60% + 250px); /* Adjust the left position as needed */
+    transition: left 0.3s; /* Smooth transition */
+}
 
 #counter {
     color: white;
@@ -46,3 +55,89 @@
 
 }
 
+
+.modal {
+    position: fixed;
+    top: 0px;
+    left: calc(50% + 600px);
+    width: 250px; /* Adjust the width as needed */
+    height: 700px;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-left: 1px solid #ccc;
+/*    overflow-y: auto; */
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    height: 95%;
+    padding: 20px;
+}
+
+.close-modal {
+    align-self: flex-end;
+    cursor: pointer;
+    font-size: 20px;
+    color: #aaa;
+    transition: color 0.3s;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: black;
+    text-decoration: none;
+}
+
+#ai-assistant-modal textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+#ai-assistant-modal button {
+    align-self: flex-end;
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 15px 32px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the container inline-block */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Some margin */
+    cursor: pointer; /* Pointer/hand icon */
+    border-radius: 12px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+/* Styles for the AI Assistant button */
+.styled-button {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 15px 32px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the container inline-block */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Some margin */
+    cursor: pointer; /* Pointer/hand icon */
+    border-radius: 12px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.styled-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+#ai-response {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+#ai-input {
+    margin-bottom: 10px;
+}

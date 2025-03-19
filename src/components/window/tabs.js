@@ -99,9 +99,21 @@ function switchTab(index) {
 }
 
 function addNewTab(title, path, tabHeader, pageWindow) {
-    const newTabInfo = { title, path };
-
+    const query = path.split("?")[1];
+    const urlParams = new URLSearchParams(query);
+    const id = urlParams.get("id");
+    const newTabInfo = { title, path, id };
     const newIndex = tabs.length;
+    
+    // Switch to tab if it already exists
+    if (id) {
+        console.log(id);
+        const index = tabs.findIndex((tab) => tab.id === id);
+        if (index != -1) {
+            switchTab(index);
+            return;
+        }
+    }
 
     tabs.push(newTabInfo);
 

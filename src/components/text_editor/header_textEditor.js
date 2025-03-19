@@ -142,6 +142,14 @@ findPrevBtn.addEventListener("click", () => findText(false));
 replaceOneBtn.addEventListener("click", () => replaceText(false));
 replaceAllBtn.addEventListener("click", () => replaceText(true));
 
+document.addEventListener("keydown", (event) => {
+    if (event.ctrlKey && event.key === "f") {
+        openModal("find");
+        event.preventDefault(); 
+    }
+});
+
+
 // Zoom In & Zoom Out & Reset
 
 // Get buttons
