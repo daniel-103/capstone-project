@@ -2,7 +2,8 @@ import saveTextDocument from "./text_editor_save.js";
 const BlockEmbed = Quill.import('blots/block');
 const Inline = Quill.import('blots/inline');
 const icons = Quill.import('ui/icons');
-
+import { extractTextFromImage } from './multimedia.mjs';
+import { textToSpeech } from './multimedia.mjs';
 // Get text data from database
 const urlParams = new URLSearchParams(window.location.search);
 const entityId = urlParams.get("id");
@@ -162,7 +163,11 @@ const toolbarOptions = [
   [{ 'align': [] }],
   
   ['clean'],
-  ['section-button']
+  ['section-button'],
+  ['ai-assistant'],
+  ['research-button'],
+  ['import-image'],
+  ['text-to-speech']
 
                                          // remove formatting button
   
@@ -175,6 +180,73 @@ const quill = new Quill('#editor', {
       handlers: {
         'section-button': function() {
           createSection();
+        },
+        'ai-assistant': function() {
+          const aiAssistantModal = document.getElementById("ai-assistant-modal");
+          const editorContainer = document.querySelector('.editor-container');
+          editorContainer.classList.toggle('expanded');
+          aiAssistantModal.classList.toggle('expanded');
+          if (aiAssistantModal.style.display === "block") {
+            aiAssistantModal.style.display = "none";
+          } else {
+            aiAssistantModal.style.display = "block";
+          }
+        },
+        'research-button': function() {
+          const researchModal = document.getElementById('research-modal');
+          const editorContainer = document.querySelector('.editor-container');
+          editorContainer.classList.toggle('expanded');
+          researchModal.classList.toggle('expanded');
+          if (researchModal.style.display === "block") {
+            researchModal.style.display = "none";
+          } else {
+            researchModal.style.display = "block";
+          }
+        },
+        'import-image': function() {
+          const input = document.createElement("input");
+          input.type = "file";
+          input.accept = "image/*";
+          input.addEventListener("change", async (event) => {
+            const file = event.target.files[0];
+            const fileType = file.type;
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onload = async function () {
+              const arrayBuffer = reader.result;
+              console.log("arrayBuffer: ", arrayBuffer);
+              try {
+                  const extractedText = await extractTextFromImage(arrayBuffer, fileType);
+                  const range = quill.getSelection(true);
+                  quill.insertText(range.index, extractedText, true);
+              } catch (error) {
+                  console.error("Error extracting text from image:", error);
+              }
+            };
+
+            reader.readAsArrayBuffer(file);
+          });
+
+          input.click();
+        },
+        'text-to-speech': async function() {
+          const audioPlayer = document.getElementById('audio-player');
+          const audioSource = document.getElementById('audio-source');
+          const audio = document.getElementById('audio');
+
+          if (audioPlayer.style.display === "block") {
+            audioPlayer.style.display = "none";
+          } else {
+            audioPlayer.style.display = "block";
+          }
+
+          const quillContent = quill.getText().trim();
+          const audioUrl = await textToSpeech(quillContent);
+          audioSource.src = audioUrl;
+          audio.load();
+          audio.play();
         }
       }
     },  
@@ -194,11 +266,32 @@ const quill = new Quill('#editor', {
 // Update initial information 
 quill.setContents(initialTextData);
 
+let aiButton = document.querySelector('.ql-ai-assistant');
+if (aiButton) {
+  aiButton.innerHTML = '🤖'; 
+}
+
+let researchButton = document.querySelector('.ql-research-button');
+if (researchButton) {
+  researchButton.innerHTML = '🔍'; 
+}
+
+let importButton = document.querySelector('.ql-import-image');
+if (importButton) {
+  importButton.innerHTML = '📝'; 
+}
+
+let textToSpeechButton = document.querySelector('.ql-text-to-speech');
+if (textToSpeechButton) {
+  textToSpeechButton.innerHTML = '🔊'; 
+}
+
 let sectionButton = document.querySelector('.ql-section-button');
 if (sectionButton) {
   sectionButton.innerHTML = 'C';  // Set "C" as the button's icon text
 
 }
+
 function createSection() {
   const dim = getDimensions();
   const startInd = dim[0];
