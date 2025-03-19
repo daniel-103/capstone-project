@@ -6,6 +6,7 @@ import relationshipData from "../entity_types/relationship.js";
 import textDocumentData from "../entity_types/textDocument.js";
 
 const projectId = localStorage.getItem('projectId');
+console.log("in hierarchy.js current projectId: ", localStorage.getItem('projectId'));
 const folderNames = document.querySelectorAll('.folder-name');
 
 document.addEventListener('DOMContentLoaded', window.top.injectTheme(document))
@@ -95,7 +96,6 @@ document.getElementById('new-folder-btn').addEventListener('click', (event) => {
 
         console.log(`🛠 [3] Creating new folder "${name}"...`);
         window.top.db.post({
-            projectId: projectId,
             name: name,
             type: "folder",
             parentId: selectedFolder.id,
@@ -104,7 +104,6 @@ document.getElementById('new-folder-btn').addEventListener('click', (event) => {
                 created: new Date(),
                 last: new Date(),
             },
-            modules: {}               // determine later
         })
             .then((result) => {
                 console.log(`✅ [3] Created "${name}".`, result);
@@ -264,18 +263,6 @@ async function populateFileHierarchy (templateId) {
     }
 }
 
-window.addEventListener('message', (event) => {
-    // Check if the event data contains the templateId
-    if (event.data && event.data.templateId) {
-        const templateId = event.data.templateId;
-        console.log('Received Template ID in hierarchy.js h:', templateId);
-
-        // Use the templateId to populate the file hierarchy
-        populateFileHierarchy(templateId);
-    } else {
-        seedHierarchy();
-    }
-});
 
 // Support running growHierarchy from other places in the project
 window.top.addEventListener("growHierarchyEvent", (event) => {
@@ -286,3 +273,5 @@ window.top.addEventListener("growHierarchyEvent", (event) => {
 window.top.addEventListener("seedHierarchyEvent", (event) => {
     seedHierarchy();
 })
+
+seedHierarchy();

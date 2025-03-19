@@ -496,66 +496,7 @@ function makeDraggable(labelMoveTab, labelBox, section) {
 // This ensures the editor works as expected.
 export { quill };
 
-// Define global variables to hold the fileName and predefinedText
-let globalFileName = '';
-let globalPredefinedText = {};
-
-// Function to save the current content of the editor
-function saveCurrentContent() {
-  if (globalFileName) {
-    const currentContent = quill.getText();
-    globalPredefinedText[globalFileName] = currentContent;
-    console.log('globalPredefinedText:', globalPredefinedText);
-    console.log('globalPredefinedText[globalFileName]:', currentContent);
-  }
-}
-
-window.addEventListener('message', (event) => {
-  // Check if the event data contains the templateId and predefinedText
-  if (event.data && event.data.templateId && event.data.predefinedText) {
-    const templateId = event.data.templateId;
-    globalPredefinedText = event.data.predefinedText; // Assign to global variable
-    console.log('Received Template ID in text_editor.js:', templateId);
-    console.log('Received Predefined Text in text_editor.js  j:', JSON.stringify(globalPredefinedText));
-    console.log('Received Predefined Text in text_editor.js:', event.data.predefinedText);
-  }
-
-  // Check if the event data contains the fileClicked event
-  if (event.data.type === 'fileClicked') {
-    const fileName = event.data.fileName;
-    console.log(`Received file name: ${fileName}`);
-
-    // Save the current content of the editor before switching files
-    saveCurrentContent();
-
-    globalFileName = fileName;
-
-    // Navigate through the globalPredefinedText to find the file content
-    let fileContent = null;
-    for (const key in globalPredefinedText) {
-      if (globalPredefinedText.hasOwnProperty(key)) {
-        const value = globalPredefinedText[key];
-        
-        if (typeof value === 'string') {
-          // The key is a file
-          if (key === fileName) {
-            fileContent = value;
-            break;
-          }
-        } else if (typeof value === 'object') {
-          // The key is a folder
-          if (value.hasOwnProperty(fileName)) {
-            fileContent = value[fileName];
-            break;
-          }
-        }
-      }
-    }
-
-    quill.setText(fileContent);
-  }
-});
-
+// Save text when pressing ctrl+s
 document.addEventListener("keydown", async (event) => {
   if (!(event.ctrlKey && event.key === "s")) { return; }
   event.preventDefault();
