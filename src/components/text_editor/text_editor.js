@@ -1,9 +1,19 @@
 import saveTextDocument from "./text_editor_save.js";
-const BlockEmbed = Quill.import('blots/block');
-const Inline = Quill.import('blots/inline');
-const icons = Quill.import('ui/icons');
 import { textToSpeech } from './multimedia.mjs';
 import { saveSections, getSections } from "./section_save.js";
+import { loadSections } from "./section_load.js";
+
+let sections = [];
+//await loadSections();
+
+// Load sections if there are any 
+// let checkSections = JSON.stringify(loadSections());
+// if (checkSections.length != 0) {
+//   sections = checkSections;
+// }
+// console.log(sections);
+//console.log(sections);
+//console.log(sections);
 // Get text data from database
 const urlParams = new URLSearchParams(window.location.search);
 const entityId = urlParams.get("id");
@@ -108,8 +118,6 @@ class Section {
   }
 
 }
-
-let sections = [];
 
 class Counter {
   constructor(quill, options) {
@@ -234,6 +242,10 @@ const quill = new Quill('#editor', {
   }
 });
 
+
+await loadSections();
+
+
 // Update initial information 
 quill.setContents(initialTextData);
 
@@ -258,8 +270,13 @@ if (sectionButton) {
 
 }
 
-function createSection() {
-  const dim = getDimensions();
+export function createSection() {
+  let dim;
+  if (arguments.length == 1) {
+    dim = getDimensions(arguments[0]);
+  } else {
+    dim = getDimensions();
+  }
   const startInd = dim[0];
   const endInd = dim[1];
   const topPosition = dim[2];
@@ -386,7 +403,7 @@ function createSection() {
   lineContainer.appendChild(labelMoveTab);
   lineContainer.appendChild(colorDropdown);
   lineContainer.appendChild(lineTypeDropdown);
-
+  
   const section = new Section(startInd, endInd, labelBox, lineElement, labelMoveTab);
   // Check if the new section is inside an existing section (subsection)
   const parentSection = findParentSection(section);
@@ -428,10 +445,20 @@ function findParentSection(newSection) {
 }
 
 function getDimensions() {
-  const range = quill.getSelection();
-  //const text = quill.getText(range.index, range.length);
-  const startInd = range.index;
-  const endInd = range.index + range.length;
+  let startInd;
+  let endInd;
+  if (arguments.length == 1) {
+    startInd = arguments[0].startInd;
+    endInd = arguments[0].endInd;
+  } else {
+    const range = quill.getSelection();
+    //const text = quill.getText(range.index, range.length);
+    startInd = range.index;
+    endInd = range.index + range.length;
+  
+  }
+  console.log("StartInd", startInd);
+  console.log("EndInd",endInd);
   const startBounds = quill.getBounds(startInd);
   const endBounds = quill.getBounds(endInd);
   // Calculate the vertical position of the selection (accounting for scroll position)
@@ -443,6 +470,8 @@ function getDimensions() {
 
   return [startInd, endInd, topPosition, bottomPosition, labelTop];
 }
+
+
 
 function makeDraggable(labelMoveTab, labelBox, section) {
   let startY = 0;
