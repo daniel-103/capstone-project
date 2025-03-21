@@ -1,3 +1,5 @@
+window.top.DEBUG = localStorage.getItem('DEBUG') == 'true'
+
 async function initProjects() {
   const date = new Date();
 
@@ -23,7 +25,7 @@ async function initProjects() {
     }
   })
   
-  console.log('🛠 [1] Fetching projects...');
+  if (window.top.DEBUG) console.log('🛠 [1] Fetching projects...');
   const projects = await window.top.db.find({
     selector: {
       parentId: null,
@@ -31,11 +33,12 @@ async function initProjects() {
     }
   })
   .then(result => {
-    console.log(`✅ [1] Fetched ${result.length} project${result.length === 1 ? '' : 's'}:`, result);
+    if (window.top.DEBUG) console.log(`✅ [1] Fetched ${result.length} project${result.length === 1 ? '' : 's'}:`, result);
     return result;
   })
   .catch(error => {
-    console.log("❌ [1] Couldn't fetch projects:", error);
+    if (window.top.DEBUG) console.log("❌ [1] Couldn't fetch projects:", error);
+    window.top.error("[ERROR] Couldn't fetch projects");
   })
 
   const project_gallery = document.getElementById('projectGallery');
@@ -143,15 +146,16 @@ async function initProjects() {
         state = 'open';
         deleteButton.classList.add('active');
       } else {
-        console.log(`🛠 [2] Deleting project "${project.name}"...`);
+        if (window.top.DEBUG) console.log(`🛠 [2] Deleting project "${project.name}"...`);
           window.top.db.remove(project._id)
           .then(() => {
               // TODO: Recursively delete all nested files and folders
-              console.log(`✅ [2] Project "${project.name}" deleted.`);
+              if (window.top.DEBUG) console.log(`✅ [2] Project "${project.name}" deleted.`);
               card.remove();
             })
           .catch(error => {
-            console.log("❌ [2] Couldn't delete project:", error);
+            if (window.top.DEBUG) console.log("❌ [2] Couldn't delete project:", error);
+            window.top.error("Couldn't delete project");
           });
       }
     })

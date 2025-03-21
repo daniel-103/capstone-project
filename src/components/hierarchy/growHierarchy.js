@@ -7,21 +7,21 @@ import addFolderClickEvent from "./addFolderClickEvent.js"
 // I initially avoided doing this because the way I was thinking about it was that I needed all of the children fetched together to order them, and thinking about only returning their ids recursizely which meant I needed to refetch each child at the top again.
 // But if I instead pass the entire fetched child, then there's no need to refetch each child, just grab the object's childrenIds, fetch, sort, and call on each child object.
 async function growHierarchy(parentFolder) {
-    console.log("growing hierarchy for", parentFolder);
+    if (window.top.DEBUG) console.log("growing hierarchy for", parentFolder);
     if (!Array.isArray(parentFolder)) {
         document.getElementById(`${parentFolder._id}`).querySelector('.folder-items').innerHTML = ''; 
     } 
     const childrenIds = Array.isArray(parentFolder)?parentFolder:parentFolder.childrenIds;
     const children = await Promise.all(
         childrenIds.map(childId => {
-            console.log(`🛠 [2.2] Fetching child with id: "${childId}"...`);
+            if (window.top.DEBUG) console.log(`🛠 [2.2] Fetching child with id: "${childId}"...`);
             return window.top.db.get(childId)
                 .then(child => {
-                    console.log(`✅ [2.2] Fetched "${child.name?child.name:child.modules[0].value[0]}": `, child);
+                    if (window.top.DEBUG) console.log(`✅ [2.2] Fetched "${child.name?child.name:child.modules[0].value[0]}": `, child);
                     return child;
                 })
                 .catch(error => {
-                    console.error(`❗ [2.2] Failed to fetch child with id "${childId}". Skipping...`, error);
+                    if (window.top.DEBUG) console.error(`❗ [2.2] Failed to fetch child with id "${childId}". Skipping...`, error);
                     return null; // Prevent breaking the Promise.all chain
                 });
         })
@@ -60,7 +60,7 @@ async function growHierarchy(parentFolder) {
             document.getElementById(child.parentId).querySelector('.folder-items').appendChild(folder);
 
             if (child.childrenIds && child.childrenIds.length > 0) {
-                console.log(`🛠 [2.3] -> [2.1] Constructing hierarchy for ${childName}'s children...`);
+                if (window.top.DEBUG) console.log(`🛠 [2.3] -> [2.1] Constructing hierarchy for ${childName}'s children...`);
                 await growHierarchy(child.childrenIds);
             }
         } else if (child.type === 'file') {
@@ -81,7 +81,7 @@ async function growHierarchy(parentFolder) {
 
             document.getElementById(child.parentId).querySelector('.folder-items').appendChild(file);
         } else {
-            console.log(`❗ [2.3] ${childName} has an unknown type "${child.type}". Skipping...`);
+            if (window.top.DEBUG) console.log(`❗ [2.3] ${childName} has an unknown type "${child.type}". Skipping...`);
         }
     }
 }

@@ -7,7 +7,7 @@ import textDocumentData from "../entity_types/textDocument.js";
 // import { translate } from "pdf-lib";
 
 const projectId = localStorage.getItem('projectId');
-console.log("in hierarchy.js current projectId: ", localStorage.getItem('projectId'));
+if (window.top.DEBUG) console.log("in hierarchy.js current projectId: ", localStorage.getItem('projectId'));
 const folderNames = document.querySelectorAll('.folder-name');
 
 document.addEventListener('DOMContentLoaded', window.top.injectTheme(document))
@@ -41,7 +41,8 @@ for (const button of slideOut.querySelectorAll('button')) {
         const parentId = document.getElementsByClassName('folder selected')[0].id
         
         await addEntity(buttonPaths[button.id][0], buttonPaths[button.id][1], parentId).catch(error => {
-            console.log(`❌ [3] Couldn't create file:`, error);
+            if (window.top.DEBUG) console.log(`❌ [3] Couldn't create file:`, error);
+            window.top.error("[ERROR] Couldn't create file.");
         });
     });   
 }
@@ -95,7 +96,7 @@ document.getElementById('new-folder-btn').addEventListener('click', (event) => {
 
         const name = span.textContent
 
-        console.log(`🛠 [3] Creating new folder "${name}"...`);
+        if (window.top.DEBUG) console.log(`🛠 [3] Creating new folder "${name}"...`);
         window.top.db.post({
             name: name,
             type: "folder",
@@ -107,27 +108,29 @@ document.getElementById('new-folder-btn').addEventListener('click', (event) => {
             },
         })
             .then((result) => {
-                console.log(`✅ [3] Created "${name}".`, result);
-                console.log(`🛠 [3.1] Fetching ${name}'s parent...`);
+                if (window.top.DEBUG) console.log(`✅ [3] Created "${name}".`, result);
+                if (window.top.DEBUG) console.log(`🛠 [3.1] Fetching ${name}'s parent...`);
                 window.top.db.get(selectedFolder.id)
                     .then(parentFolder => {
-                        console.log(`✅ [3.1] Fetched ${name}'s parent:`, parentFolder);
-                        console.log(`🛠 [3.2] Appending ${name}'s id to its parent's childrenIds...`);
+                        if (window.top.DEBUG) console.log(`✅ [3.1] Fetched ${name}'s parent:`, parentFolder);
+                        if (window.top.DEBUG) console.log(`🛠 [3.2] Appending ${name}'s id to its parent's childrenIds...`);
                         parentFolder.childrenIds.push(result.id);
                         window.top.db.put(parentFolder)
                             .then((putResult) => {
-                                console.log(`✅ [3.2] Linked ${name} to its parent:`, putResult);
+                                if (window.top.DEBUG) console.log(`✅ [3.2] Linked ${name} to its parent:`, putResult);
                                 selectedFolder.querySelector('.folder-items').innerHTML = '';   // Need a better way to order items than deleating everything and regenerating them
                                 growHierarchy(parentFolder);
                                 document.getElementById(putResult.id).classList.add('open');
                                 slideOut.classList.remove('open');
                             })
                             .catch(error => {
-                                console.log(`❌ [3.2] Couldn't link ${name} to its parent:`, error);
+                                if (window.top.DEBUG) console.log(`❌ [3.2] Couldn't link ${name} to its parent:`, error);
+                                window.top.error(`[ERROR] Couldn't link ${name} to its parent`);
                             });
                     })
                     .catch(error => {
-                        console.log(`❌ [3.1] Couldn't fetch ${name}'s parent:`, error);
+                        if (window.top.DEBUG) console.log(`❌ [3.1] Couldn't fetch ${name}'s parent:`, error);
+                        window.top.error(`[ERROR] Couldn't fetch ${name}'s parent`);
                     });
             })
     });
@@ -213,10 +216,10 @@ const hierarchy = document.getElementById('file-hierarchy');
 // Initialize the hierarchy by creating the root folder, then growing
 async function seedHierarchy() {
     hierarchy.innerHTML = '';
-    console.log(`🛠 [2] Starting Hierarchy Construction. Fetching project root with id "${projectId}"...`);
+    if (window.top.DEBUG) console.log(`🛠 [2] Starting Hierarchy Construction. Fetching project root with id "${projectId}"...`);
     window.top.db.get(projectId)
         .then(object => {
-            console.log(`✅ [2] Fetched project "${object.name}"`, object);
+            if (window.top.DEBUG) console.log(`✅ [2] Fetched project "${object.name}"`, object);
             const folder = document.createElement('div');
             folder.classList.add("folder", "root", "selected");
             folder.id = object._id;
@@ -230,11 +233,13 @@ async function seedHierarchy() {
             addFolderClickEvent(folder)
             hierarchy.appendChild(folder);
 
-            console.log(`🛠 [2.1] Constructing hierarchy for ${object.name}'s children...`);
+            if (window.top.DEBUG) console.log(`🛠 [2.1] Constructing hierarchy for ${object.name}'s children...`);
             growHierarchy(object)
         })
         .catch(error => {
-            console.log("❌ [2] Couldn't fetch project:", error);
+            if (window.top.DEBUG) console.log("❌ [2] Couldn't fetch project:", error);
+            window.top.error(`[ERROR] Couldn't fetch project`);
+            
         })
 }
 
@@ -285,7 +290,7 @@ async function populateFileHierarchy (templateId) {
             fileElement.classList.add("file");
             fileElement.innerHTML = `<div class="file-name">${file}</div>`;
             fileElement.addEventListener('click', () => {
-                console.log(`File clicked: ${file}`);
+                if (window.top.DEBUG) console.log(`File clicked: ${file}`);
                 window.parent.postMessage({ type: 'fileClicked', fileName: file }, '*');
             });
             fileList.appendChild(fileElement);
@@ -326,10 +331,11 @@ window.top.addEventListener("seedHierarchyEvent", (event) => {
 
 window.top.addEventListener("getSelectedFolder", async (event) => {
     const parentId = document.getElementsByClassName('folder selected')[0].id;
-    console.log(event);
+    if (window.top.DEBUG) console.log(event);
         
     await addEntity("../text_editor/text_editor.html", event.detail, parentId).catch(error => {
-        console.log(`❌ [3] Couldn't create file:`, error);
+        if (window.top.DEBUG) console.log(`❌ [3] Couldn't create file:`, error);
+        window.top.error(`[ERROR] Couldn't create file`);
     });
 })
 

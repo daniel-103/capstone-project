@@ -5,7 +5,7 @@ const staticProgramObject = {
     projects: []
 };
 
-console.log("❓ [-1] Sorry for all of these logs. Debugging was a nightmare. Feel free to comment them out if they are too annoying. I'll try to remove them or make debug mode later")
+// console.log("❓ [-1] Sorry for all of these logs. Debugging was a nightmare. Feel free to comment them out if they are too annoying. I'll try to remove them or make debug mode later")
 // Hey, looks like you either followed this message from the console or you stumbled upon this.
 // I'm using my own way of logging and debugging with the following format:
 
@@ -28,20 +28,20 @@ console.log("❓ [-1] Sorry for all of these logs. Debugging was a nightmare. Fe
 // Feel free to adopt this type of logging and debugging.
 
 // Fetch the 'Program Object' that keeps track of all of the projects. It's the highest level object. (the root)
-console.log('🛠 [0] Fetching Program Object...');
+if (window.top.DEBUG) console.log('🛠 [0] Fetching Program Object...');
 window.top.db.get(programId)
     .then(programObject => {
-        console.log("✅ [0] Fetched Program Object:", programObject);
+        if (window.top.DEBUG) console.log("✅ [0] Fetched Program Object:", programObject);
     })
     .catch(error => {
-        console.log("❗ [0] Couldn't fetch Program Object:", error);
-        console.log("🛠 [0.1] Creating new Program Object...");
+        if (window.top.DEBUG) console.log("❗ [0] Couldn't fetch Program Object:", error);
+        if (window.top.DEBUG) console.log("🛠 [0.1] Creating new Program Object...");
         window.top.db.put(staticProgramObject)
             .then(response => {
-                console.log("✅ [0.1] Created new Program Object:", response);
+                if (window.top.DEBUG) console.log("✅ [0.1] Created new Program Object:", response);
             })
             .catch(error => {
-                console.log("❌ [0.1] Couldn't create new Program Object:", error);
+                if (window.top.DEBUG) console.log("❌ [0.1] Couldn't create new Program Object:", error);
             })
     });
 
@@ -90,6 +90,8 @@ window.db.get("123")
                 created: date,
                 last: date
             }
-        }).then(() => console.log("✅ Document created"));
+        }).then(() => {
+            if (window.top.DEBUG) console.log("✅ Document created")
+        });
     });
 
