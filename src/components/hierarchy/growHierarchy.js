@@ -17,7 +17,6 @@ async function growHierarchy(parentFolder) {
             console.log(`🛠 [2.2] Fetching child with id: "${childId}"...`);
             return window.top.db.get(childId)
                 .then(child => {
-                    console.log(child);
                     console.log(`✅ [2.2] Fetched "${child.name?child.name:child.modules[0].value[0]}": `, child);
                     return child;
                 })

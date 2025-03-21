@@ -158,7 +158,9 @@
     --hierarchy-tree-hover-horizontal-thickness: 8;
 
 
-    --tab-section-color: var(--light-black);
+
+    /* Tabs */
+    --tab-section-color: transparent;
 
     --tab-button-color: var(--black);
     --tab-text-color: var(--magenta);
@@ -178,6 +180,7 @@
 
 
     
+    /* Default Page (deprecated?)*/
     --default-page-background-color: var(--black1);
 
     --default-page-module-background-color: var(--black1);
@@ -189,6 +192,8 @@
     --default-page-module-border-color-hover: var(--light-blue);
 
 
+
+    /* Page */
     --page-background-color: var(--black);
     --page-background-border-color: var(--black);
 
@@ -240,8 +245,12 @@
 }
 
 /* Writing */
-#side-bar-options {
+#hierarchy-container {
     border-top-right-radius: 1rem;
+}
+
+#section-hierarchy {
+    background-color: var(--light-black);
 }
 
 #new-file-slide-out {

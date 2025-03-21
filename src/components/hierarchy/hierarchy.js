@@ -4,6 +4,7 @@ import addEntity from "../enity_add/addEntity.js";
 import characterData from "../entity_types/character.js";
 import relationshipData from "../entity_types/relationship.js";
 import textDocumentData from "../entity_types/textDocument.js";
+// import { translate } from "pdf-lib";
 
 const projectId = localStorage.getItem('projectId');
 console.log("in hierarchy.js current projectId: ", localStorage.getItem('projectId'));
@@ -30,7 +31,7 @@ document.getElementById('new-file-btn').addEventListener('click',(event) => {
 
 const slideOut = document.getElementById('new-file-slide-out');
 for (const button of slideOut.querySelectorAll('button')) {
-    console.log(button);
+    // console.log(button);
     // grab button attribute and create an eventListener to create the page with the module dictated by the attached attribute
     // just going to create an empty page for now...
     button.addEventListener('click', async () => {
@@ -155,10 +156,59 @@ toCurrentBtn.addEventListener('click', (event) => {
 })
 
 
+// Toggle View Buttons
+const hierarchyContainer = document.getElementById('hierarchy-container')
+const fileHierarchyContainer = document.getElementById('file-hierarchy-container')
+const sectionHierarchyContainer = document.getElementById('section-hierarchy-container')
+const toggleSectionViewBtn = document.getElementById('toggle-section-btn')
+const toggleFileViewBtn = document.getElementById('toggle-file-btn')
+
+// Toggle Section View
+toggleSectionViewBtn.addEventListener('click', (event) => {
+
+    // move containers
+    fileHierarchyContainer.style.transform = 'translateX(-100%)'
+    sectionHierarchyContainer.style.transform = 'translateX(0%)'
+
+    // move this section's button
+    toggleSectionViewBtn.style.transition = 'transform 0.2s ease'
+    toggleSectionViewBtn.style.transform = `translateX(${fileHierarchyContainer.offsetWidth}px)`
+
+    // move other section's button to initial position
+    toggleFileViewBtn.style.transition = ''
+    toggleFileViewBtn.style.transform = `translateX(-${fileHierarchyContainer.offsetWidth}px)`
+    // force update then apply move transition
+    requestAnimationFrame(() => {
+        toggleFileViewBtn.style.transition = 'transform 0.2s ease'
+        toggleFileViewBtn.style.transform = `translateX(0px)`
+    })
+})
+
+// Toggle File View
+toggleFileViewBtn.addEventListener('click', (event) => {
+    
+    // move containers
+    fileHierarchyContainer.style.transform = ''
+    sectionHierarchyContainer.style.transform = ''
+
+    // move this section's button
+    toggleFileViewBtn.style.transition = 'transform 0.2s ease'
+    toggleFileViewBtn.style.transform = `translateX(-${fileHierarchyContainer.offsetWidth}px)`
+
+    // move other section's button to initial position
+    toggleSectionViewBtn.style.transition = ''
+    toggleSectionViewBtn.style.transform = `translateX(${fileHierarchyContainer.offsetWidth}px)`
+    // force update then apply move transition
+    requestAnimationFrame(() => {
+        toggleSectionViewBtn.style.transition = 'transform 0.2s ease'
+        toggleSectionViewBtn.style.transform = `translateX(0px)`
+    })
+})
 
 
 
-const hierarchy = document.getElementById('hierarchy');
+
+const hierarchy = document.getElementById('file-hierarchy');
 
 // Initialize the hierarchy by creating the root folder, then growing
 async function seedHierarchy() {
@@ -211,7 +261,7 @@ const templateFoldersAndFiles = {
 };
 
 async function populateFileHierarchy (templateId) {
-    const hierarchyContainer = document.getElementById('hierarchy');
+    const hierarchyContainer = document.getElementById('file-hierarchy');
     hierarchyContainer.innerHTML = ''; // Clear existing hierarchy
 
     const templateData = templateFoldersAndFiles[templateId];
