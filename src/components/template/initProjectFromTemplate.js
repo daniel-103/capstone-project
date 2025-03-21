@@ -11,6 +11,7 @@ async function initProjectFromTemplate(template) {
         description: template.description,
         childrenIds: [],
         date: {created: date, last: date},
+        sections: [],
     };
 
     const newProject = await window.top.db.post(project);

@@ -30,7 +30,7 @@ class Section {
     this.labelMoveTab = labelMoveTab;
     this.lineElement = lineElement;
     this.children = [];
-    this.parent = null;
+    //this.parent = null;
   }
 
   updateLineHeight() {
@@ -102,7 +102,7 @@ class Section {
   }
 
   setParent(parentSection) {
-    this.parent = parentSection;
+    //this.parent = parentSection;
     parentSection.children.push(this);
     console.log(`Subsection created under parent: ${parentSection.labelBox.textContent}`);
   }
@@ -411,8 +411,8 @@ function createSection() {
     }
   });
   console.log(sections);
-  saveSections(sections);
-  getSections();
+  //saveSections(sections);
+  //getSections();
 }
 
 function findParentSection(newSection) {
@@ -560,8 +560,17 @@ export { quill };
 export { sections };
 // Save text when pressing ctrl+s
 document.addEventListener("keydown", async (event) => {
+  if (!(event.ctrlKey && event.key === ".")) { return; }
+  getSections();
+});
+document.addEventListener("keydown", async (event) => {
   if (!(event.ctrlKey && event.key === "s")) { return; }
   event.preventDefault();
+  try {
+    saveSections(sections);
+  } catch (err) {
+    console.error("Failed to save section data");
+  }
   if (!entityId) {
     console.error("No entity ID in URL.");
   } else {
