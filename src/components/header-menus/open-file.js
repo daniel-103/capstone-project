@@ -1,3 +1,5 @@
+import textDocumentData from "../entity_types/textDocument.js";
+import initNewEntity from "../enity_add/addEntity.js";
 // Maybe add logic here to open projects if we get a project file format established.
 // For now, just importing pages.
 
@@ -12,11 +14,10 @@ document.getElementById('file-input').addEventListener('change', event => {
 
 
 // Drag and drop
-const validFileTypes = [
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
-    "application/pdf", // .pdf
-    "text/plain", // .txt
-]
+const fileTypeFunctions = {
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" : convertWordFile, // .docx
+    "text/plain" : convertTxtFile, // .txt
+}
 
 const icon = document.getElementById('drop-icon');
 
@@ -46,7 +47,7 @@ window.addEventListener('drop', event => {
 
     const file = event.dataTransfer.files[0];
 
-    if (!validFileTypes.includes(file.type)) {
+    if (!Object.keys(fileTypeFunctions).includes(file.type)) {
         // invalid file type, can only docx, pdf, txt
         console.error('Invalid file type');
         window.top.error('[ERROR] Invalid file type.', 5);
@@ -57,8 +58,35 @@ window.addEventListener('drop', event => {
 
 })
 
-function handleFile(file) {
-    console.log(file);
-    // Not sure what to do with the file from here so I'll leave it up to you (Daniel) to import it.
+async function handleFile(file) {
+    try {
+        let deltaInfo;
+        deltaInfo = await fileTypeFunctions[file.type](file);
+
+        textDocumentData.textData = JSON.stringify(deltaInfo);
+
+        const getSelectedFolderEvent = new CustomEvent('getSelectedFolder', {
+            detail: textDocumentData
+        });
+
+        window.top.dispatchEvent(getSelectedFolderEvent);
+        
+    } catch (error) {
+        console.error(error);
+    }
 }
 
+async function convertWordFile(file) {
+    const arrayBuffer = await file.arrayBuffer();
+    const result = await mammoth.convertToHtml({arrayBuffer});
+
+    const quillTemp = new Quill(document.createElement('div'));
+    quillTemp.clipboard.dangerouslyPasteHTML(result.value);
+
+    return quillTemp.getContents();
+}
+
+async function convertTxtFile(file) {
+    const text = await file.text();
+    return { ops: [{ insert: text }]};
+}

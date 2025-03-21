@@ -324,4 +324,13 @@ window.top.addEventListener("seedHierarchyEvent", (event) => {
     seedHierarchy();
 })
 
+window.top.addEventListener("getSelectedFolder", async (event) => {
+    const parentId = document.getElementsByClassName('folder selected')[0].id;
+    console.log(event);
+        
+    await addEntity("../text_editor/text_editor.html", event.detail, parentId).catch(error => {
+        console.log(`❌ [3] Couldn't create file:`, error);
+    });
+})
+
 seedHierarchy();
