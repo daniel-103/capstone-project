@@ -3,6 +3,7 @@ const BlockEmbed = Quill.import('blots/block');
 const Inline = Quill.import('blots/inline');
 const icons = Quill.import('ui/icons');
 import { textToSpeech } from './multimedia.mjs';
+import { saveSections, getSections } from "./section_save.js";
 // Get text data from database
 const urlParams = new URLSearchParams(window.location.search);
 const entityId = urlParams.get("id");
@@ -409,6 +410,9 @@ function createSection() {
       sections.forEach(section => section.updateLineHeight());
     }
   });
+  console.log(sections);
+  saveSections(sections);
+  getSections();
 }
 
 function findParentSection(newSection) {
@@ -553,7 +557,7 @@ function makeDraggable(labelMoveTab, labelBox, section) {
 
 // This ensures the editor works as expected.
 export { quill };
-
+export { sections };
 // Save text when pressing ctrl+s
 document.addEventListener("keydown", async (event) => {
   if (!(event.ctrlKey && event.key === "s")) { return; }
@@ -564,7 +568,7 @@ document.addEventListener("keydown", async (event) => {
     try {
         const entityData = await window.top.db.get(entityId);
         saveTextDocument(entityData,JSON.stringify(quill.getContents()));
-  
+        
       } catch (err) {
         console.error("Failed to fetch document:", err);
       }
