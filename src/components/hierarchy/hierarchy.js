@@ -35,7 +35,6 @@ for (const button of slideOut.querySelectorAll('button')) {
     // grab button attribute and create an eventListener to create the page with the module dictated by the attached attribute
     // just going to create an empty page for now...
     button.addEventListener('click', async () => {
-        tabs = window.parent.tabs;
 
         // grab selected folder (_id will be in attribute)
         const parentId = document.getElementsByClassName('folder selected')[0].id

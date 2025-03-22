@@ -65,6 +65,7 @@ const windowIframe = document.getElementById('window');
 if (redirectButton && windowIframe) {
     redirectButton.addEventListener('click', () => {
         windowIframe.src = 'components/template/template.html';
+		window.top.tabs = [];
         // window.top.injectTheme(window.top.document);
         // windowIframe.contentWindow.addEventListener('DOMContentLoaded', () => {
         //     console.log('loaded')
