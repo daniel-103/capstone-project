@@ -24,6 +24,10 @@ NOTE: This is still a work in progress due to us still actively trying to figure
   - **DOCX:** `file-save-as-docx-btn`
   - **TXT:** `file-save-as-txt-btn`
 
+#### Open
+- **Button ID:** `file-open-btn`
+- **Functionality:** Opens a tool that allows you to select or drag and drop a word or .txt file. It will then extract the text and (some) formatting, and create a new text document with that extracted text.
+
 #### Settings
 - **Button ID:** `file-settings-btn`
 - **Functionality:** Opens the settings menu for the application.
