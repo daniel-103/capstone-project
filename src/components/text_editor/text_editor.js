@@ -242,8 +242,15 @@ const quill = new Quill('#editor', {
   }
 });
 
+if (entityId) {
+  try {
+    const entityData = await window.top.db.get(entityId);
+    await loadSections(entityData);
+  } catch (err) {
+    console.error("Failed to load sections:", err);
+  }
+}
 
-await loadSections();
 
 
 // Update initial information 
@@ -595,20 +602,15 @@ document.addEventListener("keydown", async (event) => {
 document.addEventListener("keydown", async (event) => {
   if (!(event.ctrlKey && event.key === "s")) { return; }
   event.preventDefault();
-  try {
-    saveSections(sections);
-  } catch (err) {
-    console.error("Failed to save section data");
-  }
   if (!entityId) {
     console.error("No entity ID in URL.");
   } else {
     try {
         const entityData = await window.top.db.get(entityId);
-        saveTextDocument(entityData,JSON.stringify(quill.getContents()));
-        
+        await saveTextDocument(entityData,JSON.stringify(quill.getContents()));
+        await saveSections(entityData, sections);
       } catch (err) {
-        console.error("Failed to fetch document:", err);
+        console.error("Failed to save document:", err);
       }
   }
 });

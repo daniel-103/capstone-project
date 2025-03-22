@@ -1,19 +1,12 @@
 import { createSection } from "./text_editor.js";
 
-export async function loadSections() {
+export async function loadSections(entityData) {
     try {
-        const projectId = localStorage.getItem('projectId');
-        if (!projectId) {
-            console.error("No project ID found in localStorage.");
+        if (!entityData.sections) {
             return;
         }
-
-        // get the current project
-        let projectDoc = await window.top.db.get(projectId).catch(err => null);
-        for (const section of projectDoc.sections) {
-            // if (sectionsArray.length == 0 || section == null) {
-            //     break;
-            // }
+        
+        for (const section of entityData.sections) {
             console.log(section);
             createSection(section);
             if (section.children.length != 0) {
