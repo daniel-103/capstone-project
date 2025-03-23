@@ -191,8 +191,8 @@ const quill = new Quill('#editor', {
         'ai-assistant': function() {
           const aiAssistantModal = document.getElementById("ai-assistant-modal");
           const editorContainer = document.querySelector('.editor-container');
-          editorContainer.classList.toggle('expanded');
-          aiAssistantModal.classList.toggle('expanded');
+//          editorContainer.classList.toggle('expanded');
+//          aiAssistantModal.classList.toggle('expanded');
           if (aiAssistantModal.style.display === "block") {
             aiAssistantModal.style.display = "none";
           } else {
@@ -202,8 +202,8 @@ const quill = new Quill('#editor', {
         'research-button': function() {
           const researchModal = document.getElementById('research-modal');
           const editorContainer = document.querySelector('.editor-container');
-          editorContainer.classList.toggle('expanded');
-          researchModal.classList.toggle('expanded');
+//          editorContainer.classList.toggle('expanded');
+//          researchModal.classList.toggle('expanded');
           if (researchModal.style.display === "block") {
             researchModal.style.display = "none";
           } else {

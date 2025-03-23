@@ -57,23 +57,38 @@
 
 
 .modal {
-    position: fixed;
-    top: 0px;
+    position: absolute;
+    top: 50px;
     left: calc(50% + 600px);
-    width: 250px; /* Adjust the width as needed */
-    height: 700px;
+    width: 300px; /* Adjust the width as needed */
+    height: 600px; /* Adjust the height as needed */
     z-index: 1000;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-left: 1px solid #ccc;
-/*    overflow-y: auto; */
+    border: 1px solid #ccc;
+    border-radius: 10px; /* Rounded corners */
+    overflow: auto;
+    resize: both; /* Make the modal resizable */
+    min-width: 200px; /* Minimum width */
+    min-height: 200px; /* Minimum height */
+}
+
+.modal-header {
+    padding: 10px;
+    background-color: #4CAF50; /* Green bsackground */
+    color: white; /* White text */
+    cursor: move; /* Cursor change to indicate draggable */
+    border-top-left-radius: 10px; /* Rounded corners for the header */
+    border-top-right-radius: 10px; /* Rounded corners for the header */
+    user-select: none;
 }
 
 .modal-content {
     display: flex;
     flex-direction: column;
-    height: 95%;
+    height: calc(100% - 40px); /* Adjust height to account for header */
     padding: 20px;
+    overflow: auto; /* Ensure content is scrollable if it overflows */
 }
 
 .close-modal {
@@ -101,7 +116,7 @@
     background-color: #4CAF50; /* Green background */
     border: none; /* Remove borders */
     color: white; /* White text */
-    padding: 15px 32px; /* Some padding */
+    padding: 10px 20px; /* Some padding */
     text-align: center; /* Centered text */
     text-decoration: none; /* Remove underline */
     display: inline-block; /* Make the container inline-block */
@@ -112,23 +127,7 @@
     transition: background-color 0.3s; /* Smooth transition */
 }
 
-/* Styles for the AI Assistant button */
-.styled-button {
-    background-color: #4CAF50; /* Green background */
-    border: none; /* Remove borders */
-    color: white; /* White text */
-    padding: 15px 32px; /* Some padding */
-    text-align: center; /* Centered text */
-    text-decoration: none; /* Remove underline */
-    display: inline-block; /* Make the container inline-block */
-    font-size: 16px; /* Increase font size */
-    margin: 4px 2px; /* Some margin */
-    cursor: pointer; /* Pointer/hand icon */
-    border-radius: 12px; /* Rounded corners */
-    transition: background-color 0.3s; /* Smooth transition */
-}
-
-.styled-button:hover {
+#ai-assistant-modal button:hover {
     background-color: #45a049; /* Darker green on hover */
 }
 
