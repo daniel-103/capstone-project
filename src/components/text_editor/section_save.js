@@ -1,34 +1,38 @@
 //import { sections as sectionArray } from "./text_editor.js" ;
 
-export async function saveSections(entityData, sectionsArray) {
+export async function saveSections(sectionsArray, entityData) {
     
     try {
-        
-        // Update the sections array
-        entityData.sections = sectionsArray;
-
-        // Save the updated document with _rev to preserve the revision history
-        const response = await window.top.db.put({
-            ...entityData, // Spread the existing document to preserve other fields (including _rev)
-            _rev: entityData._rev, // Ensure the _rev is included to prevent conflicts
-        });
+    
+        if (JSON.stringify(entityData.sections) != JSON.stringify(sectionsArray)) {
+            
+            const old_rev = entityData._rev;
+            
+            entityData.sections = sectionsArray;
+            entityData._rev = old_rev;
+            console.log("_rev: ",entityData._rev);
+            
+            const response = await window.top.db.put(entityData);
+            
+    
+            console.log(`Sections updated for page ${entityData.name}`, response);
+        } else {
+            console.log("No changes to the sections array. No update needed.");
+        }
 
     } catch (err) {
         console.error("Error saving sections:", err);
     }
 }
 
-export async function getSections() {
+export async function getSections(entityData) {
     try {
-        const projectId = localStorage.getItem('projectId');
-        const projectDoc = await window.top.db.get(projectId);
-        console.log("Retrieved sections:", projectDoc.sections);
-        console.log(projectDoc);
-        return projectDoc.sections;
+        
+        console.log("Retrieved sections:", entityData.sections);
+        return;
     } catch (err) {
         console.error("Error retrieving sections:", err);
-        return [];
+        return;
     }
 }
-
 
