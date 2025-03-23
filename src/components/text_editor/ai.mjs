@@ -7,11 +7,7 @@ const aiSubmit = document.getElementById("ai-submit");
 const aiResponse = document.getElementById("ai-response");
 const aiAssistantModal = document.getElementById("ai-assistant-modal");
 const aiAssistantModalheader = document.getElementById("ai-assistant-modalheader");
-const researchModal = document.getElementById("research-modal");
-const researchModalheader = document.getElementById("research-modalheader");
 const closeAiAssistant = document.getElementById("close-ai-assistant");
-const closeResearchModal = document.getElementById("close-research-modal");
-const editorContainer = document.querySelector('.editor-container');
 
 let savedRange = null;
 
@@ -73,47 +69,43 @@ closeAiAssistant.addEventListener("click", () => {
     aiAssistantModal.style.display = "none";
 });
 
-// Close Research Modal
-closeResearchModal.addEventListener("click", () => {
-    researchModal.style.display = "none";
-});
 
 // Make the AI Assistant Modal draggable
-let isDragging = false;
-let isResizing = false;
-let offsetX, offsetY;
+let isDraggingAI = false;
+let isResizingAI = false;
+let offsetXAI, offsetYAI;
 
-function makeModalDraggableAndResizable(modal, header) {
+function makeAIModalDraggableAndResizable(modal, header) {
     header.addEventListener('mousedown', function(e) {
-        isDragging = true;
-        offsetX = e.clientX - modal.getBoundingClientRect().left;
-        offsetY = e.clientY - modal.getBoundingClientRect().top;
+        isDraggingAI = true;
+        offsetXAI = e.clientX - modal.getBoundingClientRect().left;
+        offsetYAI = e.clientY - modal.getBoundingClientRect().top;
         document.body.style.cursor = 'move';
     });
 
     document.addEventListener('mousemove', function(e) {
-        if (isDragging) {
-            modal.style.left = `${e.clientX - offsetX}px`;
-            modal.style.top = `${e.clientY - offsetY}px`;
+        if (isDraggingAI) {
+            modal.style.left = `${e.clientX - offsetXAI}px`;
+            modal.style.top = `${e.clientY - offsetYAI}px`;
         }
     });
 
     document.addEventListener('mouseup', function() {
-        if (isDragging) {
-            isDragging = false;
+        if (isDraggingAI) {
+            isDraggingAI = false;
             document.body.style.cursor = 'default';
         }
     });
 
     modal.addEventListener('mousedown', function(e) {
-        if (e.target === modal && !isDragging) {
-            isResizing = true;
+        if (e.target === modal && !isDraggingAI) {
+            isResizingAI = true;
             document.body.style.cursor = 'nwse-resize';
         }
     });
 
     document.addEventListener('mousemove', function(e) {
-        if (isResizing) {
+        if (isResizingAI) {
             const rect = modal.getBoundingClientRect();
             modal.style.width = `${e.clientX - rect.left}px`;
             modal.style.height = `${e.clientY - rect.top}px`;
@@ -121,13 +113,13 @@ function makeModalDraggableAndResizable(modal, header) {
     });
 
     document.addEventListener('mouseup', function() {
-        if (isResizing) {
-            isResizing = false;
+        if (isResizingAI) {
+            isResizingAI = false;
             document.body.style.cursor = 'default';
         }
     });
 }
 
+
 // Apply draggable and resizable functionality
-makeModalDraggableAndResizable(aiAssistantModal, aiAssistantModalheader);
-makeModalDraggableAndResizable(researchModal, researchModalheader);
+makeAIModalDraggableAndResizable(aiAssistantModal, aiAssistantModalheader);

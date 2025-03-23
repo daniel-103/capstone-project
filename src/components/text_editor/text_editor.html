@@ -42,20 +42,21 @@
 </div>
 -->
 <!-- AI Assistant Modal -->
-<div id="ai-assistant-modal" class="modal" style="display: none;">
-	<div class="modal-header" id="ai-assistant-modalheader">SkripMancer</div>
-    <div class="modal-content">
-        <span class="close-modal" id="close-ai-assistant">&times;</span>
+<div id="ai-assistant-modal" class="ai-assistant-modal" style="display: none;">
+	<div class="ai-assistant-modal-header" id="ai-assistant-modalheader">SkripMancer</div>
+    <div class="ai-assistant-modal-content">
+        <span class="ai-assistant-modal-close-modal" id="close-ai-assistant">&times;</span>
 		<div id="ai-response"></div>
         <textarea id="ai-input" placeholder="SkripMancer – Where Ideas Take Shape..."></textarea>
         <button id="ai-submit">Ask SkripMancer</button>
     </div>
 </div>
 
-<div id="research-modal" class="modal" style="display: none;">
-	<div class="modal-header" id="research-modalheader">Research Tools</div>
-	<div class="modal-content">
-	  <span class="close-modal" id="close-research-modal">&times;</span>
+<!-- Research Modal -->
+<div id="research-modal" class="research-modal" style="display: none;">
+	<div class="research-modal-header" id="research-modalheader">Research Tools</div>
+	<div class="research-modal-content">
+	  <span class="research-modal-close-modal" id="close-research-modal">&times;</span>
 	  <h2>Research</h2>
 	  <input type="text" id="research-input" placeholder="Enter search term...">
 	  <button id="wikipedia-search">Wikipedia Search</button>
@@ -64,11 +65,17 @@
 	</div>
 </div>
 
-<div id="audio-player" style="display: none;">
-    <audio id="audio" controls>
-      <source id="audio-source" src="" type="audio/wav">
-      Your browser does not support the audio element.
-    </audio>
+<!-- Audio Player Modal -->
+<div id="audio-player-modal" class="audio-player-modal" style="display: none;">
+	<div class="audio-player-modal-header" id="audio-player-modalheader">Text to Speech</div>
+    <div class="audio-player-modal-content">
+        <span class="audio-player-modal-close-modal" id="audio-player-modal-close-audio-player">&times;</span>
+		<div id="audio-response"></div>
+        <audio id="audio" controls style="display: none;">
+            <source id="audio-source" src="" type="audio/wav">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
 </div>
 
 <!-- Include the Quill library -->
