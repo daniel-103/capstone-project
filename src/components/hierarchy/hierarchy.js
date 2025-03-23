@@ -242,6 +242,39 @@ async function seedHierarchy() {
         })
 }
 
+const sec_hierarchy = document.getElementById('section-hierarchy');
+
+async function seedSecHierarchy() {
+    let projectData = await window.top.db.get(projectId);
+    let entityId = projectData.childrenIds[0];   
+
+    sec_hierarchy.innerHTML = '';
+    if (window.top.DEBUG) console.log(`🛠 [2] Starting Hierarchy Construction. Fetching project root with id "${projectId}"...`);
+    window.top.db.get(entityId)
+    .then(object => {
+        if (window.top.DEBUG) console.log(`✅ [2] Fetched entity "${object.name}"`, object);
+        const folder = document.createElement('div');
+        folder.classList.add("folder", "root", "selected");
+        folder.id = object._id;
+        folder.innerHTML = `
+            <div class="folder-name">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
+                <span>${'Section List'}</span>
+            </div>
+            <ul class="folder-items"></ul>
+        `;
+        addFolderClickEvent(folder)
+        sec_hierarchy.appendChild(folder);
+
+        //if (window.top.DEBUG) console.log(`🛠 [2.1] Constructing hierarchy for ${object.name}'s children...`);
+        //growHierarchy(object)
+    })
+    .catch(error => {
+        if (window.top.DEBUG) console.log("❌ [2] Couldn't fetch project:", error);
+        window.top.error(`[ERROR] Couldn't fetch project`);
+        
+    })
+}
 /*
 seedHierarchy(projectId)
 */
@@ -339,3 +372,4 @@ window.top.addEventListener("getSelectedFolder", async (event) => {
 })
 
 seedHierarchy();
+seedSecHierarchy();

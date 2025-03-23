@@ -74,7 +74,7 @@ class Section {
     let lineContainer = this.labelBox.parentElement;
     console.log(lineContainer.children[3]);
     lineContainer.children[3].style.top = `${newTopPosition}px`;
-    lineContainer.children[4].style.top = `${parseInt(colorDropdown.style.top) + parseInt(colorDropdown.style.height)+ 5}px`;
+    //lineContainer.children[4].style.top = `${parseInt(colorDropdown.style.top) + parseInt(colorDropdown.style.height)+ 5}px`;
     console.log(colorDropdown);
 
     console.log("Updated Section:", {
