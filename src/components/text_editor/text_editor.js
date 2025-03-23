@@ -2,6 +2,7 @@ import saveTextDocument from "./text_editor_save.js";
 import { textToSpeech } from './multimedia.mjs';
 import { saveSections, getSections } from "./section_save.js";
 import { loadSections } from "./section_load.js";
+import getDoc from "./getTextDoc.js";
 
 const sections = [];
 // Wee Woo Wee Woo Work in Progress Please be Patient
@@ -9,25 +10,29 @@ const sections = [];
 // Saving and loading sections needed to be fixed to implement current page sections first
 const projectId = localStorage.getItem('projectId'); // Get the projectId 
 const projectData = await window.top.db.get(projectId); // Then the project data
-const entityId = projectData.childrenIds[0]; // Temp solution to getting the writing page's entityId 
-let entityData = await window.top.db.get(entityId);
+//const entityId = projectData.childrenIds[0]; // Temp solution to getting the writing page's entityId 
+//let entityData = await window.top.db.get(entityId);
 //console.log(entityData.sections);
 //console.log(entityData);
 //console.log(entityId);
 // Get text data from database
 // Using urlParams not working for this, so its breaking saving text data and sections. Do not use atm
-
-//const urlParams = new URLSearchParams(window.location.search);
+const urlParams = new URLSearchParams(window.location.search);
 //console.log(urlParams);
-//entityId = urlParams.get("entityId");
+let entityId = urlParams.get("id");
 //console.log(entityId);
 //const entityId = currentPage;
 
 let initialTextData = "{\"ops\":[{\"insert\":\"123456789\\n\"}]}";
 if (!entityId) {
+  entityId = await getDoc(projectId);
+  console.log(entityId);
+} 
+if (!entityId) {
   console.error("No entity ID in URL.");
 } else {
   try {
+    
       const entityData = await window.top.db.get(entityId);
       initialTextData = entityData.textData;
 
@@ -604,7 +609,7 @@ function makeDraggable(labelMoveTab, labelBox, section) {
 }
 
 // Refresh entity data before loading in all saved sections
-entityData = await window.top.db.get(entityId);
+const entityData = await window.top.db.get(entityId);
 await loadSections(entityData);
 
 
