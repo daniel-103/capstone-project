@@ -49,6 +49,7 @@ class Section {
     this.color = color;
     this.lineStyle = lineStyle;
     this.labelText = labelText;
+    
     //this.parent = null;
   }
 
@@ -70,6 +71,12 @@ class Section {
     this.lineElement.style.height = `${newBottomPosition - newTopPosition}px`;
     this.labelBox.style.top = `${newTopPosition}px`; // Update the position of the label box
     this.labelMoveTab.style.top = `${newTopPosition}px`;
+    let lineContainer = this.labelBox.parentElement;
+    console.log(lineContainer.children[3]);
+    lineContainer.children[3].style.top = `${newTopPosition}px`;
+    lineContainer.children[4].style.top = `${parseInt(colorDropdown.style.top) + parseInt(colorDropdown.style.height)+ 5}px`;
+    console.log(colorDropdown);
+
     console.log("Updated Section:", {
       start: this.startInd,
       end: this.endInd,
@@ -342,11 +349,11 @@ export function createSection() {
   const labelMoveTab = document.createElement('div');
   labelMoveTab.style.position = 'absolute';
   labelMoveTab.style.top = `${labelTop}px`; // Same top position as labelBox
-  labelMoveTab.style.left = '5px'; // Positioned to the left of labelBox
+  labelMoveTab.style.left = `${parseInt(labelBox.style.left) - 20}`; // Positioned to the left of labelBox
   labelMoveTab.style.width = '15px'; // Smaller width for the square
-  labelMoveTab.style.height = '20px'; // Match height with labelBox
+  labelMoveTab.style.height = '19.5px'; // Match height with labelBox
   labelMoveTab.style.backgroundColor = '#eeeeee'; // Different color to distinguish
-  labelMoveTab.style.border = `1px solid black`;
+  //labelMoveTab.style.border = `1px solid black`;
   labelMoveTab.style.cursor = 'grab';
   labelMoveTab.style.zIndex = '100';
   labelMoveTab.style.textAlign = 'center'; // Center text horizontally
@@ -356,13 +363,14 @@ export function createSection() {
   labelMoveTab.style.userSelect = 'none';
 
   // Add the "|" symbol
-  labelMoveTab.textContent = '|';
+  labelMoveTab.textContent = '-';
 
   // Create a color dropdown button
   const colorDropdown = document.createElement('select');
+  colorDropdown.id = 'colorDropdown';
   colorDropdown.style.position = 'relative';
   colorDropdown.style.top = `${labelTop}px`; // Align with labelBox
-  colorDropdown.style.left = `${parseInt(labelBox.style.left) + parseInt(labelBox.style.width) + 5}px`; // Place next to labelBox
+  colorDropdown.style.left = `${parseInt(labelBox.style.left) + parseInt(labelBox.style.width)}px`; // Place next to labelBox
   colorDropdown.style.width = '25px'; // Small square dropdown
   colorDropdown.style.height = '22px'; // Match labelBox height
   colorDropdown.style.border = '1px solid black';
@@ -384,6 +392,7 @@ export function createSection() {
     option.value = color;
     option.style.backgroundColor = color; // Set background color of option
     option.textContent = " "; // Empty text so only color is shown
+    //option.style.position = 'absolute';
     colorDropdown.appendChild(option);
   });
 
@@ -397,9 +406,10 @@ export function createSection() {
 
   // Create a line type dropdown button
   const lineTypeDropdown = document.createElement('select');
-  lineTypeDropdown.style.position = 'absolute';
-  lineTypeDropdown.style.top = `${parseInt(colorDropdown.style.top) + parseInt(colorDropdown.style.height) + 5}px`; // Below the color dropdown
-  lineTypeDropdown.style.left = colorDropdown.style.left; // Same left position
+  lineTypeDropdown.id = 'lineTypeDropdown';
+  lineTypeDropdown.style.position = 'relative';
+  lineTypeDropdown.style.top = `${parseInt(colorDropdown.style.top) + parseInt(colorDropdown.style.height)+ 5}px`; // Below the color dropdown
+  lineTypeDropdown.style.left = `${parseInt(labelBox.style.left) + parseInt(labelBox.style.width) - 25}px`; // Same left position
   lineTypeDropdown.style.width = '25px'; // Slightly wider for line type selection
   lineTypeDropdown.style.height = '22px'; // Match height of color dropdown
   lineTypeDropdown.style.border = '1px solid black';
@@ -429,8 +439,8 @@ export function createSection() {
   lineContainer.appendChild(lineElement);
   lineContainer.appendChild(labelBox);
   lineContainer.appendChild(labelMoveTab);
-  labelBox.appendChild(colorDropdown);
-  labelBox.appendChild(lineTypeDropdown);
+  lineContainer.appendChild(colorDropdown);
+  lineContainer.appendChild(lineTypeDropdown);
   
   const section = new Section(startInd, endInd, labelBox, lineElement, labelMoveTab, color, lineStyle, labelText);
   // Check if the new section is inside an existing section (subsection)
