@@ -9,6 +9,7 @@ import novelTemplate from "./template_types/novelTemplate.js"
 import poemTemplate from "./template_types/poemTemplate.js"
 import scriptTemplate from "./template_types/scriptTemplate.js"
 import shortStoryTemplate from "./template_types/shortStoryTemplate.js"
+import emptyTemplate from "./template_types/emptyTemplate.js"
 
 const templates = [
 	autobiographyTemplate,
@@ -21,6 +22,7 @@ const templates = [
 	poemTemplate,
 	scriptTemplate,
 	shortStoryTemplate,
+	emptyTemplate,
 ];
 
 const gallery = document.getElementById('templateGallery');
