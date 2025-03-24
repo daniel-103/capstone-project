@@ -1,27 +1,163 @@
-html, body, p {
-    margin: 0;
-    font-family: Helvetica;
-    transition: all 0.2s ease;
+html, body {
+    margin: 0.5rem;
 }
 
 body {
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: var(--menu-background-color);
     color: white;
 }
 
-#theme-section {
+p, span, li {
+    margin: 0;
+    font-family: Helvetica;
+    outline: none;
+}
+
+button {
+    padding: 0.25rem 0.5rem;
+    border: none;
+    color: var(--menu-button-text-color);
+    background-color: var(--menu-button-color);
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    color: var(--menu-button-hover-text-color);
+    background-color: var(--menu-button-hover-color);
+}
+
+#settings-area {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: fit-content;
+    min-width: 50%;
     position: relative;
-    height: 25rem;
-    width: 15rem;
+    padding: 1rem;
+    color: var(--menu-section-text-color);
+    background-color: var(--menu-section-color);
+}
+
+.section-title {
+    color: var(--menu-section-title-color);
+    margin-bottom: 0.5rem;
+}
+
+.section > *:not(.section-title) {
+    margin-left: 2rem;
+} 
+
+.subsection {
+    display: flex;
+    flex-direction: column;
+    color: var(--menu-subsection-text-color);
+    background-color: var(--menu-subsection-color);
+    padding: 0.5rem;
+}
+
+.subsection-title {
+    color: var(--menu-subsection-title-color);
+    margin-bottom: 0.25rem;
+}
+
+.subsection > *:not(.subsection-title) {
+    margin-left: 2rem;
+} 
+
+#settings-couchdb-section {
+    z-index: 99;
+}
+
+#split-url-container,
+#full-url-container {
+    display: inline-flex;
+}
+
+#full-url-container {
+    box-sizing: border-box;
+}
+
+span.badge[contenteditable] {
+    color: var(--menu-entry-text-color);
+    background-color: var(--menu-entry-color);
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+}
+  
+span.badge[contenteditable]:empty::before,
+span.badge[contenteditable]:empty:focus::before {
+    content: attr(data-placeholder);
+    display: inline-block;
+}
+
+#submit-url-section {
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown {
+    position:relative;
+}
+
+.dropdown-btn {
+    /* font-size: 1rem; */
+    padding: 0.25rem;
+    color: var(--menu-select-option-text-color);
+    background-color: var(--menu-select-option-color);
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-btn:hover {
+    color: var(--menu-select-option-hover-text-color);
+    background-color: var(--menu-select-option-hover-color);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: none;
+    white-space: nowrap;
+}
+
+.dropdown-menu li {
+    font-size: 0.75rem;
+    padding: 0.25rem;
+    color: var(--menu-button-text-color);
+    background-color: var(--menu-button-color);
+    cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+    color: var(--menu-button-hover-text-color);
+    background-color: var(--menu-button-hover-color);
+}
+
+#submit-url-section {
+    display: inline-flex;
+    gap: 0.5rem;
+}
+
+#theme-section {
     background-color: var(--hierarchy-section-color);
     overflow: auto;
     padding: 1rem;
+    max-width: 20rem;
 }
 
-#theme-section button {
-    position: absolute;
-    right: 1rem;
-    bottom: 1rem;
+#settings-theme-area button {
+    /* position: absolute; */
+    justify-self: end;
     border: none;
     cursor: pointer;
     color: var(--hierarchy-open-folder-text-color);
@@ -80,6 +216,7 @@ li {
     padding-left: 0.25rem;
     color: var(--hierarchy-folder-text-color);
     background-color: var(--hierarchy-folder-color);
+    transition: all 0.2s ease;
 }
 
 .folder:hover > p {
@@ -101,6 +238,7 @@ li {
     padding-left: 0.25rem;
     color: var(--hierarchy-file-text-color);
     background-color: var(--hierarchy-file-color);
+    transition: all 0.2s ease;
 }
 
 .file p:hover {

@@ -218,7 +218,44 @@
     --options-input-text: #ffffff;
     --options-hover-bg: #45494f;
     --button-border-color: #666;
-    /* Will add more things later. Colors and sizes */
+    
+
+    /* Header Menus */
+    --menu-background-color: var(--black);
+    /* --menu-background-color: rgba(0, 0, 0, 0.75); */
+
+    --menu-section-title-color: var(--pink);
+    --menu-section-color: var(--light-black);
+    --menu-section-text-color: var(--grey);
+
+    --menu-subsection-title-color: var(--magenta);
+    --menu-subsection-color: var(--black);
+    --menu-subsection-text-color: var(--grey);
+
+    --menu-entry-color: var(--light-black);
+    --menu-entry-text-color: var(--light-blue);
+
+    --menu-select-color: var(--purple);
+    --menu-select-text-color: var(--black);
+
+    --menu-select-hover-color: var(--grey);
+    --menu-select-hover-text-color: var(--black);
+    
+    
+    --menu-select-option-color: var(--light-black);
+    --menu-select-option-text-color: var(--light-blue);
+
+    --menu-select-option-hover-color: var(--light-blue);
+    --menu-select-option-hover-text-color: var(--light-black);
+
+
+    --menu-button-color: var(--light-black);
+    --menu-button-text-color: var(--light-blue);
+
+    --menu-button-hover-color: var(--light-blue);
+    --menu-button-hover-text-color: var(--black);
+
+    
 }
 
 /* import custom css here */

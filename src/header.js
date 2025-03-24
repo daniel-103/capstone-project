@@ -1,5 +1,6 @@
 const mainWindow = window.top.document.getElementById('window')
 const headerOptions = document.getElementById('header-options');
+const overlay = document.getElementById("overlay");
 
 for (const dropdownOption of headerOptions.children) {
 	const openDropdownButton = dropdownOption.querySelector("button");
@@ -62,15 +63,13 @@ for (const dropdownOption of headerOptions.children) {
 const redirectButton = document.getElementById('logo-btn');
 const windowIframe = document.getElementById('window');
 
-if (redirectButton && windowIframe) {
-    redirectButton.addEventListener('click', () => {
-        windowIframe.src = 'components/template/template.html';
-        // window.top.injectTheme(window.top.document);
-        // windowIframe.contentWindow.addEventListener('DOMContentLoaded', () => {
-        //     console.log('loaded')
-        // })
-    });
-}
+
+redirectButton.addEventListener('click', () => {
+	overlay.classList.remove("open");
+	if (redirectButton && windowIframe) {
+		windowIframe.src = 'components/template/template.html';
+	}
+});
 
 // File
 //      Save
@@ -97,27 +96,34 @@ settingsButton.addEventListener("click", () => {
 
 
 // If a header button needs to open a menu, open it with this.
-const overlay = document.getElementById("overlay");
 function openOverlay(fileSrc) {
+	// close any header options
+	closeHeaderDropDowns()
+
 	// menu is open, close it then try again
 	if (overlay.classList.contains("open")) {
 		overlay.classList.remove("open");
 
+		// trying to reopen same menu, toggle
+		if (overlay.src.includes(fileSrc)) return;
+
+		// open new menu after waiting for prev menu to close
 		setTimeout(() => {
-			if (overlay.src.includes(fileSrc)) {
-				overlay.classList.remove("open")
-				return
-			}
 			openOverlay(fileSrc);
 		}, 200)
+
 		return;
 	}
 
 	// menu isn't open, open it
 	overlay.src = fileSrc;
 	overlay.classList.add("open")
-	
-	// close any header options
+	overlay.addEventListener("load", () => {
+		window.top.injectTheme(overlay.contentDocument);
+	});
+}
+
+function closeHeaderDropDowns() {
 	for (const headerOption of document.getElementsByClassName("header-option")) {
 		headerOption.querySelector('button').classList.remove("open");
 		headerOption.querySelector('.header-dropdown-wrapper').classList.remove("open");

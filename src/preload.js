@@ -26,5 +26,7 @@ contextBridge.exposeInMainWorld('db', {
     allDocs: (options) => ipcRenderer.invoke('allDocs', options),
     getIndexes: () => ipcRenderer.invoke('getIndexes'),
 
+    setCouchURL: (url, syncType) => ipcRenderer.invoke('setCouchURL', url, syncType),
+
     newProject: (doc) => ipcRenderer.invoke('newProject', doc),
 });

@@ -9,7 +9,8 @@ const fs = require('fs');
 const isDev = process.env.NODE_ENV === 'development';
 
 let mainWindow;
-let db;
+let pouchDB;
+let couchDB;
 
 const createWindow = () => {
   // Create the browser window.
@@ -32,11 +33,11 @@ const createWindow = () => {
     mainWindow.webContents.openDevTools();
   }
 
-  // Create the database
+  // Create the pouch database
   const userDataPath = app.getPath('userData');
   const dbPath = path.join(userDataPath, 'Skriptor');
   console.log(`Database path: ${dbPath}`);
-  db = new PouchDB(dbPath);
+  pouchDB = new PouchDB(dbPath);  
 
   // and load the index.html of the app.
   mainWindow.loadFile('src/index.html');
@@ -92,53 +93,53 @@ ipcMain.handle('get-app-path', () => {
 
 ipcMain.handle('put', async (_, doc) => {
   try {
-    const result = await db.put(doc);
+    const result = await pouchDB.put(doc);
     return result;
   } catch (error) {throw error}
 });
 
 ipcMain.handle('post', async (_, doc) => {
   try {
-    const result = await db.post(doc);
+    const result = await pouchDB.post(doc);
     return result;
   } catch (error) {throw error}
 });
 
-// await window.db.update('docID', { name: 'Updated Name', data.last: new Date() });
+// await window.pouchDB.update('docID', { name: 'Updated Name', data.last: new Date() });
 ipcMain.handle('update', async (_, id, updates) => {
   try {
-      const doc = await db.get(id);
+      const doc = await pouchDB.get(id);
       const updatedDoc = { ...doc, ...updates }; // Merge existing fields
-      const response = await db.put(updatedDoc);
+      const response = await pouchDB.put(updatedDoc);
       return response;
   } catch (error) {throw error}
 });
 
 ipcMain.handle('get', async (_, id) => {
   try {
-    const doc = await db.get(id);
+    const doc = await pouchDB.get(id);
     return doc;
   } catch (error) {throw error}
 });
 
 ipcMain.handle('getAll', async () => {
   try {
-    const result = await db.allDocs({ include_docs: true });
+    const result = await pouchDB.allDocs({ include_docs: true });
     return result.rows.map(row => row.doc);
   } catch (error) {throw error}
 });
 
 ipcMain.handle('remove', async (_, id) => {
   try {
-    const doc = await db.get(id);
-    const result = await db.remove(doc);
+    const doc = await pouchDB.get(id);
+    const result = await pouchDB.remove(doc);
     return result;
   } catch (error) {return error}
 });
 
 ipcMain.handle('find', async (_, query) => {
   try {
-    const doc = await db.find(query);
+    const doc = await pouchDB.find(query);
     const result = doc.docs;
     return result;
   } catch (error) {return error}
@@ -146,24 +147,64 @@ ipcMain.handle('find', async (_, query) => {
 
 ipcMain.handle('createIndex', async (_, indexDef) => {
   try {
-      const result = await db.createIndex(indexDef);
+      const result = await pouchDB.createIndex(indexDef);
       return result;
   } catch (error) {return error}
 });
 
 ipcMain.handle('allDocs', async (_, options) => {
   try {
-      const result = await db.allDocs(options);
+      const result = await pouchDB.allDocs(options);
       return result;
   } catch (error) {return error}
 });
 
 ipcMain.handle('getIndexes', async () => {
   try {
-      const indexes = await db.getIndexes();
+      const indexes = await pouchDB.getIndexes();
       return indexes;
   } catch (error) {return error}
 });
+
+ipcMain.handle('setCouchURL', async (_, url, syncType) => {
+  try {
+    return await setCouchURL(url, syncType);
+  } catch (error) {
+    return { error: true, message: error.message };
+  }
+});
+
+async function setCouchURL(url, syncType) {
+  if (!url) return { error: true, message: 'Invalid URL' };
+
+  try {
+    couchDB = new PouchDB(url);
+    console.log('hi')
+    
+    switch (syncType) {
+      case 'merge':
+        pouchDB.sync(couchDB, { live: true, retry: true })
+          .on('change', info => console.log('Sync change:', info))
+          .on('error', error => console.log('Sync error:', error));
+        return { message: 'Updated CouchDB URL:', url };
+
+      case 'ovrR':
+        await pouchDB.replicate.to(couchDB, { live: false });
+        return await setCouchURL(url, 'merge');
+
+      case 'ovrL':
+        await pouchDB.replicate.from(couchDB, { live: false });
+        return await setCouchURL(url, 'merge');
+      
+      default:
+        return { error: true, message: 'Invalid sync method' };
+
+    }
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
 
 
 // Application specific
@@ -173,10 +214,10 @@ ipcMain.handle('getIndexes', async () => {
 
 ipcMain.handle('newProject', async (_, newProj) => {
   try {
-    const newProjPostResponse = await db.post(newProj);
-    const programObject = await db.get('Skriptor');
+    const newProjPostResponse = await pouchDB.post(newProj);
+    const programObject = await pouchDB.get('Skriptor');
     programObject.projects.push(newProjPostResponse.id);
-    const programUpdateResponse = await db.put(programObject);
+    const programUpdateResponse = await pouchDB.put(programObject);
     return { newProjPostResponse, programUpdateResponse };
   } catch (error) {return error}
 })

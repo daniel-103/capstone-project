@@ -132,9 +132,9 @@
     --hierarchy-tree-horizontal-color: var(--black2);
     --hierarchy-tree-horizontal-thickness: 2;
     
-    --hierarchy-tree-hover-vertical-color: var(--magenta);      /* Not used? */
+    --hierarchy-tree-hover-vertical-color: var(--white0);      /* Not used? */
     --hierarchy-tree-hover-vertical-thickness: 8;               /* Not used? */
-    --hierarchy-tree-hover-horizontal-color: var(--magenta);    /* Not used? */
+    --hierarchy-tree-hover-horizontal-color: var(--white0);    /* Not used? */
     --hierarchy-tree-hover-horizontal-thickness: 8;             /* Not used? */
 
 
@@ -194,4 +194,41 @@
     --options-input-text: #ffffff;
     --options-hover-bg: #45494f;
     --button-border-color: #666;
+
+
+
+    /* Header Menus */
+    --menu-background-color: var(--black0);
+    /* --menu-background-color: rgba(0, 0, 0, 0.75); */
+
+    --menu-section-title-color: var(--white0);
+    --menu-section-color: var(--black1);
+    --menu-section-text-color: var(--white1);
+
+    --menu-subsection-title-color: var(--white0);
+    --menu-subsection-color: var(--black2);
+    --menu-subsection-text-color: var(--white2);
+
+    --menu-entry-color: var(--black2);
+    --menu-entry-text-color: var(--white0);
+
+    --menu-select-color: var(--purple);
+    --menu-select-text-color: var(--black1);
+
+    --menu-select-hover-color: var(--black2);
+    --menu-select-hover-text-color: var(--black1);
+    
+    
+    --menu-select-option-color: var(--black1);
+    --menu-select-option-text-color: var(--white1);
+
+    --menu-select-option-hover-color: var(--white1);
+    --menu-select-option-hover-text-color: var(--black1);
+
+
+    --menu-button-color: var(--black1);
+    --menu-button-text-color: var(--white1);
+
+    --menu-button-hover-color: var(--white1);
+    --menu-button-hover-text-color: var(--black0);
 }

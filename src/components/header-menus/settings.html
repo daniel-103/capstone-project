@@ -7,15 +7,60 @@
     <link rel="stylesheet" href="settings.css">
 </head>
 <body>
-    <p>Imagine there's a bunch of settings here.</p>
-    <p>Just theme switching for now.</p>
-    <div id="theme-section">
-        <li class="folder">
-            <p>Themes</p>
-            <ul id="theme-list"></ul>
-        </li>
-        <button id="theme-refresh-btn">Refresh</button>
+    <div id="settings-area">
+        <div id="settings-couchdb-section" class="section">
+            <p class="section-title">CouchDB URL</p>
+            <div class="subsection">
+                <p class="subsection-title">Segmented URL:</p>
+                <div id="split-url-container">
+                    <p>http://</p>
+                    <span class="badge"><span contenteditable="true" id="url-user-input" class="badge" data-placeholder="username"></span></span>
+                    <p>:</p>
+                    <span class="badge"><span contenteditable="true" id="url-pass-input" class="badge" data-placeholder="password"></span></span>
+                    <p>@</p>
+                    <span class="badge"><span contenteditable="true" id="url-hostname-input" class="badge" data-placeholder="hostname"></span></span>
+                    <p>:</p>
+                    <span class="badge"><span contenteditable="true" id="url-port-input" class="badge" data-placeholder="port"></span></span>
+                    <p>/</p>
+                    <span class="badge"><span contenteditable="true" id="url-dbname-input" class="badge" data-placeholder="dbname"></span></span>
+                </div>
+            </div>
+            <p>or</p>
+            <div id="full-url-container" class="subsection">
+                <p class="subsection-title">Full URL:</p>
+                <span class="badge"><span contenteditable="true" id="url-full-input" class="badge" data-placeholder="127.0.0.1:5984"></span></span>
+            </div>
+
+            <div class="subsection">
+                <p class="subsection-title">Sync method:</p>
+                <div id="submit-url-section">
+                    <div class="dropdown">
+                        <button class="dropdown-btn">Select sync method:</button>
+                        <ul class="dropdown-menu">
+                            <li data-value="merge">Merge</li>
+                            <li data-value="ovrR">Write to Remote</li>
+                            <li data-value="ovrL">Load from Remote</li>
+                        </ul>
+                    </div>
+                    <button id="submit-url-btn">Sync</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="settings-theme-area" class="section">
+            <p class="section-title">Themes</p>
+            <div id="theme-section" >
+                <li class="folder">
+                    <p>/assets/themes</p>
+                    <ul id="theme-list"></ul>
+                </li>
+            </div>
+            <button id="theme-refresh-btn">Refresh</button>
+        </div>
     </div>
+
+    
+    
     <div id="exit-btns">
         <button id="cancel-settings-btn">Cancel</button>
         <button id="submit-settings-btn">Ok</button>

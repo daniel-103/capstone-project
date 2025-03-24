@@ -27,23 +27,24 @@ const staticProgramObject = {
 // See a few of the logs in this file and in components/hierarchy/hierarchy.js for example
 // Feel free to adopt this type of logging and debugging.
 
+// I guess the program object is deprecated now?
 // Fetch the 'Program Object' that keeps track of all of the projects. It's the highest level object. (the root)
-if (window.top.DEBUG) console.log('🛠 [0] Fetching Program Object...');
-window.top.db.get(programId)
-    .then(programObject => {
-        if (window.top.DEBUG) console.log("✅ [0] Fetched Program Object:", programObject);
-    })
-    .catch(error => {
-        if (window.top.DEBUG) console.log("❗ [0] Couldn't fetch Program Object:", error);
-        if (window.top.DEBUG) console.log("🛠 [0.1] Creating new Program Object...");
-        window.top.db.put(staticProgramObject)
-            .then(response => {
-                if (window.top.DEBUG) console.log("✅ [0.1] Created new Program Object:", response);
-            })
-            .catch(error => {
-                if (window.top.DEBUG) console.log("❌ [0.1] Couldn't create new Program Object:", error);
-            })
-    });
+// if (window.top.DEBUG) console.log('🛠 [0] Fetching Program Object...');
+// window.top.db.get(programId)
+//     .then(programObject => {
+//         if (window.top.DEBUG) console.log("✅ [0] Fetched Program Object:", programObject);
+//     })
+//     .catch(error => {
+//         if (window.top.DEBUG) console.log("❗ [0] Couldn't fetch Program Object:", error);
+//         if (window.top.DEBUG) console.log("🛠 [0.1] Creating new Program Object...");
+//         window.top.db.put(staticProgramObject)
+//             .then(response => {
+//                 if (window.top.DEBUG) console.log("✅ [0.1] Created new Program Object:", response);
+//             })
+//             .catch(error => {
+//                 if (window.top.DEBUG) console.log("❌ [0.1] Couldn't create new Program Object:", error);
+//             })
+//     });
 
 window.top.db.createIndex({
     index: { fields: ['type'] }
@@ -75,23 +76,23 @@ window.top.db.createIndex({
 // deleteCharacters();
 
 // Comment this out if you are getting annoyed with the errors in the terminal.
-const date = new Date();
-window.db.get("123")
-    .catch(error => {
-        return window.db.put({
-            _id: "123",
-            name: "NewWorldMain",
-            type: "folder",
-            parentId: null,
-            image: "dog.jpg",
-            description: "This is a test project",
-            childrenIds: [],
-            date: {
-                created: date,
-                last: date
-            }
-        }).then(() => {
-            if (window.top.DEBUG) console.log("✅ Document created")
-        });
-    });
+// const date = new Date();
+// window.db.get("123")
+//     .catch(error => {
+//         return window.db.put({
+//             _id: "123",
+//             name: "NewWorldMain",
+//             type: "folder",
+//             parentId: null,
+//             image: "dog.jpg",
+//             description: "This is a test project",
+//             childrenIds: [],
+//             date: {
+//                 created: date,
+//                 last: date
+//             }
+//         }).then(() => {
+//             if (window.top.DEBUG) console.log("✅ Document created")
+//         });
+//     });
 

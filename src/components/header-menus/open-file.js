@@ -19,6 +19,10 @@ const fileTypeFunctions = {
     "text/plain" : convertTxtFile, // .txt
 }
 
+document.getElementById('file-open-cancel-btn').addEventListener("click", () => {
+    
+})
+
 const icon = document.getElementById('drop-icon');
 
 window.addEventListener('dragenter', event => {
