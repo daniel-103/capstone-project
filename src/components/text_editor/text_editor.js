@@ -2,26 +2,37 @@ import saveTextDocument from "./text_editor_save.js";
 import { textToSpeech } from './multimedia.mjs';
 import { saveSections, getSections } from "./section_save.js";
 import { loadSections } from "./section_load.js";
+import getDoc from "./getTextDoc.js";
 
-let sections = [];
-//await loadSections();
-
-// Load sections if there are any 
-// let checkSections = JSON.stringify(loadSections());
-// if (checkSections.length != 0) {
-//   sections = checkSections;
-// }
-// console.log(sections);
-//console.log(sections);
-//console.log(sections);
+const sections = [];
+// Wee Woo Wee Woo Work in Progress Please be Patient
+// Not permanent solution to get the entityId for the current page
+// Saving and loading sections needed to be fixed to implement current page sections first
+const projectId = localStorage.getItem('projectId'); // Get the projectId 
+const projectData = await window.top.db.get(projectId); // Then the project data
+//const entityId = projectData.childrenIds[0]; // Temp solution to getting the writing page's entityId 
+//let entityData = await window.top.db.get(entityId);
+//console.log(entityData.sections);
+//console.log(entityData);
+//console.log(entityId);
 // Get text data from database
+// Using urlParams not working for this, so its breaking saving text data and sections. Do not use atm
 const urlParams = new URLSearchParams(window.location.search);
-const entityId = urlParams.get("id");
+//console.log(urlParams);
+let entityId = urlParams.get("id");
+//console.log(entityId);
+//const entityId = currentPage;
+
 let initialTextData = "{\"ops\":[{\"insert\":\"123456789\\n\"}]}";
+if (!entityId) {
+  entityId = await getDoc(projectId);
+  console.log(entityId);
+} 
 if (!entityId) {
   console.error("No entity ID in URL.");
 } else {
   try {
+    
       const entityData = await window.top.db.get(entityId);
       initialTextData = entityData.textData;
 
@@ -33,13 +44,17 @@ if (!entityId) {
 initialTextData = JSON.parse(initialTextData);
 
 class Section {
-  constructor(startInd,endInd, labelBox, lineElement, labelMoveTab) {
+  constructor(startInd,endInd, labelBox, lineElement, labelMoveTab, color, lineStyle, labelText) {
     this.startInd = startInd;
     this.endInd = endInd;
     this.labelBox = labelBox;
     this.labelMoveTab = labelMoveTab;
     this.lineElement = lineElement;
     this.children = [];
+    this.color = color;
+    this.lineStyle = lineStyle;
+    this.labelText = labelText;
+    
     //this.parent = null;
   }
 
@@ -61,6 +76,12 @@ class Section {
     this.lineElement.style.height = `${newBottomPosition - newTopPosition}px`;
     this.labelBox.style.top = `${newTopPosition}px`; // Update the position of the label box
     this.labelMoveTab.style.top = `${newTopPosition}px`;
+    let lineContainer = this.labelBox.parentElement;
+    console.log(lineContainer.children[3]);
+    lineContainer.children[3].style.top = `${newTopPosition}px`;
+    //lineContainer.children[4].style.top = `${parseInt(colorDropdown.style.top) + parseInt(colorDropdown.style.height)+ 5}px`;
+    console.log(colorDropdown);
+
     console.log("Updated Section:", {
       start: this.startInd,
       end: this.endInd,
@@ -190,41 +211,23 @@ const quill = new Quill('#editor', {
         },
         'ai-assistant': function() {
           const aiAssistantModal = document.getElementById("ai-assistant-modal");
-          const editorContainer = document.querySelector('.editor-container');
-          editorContainer.classList.toggle('expanded');
-          aiAssistantModal.classList.toggle('expanded');
-          if (aiAssistantModal.style.display === "block") {
-            aiAssistantModal.style.display = "none";
-          } else {
-            aiAssistantModal.style.display = "block";
-          }
+          aiAssistantModal.style.display = "block";
         },
         'research-button': function() {
           const researchModal = document.getElementById('research-modal');
-          const editorContainer = document.querySelector('.editor-container');
-          editorContainer.classList.toggle('expanded');
-          researchModal.classList.toggle('expanded');
-          if (researchModal.style.display === "block") {
-            researchModal.style.display = "none";
-          } else {
-            researchModal.style.display = "block";
-          }
+          researchModal.style.display = "block";
         },
         'text-to-speech': async function() {
-          const audioPlayer = document.getElementById('audio-player');
+          const audioModal = document.getElementById('audio-player-modal');
           const audioSource = document.getElementById('audio-source');
           const audio = document.getElementById('audio');
-
-          if (audioPlayer.style.display === "block") {
-            audioPlayer.style.display = "none";
-          } else {
-            audioPlayer.style.display = "block";
-          }
+          audioModal.style.display = "block";
 
           const quillContent = quill.getText().trim();
           const audioUrl = await textToSpeech(quillContent);
           audioSource.src = audioUrl;
           audio.load();
+          audio.style.display = "block";
           audio.play();
         }
       }
@@ -243,7 +246,6 @@ const quill = new Quill('#editor', {
 });
 
 
-await loadSections();
 
 
 // Update initial information 
@@ -272,10 +274,22 @@ if (sectionButton) {
 
 export function createSection() {
   let dim;
-  if (arguments.length == 1) {
+  let color;
+  let lineStyle;
+  let labelText;
+  if (arguments.length == 1) { // JavaScript's way of overloading a function. arguments[0] will be the section being loaded back onto the page. Used in secion_load.js
+    //console.log(arguments[0]);
     dim = getDimensions(arguments[0]);
+    color = arguments[0].color;
+    lineStyle = arguments[0].lineStyle;
+    labelText = arguments[0].labelText;
+    console.log(arguments[0]);
+    //console.log("Dim: ",dim);
   } else {
     dim = getDimensions();
+    color = 'black';
+    lineStyle = 'dotted';
+    labelText = 'Chapter';
   }
   const startInd = dim[0];
   const endInd = dim[1];
@@ -291,7 +305,8 @@ export function createSection() {
   lineElement.style.width = '1045px'; // Line width
   //lineElement.style.backgroundColor = 'red'; // Line color
   lineElement.style.margin = '10px';
-  lineElement.style.border = 'dotted black';
+  lineElement.style.borderStyle = lineStyle;
+  lineElement.style.borderColor = color;
   //lineElement.style.boxShadow = '5px 5px lightgray';
   lineElement.style.borderRadius = '25px';
   lineElement.style.pointerEvents = 'none';
@@ -310,18 +325,22 @@ export function createSection() {
   labelBox.style.padding = '0px';
   labelBox.style.backgroundColor = 'lightgray';
   labelBox.style.width = '70px'; // Fixed width for the label
-  labelBox.textContent = 'Chapter'; // Default text
+  labelBox.textContent = labelText; // Default text
   labelBox.style.zIndex = '99';
+
+  labelBox.addEventListener('input', () => {
+    section.labelText = labelBox.textContent;
+  });
 
   // Create a labelMoveTab (square to the left of labelBox)
   const labelMoveTab = document.createElement('div');
   labelMoveTab.style.position = 'absolute';
   labelMoveTab.style.top = `${labelTop}px`; // Same top position as labelBox
-  labelMoveTab.style.left = '5px'; // Positioned to the left of labelBox
+  labelMoveTab.style.left = `${parseInt(labelBox.style.left) - 20}`; // Positioned to the left of labelBox
   labelMoveTab.style.width = '15px'; // Smaller width for the square
-  labelMoveTab.style.height = '20px'; // Match height with labelBox
+  labelMoveTab.style.height = '19.5px'; // Match height with labelBox
   labelMoveTab.style.backgroundColor = '#eeeeee'; // Different color to distinguish
-  labelMoveTab.style.border = `1px solid black`;
+  //labelMoveTab.style.border = `1px solid black`;
   labelMoveTab.style.cursor = 'grab';
   labelMoveTab.style.zIndex = '100';
   labelMoveTab.style.textAlign = 'center'; // Center text horizontally
@@ -331,13 +350,14 @@ export function createSection() {
   labelMoveTab.style.userSelect = 'none';
 
   // Add the "|" symbol
-  labelMoveTab.textContent = '|';
+  labelMoveTab.textContent = '-';
 
   // Create a color dropdown button
   const colorDropdown = document.createElement('select');
-  colorDropdown.style.position = 'absolute';
+  colorDropdown.id = 'colorDropdown';
+  colorDropdown.style.position = 'relative';
   colorDropdown.style.top = `${labelTop}px`; // Align with labelBox
-  colorDropdown.style.left = `${parseInt(labelBox.style.left) + parseInt(labelBox.style.width) + 5}px`; // Place next to labelBox
+  colorDropdown.style.left = `${parseInt(labelBox.style.left) + parseInt(labelBox.style.width)}px`; // Place next to labelBox
   colorDropdown.style.width = '25px'; // Small square dropdown
   colorDropdown.style.height = '22px'; // Match labelBox height
   colorDropdown.style.border = '1px solid black';
@@ -359,6 +379,7 @@ export function createSection() {
     option.value = color;
     option.style.backgroundColor = color; // Set background color of option
     option.textContent = " "; // Empty text so only color is shown
+    //option.style.position = 'absolute';
     colorDropdown.appendChild(option);
   });
 
@@ -366,13 +387,16 @@ export function createSection() {
   colorDropdown.addEventListener('change', () => {
     lineElement.style.borderColor = colorDropdown.value;
     colorDropdown.style.backgroundColor = colorDropdown.value; // Change dropdown to selected color
+    section.color = colorDropdown.value;
   });
+
 
   // Create a line type dropdown button
   const lineTypeDropdown = document.createElement('select');
-  lineTypeDropdown.style.position = 'absolute';
-  lineTypeDropdown.style.top = `${parseInt(colorDropdown.style.top) + parseInt(colorDropdown.style.height) + 5}px`; // Below the color dropdown
-  lineTypeDropdown.style.left = colorDropdown.style.left; // Same left position
+  lineTypeDropdown.id = 'lineTypeDropdown';
+  lineTypeDropdown.style.position = 'relative';
+  lineTypeDropdown.style.top = `${parseInt(colorDropdown.style.top) + parseInt(colorDropdown.style.height)+ 5}px`; // Below the color dropdown
+  lineTypeDropdown.style.left = `${parseInt(labelBox.style.left) + parseInt(labelBox.style.width) - 25}px`; // Same left position
   lineTypeDropdown.style.width = '25px'; // Slightly wider for line type selection
   lineTypeDropdown.style.height = '22px'; // Match height of color dropdown
   lineTypeDropdown.style.border = '1px solid black';
@@ -394,6 +418,7 @@ export function createSection() {
   // Change line style when selecting a line type
   lineTypeDropdown.addEventListener('change', () => {
       lineElement.style.borderStyle = lineTypeDropdown.value; // Update line style
+      section.lineStyle = lineTypeDropdown.value;
   });
 
   // Append the line element to the line container
@@ -404,7 +429,7 @@ export function createSection() {
   lineContainer.appendChild(colorDropdown);
   lineContainer.appendChild(lineTypeDropdown);
   
-  const section = new Section(startInd, endInd, labelBox, lineElement, labelMoveTab);
+  const section = new Section(startInd, endInd, labelBox, lineElement, labelMoveTab, color, lineStyle, labelText);
   // Check if the new section is inside an existing section (subsection)
   const parentSection = findParentSection(section);
   if (parentSection) {
@@ -412,7 +437,7 @@ export function createSection() {
   } else {
     sections.push(section);
   }
-
+  
   const editorLength = quill.getLength();
   if (endInd >= editorLength - 1) {
     quill.insertText(editorLength, '\n');
@@ -447,7 +472,7 @@ function findParentSection(newSection) {
 function getDimensions() {
   let startInd;
   let endInd;
-  if (arguments.length == 1) {
+  if (arguments.length == 1) { // Overloading for createSection(seciton) used with section_load.js
     startInd = arguments[0].startInd;
     endInd = arguments[0].endInd;
   } else {
@@ -457,8 +482,8 @@ function getDimensions() {
     endInd = range.index + range.length;
   
   }
-  console.log("StartInd", startInd);
-  console.log("EndInd",endInd);
+  //console.log("StartInd", startInd);
+  //console.log("EndInd",endInd);
   const startBounds = quill.getBounds(startInd);
   const endBounds = quill.getBounds(endInd);
   // Calculate the vertical position of the selection (accounting for scroll position)
@@ -583,6 +608,10 @@ function makeDraggable(labelMoveTab, labelBox, section) {
   });
 }
 
+// Refresh entity data before loading in all saved sections
+const entityData = await window.top.db.get(entityId);
+await loadSections(entityData);
+
 
 // This ensures the editor works as expected.
 export { quill };
@@ -590,25 +619,35 @@ export { sections };
 // Save text when pressing ctrl+s
 document.addEventListener("keydown", async (event) => {
   if (!(event.ctrlKey && event.key === ".")) { return; }
-  getSections();
+  let entityData = await window.top.db.get(entityId);
+  getSections(entityData);
 });
 document.addEventListener("keydown", async (event) => {
   if (!(event.ctrlKey && event.key === "s")) { return; }
   event.preventDefault();
-  try {
-    saveSections(sections);
-  } catch (err) {
-    console.error("Failed to save section data");
-  }
+  
   if (!entityId) {
     console.error("No entity ID in URL.");
   } else {
     try {
-        const entityData = await window.top.db.get(entityId);
+        let entityData = await window.top.db.get(entityId); // Must refresh entityData or _rev will be outdated 
+        saveSections(sections,entityData);
+        entityData = await window.top.db.get(entityId); // Must refresh entityData or _rev will be outdated
         saveTextDocument(entityData,JSON.stringify(quill.getContents()));
-        
       } catch (err) {
         console.error("Failed to fetch document:", err);
       }
   }
 });
+
+// Adds the ability to tab, but messes with sections so turned off for the moment
+// quill.container.addEventListener("keydown", function(event) {
+//   if (event.key === "Tab") {
+//       event.preventDefault();
+//       let range = quill.getSelection();
+//       if (range) {
+//           quill.insertText(range.index, "\t"); // Insert tab character
+//           quill.setSelection(range.index + 1); // Move cursor after tab
+//       }
+//   }
+// });

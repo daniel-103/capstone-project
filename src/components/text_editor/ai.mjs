@@ -6,8 +6,8 @@ const aiInput = document.getElementById("ai-input");
 const aiSubmit = document.getElementById("ai-submit");
 const aiResponse = document.getElementById("ai-response");
 const aiAssistantModal = document.getElementById("ai-assistant-modal");
+const aiAssistantModalheader = document.getElementById("ai-assistant-modalheader");
 const closeAiAssistant = document.getElementById("close-ai-assistant");
-const editorContainer = document.querySelector('.editor-container');
 
 let savedRange = null;
 
@@ -66,14 +66,60 @@ aiSubmit.addEventListener("click", run);
 
 // Close AI Assistant Modal
 closeAiAssistant.addEventListener("click", () => {
-    editorContainer.classList.toggle('expanded');
-    aiAssistantModal.classList.toggle('expanded');
     aiAssistantModal.style.display = "none";
 });
 
-// Close AI Assistant Modal when clicking outside of it
-window.addEventListener("click", (event) => {
-    if (event.target === aiAssistantModal) {
-        aiAssistantModal.style.display = "none";
-    }
-});
+
+// Make the AI Assistant Modal draggable
+let isDraggingAI = false;
+let isResizingAI = false;
+let offsetXAI, offsetYAI;
+
+function makeAIModalDraggableAndResizable(modal, header) {
+    header.addEventListener('mousedown', function(e) {
+        isDraggingAI = true;
+        offsetXAI = e.clientX - modal.getBoundingClientRect().left;
+        offsetYAI = e.clientY - modal.getBoundingClientRect().top;
+        document.body.style.cursor = 'move';
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if (isDraggingAI) {
+            modal.style.left = `${e.clientX - offsetXAI}px`;
+            modal.style.top = `${e.clientY - offsetYAI}px`;
+        }
+    });
+
+    document.addEventListener('mouseup', function() {
+        if (isDraggingAI) {
+            isDraggingAI = false;
+            document.body.style.cursor = 'default';
+        }
+    });
+
+    modal.addEventListener('mousedown', function(e) {
+        if (e.target === modal && !isDraggingAI) {
+            isResizingAI = true;
+            document.body.style.cursor = 'nwse-resize';
+        }
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if (isResizingAI) {
+            const rect = modal.getBoundingClientRect();
+            modal.style.width = `${e.clientX - rect.left}px`;
+            modal.style.height = `${e.clientY - rect.top}px`;
+        }
+    });
+
+    document.addEventListener('mouseup', function() {
+        if (isResizingAI) {
+            isResizingAI = false;
+            document.body.style.cursor = 'default';
+        }
+    });
+}
+
+
+// Apply draggable and resizable functionality
+makeAIModalDraggableAndResizable(aiAssistantModal, aiAssistantModalheader);

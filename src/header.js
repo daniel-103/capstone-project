@@ -68,6 +68,7 @@ redirectButton.addEventListener('click', () => {
 	overlay.classList.remove("open");
 	if (redirectButton && windowIframe) {
 		windowIframe.src = 'components/template/template.html';
+		window.top.tabs = [];
 	}
 });
 

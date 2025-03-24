@@ -8,7 +8,7 @@ async function addEntity(path, entityData, parentId) {
     const tabHeader = window.parent.document.getElementById("tab-header");
     const pageWindow = window.parent.document.getElementById("page-window");
 
-    window.parent.addNewTab(`Tab ${window.parent.tabs.length + 1}`, path, tabHeader, pageWindow);
+    window.parent.addNewTab(`Tab ${window.top.tabs.length + 1}`, path, tabHeader, pageWindow);
 
 }
 

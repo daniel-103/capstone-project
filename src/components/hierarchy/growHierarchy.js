@@ -75,6 +75,7 @@ async function growHierarchy(parentFolder) {
                 const pagePath = window.top.pagePaths[child.fileType] + "?id=" + encodeURIComponent(child._id);
                 const pageWindow = window.parent.document.getElementById("page-window");
                 const tabHeader = window.parent.document.getElementById("tab-header");
+                console.log("path: ", pagePath);
 
                 window.parent.addNewTab(childName, pagePath, tabHeader, pageWindow);
             });

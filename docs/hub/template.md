@@ -26,79 +26,54 @@ Handles the dynamic creation of template cards and user interaction
 - Dynamically generates template cards in the gallery
 
 ## Auto Generation of Preformatted Content
-When the user clicks on one of the template cards, it will redirect them to a new project file. The file hierarchy is populated with folders and files related to the template that the user clicked on. When the user clicks on ones of the files, the text editor will be populated with text related to the file that the user clicked on. 
+When the user clicks on one of the template cards, it will redirect them to a new project file. The file hierarchy is populated with folders and files related to the template that the user clicked on. These files and folders are added to the database when the user clicks on the template card, so clicking on any of the files in the hierarchy would open a tab associated with the db object.
 
 **Key Components:**
 ```
-const predefinedText = {
-    1: {
-        'story.txt': `
-			Title: [Your Short Story Title]
-			
-			Once upon a time...
-		`,
-        'outline.txt': `
-			Title: [Your Short Story Title] 
-			1. Introduction - Setting & Characters 
-			2. Conflict - What problem arises? 
-			3. Climax - The turning point 
-			4. Resolution - How does it end?
-		`,
-        'characters.txt': `
-			Character Name: [Name]  
-			Role: [Protagonist/Antagonist/Side Character]  
-			Description: [Appearance, Personality, Motivation]  
-		`
-    },
-    ...
+const templateData = {
+    name: 'Project Name',
+    image: './path/to/image.jpg',
+    description: 'Project description',
+    files: [
+        {
+            type: 'folder',
+            document: {
+                name: "folderName",
+                type: "folder",
+                parentId: null,
+                childrenIds: [],
+                date: {
+                    created: new Date(),
+                    last: new Date(),
+                },
+            },
+            children: [
+                {
+                    type: 'file',
+                    document: {
+                        parentId: null,
+                        type: 'file',
+                        name: 'fileName',
+                        fileType: 'textDocument',
+                        textData: "{text data in quill's delta format}"
+                    }
+                },
+            ]
+        },
+    ]
 }
 ```
-This contains the predefined text for each file for every template. It sorts by the template id.
+This is the general format of a template. It can contain files and folders, and a file is in the array of it's parent's folder. If the file is not in a folder's children element, it is a child of the main project folder.
 
 
 ```
 card.onclick = async () => {
+    const projectId = await initProjectFromTemplate(template);
+    localStorage.setItem('projectId', projectId);
     const windowIframe = window.parent.document.getElementById('window');
-    const predefinedTextForTemplate = predefinedText[template.id];
-    windowIframe.src = `components/window/window.html?templateId=${template.id}&predefinedText=${encodeURIComponent(JSON.stringify(predefinedTextForTemplate))}`;
+    windowIframe.src = `components/window/window.html`;
 };
 ```
 
 
-When the user clicks on the card, the template id along with the predefined text for the template is sent to the window Iframe. That information is then used by the hierarchy and textEditor Iframes through window listeners in each of their respective scripts. The functionality is handled below:
-
-```
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-        // Parse the URL parameters to get the templateId
-        const urlParams = new URLSearchParams(window.location.search);
-        const templateId = urlParams.get('templateId');
-        const predefinedText = JSON.parse(decodeURIComponent(urlParams.get('predefinedText')));
-        console.log('Template ID:', templateId);
-        console.log('Predefined Text:', predefinedText);
-
-        // Get the hierarchy iframe element
-        const hierarchyIframe = document.getElementById('hierarchyIframe');
-
-        // Get the text editor iframe element
-        const textEditorIframe = document.getElementById('textEditorIframe');
-
-        // When the iframe has loaded, send the templateId to it
-        hierarchyIframe.onload = () => {
-            hierarchyIframe.contentWindow.postMessage({ templateId }, '*');
-        };
-
-        // When the iframe has loaded, send the templateId and predefinedText to it
-        textEditorIframe.onload = () => {
-            textEditorIframe.contentWindow.postMessage({ templateId, predefinedText }, '*');
-        };
-
-        // Forward the fileClicked message to the text editor iframe
-        window.addEventListener('message', (event) => {
-            if (event.data.type === 'fileClicked') {
-                textEditorIframe.contentWindow.postMessage(event.data, '*');
-            }
-        });
-    });
-</script>
-```
+When the user clicks on the card, the project is created via the injectFromTemplate function. The local storage is used to store the project id, so that when we switch to the window.html source, the hierarchy will be generated using the current projectId in local storage.
