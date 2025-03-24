@@ -34,7 +34,9 @@
     },
     "linux": {
       "target": "AppImage"
-    }
+    },
+    "npmRebuild": true,
+    "includeSubNodeModules": true
   },
   "dependencies": {
     "docx": "^9.1.1",

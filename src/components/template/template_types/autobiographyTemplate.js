@@ -10,7 +10,7 @@ const templateData = {
                 type: 'file',
                 name: 'life_story',
                 fileType: 'textDocument',
-                textData: "{\"ops\":[{\"insert\":\"\\n\\t\\t\\tI was born on [Date] in [Place]...  \\n\\t\\t\\n\"}]}"
+                textData: "{\"ops\":[{\"insert\":\"\\n\\t\\tI was born on [Date] in [Place], and my early life was shaped by [Event]. I later moved to [Location] to pursue my passion for [Activity].\\n\"}]}"
             }
         },
         {
