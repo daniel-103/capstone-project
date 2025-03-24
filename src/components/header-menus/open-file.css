@@ -4,10 +4,9 @@ html, body, p {
     transition: all 0.2s ease;
 }
 
-body {
+/* body {
     background-color: rgba(0, 0, 0, 0.75);
-    color: white;
-}
+} */
 
 
 svg {
@@ -28,52 +27,8 @@ svg.dragover {
     width: 20rem;
 }
 
-/* #file-drop-modal {
-    display: flex;
+#file-open-cancel-btn {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-
-    z-index: 99;
-  
-    align-items: center;
-    justify-content: center;
-  
-    background-color: rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(2px);
-  
-    opacity: 0;
-
-    pointer-events: none;
-
-    transition: all 0.2s ease;
+    bottom: 1rem;
+    right: 1rem;
 }
-
-#file-drop-modal.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-#file-drop-modal-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    border-radius: 1rem;
-    outline: solid white 0.25rem;
-    background-color: rgba(255, 255, 255, 0.25);
-}
-
-#file-drop-modal-content svg {
-    height: 8rem;
-    margin-right: 2rem;
-    fill: var(--hierarchy-folder-icon-color);
-}
-
-#file-drop-modal-content p {
-    margin: 0;
-    margin-top: 1rem;
-    font-size: 1.5rem;
-    color: white;
-} */

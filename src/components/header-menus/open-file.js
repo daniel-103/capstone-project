@@ -62,6 +62,10 @@ window.addEventListener('drop', event => {
 
 })
 
+document.getElementById('file-open-cancel-btn').addEventListener('click', () => {
+    window.top.document.getElementById('overlay').classList.remove("open");
+})
+
 async function handleFile(file) {
     try {
         let deltaInfo;
@@ -74,6 +78,7 @@ async function handleFile(file) {
         });
 
         window.top.dispatchEvent(getSelectedFolderEvent);
+        window.top.document.getElementById('overlay').classList.remove("open");
         
     } catch (error) {
         console.error(error);
