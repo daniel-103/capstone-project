@@ -42,6 +42,16 @@ HTML for the editor and its components
 Links to `text_editor.js` for function
 Links to `text_editor.css` for styling
 
+### 4. `section_save.js`
+File handles the saving of sections into the database
+Sections stored in object array 
+Exported for use in `text_editor.js`
+
+### 5. `section_load.js`
+File handles the loading of sections back into a writing page
+Exported for use in `text_editor.js`
+Uses something similar to function overloading when creating the sections in the 
+writing page from the stored data
 
 ## Exporting Text to File Format
 In the text editor IFrame, there is a green Export button that allows the user to convert the text into file formats (PDF, DOCX, TXT). When the user clicks on the button, there is a dropdown menu that displays the file formats. Some of the file formats when clicked (PDF, DOCX for example) have particular exporting details such setting the margin size or including headers and footers while others like TXT do not.
