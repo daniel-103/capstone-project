@@ -1,6 +1,7 @@
 import { displayModules, bringToFront, currentZ } from "../module_space/modules_display.js";
 import { displayChangesPanel, deleteChange, addNewChange } from "../module_space/module_changes.js";
 import { setupSaveHandler } from "../module_space/page_save.js";
+import { moduleAdd } from "../module_space/module_add.js"
 
 let entityData = null;
 let entityId = null;
@@ -14,7 +15,11 @@ async function init() {
   }
   try {
     entityData = await window.top.db.get(entityId);
-    
+
+    const moduleAddHandler = (e) => moduleAdd(entityData, e.detail.modulePath, "#page-container");
+    window.addEventListener("add-module-event", moduleAddHandler)
+
+
     displayModules(entityData, "#page-container");
     displayChangesPanel(entityData);
     setupSaveHandler(entityData, window.top.db);
@@ -24,3 +29,4 @@ async function init() {
 }
 
 window.addEventListener("DOMContentLoaded", init);
+

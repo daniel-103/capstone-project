@@ -4,7 +4,7 @@ export function setupSaveHandler(characterData, db) {
       event.preventDefault();
       try {
         const moduleElems = document.querySelectorAll(".module.text-module");
-        
+        console.log(characterData);
         moduleElems.forEach((elem) => {
           const valueElem = elem.querySelector(".module-value");
           const typeElem = elem.querySelector(".module-type");
