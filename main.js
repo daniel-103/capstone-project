@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const PouchDB = require('pouchdb');
 PouchDB.plugin(require("pouchdb-find"));
 
@@ -81,6 +81,25 @@ ipcMain.on('maximize-window', () => {
 
 ipcMain.on('close-window', () => {
   mainWindow.close();
+});
+
+ipcMain.on('get-module-page-menu', (event, template) => {
+  const processMenu = (items) => items.map(item => {
+    if (item.submenu) item.submenu = processMenu(item.submenu);
+    if (item.clickId) {
+      item.click = () => {
+        event.sender.send('module-menu-action', item.clickId);
+      };
+    }
+    return item;
+  });
+
+  try {
+    const menu = Menu.buildFromTemplate(processMenu(JSON.parse(template)));
+    menu.popup();
+  } catch (error) {
+    console.error('Menu error:', error);
+  }
 });
 
 

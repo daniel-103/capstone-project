@@ -30,3 +30,11 @@ contextBridge.exposeInMainWorld('db', {
 
     newProject: (doc) => ipcRenderer.invoke('newProject', doc),
 });
+
+// Right click menu for module pages
+contextBridge.exposeInMainWorld('rightClickMenu', {
+    show: (template) => ipcRenderer.send('get-module-page-menu', template),
+    onMenuAction: (callback) => {
+      ipcRenderer.on('module-menu-action', (_, actionId) => callback(actionId));
+    }
+  });
