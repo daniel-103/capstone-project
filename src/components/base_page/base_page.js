@@ -2,6 +2,8 @@ import { displayModules, bringToFront, currentZ } from "../module_space/modules_
 import { displayChangesPanel, deleteChange, addNewChange } from "../module_space/module_changes.js";
 import { setupSaveHandler } from "../module_space/page_save.js";
 import { moduleAdd } from "../module_space/module_add.js"
+import { moduleDelete } from "../module_space/module_delete.js";
+import { addSelect } from "../module_space/add_module_select.js";
 
 let entityData = null;
 let entityId = null;
@@ -21,6 +23,8 @@ async function init() {
 
 
     displayModules(entityData, "#page-container");
+    addSelect();
+    moduleDelete(entityData);
     displayChangesPanel(entityData);
     setupSaveHandler(entityData, window.top.db);
   } catch (err) {

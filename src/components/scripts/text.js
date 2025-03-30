@@ -12,8 +12,8 @@
     moduleElem.dataset.moduleKey = modData.type;
     moduleElem.style.width = modData.size?.width || "200px";
     moduleElem.style.height = modData.size?.height || "100px";
-    
-    // Create and insert module type element.
+    moduleElem.dataset.selected = "false";
+
     const typeElem = document.createElement("div");
     typeElem.classList.add("module-type");
     typeElem.textContent = modData.type;

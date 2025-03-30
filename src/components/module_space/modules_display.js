@@ -16,7 +16,6 @@ export function displayModules(characterData, containerSelector) {
         
         document.querySelector(containerSelector).appendChild(scriptElem);
       });
-
   });
   
 }
