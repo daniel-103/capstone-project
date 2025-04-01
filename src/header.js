@@ -20,13 +20,15 @@ for (const dropdownOption of headerOptions.children) {
 		}
 	});
 	
-	// Handle mouse leaving the dropdown
-	dropdown.addEventListener("mouseleave", (event) => {
-		if (!openDropdownButton.contains(event.relatedTarget) && dropdown.classList.contains("open")) {
-			dropdown.classList.remove("open");
-			openDropdownButton.classList.remove("open");
-		}
-	});
+	if (dropdown) {
+		// Handle mouse leaving the dropdown
+		dropdown.addEventListener("mouseleave", (event) => {
+			if (!openDropdownButton.contains(event.relatedTarget) && dropdown.classList.contains("open")) {
+				dropdown.classList.remove("open");
+				openDropdownButton.classList.remove("open");
+			}
+		});
+	}
 
 	for (const foldoutOption of dropdownOption.querySelectorAll(".option-foldout")) {
 		const openFoldoutButton = foldoutOption.querySelector("button");
