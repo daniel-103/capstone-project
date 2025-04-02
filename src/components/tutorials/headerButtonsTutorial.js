@@ -18,7 +18,14 @@ window.addEventListener('message', (event) => {
                     {
                         element: '#file-save-as-pdf-btn',
                         intro: "Save your document as a PDF file.",
-                        position: 'bottom'
+                        position: 'bottom',
+                        onBefore: () => {
+                            // Open the dropdown for file-save-as-btn
+                            const fileSaveAsBtn = document.getElementById('file-save-as-btn');
+                            const fileSaveAsDropdown = fileSaveAsBtn.parentElement.querySelector(".foldout-wrapper");
+                            fileSaveAsDropdown.classList.add("open");
+                            fileSaveAsBtn.classList.add("open");
+                        }
                     },
                     {
                         element: '#file-save-as-docx-btn',
@@ -33,7 +40,14 @@ window.addEventListener('message', (event) => {
                     {
                         element: '#file-open-btn',
                         intro: "Click here to open an existing document.",
-                        position: 'bottom'
+                        position: 'bottom',
+                        onBefore: () => {
+                            // Close the dropdown for file-save-as-btn
+                            const fileSaveAsBtn = document.getElementById('file-save-as-btn');
+                            const fileSaveAsDropdown = fileSaveAsBtn.parentElement.querySelector(".foldout-wrapper");
+                            fileSaveAsDropdown.classList.remove("open");
+                            fileSaveAsBtn.classList.remove("open");
+                        }
                     },
                     {
                         element: '#file-settings-btn',
@@ -177,13 +191,20 @@ window.addEventListener('message', (event) => {
                 openDropdown(dropdown.menuButton, dropdown.menuContent); // Open the dropdown menu
                 introJs()
                     .setOptions({
-                        steps: dropdown.steps,
-                        tooltipPosition: 'bottom', // Default tooltip position
-                        positionPrecedence: ['bottom', 'top', 'right', 'left'], // Try bottom first, then top, etc.
+                        steps: dropdown.steps.map((step) => ({
+                            ...step,
+                            onBeforeChange: step.onBefore || (() => {}), // Execute onBefore if defined
+                            onAfterChange: step.onAfter || (() => {}) // Execute onAfter if defined
+                        })),
                         tooltipClass: 'introjs-tooltip'
+                    })
+                    .onbeforechange((targetElement) => {
+                        const step = dropdown.steps.find((s) => s.element === `#${targetElement.id}`);
+                        if (step && step.onBefore) step.onBefore();
                     })
                     .oncomplete(() => {
                         closeDropdown(dropdown.menuButton, dropdown.menuContent); // Close the dropdown menu after the tutorial
+                        resolve();
                     })
                     .onexit(() => {
                         closeDropdown(dropdown.menuButton, dropdown.menuContent); // Close the dropdown menu if the tutorial is exited
@@ -215,6 +236,11 @@ window.addEventListener('message', async (event) => {
         console.log("File dropdown:", fileDropdown);
         fileDropdown.classList.toggle("open");
         file.classList.toggle("open");
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        const fileSave = document.getElementById('file-save-as-btn');
+        const fileSaveDropdown = fileSave.parentElement.querySelector(".foldout-wrapper");
+        fileSaveDropdown.classList.toggle("open");
+        fileSave.classList.toggle("open");
         await new Promise((resolve) => setTimeout(resolve, 5000));
         fileDropdown.classList.remove("open");
         file.classList.remove("open");
