@@ -34,6 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Start the Text Editor tutorial after the Hierarchy tutorial is complete
             const textEditorIframe = document.getElementById('textEditorIframe');
             textEditorIframe.contentWindow.postMessage({ action: 'startTextEditorTour' }, '*');
+        } else if (event.data.action === 'textEditorTourComplete') {
+            window.parent.postMessage({ action: 'startHeaderButtonsTour' }, '*');
         }
     });
 });
