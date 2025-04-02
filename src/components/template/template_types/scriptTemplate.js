@@ -43,6 +43,32 @@ const templateData = {
                 textData: "{\"ops\":[{\"insert\":\"\\n\\t\\t\\tTitle: [Your Script Title]  \\n\\t\\t\\tGenre: [Drama, Comedy, Thriller, etc.]  \\n\\t\\t\\tFormat: [Screenplay, Stage Play, Radio Drama, etc.]  \\n\\t\\t\\tTheme: [What central message or idea does the script explore?]  \\n\\t\\t\\tTone/Mood: [Dark, Humorous, Suspenseful, etc.]  \\n\\n\\t\\t\\tLogline:  \\n\\t\\t\\t[A one-sentence summary of the story concept.]  \\n\\n\\t\\t\\tAct Structure:  \\n\\t\\t\\t- **Act 1 (Setup):** [Introduce characters, setting, and conflict]  \\n\\t\\t\\t- **Act 2 (Confrontation):** [Escalate conflict, develop subplots]  \\n\\t\\t\\t- **Act 3 (Resolution):** [Climax and conclusion]  \\n\\n\\t\\t\\tInspirations:  \\n\\t\\t\\t- [Movies, TV shows, books, real-life events, etc.]  \\n\\n\\t\\t\\tWriting Notes:  \\n\\t\\t\\t- [Anything specific to remember while writing the script]  \\n\\t\\t\\n\"}]}"
             }
         }
+    ],
+    fileOptions: [
+        {
+            id: "btn-new-writing",
+            title: "Create a new Writing Page",
+            name: "Writing Page",
+            dataPath: "../entity_types/textDocument.js",
+            sourcePath: "../text_editor/text_editor.html",
+            data: null
+        },
+        {
+            id: "btn-new-character",
+            title: "Create a new Character Page",
+            name: "Character Page",
+            dataPath: "../entity_types/character.js",
+            sourcePath: "../base_page/base_page.html",
+            data: null
+        },
+        {
+            id: "btn-new-relationship",
+            title: "Create a new Relationship Page",
+            name: "Relationship Page",
+            dataPath: "../entity_types/relationship.js",
+            sourcePath: "../base_page/base_page.html",
+            data: null
+        }
     ]
 }
 

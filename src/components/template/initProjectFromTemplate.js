@@ -1,7 +1,9 @@
 import addDocs from "./addDocs.js";
+import getFileOptions from "./getFileOptions.js";
 
 async function initProjectFromTemplate(template) {
     const date = new Date();
+    const fileOptions = await getFileOptions(template);
 
     const project = {
         name: template.name,
@@ -10,6 +12,7 @@ async function initProjectFromTemplate(template) {
         image: template.image,
         description: template.description,
         childrenIds: [],
+        fileOptions: JSON.stringify(fileOptions),
         date: {created: date, last: date},
         
     };

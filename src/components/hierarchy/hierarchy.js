@@ -1,10 +1,6 @@
 import growHierarchy from "./growHierarchy.js";
 import addFolderClickEvent from "./addFolderClickEvent.js"
-import addEntity from "../enity_add/addEntity.js";
-import characterData from "../entity_types/character.js";
-import relationshipData from "../entity_types/relationship.js";
-import textDocumentData from "../entity_types/textDocument.js";
-// import { translate } from "pdf-lib";
+import addNewFileOptions from "./addNewFileOptions.js";
 
 const projectId = localStorage.getItem('projectId');
 if (window.top.DEBUG) console.log("in hierarchy.js current projectId: ", localStorage.getItem('projectId'));
@@ -12,17 +8,7 @@ const folderNames = document.querySelectorAll('.folder-name');
 
 document.addEventListener('DOMContentLoaded', window.top.injectTheme(document))
 
-// const defaultPagePath = "../default_page/default_page.html";
-const tabHeader = window.parent.document.getElementById("tab-header");
-const pageWindow = window.parent.document.getElementById("page-window");
-
 folderNames.forEach(folderName => {addFolderClickEvent(folderName)});
-
-// temporary way of mapping paths and default data to buttons
-const buttonPaths = {"btn-new-writing" : ["../text_editor/text_editor.html", textDocumentData], 
-                    "btn-new-character" : ["../base_page/base_page.html", characterData],
-                    "btn-new-relationship" : ["../base_page/base_page.html", relationshipData],
-};
 
 // New file
 document.getElementById('new-file-btn').addEventListener('click',(event) => {
@@ -30,21 +16,10 @@ document.getElementById('new-file-btn').addEventListener('click',(event) => {
 });
 
 const slideOut = document.getElementById('new-file-slide-out');
-for (const button of slideOut.querySelectorAll('button')) {
-    // console.log(button);
-    // grab button attribute and create an eventListener to create the page with the module dictated by the attached attribute
-    // just going to create an empty page for now...
-    button.addEventListener('click', async () => {
+window.top.db.get(projectId).then((project) => {
+    addNewFileOptions(JSON.parse(project.fileOptions), slideOut);
+});
 
-        // grab selected folder (_id will be in attribute)
-        const parentId = document.getElementsByClassName('folder selected')[0].id
-        
-        await addEntity(buttonPaths[button.id][0], buttonPaths[button.id][1], parentId).catch(error => {
-            if (window.top.DEBUG) console.log(`❌ [3] Couldn't create file:`, error);
-            window.top.error("[ERROR] Couldn't create file.");
-        });
-    });   
-}
 
 document.addEventListener('mouseleave', (event) => {
     slideOut.classList.remove('open');
@@ -53,8 +28,6 @@ document.addEventListener('mouseleave', (event) => {
 slideOut.addEventListener('mouseleave', (event) => {
     slideOut.classList.remove('open');
 })
-
-
 
 // New folder
 document.getElementById('new-folder-btn').addEventListener('click', (event) => {
