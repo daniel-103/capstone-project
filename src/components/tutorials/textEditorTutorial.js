@@ -23,6 +23,9 @@ window.addEventListener('message', (event) => {
                     intro: "This is the Text-to-Speech Audio Player. Use it to listen to your content being read aloud."
                 }
             ]
+        }).oncomplete(() => {
+            // Notify the parent window that the Text Editor tutorial is complete
+            window.parent.postMessage({ action: 'textEditorTourComplete' }, '*');
         }).start();
     }
 });
