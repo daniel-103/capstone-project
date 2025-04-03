@@ -1,5 +1,5 @@
-window.top.DEBUG = localStorage.getItem('DEBUG') == 'true'
-
+window.top.DEBUG = localStorage.getItem('DEBUG') == true
+//window.top.DEBUG = true;
 async function initProjects() {
   const date = new Date();
 
@@ -184,9 +184,87 @@ async function initProjects() {
     });
 
     // Duplicate
-		duplicateButton.addEventListener('click', async (event) => {
-      console.log('duplicate')
-		})
+    duplicateButton.addEventListener('click', async (event) => {
+      event.stopPropagation(); // Prevent triggering the card's onclick event
+    
+      try {
+        if (window.top.DEBUG) console.log(`🛠 [4] Duplicating project "${project.name}"...`);
+    
+        // Create a copy of the project with a new ID and updated timestamps
+        const { _id, _rev, ...projectData } = project; // Exclude _id and _rev
+        const newProject = {
+          ...projectData,
+          name: `${project.name} (Copy)`, // Append "Copy" to the name
+          date: {
+            created: new Date(),
+            last: new Date()
+          }
+        };
+    
+        // Save the new project to the database
+        const response = await window.top.db.post(newProject);
+    
+        if (response.ok) {
+          const newProjectId = response.id; // Get the new project's ID
+          if (window.top.DEBUG) console.log(`✅ [4] Project "${project.name}" duplicated successfully with ID "${newProjectId}".`);
+    
+          // Fetch and duplicate children
+          if (project.childrenIds && project.childrenIds.length > 0) {
+            if (window.top.DEBUG) console.log(`🛠 [4] Duplicating children of project "${project.name}"...`);
+    
+            for (const childId of project.childrenIds) {
+              console.log("childID:", childId);
+              await duplicateChild(childId, newProjectId);
+            }
+          }
+    
+          alert(`Project "${project.name}" duplicated successfully.`);
+          location.reload(); // Reload the project hub to reflect the new project
+        } else {
+          throw new Error('Failed to duplicate project.');
+        }
+      } catch (error) {
+        if (window.top.DEBUG) console.error("Error duplicating project:", error);
+        alert("Couldn't duplicate project. Please try again.");
+      }
+    });
+    
+    async function duplicateChild(childId, newParentId) {
+      try {
+        // Fetch the child document
+        const child = await window.top.db.get(childId);
+
+        // Create a copy of the child with a new ID and updated parentId
+        const { _id, _rev, ...childData } = child; // Exclude _id and _rev
+        const newChild = {
+          ...childData,
+          parentId: newParentId, // Associate the child with the new parent project
+          date: {
+            created: new Date(),
+            last: new Date()
+          }
+        };
+    
+        // Save the new child to the database
+        const response = await window.top.db.post(newChild);
+        console.log("Response: ", response);
+        if (response.ok) {
+          if (window.top.DEBUG) console.log(`✅ [4] Child "${child.name}" duplicated successfully with new ID "${response.id}".`);
+    
+          // Recursively duplicate the child's children if it is a folder
+          if (child.type === 'folder' && child.childrenIds && child.childrenIds.length > 0) {
+            for (const grandChildId of child.childrenIds) {
+              await duplicateChild(grandChildId, response.id);
+            }
+          }
+        } else {
+          throw new Error(`Failed to duplicate child "${child.name}".`);
+        }
+      } catch (error) {
+        if (window.top.DEBUG) console.error(`Error duplicating child with ID "${childId}":`, error);
+        alert(`Couldn't duplicate child with ID "${childId}". Please try again.`);
+      }
+    }
 
     // Delete
     let state = 'closed';
