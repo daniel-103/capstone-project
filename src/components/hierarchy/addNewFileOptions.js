@@ -1,7 +1,8 @@
 import addEntity from "../enity_add/addEntity.js";
 
-async function addNewFileOptions(fileOptions, slideout) {
-
+async function addNewFileOptions(fileOptions) {
+    const slideout = document.getElementById('new-file-slide-out');
+    slideout.textContent = '';
     fileOptions.forEach(fileOption => {
         const button = document.createElement('button');
         button.id = fileOption.id;

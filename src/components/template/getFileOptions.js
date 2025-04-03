@@ -10,7 +10,6 @@ async function getFileOptions(template) {
         } catch (error) {
             console.error(error);
         }
-        console.log("file option data: ", fileOptionData.default);
         if (fileOptionData) {
             fileOptions[i].data = fileOptionData;
         }
