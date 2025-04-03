@@ -127,9 +127,61 @@ async function initProjects() {
     // Info
 
     // Rename
-		renameButton.addEventListener('click', async (event) => {
-      console.log('rename')
-		})
+    renameButton.addEventListener('click', async (event) => {
+      event.stopPropagation(); // Prevent triggering the card's onclick event
+    
+      // Create an input field for renaming
+      const titleElement = card.querySelector('.template-title');
+      const currentName = titleElement.textContent;
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = currentName;
+      input.className = 'rename-input';
+      titleElement.replaceWith(input);
+      input.focus();
+    
+      // Handle renaming logic
+      input.addEventListener('blur', async () => {
+        const newName = input.value.trim();
+    
+        // Validate the input
+        if (!newName) {
+          alert('Project name cannot be empty.');
+          input.replaceWith(titleElement);
+          return;
+        }
+    
+        if (newName === currentName) {
+          input.replaceWith(titleElement);
+          return;
+        }
+    
+        try {
+          // Update the project in the database
+          if (window.top.DEBUG) console.log(`🛠 [3] Renaming project "${currentName}" to "${newName}"...`);
+          const updatedProject = { ...project, name: newName };
+          await window.top.db.put(updatedProject);
+    
+          // Update the UI
+          titleElement.textContent = newName;
+          input.replaceWith(titleElement);
+    
+          if (window.top.DEBUG) console.log(`✅ [3] Project renamed to "${newName}".`);
+          alert(`Project renamed to "${newName}".`);
+        } catch (error) {
+          if (window.top.DEBUG) console.log("❌ [3] Couldn't rename project:", error);
+          alert("Couldn't rename project. Please try again.");
+          input.replaceWith(titleElement);
+        }
+      });
+    
+      // Handle pressing Enter to confirm renaming
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          input.blur();
+        }
+      });
+    });
 
     // Duplicate
 		duplicateButton.addEventListener('click', async (event) => {
