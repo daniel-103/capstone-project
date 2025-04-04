@@ -350,6 +350,11 @@ async function initProjects() {
       event.stopPropagation(); // Prevent triggering the card's onclick event
     
       try {
+        if (!project || !project.name) {
+          alert("Invalid project data. Cannot duplicate.");
+          return;
+        }
+    
         if (window.top.DEBUG) console.log(`🛠 [4] Duplicating project "${project.name}"...`);
     
         // Create a copy of the project with a new ID and updated timestamps
@@ -375,8 +380,9 @@ async function initProjects() {
             if (window.top.DEBUG) console.log(`🛠 [4] Duplicating children of project "${project.name}"...`);
     
             for (const childId of project.childrenIds) {
-              console.log("childID:", childId);
-              await duplicateChild(childId, newProjectId);
+              if (childId) { // Ensure childId is not null or undefined
+                await duplicateChild(childId, newProjectId);
+              }
             }
           }
     
@@ -393,9 +399,19 @@ async function initProjects() {
     
     async function duplicateChild(childId, newParentId) {
       try {
+        if (!childId || !newParentId) {
+          if (window.top.DEBUG) console.error("Invalid childId or newParentId. Skipping duplication.");
+          return;
+        }
+    
         // Fetch the child document
         const child = await window.top.db.get(childId);
-
+    
+        if (!child || !child.name) {
+          if (window.top.DEBUG) console.error(`Invalid child data for ID "${childId}". Skipping duplication.`);
+          return;
+        }
+    
         // Create a copy of the child with a new ID and updated parentId
         const { _id, _rev, ...childData } = child; // Exclude _id and _rev
         const newChild = {
@@ -409,14 +425,24 @@ async function initProjects() {
     
         // Save the new child to the database
         const response = await window.top.db.post(newChild);
-        console.log("Response: ", response);
         if (response.ok) {
-          if (window.top.DEBUG) console.log(`✅ [4] Child "${child.name}" duplicated successfully with new ID "${response.id}".`);
+          const newChildId = response.id; // Get the new child's ID
+          if (window.top.DEBUG) console.log(`✅ [4] Child "${child.name}" duplicated successfully with new ID "${newChildId}".`);
+    
+          // Update the parent's childrenIds with the new child's ID
+          const parent = await window.top.db.get(newParentId);
+          const updatedParent = {
+            ...parent,
+            childrenIds: [...(parent.childrenIds || []), newChildId]
+          };
+          await window.top.db.put(updatedParent);
     
           // Recursively duplicate the child's children if it is a folder
-          if (child.type === 'folder' && child.childrenIds && child.childrenIds.length > 0) {
+          if (child.type === 'folder' && Array.isArray(child.childrenIds) && child.childrenIds.length > 0) {
             for (const grandChildId of child.childrenIds) {
-              await duplicateChild(grandChildId, response.id);
+              if (grandChildId) { // Ensure grandChildId is not null or undefined
+                await duplicateChild(grandChildId, newChildId);
+              }
             }
           }
         } else {
@@ -433,7 +459,7 @@ async function initProjects() {
     deleteButton.addEventListener('click', async (event) => {
       if (state === 'closed') {
         deleteButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M119.4 44.1c23.3-3.9 46.8-1.9 68.6 5.3l49.8 77.5-75.4 75.4c-1.5 1.5-2.4 3.6-2.3 5.8s1 4.2 2.6 5.7l112 104c2.9 2.7 7.4 2.9 10.5 .3s3.8-7 1.7-10.4l-60.4-98.1 90.7-75.6c2.6-2.1 3.5-5.7 2.4-8.8L296.8 61.8c28.5-16.7 62.4-23.2 95.7-17.6C461.5 55.6 512 115.2 512 185.1l0 5.8c0 41.5-17.2 81.2-47.6 109.5L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9L47.6 300.4C17.2 272.1 0 232.4 0 190.9l0-5.8c0-69.9 50.5-129.5 119.4-141z"/></svg>';
-        dropButtons([openButton, infoButton, renameButton, duplicateButton], '2.5rem')
+        dropButtons([openButton, infoButton, renameButton, duplicateButton, changeImageButton, renameDescriptionButton], '2.5rem')
         confirmation.style.transform = 'translateY(-2rem)';
         state = 'open';
         deleteButton.classList.add('active');
@@ -456,7 +482,7 @@ async function initProjects() {
     card.querySelector('.btn-delete-cancel').addEventListener('click', async (event) => {
       deleteButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>'
       dropButtons([])
-      unDropButtons([openButton, infoButton, renameButton, duplicateButton])
+      unDropButtons([openButton, infoButton, renameButton, duplicateButton, changeImageButton, renameDescriptionButton])
       confirmation.style.transform = 'translateY(0rem)';
       state = 'closed';
       deleteButton.classList.remove('active');
@@ -466,7 +492,7 @@ async function initProjects() {
     card.addEventListener('mouseleave', async (event) => {
       deleteButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>'
       dropButtons([])
-      unDropButtons([openButton, infoButton, renameButton, duplicateButton])
+      unDropButtons([openButton, infoButton, renameButton, duplicateButton, changeImageButton, renameDescriptionButton])
       confirmation.style.transform = 'translateY(0rem)';
       state = 'closed';
       deleteButton.classList.remove('active');
