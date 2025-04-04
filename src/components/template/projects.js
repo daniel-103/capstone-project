@@ -46,8 +46,14 @@ async function initProjects() {
   for (const project of projects) {
     const card = document.createElement('div');
     card.className = 'project-card';
+
+    // Check if the image is a data URL or a file path
+    const imageUrl = project.image.startsWith('data:') 
+      ? project.image // Use the data URL directly
+      : `../../assets/images/${project.image}`; // Construct the file path for regular images
+
     card.innerHTML = `
-      <div class="template-image" style="background-image: url('../../assets/images/${project.image}');"></div>
+      <div class="template-image" style="background-image: url('${imageUrl}');"></div>
       <div class="template-title">${project.name}</div>
       <div class="template-description">${project.description}</div>
 
@@ -61,6 +67,11 @@ async function initProjects() {
           </button>
           <button title="Rename ${project.name}" class="btn-rename">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M.1 29.3C-1.4 47 11.7 62.4 29.3 63.9l8 .7C70.5 67.3 96 95 96 128.3L96 224l-32 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l32 0 0 95.7c0 33.3-25.5 61-58.7 63.8l-8 .7C11.7 449.6-1.4 465 .1 482.7s16.9 30.7 34.5 29.2l8-.7c34.1-2.8 64.2-18.9 85.4-42.9c21.2 24 51.2 40 85.4 42.9l8 .7c17.6 1.5 33.1-11.6 34.5-29.2s-11.6-33.1-29.2-34.5l-8-.7C185.5 444.7 160 417 160 383.7l0-95.7 32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-32 0 0-95.7c0-33.3 25.5-61 58.7-63.8l8-.7c17.6-1.5 30.7-16.9 29.2-34.5S239-1.4 221.3 .1l-8 .7C179.2 3.6 149.2 19.7 128 43.7c-21.2-24-51.2-40-85.4-42.9l-8-.7C17-1.4 1.6 11.7 .1 29.3z"/></svg>  
+          </button>
+          <button title="Change Image for ${project.name}" class="btn-change-image">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM128 192c-17.67 0-32 14.33-32 32s14.33 32 32 32 32-14.33 32-32-14.33-32-32-32zm320 160L352 288l-96 128H64l128-160 96 128 64-96 96 128z"/>
+            </svg>
           </button>
           <button title="Duplicate ${project.name}" class="btn-duplicate">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M288 448L64 448l0-224 64 0 0-64-64 0c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l224 0c35.3 0 64-28.7 64-64l0-64-64 0 0 64zm-64-96l224 0c35.3 0 64-28.7 64-64l0-224c0-35.3-28.7-64-64-64L224 0c-35.3 0-64 28.7-64 64l0 224c0 35.3 28.7 64 64 64z"/></svg>
@@ -94,7 +105,7 @@ async function initProjects() {
     const renameButton = card.querySelector('.btn-rename');
     const duplicateButton = card.querySelector('.btn-duplicate');
     const deleteButton = card.querySelector('.btn-delete');
-    const modifyButton = card.querySelector('.btn-modify');
+    const changeImageButton = card.querySelector('.btn-change-image');
 
     // Delete Confirmation div
     const confirmation = card.querySelector('.delete-confirmation');
@@ -214,6 +225,55 @@ async function initProjects() {
         }
       });
     });
+
+    // Change Image
+    changeImageButton.addEventListener('click', async (event) => {
+      event.stopPropagation(); // Prevent triggering the card's onclick event
+
+      // Create a file input element
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'image/*'; // Accept only image files
+
+      // Trigger the file input dialog
+      fileInput.click();
+
+      // Handle file selection
+      fileInput.addEventListener('change', async () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        try {
+          if (window.top.DEBUG) console.log(`🛠 [7] Changing image for project "${project.name}"...`);
+
+          // Use FileReader to read the image file as a data URL
+          const reader = new FileReader();
+          reader.onload = () => {
+            // Update the UI with the selected image
+            const imageElement = card.querySelector('.template-image');
+            imageElement.style.backgroundImage = `url('${reader.result}')`;
+
+            // Optionally, update the project in the database with the data URL
+            const updatedProject = { ...project, image: reader.result };
+            window.top.db.put(updatedProject);
+
+            if (window.top.DEBUG) console.log(`✅ [7] Image changed for project "${project.name}".`);
+            alert(`Image updated successfully for project "${project.name}".`);
+          };
+
+          reader.onerror = () => {
+            if (window.top.DEBUG) console.error("Error reading the image file.");
+            alert("Couldn't read the selected image. Please try again.");
+          };
+
+          reader.readAsDataURL(file); // Read the file as a data URL
+        } catch (error) {
+          if (window.top.DEBUG) console.error("Error changing project image:", error);
+          alert("Couldn't change the project image. Please try again.");
+        }
+      });
+    });
+
 
     // Duplicate
     duplicateButton.addEventListener('click', async (event) => {
