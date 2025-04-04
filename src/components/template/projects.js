@@ -65,12 +65,17 @@ async function initProjects() {
           <button title="About ${project.name}" class="btn-info">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32l64 0c17.7 0 32 14.3 32 32l0 224 32 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 512c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-192-32 0c-17.7 0-32-14.3-32-32z"/></svg>
           </button>
-          <button title="Rename ${project.name}" class="btn-rename">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M.1 29.3C-1.4 47 11.7 62.4 29.3 63.9l8 .7C70.5 67.3 96 95 96 128.3L96 224l-32 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l32 0 0 95.7c0 33.3-25.5 61-58.7 63.8l-8 .7C11.7 449.6-1.4 465 .1 482.7s16.9 30.7 34.5 29.2l8-.7c34.1-2.8 64.2-18.9 85.4-42.9c21.2 24 51.2 40 85.4 42.9l8 .7c17.6 1.5 33.1-11.6 34.5-29.2s-11.6-33.1-29.2-34.5l-8-.7C185.5 444.7 160 417 160 383.7l0-95.7 32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-32 0 0-95.7c0-33.3 25.5-61 58.7-63.8l8-.7c17.6-1.5 30.7-16.9 29.2-34.5S239-1.4 221.3 .1l-8 .7C179.2 3.6 149.2 19.7 128 43.7c-21.2-24-51.2-40-85.4-42.9l-8-.7C17-1.4 1.6 11.7 .1 29.3z"/></svg>  
-          </button>
           <button title="Change Image for ${project.name}" class="btn-change-image">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
               <path d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM128 192c-17.67 0-32 14.33-32 32s14.33 32 32 32 32-14.33 32-32-14.33-32-32-32zm320 160L352 288l-96 128H64l128-160 96 128 64-96 96 128z"/>
+            </svg>
+          </button>
+          <button title="Rename Project Title for ${project.name}" class="btn-rename-title">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M.1 29.3C-1.4 47 11.7 62.4 29.3 63.9l8 .7C70.5 67.3 96 95 96 128.3L96 224l-32 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l32 0 0 95.7c0 33.3-25.5 61-58.7 63.8l-8 .7C11.7 449.6-1.4 465 .1 482.7s16.9 30.7 34.5 29.2l8-.7c34.1-2.8 64.2-18.9 85.4-42.9c21.2 24 51.2 40 85.4 42.9l8 .7c17.6 1.5 33.1-11.6 34.5-29.2s-11.6-33.1-29.2-34.5l-8-.7C185.5 444.7 160 417 160 383.7l0-95.7 32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-32 0 0-95.7c0-33.3 25.5-61 58.7-63.8l8-.7c17.6-1.5 30.7-16.9 29.2-34.5S239-1.4 221.3 .1l-8 .7C179.2 3.6 149.2 19.7 128 43.7c-21.2-24-51.2-40-85.4-42.9l-8-.7C17-1.4 1.6 11.7 .1 29.3z"/></svg>  
+          </button>
+          <button title="Rename Description for ${project.name}" class="btn-rename-description">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path d="M290.74 93.24a32 32 0 0 0-45.25 0l-224 224a32 32 0 0 0-8.19 13.7L.06 482.3a16 16 0 0 0 19.64 19.64l151.36-13.24a32 32 0 0 0 13.7-8.19l224-224a32 32 0 0 0 0-45.25ZM124.12 422.06l-92.18 8.06 8.06-92.18 176-176 84.12 84.12ZM478.33 33.67a96 96 0 0 0-135.66 0l-56.56 56.56 135.66 135.66 56.56-56.56a96 96 0 0 0 0-135.66ZM403.88 108.12l-84.12-84.12 33.94-33.94a64 64 0 0 1 90.5 90.5Z"/>
             </svg>
           </button>
           <button title="Duplicate ${project.name}" class="btn-duplicate">
@@ -102,10 +107,11 @@ async function initProjects() {
     const toolbar = card.querySelector('.toolbar')
     const openButton = card.querySelector('.btn-open');
     const infoButton = card.querySelector('.btn-info');
-    const renameButton = card.querySelector('.btn-rename');
+    const renameButton = card.querySelector('.btn-rename-title');
     const duplicateButton = card.querySelector('.btn-duplicate');
     const deleteButton = card.querySelector('.btn-delete');
     const changeImageButton = card.querySelector('.btn-change-image');
+    const renameDescriptionButton = card.querySelector('.btn-rename-description');
 
     // Delete Confirmation div
     const confirmation = card.querySelector('.delete-confirmation');
@@ -274,6 +280,70 @@ async function initProjects() {
       });
     });
 
+    // Rename Project Description
+    renameDescriptionButton.addEventListener('click', async (event) => {
+      event.stopPropagation(); // Prevent triggering the card's onclick event
+    
+      // Create an input field for renaming the description
+      const descriptionElement = card.querySelector('.template-description');
+      const toolbar = card.querySelector('.toolbar'); // Reference the toolbar
+      const currentDescription = descriptionElement.textContent;
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = currentDescription;
+      input.className = 'rename-input';
+      descriptionElement.replaceWith(input);
+      input.focus();
+    
+      // Temporarily hide the toolbar
+      toolbar.style.visibility = 'hidden';
+    
+      // Handle renaming logic
+      input.addEventListener('blur', async () => {
+        const newDescription = input.value.trim();
+    
+        // Validate the input
+        if (!newDescription) {
+          alert('Project description cannot be empty.');
+          input.replaceWith(descriptionElement);
+          toolbar.style.visibility = 'visible'; // Restore the toolbar
+          return;
+        }
+    
+        if (newDescription === currentDescription) {
+          input.replaceWith(descriptionElement);
+          toolbar.style.visibility = 'visible'; // Restore the toolbar
+          return;
+        }
+    
+        try {
+          // Update the project in the database
+          if (window.top.DEBUG) console.log(`🛠 [9] Renaming project description from "${currentDescription}" to "${newDescription}"...`);
+          const updatedProject = { ...project, description: newDescription };
+          await window.top.db.put(updatedProject);
+    
+          // Update the UI
+          descriptionElement.textContent = newDescription;
+          input.replaceWith(descriptionElement);
+    
+          if (window.top.DEBUG) console.log(`✅ [9] Project description renamed to "${newDescription}".`);
+          alert(`Project description updated to "${newDescription}".`);
+        } catch (error) {
+          if (window.top.DEBUG) console.error("Error renaming project description:", error);
+          alert("Couldn't update the project description. Please try again.");
+          input.replaceWith(descriptionElement);
+        } finally {
+          toolbar.style.visibility = 'visible'; // Restore the toolbar
+        }
+      });
+    
+      // Handle pressing Enter to confirm renaming
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          input.blur();
+        }
+      });
+    });
 
     // Duplicate
     duplicateButton.addEventListener('click', async (event) => {
