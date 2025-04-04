@@ -94,6 +94,7 @@ async function initProjects() {
     const renameButton = card.querySelector('.btn-rename');
     const duplicateButton = card.querySelector('.btn-duplicate');
     const deleteButton = card.querySelector('.btn-delete');
+    const modifyButton = card.querySelector('.btn-modify');
 
     // Delete Confirmation div
     const confirmation = card.querySelector('.delete-confirmation');
@@ -123,8 +124,39 @@ async function initProjects() {
 		})
 
     // Open
+    openButton.addEventListener('click', async (event) => {
+      event.stopPropagation(); // Prevent triggering the card's onclick event
+
+      try {
+        if (window.top.DEBUG) console.log(`🛠 [5] Opening project "${project.name}"...`);
+        localStorage.setItem('projectId', project._id); // Save the project ID to localStorage
+        const windowIframe = window.parent.document.getElementById('window');
+        windowIframe.src = 'components/window/window.html'; // Navigate to the project workspace
+        if (window.top.DEBUG) console.log(`✅ [5] Project "${project.name}" opened.`);
+      } catch (error) {
+        if (window.top.DEBUG) console.error("Error opening project:", error);
+        alert("Couldn't open the project. Please try again.");
+      }
+    });
 
     // Info
+    infoButton.addEventListener('click', (event) => {
+      event.stopPropagation(); // Prevent triggering the card's onclick event
+
+      try {
+        if (window.top.DEBUG) console.log(`🛠 [6] Displaying info for project "${project.name}"...`);
+        alert(`
+          Project Name: ${project.name}
+          Description: ${project.description}
+          Created: ${new Date(project.date.created).toLocaleString()}
+          Last Updated: ${new Date(project.date.last).toLocaleString()}
+        `);
+        if (window.top.DEBUG) console.log(`✅ [6] Info displayed for project "${project.name}".`);
+      } catch (error) {
+        if (window.top.DEBUG) console.error("Error displaying project info:", error);
+        alert("Couldn't display project info. Please try again.");
+      }
+    });
 
     // Rename
     renameButton.addEventListener('click', async (event) => {
