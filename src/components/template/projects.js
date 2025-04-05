@@ -348,44 +348,59 @@ async function initProjects() {
     // Duplicate
     duplicateButton.addEventListener('click', async (event) => {
       event.stopPropagation(); // Prevent triggering the card's onclick event
-    
+
       try {
         if (!project || !project.name) {
           alert("Invalid project data. Cannot duplicate.");
           return;
         }
-    
+
         if (window.top.DEBUG) console.log(`🛠 [4] Duplicating project "${project.name}"...`);
-    
+
         // Create a copy of the project with a new ID and updated timestamps
         const { _id, _rev, ...projectData } = project; // Exclude _id and _rev
         const newProject = {
           ...projectData,
           name: `${project.name} (Copy)`, // Append "Copy" to the name
+          childrenIds: [], // Initialize with an empty array
           date: {
             created: new Date(),
             last: new Date()
           }
         };
-    
+
         // Save the new project to the database
         const response = await window.top.db.post(newProject);
-    
+
         if (response.ok) {
           const newProjectId = response.id; // Get the new project's ID
           if (window.top.DEBUG) console.log(`✅ [4] Project "${project.name}" duplicated successfully with ID "${newProjectId}".`);
-    
+
           // Fetch and duplicate children
           if (project.childrenIds && project.childrenIds.length > 0) {
             if (window.top.DEBUG) console.log(`🛠 [4] Duplicating children of project "${project.name}"...`);
-    
+
+            const newChildrenIds = [];
             for (const childId of project.childrenIds) {
               if (childId) { // Ensure childId is not null or undefined
-                await duplicateChild(childId, newProjectId);
+                const newChildId = await duplicateChild(childId, newProjectId);
+                if (newChildId) {
+                  newChildrenIds.push(newChildId);
+                }
               }
             }
+
+            // Fetch the latest version of the new project to get its _rev
+            const latestNewProject = await window.top.db.get(newProjectId);
+
+            // Update the new project's childrenIds
+            const updatedProject = {
+              ...latestNewProject, // Include the latest _rev
+              childrenIds: newChildrenIds
+            };
+            await window.top.db.put(updatedProject); // Save the updated project
           }
-    
+
           alert(`Project "${project.name}" duplicated successfully.`);
           location.reload(); // Reload the project hub to reflect the new project
         } else {
@@ -396,22 +411,22 @@ async function initProjects() {
         alert("Couldn't duplicate project. Please try again.");
       }
     });
-    
+
     async function duplicateChild(childId, newParentId) {
       try {
         if (!childId || !newParentId) {
           if (window.top.DEBUG) console.error("Invalid childId or newParentId. Skipping duplication.");
-          return;
+          return null;
         }
-    
+
         // Fetch the child document
         const child = await window.top.db.get(childId);
-    
+
         if (!child || !child.name) {
           if (window.top.DEBUG) console.error(`Invalid child data for ID "${childId}". Skipping duplication.`);
-          return;
+          return null;
         }
-    
+
         // Create a copy of the child with a new ID and updated parentId
         const { _id, _rev, ...childData } = child; // Exclude _id and _rev
         const newChild = {
@@ -422,35 +437,44 @@ async function initProjects() {
             last: new Date()
           }
         };
-    
+
         // Save the new child to the database
         const response = await window.top.db.post(newChild);
         if (response.ok) {
           const newChildId = response.id; // Get the new child's ID
           if (window.top.DEBUG) console.log(`✅ [4] Child "${child.name}" duplicated successfully with new ID "${newChildId}".`);
-    
-          // Update the parent's childrenIds with the new child's ID
-          const parent = await window.top.db.get(newParentId);
-          const updatedParent = {
-            ...parent,
-            childrenIds: [...(parent.childrenIds || []), newChildId]
-          };
-          await window.top.db.put(updatedParent);
-    
+
+          // Fetch the latest version of the new child to get its _rev
+          const latestNewChild = await window.top.db.get(newChildId);
+
           // Recursively duplicate the child's children if it is a folder
           if (child.type === 'folder' && Array.isArray(child.childrenIds) && child.childrenIds.length > 0) {
+            const newGrandChildrenIds = [];
             for (const grandChildId of child.childrenIds) {
               if (grandChildId) { // Ensure grandChildId is not null or undefined
-                await duplicateChild(grandChildId, newChildId);
+                const newGrandChildId = await duplicateChild(grandChildId, newChildId);
+                if (newGrandChildId) {
+                  newGrandChildrenIds.push(newGrandChildId);
+                }
               }
             }
+
+            // Update the new child's childrenIds
+            const updatedChild = {
+              ...latestNewChild, // Include the latest _rev
+              childrenIds: newGrandChildrenIds
+            };
+            await window.top.db.put(updatedChild); // Save the updated child
           }
+
+          return newChildId; // Return the new child's ID
         } else {
           throw new Error(`Failed to duplicate child "${child.name}".`);
         }
       } catch (error) {
         if (window.top.DEBUG) console.error(`Error duplicating child with ID "${childId}":`, error);
         alert(`Couldn't duplicate child with ID "${childId}". Please try again.`);
+        return null;
       }
     }
 
