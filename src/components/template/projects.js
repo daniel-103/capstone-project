@@ -1,5 +1,23 @@
 window.top.DEBUG = localStorage.getItem('DEBUG') == true
 //window.top.DEBUG = true;
+
+// Function to populate the "All Projects" dropdown with A-Z filtering
+function populateProjectDropdown(projects) {
+  const dropdownContent = document.getElementById("projectDropdown");
+  dropdownContent.innerHTML = ""; // Clear existing content
+
+  // Sort projects alphabetically by name
+  const sortedProjects = projects.sort((a, b) => a.name.localeCompare(b.name));
+
+  sortedProjects.forEach((project) => {
+    const projectLink = document.createElement("a");
+    projectLink.href = "#"; // You can update this to link to the project's page if needed
+    projectLink.textContent = project.name;
+    dropdownContent.appendChild(projectLink);
+  });
+}
+
+
 async function initProjects() {
   const date = new Date();
 
@@ -494,6 +512,7 @@ async function initProjects() {
               // TODO: Recursively delete all nested files and folders
               if (window.top.DEBUG) console.log(`✅ [2] Project "${project.name}" deleted.`);
               card.remove();
+              location.reload();
             })
           .catch(error => {
             if (window.top.DEBUG) console.log("❌ [2] Couldn't delete project:", error);
@@ -522,6 +541,10 @@ async function initProjects() {
       deleteButton.classList.remove('active');
     })
   };
+
+  // Add hover event listener to populate the dropdown
+  const dropdownButton = document.querySelector(".dropbtn");
+  dropdownButton.addEventListener("mouseover", () => populateProjectDropdown(projects));
 }
 
 initProjects();
