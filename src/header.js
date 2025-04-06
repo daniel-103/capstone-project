@@ -96,6 +96,15 @@ settingsButton.addEventListener("click", () => {
 	openOverlay("components/header-menus/settings.html")
 })
 
+// Project Types 
+const projectTypesButton = document.getElementById("file-project-types-btn");
+projectTypesButton.addEventListener("click", () => {
+	if (mainWindow.src.includes('template.html')) {
+		window.top.error('[ERROR] Can only view type settings for an open project.', 8);
+		return;
+	}
+	openOverlay("components/header-menus/pageTypes/pageTypes.html")
+})
 
 
 // If a header button needs to open a menu, open it with this.

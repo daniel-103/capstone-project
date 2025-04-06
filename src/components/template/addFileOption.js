@@ -24,6 +24,15 @@ async function addFileOption(entityData) {
         }
     });
 
+    // Add to the listing of all types 
+    const allTypes = await window.top.db.get('entityTypes');
+    const entityTypes = Array.from(new Set([...allTypes.entityTypes, JSON.stringify(newType)]));
+    await window.top.db.put({
+        _id: 'entityTypes',
+        _rev: allTypes._rev,
+        entityTypes: entityTypes
+    });
+
     window.top.dispatchEvent(updateFileOptionsEvent);
     await window.top.db.put(project);
 }
