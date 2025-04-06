@@ -1,6 +1,6 @@
 const projectId = localStorage.getItem('projectId');
 const relationshipData = {
-    parentId: projectId,
+    parentId: null,
     type: 'file',
     fileType: 'relationship',
     modules: [

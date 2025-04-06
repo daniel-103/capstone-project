@@ -1,6 +1,6 @@
 const projectId = localStorage.getItem('projectId');
 const textDocumentData = {
-    parentId: projectId,
+    parentId: null,
     type: 'file',
     name: 'someDoc',
     fileType: 'textDocument',

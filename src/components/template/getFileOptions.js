@@ -11,6 +11,7 @@ async function getFileOptions(template) {
             console.error(error);
         }
         if (fileOptionData) {
+            console.log('file otion data: ', fileOptionData);
             fileOptions[i].data = fileOptionData;
         }
        
