@@ -40,6 +40,14 @@ const templateData = {
             dataPath: "../entity_types/relationship.js",
             sourcePath: "../base_page/base_page.html",
             data: null
+        },
+        {
+            id: "btn-new-relationship",
+            title: "Create a new Node Relationship Page",
+            name: "Node Relationship Page",
+            dataPath: "../entity_types/node_relation.js",
+            sourcePath: "../base_page/base_page.html",
+            data: null
         }
     ]
 
