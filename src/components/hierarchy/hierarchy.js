@@ -97,12 +97,12 @@ document.getElementById('new-folder-btn').addEventListener('click', (event) => {
                             })
                             .catch(error => {
                                 if (window.top.DEBUG) console.log(`❌ [3.2] Couldn't link ${name} to its parent:`, error);
-                                window.top.error(`[ERROR] Couldn't link ${name} to its parent`);
+                                window.top.notify('error', `Couldn't link ${name} to its parent`);
                             });
                     })
                     .catch(error => {
                         if (window.top.DEBUG) console.log(`❌ [3.1] Couldn't fetch ${name}'s parent:`, error);
-                        window.top.error(`[ERROR] Couldn't fetch ${name}'s parent`);
+                        window.top.notify('error', `Couldn't fetch ${name}'s parent`);
                     });
             })
     });
@@ -210,7 +210,7 @@ async function seedHierarchy() {
         })
         .catch(error => {
             if (window.top.DEBUG) console.log("❌ [2] Couldn't fetch project:", error);
-            window.top.error(`[ERROR] Couldn't fetch project`);
+            window.top.notify('error', `Couldn't fetch project`);
             
         })
 }
@@ -244,7 +244,7 @@ async function seedSecHierarchy() {
     })
     .catch(error => {
         if (window.top.DEBUG) console.log("❌ [2] Couldn't fetch project:", error);
-        window.top.error(`[ERROR] Couldn't fetch project`);
+        window.top.notify('error', `Couldn't fetch project`);
         
     })
 }
@@ -340,7 +340,7 @@ window.top.addEventListener("getSelectedFolder", async (event) => {
         
     await addEntity("../text_editor/text_editor.html", event.detail, parentId).catch(error => {
         if (window.top.DEBUG) console.log(`❌ [3] Couldn't create file:`, error);
-        window.top.error(`[ERROR] Couldn't create file`);
+        window.top.notify('error', `Couldn't create file`);
     });
 })
 

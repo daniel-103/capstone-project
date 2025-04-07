@@ -45,7 +45,7 @@ window.addEventListener('drop', event => {
 
     if (event.dataTransfer.files.length > 1) {
         // too many files, can only upload one file
-        window.top.error('[ERROR] Too many files. You can only import 1 file at a time.', 5);
+        window.top.notify('error', 'Too many files. You can only import 1 file at a time.', 5);
         return;
     }
 
@@ -54,7 +54,7 @@ window.addEventListener('drop', event => {
     if (!Object.keys(fileTypeFunctions).includes(file.type)) {
         // invalid file type, can only docx, pdf, txt
         console.error('Invalid file type');
-        window.top.error('[ERROR] Invalid file type.', 5);
+        window.top.notify('error', 'Invalid file type.', 5);
         return;
     }
 

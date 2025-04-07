@@ -13,7 +13,7 @@ async function addNewFileOptions(fileOptions, slideout) {
             const parentId = document.getElementsByClassName('folder selected')[0].id
             await addEntity(fileOption.sourcePath, fileOption.data.default, parentId).catch(error => {
                 if (window.top.DEBUG) console.log(`❌ [3] Couldn't create file:`, error);
-                window.top.error("[ERROR] Couldn't create file.");
+                window.top.notify('error', "Couldn't create file.");
             });
         }); 
 

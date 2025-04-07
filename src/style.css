@@ -279,7 +279,7 @@ iframe,
     background: #f0f0f0;
 }
 
-#error-container {
+#notification-container {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -291,34 +291,31 @@ iframe,
     overflow: hidden;
 }
 
-.error-message {
+.notification-message {
     display: adsolute;
     position: relative;
-    background-color: rgba(128, 0, 0, 0.75);
     transform-origin: bottom;
     height: 1.5rem;
     transition: all 0.2s ease;
 }
 
-.error-content {
-    margin-top: 0.25rem;
+.notification-content {
     color: white;
-    height: 1rem;
+    /* height: 1.25rem; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
 .progress-bar {
-    background-color: rgba(255, 128, 128, 0.75);
     height: 0.25rem;
     width: 100%;
 }
 
-.error-close-btn {
+.notification-close-btn {
+    margin-top: 0.25rem;
+    margin-right: 0.25rem;
     width: 0.75rem;
     height: 0.75rem;
     z-index: 99;
-
-    fill: white;
 }

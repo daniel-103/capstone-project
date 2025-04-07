@@ -38,7 +38,7 @@ async function initProjects() {
   })
   .catch(error => {
     if (window.top.DEBUG) console.log("❌ [1] Couldn't fetch projects:", error);
-    window.top.error("[ERROR] Couldn't fetch projects");
+    window.top.notify('error', "Couldn't fetch projects");
   })
 
   const project_gallery = document.getElementById('projectGallery');
@@ -155,7 +155,7 @@ async function initProjects() {
             })
           .catch(error => {
             if (window.top.DEBUG) console.log("❌ [2] Couldn't delete project:", error);
-            window.top.error("Couldn't delete project");
+            window.top.notify('error', "Couldn't delete project");
           });
       }
     })

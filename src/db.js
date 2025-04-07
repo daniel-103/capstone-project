@@ -1,98 +1,294 @@
-const programId = 'Skriptor'
+const PouchDB = require('pouchdb');
+PouchDB.plugin(require("pouchdb-find"));
 
-const staticProgramObject = {
-    _id: programId,
-    projects: []
-};
+let pouchDB;
+let couchDB;
+let dbPath;
 
-// console.log("❓ [-1] Sorry for all of these logs. Debugging was a nightmare. Feel free to comment them out if they are too annoying. I'll try to remove them or make debug mode later")
-// Hey, looks like you either followed this message from the console or you stumbled upon this.
-// I'm using my own way of logging and debugging with the following format:
+let syncHandler;
 
-// Symbol for type of log, easyily distinguishable
-    // 🛠: Doing something. 
-        // Shows the start of a process.
-    // ✅: Successfull response. 
-        // Process was successful. Return the result
-    // ❌: Error response. 
-        // Process was unsuccessful. Return the error
-    // ❗: Warning response. 
-        // Process was unsuccessful but it's ok. The process will either be skipped or has error handling to recover. Return the error
-// Tracker, kind of like an id to see where the log came from and any associated logs.
-    // Subsequent processes are shown in [] and represented using decimal versioning. (0.8, 0.9, 0.10, 0.11, ...)
-    // You can choose any number as long as it's locally unique. Like you can reause 0 outside of initial project loading since it's only used here.
-// Message, a brief description of what the log is about.
-// Return object, only for responses, not used when showing the start of a process.
+async function initPouchDB(path) {
+    try {
+        dbPath = path;
+        console.log(`Database path: ${path}`);
+        pouchDB = new PouchDB(path);
+        return { message: 'Initialized local database' };
+    } catch (error) {
+        // SHIT IS VERY FUCKED
+        console.log(error);
+        return { error: true, message: 'Could not create local database' };
+    }
+}
 
-// See a few of the logs in this file and in components/hierarchy/hierarchy.js for example
-// Feel free to adopt this type of logging and debugging.
+async function clearPouch() {
+    try {
+        await pouchDB.destroy();
+        await initPouchDB(dbPath);
+        return { message: 'Cleared local project data' };
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Could not clear local project data' };
+    }
+}
 
-// I guess the program object is deprecated now?
-// Fetch the 'Program Object' that keeps track of all of the projects. It's the highest level object. (the root)
-// if (window.top.DEBUG) console.log('🛠 [0] Fetching Program Object...');
-// window.top.db.get(programId)
-//     .then(programObject => {
-//         if (window.top.DEBUG) console.log("✅ [0] Fetched Program Object:", programObject);
-//     })
-//     .catch(error => {
-//         if (window.top.DEBUG) console.log("❗ [0] Couldn't fetch Program Object:", error);
-//         if (window.top.DEBUG) console.log("🛠 [0.1] Creating new Program Object...");
-//         window.top.db.put(staticProgramObject)
-//             .then(response => {
-//                 if (window.top.DEBUG) console.log("✅ [0.1] Created new Program Object:", response);
-//             })
-//             .catch(error => {
-//                 if (window.top.DEBUG) console.log("❌ [0.1] Couldn't create new Program Object:", error);
-//             })
-//     });
+async function clearCouch() {
+    try {
+        if (!couchDB) return { error: true, message: 'No remote database connected' }
 
-window.top.db.createIndex({
-    index: { fields: ['type'] }
-});
+        const allDocs = await couchDB.allDocs({ include_docs: false })
 
-// Commented these out so they don't keep getting created
-// window.db.post({
-//     type: 'character',
-//     modules: {
-//         name:        { value: 'bob', position: {x: 0, y: 0} },
-//         description: { value: 'Description',   position: {x: 0, y: 0} },
-//         backstory:   { value: 'Backstory',     position: {x: 0, y: 0} }
-//     }
-// });
+        const purgeMap  = {};
+        for (const row of allDocs.rows) {
+            purgeMap [row.id] = [row.value.rev];
+        }
 
-// window.db.post({
-//     type: 'character',
-//     modules: {
-//         name:        { value: 'bob2', position: {x: 0, y: 0} },
-//         description: { value: 'Description',   position: {x: 0, y: 0} },
-//         backstory:   { value: 'Backstory',     position: {x: 0, y: 0} }
-//     }
-// });
+        const response = await fetch(`${couchDB.url.origin}${couchDB.url.pathname}/_purge`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Basic " + btoa(`${couchDB.url.username}:${couchDB.url.password}`),
+            },
+            body: JSON.stringify(purgeMap)
+        });
 
-// If you need to delete any excess characters, uncomment this code and run it.
-// async function deleteCharacters() {
-//     await Promise.all((await window.top.db.getAll({ include_docs: true })).filter(doc => doc.type === 'character').map(doc => window.top.db.remove(doc._id)));
-// }
-// deleteCharacters();
+        console.log(response)
 
-// Comment this out if you are getting annoyed with the errors in the terminal.
-// const date = new Date();
-// window.db.get("123")
-//     .catch(error => {
-//         return window.db.put({
-//             _id: "123",
-//             name: "NewWorldMain",
-//             type: "folder",
-//             parentId: null,
-//             image: "dog.jpg",
-//             description: "This is a test project",
-//             childrenIds: [],
-//             date: {
-//                 created: date,
-//                 last: date
-//             }
-//         }).then(() => {
-//             if (window.top.DEBUG) console.log("✅ Document created")
-//         });
-//     });
+        return { message: 'Cleared remote project data' };
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Could not clear remote project data' };
+    }
+}
 
+async function deleteCouch() {
+    try {
+        if (!couchDB) return { error: true, message: 'No remote database connected' }
+        await couchDB.destroy();
+        couchDB = undefined;
+        return { message: 'Deleted the remote database' };
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Could not delete the remote database' };
+    }
+}
+
+async function linkCouch(url) {
+    try {
+        couchDB = new PouchDB(url.href);
+        couchDB.url = url
+        return { message: `Connected to remote database "${url.pathname.replace("/", "")}" at ${url.hostname}` };
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: `Could not connect to remote database at ${url.hostname}` };
+    }
+}
+
+async function unlinkCouch() {
+    try {
+        couchDB = undefined;
+        return { message: "Disconnected from remote database" };
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: "Could not disconnect from remote database" };
+    }
+}
+
+async function merge() {
+    try {
+        await pouchDB.sync(couchDB)
+        return { message: 'Merged local and remote project data' };
+    } catch (error) {
+        console.log(error)
+        return { error: true, message: "Could not merge" };
+    }
+}
+
+async function mergeToPouch() {
+    try {        
+        if (!couchDB) return { error: true, message: 'No remote database connected' }
+
+        await pouchDB.replicate.from(couchDB);
+        return { message: "Succesfully merged remote project data into local local project data" };
+    } catch (error) {
+        return { error: true, message: "Could not merge remote project data into local local project data" };
+    }
+}
+
+async function mergeToCouch() {
+    try {
+        if (!couchDB) return { error: true, message: 'No remote database connected' }
+
+        await pouchDB.replicate.to(couchDB);
+        return { message: "Succesfully merged local project data into remote project data" };
+    } catch (error) {
+        return { error: true, message: "Could not merge local project data into remote project data" };
+    }
+}
+
+async function replicateToPouch() {
+    try {
+        if (!couchDB) return { error: true, message: 'No remote database connected' };
+
+        await clearPouch();
+        await pouchDB.replicate.from(couchDB);
+        return { message: "Succesfully overwrote local project data data with remote project data" };
+    } catch (error) {
+        return { error: true, message: "Could not overwrite local project data with remote project data" };
+    }
+}
+
+async function replicateToCouch() {
+    try {
+        if (!couchDB) return { error: true, message: 'No remote database connected' };
+
+        await clearCouch();
+        await pouchDB.replicate.to(couchDB);
+        return { message: "Succesfully overwrote remote project data with local project data" };
+    } catch (error) {
+        return { error: true, message: "Could not overwrite remote project data with local project data" };
+    }
+}
+
+async function sync() {
+    try {
+        if (!couchDB) return { error: true, message: 'No remote database connected' }
+
+        syncHandler = pouchDB.sync(couchDB, { live: true, retry: true })
+            // .on('change', info => console.log('Sync change:', info))
+            // .on('paused', err => console.log('Sync paused:', err))
+            // .on('active', () => console.log('Sync active'))
+            // .on('denied', err => console.log('Sync denied:', err))
+            // .on('complete', info => console.log('Sync complete:', info))
+            // .on('error', error => console.log('Sync error:', error));
+        return { message: 'The remote database is now synced' };
+    } catch (error) {
+        return { error: true, message: "Could not sync with remote database" };
+    }
+}
+
+async function unsync() {
+    try {
+        syncHandler.cancel();
+        return { message: 'The remote database is no longer synced' };
+    } catch (error) {
+        return { error: true, message: "Could not unsync from the remote database" };
+    }
+}
+
+
+
+async function put(doc) {
+    try {
+        return await pouchDB.put(doc);
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Could not write to database' };
+    }
+}
+
+async function post(doc) {
+    try {
+        return await pouchDB.post(doc);
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Could not write to database' };
+    }
+}
+
+async function update(id, updates) {
+    try {
+        const doc = await pouchDB.get(id);
+        const updatedDoc = { ...doc, ...updates }; // Merge existing fields
+        return await pouchDB.put(updatedDoc);
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Could not update doc' };
+    }
+}
+
+async function get(id) {
+    try {
+        return await pouchDB.get(id);
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Could not read from database' };
+    }
+}
+
+async function getAll() {
+    try {
+        const result = await pouchDB.allDocs({ include_docs: true });
+        return result.rows.map(row => row.doc);
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Could not read from database' };
+    }
+}
+
+async function remove(id) {
+    const doc = await pouchDB.get(id);
+    return await pouchDB.remove(doc);
+}
+
+async function find(query) {
+    try {
+        const doc = await pouchDB.find(query);
+        return doc.docs;
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Could not find query' };
+    }
+}
+
+async function createIndex(indexDef) {
+    try {
+        return await pouchDB.createIndex(indexDef);
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Could not create index' };
+    }
+}
+
+async function allDocs(options) {
+    try {
+        return await pouchDB.allDocs(options);
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Could not get all docs' };
+    }
+}
+
+async function getIndexes() {
+    try {
+        return await pouchDB.getIndexes();
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Could not get indexes' };
+    }
+}
+
+module.exports = {
+    merge,
+    initPouchDB,
+    clearPouch,
+    clearCouch,
+    deleteCouch,
+    linkCouch,
+    unlinkCouch,
+    mergeToPouch,
+    mergeToCouch,
+    replicateToCouch,
+    replicateToPouch,
+    sync,
+    unsync,
+    put,
+    post,
+    update,
+    get,
+    getAll,
+    remove,
+    find,
+    createIndex,
+    allDocs,
+    getIndexes
+}

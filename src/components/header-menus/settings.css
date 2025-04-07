@@ -17,15 +17,32 @@
     box-sizing: border-box;
 }
 
-#submit-url-section {
+#connection-status-container {
     display: inline-flex;
     align-items: center;
+    margin-top: 0.5rem;
+    gap: 0.25rem;
+    font-family: Helvetica;
 }
 
-#submit-url-section {
+/* #connection-status::after {
+    content: 'Disconnected';
+    color: red;
+}
+
+#connection-status.connected::after {
+    content: 'Connected';
+    color: rgba(64, 255, 64, 1);
+} */
+
+#actions,
+#sync-status-container {
     display: inline-flex;
+    align-items: center;
     gap: 0.5rem;
 }
+
+
 
 #theme-section {
     background-color: var(--hierarchy-section-color);

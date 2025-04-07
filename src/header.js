@@ -84,7 +84,7 @@ const exportButton = document.getElementById("file-save-as-btn")
 const openButton = document.getElementById("file-open-btn")
 openButton.addEventListener("click", () => {
 	if (mainWindow.src.includes('template.html')) {
-		window.top.error('[ERROR] Can only import pages to an open project. Please open a project to import a page.', 8);
+		window.top.notify('error', 'You can only import pages to an open project. Please open a project to import a page.', 8);
 		return;
 	}
 	openOverlay("components/header-menus/open-file.html")

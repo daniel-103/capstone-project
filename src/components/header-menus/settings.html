@@ -10,9 +10,9 @@
 <body>
     <div id="settings-area">
         <div id="settings-couchdb-section" class="section">
-            <p class="section-title">CouchDB URL</p>
+            <p class="section-title">CouchDB</p>
             <div class="subsection">
-                <p class="subsection-title">Segmented URL:</p>
+                <p class="subsection-title">Connect:</p>
                 <div id="split-url-container">
                     <p>http://</p>
                     <span class="badge"><span contenteditable="true" id="url-user-input" class="badge" data-placeholder="username"></span></span>
@@ -25,25 +25,45 @@
                     <p>/</p>
                     <span class="badge"><span contenteditable="true" id="url-dbname-input" class="badge" data-placeholder="dbname"></span></span>
                 </div>
+                <p>or</p>
+                <div id="full-url-container">
+                    <span class="badge"><span contenteditable="true" id="url-full-input" class="badge" data-placeholder="http://username:password@hostname:port/dbname"></span></span>
+                </div>
+                <div id="connection-status-container">
+                    <div id="connection-buttons">
+                        <button id="connect-url-btn">Connect</button>
+                    </div>
+                    <p id="connection-status"></p>
+                </div>
             </div>
-            <p>or</p>
-            <div id="full-url-container" class="subsection">
-                <p class="subsection-title">Full URL:</p>
-                <span class="badge"><span contenteditable="true" id="url-full-input" class="badge" data-placeholder="127.0.0.1:5984"></span></span>
-            </div>
-
-            <div class="subsection">
-                <p class="subsection-title">Sync method:</p>
-                <div id="submit-url-section">
+            
+            <div id="action-subsection" class="subsection">
+                <p class="subsection-title">Database Actions:</p>
+                <div id="actions">
                     <div class="dropdown">
                         <button class="dropdown-btn">Select sync method:</button>
                         <ul class="dropdown-menu">
-                            <li data-value="merge">Merge</li>
-                            <li data-value="ovrR">Write to Remote</li>
-                            <li data-value="ovrL">Load from Remote</li>
+                            <li data-value="merge">↔ Merge local and remote</li>
+                            <li data-value="mergeToPouch">⬅ Merge to local</li>
+                            <li data-value="mergeToCouch">➡ Merge to remote</li>
+                            <li data-value="overwritePouch">⤵ Overwrite local with remote database</li>
+                            <li data-value="overwriteCouch">⤴ Overwrite remote with local database</li>
+                            <li data-value="clearPouch">🗑 Clear local database</li>
+                            <li data-value="clearCouch">🗑 Clear remote database</li>
+                            <li data-value="deleteCouch">❌ Delete remote database</li>
                         </ul>
                     </div>
-                    <button id="submit-url-btn">Sync</button>
+                    <button id="action-btn">Start</button>
+                </div>
+            </div>
+
+            <div id="sync-subsection" class="subsection">
+                <p class="subsection-title">Sync:</p>
+                <div id="sync-status-container">
+                    <div id="sync-buttons">
+                        <button id="sync-btn">Start sync</button>
+                    </div>
+                    <p id="sync-status"></p>
                 </div>
             </div>
         </div>

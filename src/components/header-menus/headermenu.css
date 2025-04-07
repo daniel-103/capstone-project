@@ -18,6 +18,7 @@ button {
     color: var(--menu-button-text-color);
     background-color: var(--menu-button-color);
     transition: all 0.2s ease;
+    width: fit-content;
 }
 
 button:hover {
@@ -35,6 +36,8 @@ button:hover {
     padding: 1rem;
     color: var(--menu-section-text-color);
     background-color: var(--menu-section-color);
+    
+    transition: all ease 0.2s;
 }
 
 .section-title {
@@ -52,6 +55,8 @@ button:hover {
     color: var(--menu-subsection-text-color);
     background-color: var(--menu-subsection-color);
     padding: 0.5rem;
+    
+    transition: all ease 0.2s;
 }
 
 .subsection-title {
@@ -116,4 +121,11 @@ span.badge[contenteditable]:empty:focus::before {
 .dropdown-menu li:hover {
     color: var(--menu-button-hover-text-color);
     background-color: var(--menu-button-hover-color);
+}
+
+
+
+.disabled {
+    pointer-events: none;
+    filter: grayscale(0.5) brightness(0.75);
 }
