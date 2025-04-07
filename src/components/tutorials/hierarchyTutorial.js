@@ -31,7 +31,22 @@ window.addEventListener('message', (event) => {
                     intro: "This is the Section Hierarchy. It displays the structure of sections within your project."
                 }
             ]
-        }).oncomplete(() => {
+        })
+        .onchange((targetElement) => {
+            const toggleSectionViewBtn = document.getElementById('toggle-section-btn');
+
+            if (targetElement.id === 'toggle-section-btn') {
+                console.log('targetElement.id:', targetElement.id);
+                // Switch back to the file hierarchy
+                toggleSectionViewBtn.click();
+            }
+        })
+        .oncomplete(() => {
+            const toggleFileViewBtn = document.getElementById('toggle-file-btn');
+
+            // Switch to the file hierarchy
+            toggleFileViewBtn.click();
+
             // Notify the parent window that the Hierarchy tutorial is complete
             window.parent.postMessage({ action: 'hierarchyTourComplete' }, '*');
         }).start();

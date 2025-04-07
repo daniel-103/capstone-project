@@ -6,6 +6,11 @@ window.addEventListener('message', (event) => {
                 menuContent: document.getElementById('file').parentElement.querySelector(".header-dropdown-wrapper"), // File dropdown content
                 steps: [
                     {
+                        element: '#file',
+                        intro: "This is the File menu. Click here to access file-related actions like saving, opening, and exporting documents.",
+                        position: 'bottom'
+                    },
+                    {
                         element: '#file-save-btn',
                         intro: "This button saves your document.",
                         position: 'bottom'
@@ -40,18 +45,16 @@ window.addEventListener('message', (event) => {
                     {
                         element: '#file-open-btn',
                         intro: "Click here to open an existing document.",
-                        position: 'bottom',
-                        onBefore: () => {
-                            // Close the dropdown for file-save-as-btn
-                            const fileSaveAsBtn = document.getElementById('file-save-as-btn');
-                            const fileSaveAsDropdown = fileSaveAsBtn.parentElement.querySelector(".foldout-wrapper");
-                            fileSaveAsDropdown.classList.remove("open");
-                            fileSaveAsBtn.classList.remove("open");
-                        }
+                        position: 'bottom'
                     },
                     {
                         element: '#file-settings-btn',
                         intro: "Access the settings menu to configure your preferences.",
+                        position: 'bottom'
+                    },
+                    {
+                        element: '#file-project-types-btn',
+                        intro: 'Click here to explore different project types available in the application.',
                         position: 'bottom'
                     }
                 ]
@@ -60,6 +63,11 @@ window.addEventListener('message', (event) => {
                 menuButton: document.getElementById('edit'), // Edit menu button
                 menuContent: document.getElementById('edit').parentElement.querySelector(".header-dropdown-wrapper"), // Edit dropdown content
                 steps: [
+                    {
+                        element: '#edit',
+                        intro: "This is the Edit menu. Click here to access editing actions like undo, redo, cut, copy, and paste.",
+                        position: 'bottom'
+                    },
                     {
                         element: '#edit-undo-btn',
                         intro: "Click here to undo your last action (Ctrl + Z).",
@@ -102,6 +110,11 @@ window.addEventListener('message', (event) => {
                 menuContent: document.getElementById('view').parentElement.querySelector(".header-dropdown-wrapper"), // View dropdown content
                 steps: [
                     {
+                        element: '#view',
+                        intro: "This is the View menu. Click here to access options for zooming and resetting the view.",
+                        position: 'bottom'
+                    },
+                    {
                         element: '#view-zoom-in-btn',
                         intro: "Use this button to zoom in on your document (Ctrl + Shift + +).",
                         position: 'bottom'
@@ -123,6 +136,11 @@ window.addEventListener('message', (event) => {
                 menuContent: document.getElementById('insert').parentElement.querySelector(".header-dropdown-wrapper"), // Insert dropdown content
                 steps: [
                     {
+                        element: '#insert',
+                        intro: "This is the Insert menu. Click here to add elements like images and tables to your document.",
+                        position: 'bottom'
+                    },
+                    {
                         element: '#insert-image-btn',
                         intro: "Click here to insert an image into your document.",
                         position: 'bottom'
@@ -138,6 +156,11 @@ window.addEventListener('message', (event) => {
                 menuButton: document.getElementById('format'), // Format menu button
                 menuContent: document.getElementById('format').parentElement.querySelector(".header-dropdown-wrapper"), // Format dropdown content
                 steps: [
+                    {
+                        element: '#format',
+                        intro: "This is the Format menu. Click here to access formatting options like headers, footers, and page numbers.",
+                        position: 'bottom'
+                    },
                     {
                         element: '#insert-header-btn',
                         intro: "Use this to insert a header into your document.",
@@ -159,6 +182,11 @@ window.addEventListener('message', (event) => {
                 menuButton: document.getElementById('tools'), // Tools menu button
                 menuContent: document.getElementById('tools').parentElement.querySelector(".header-dropdown-wrapper"), // Tools dropdown content
                 steps: [
+                    {
+                        element: '#tools',
+                        intro: "This is the Tools menu. Click here to access tools like spelling and grammar check or word count.",
+                        position: 'bottom'
+                    },
                     {
                         element: '#tools-spelling-btn',
                         intro: "Click here to check spelling and grammar in your document.",
@@ -187,7 +215,7 @@ window.addEventListener('message', (event) => {
 
         // Start the tutorial for each dropdown menu
         const startDropdownTutorial = (dropdown) => {
-            return new Promise((resolve) => {
+            return new Promise((resolve, reject) => {
                 openDropdown(dropdown.menuButton, dropdown.menuContent); // Open the dropdown menu
                 introJs()
                     .setOptions({
@@ -208,14 +236,36 @@ window.addEventListener('message', (event) => {
                     })
                     .onexit(() => {
                         closeDropdown(dropdown.menuButton, dropdown.menuContent); // Close the dropdown menu if the tutorial is exited
-                        resolve(); // Resolve the promise to move to the next dropdown
+                        reject(); // Reject the promise to stop the tutorial
                     })
                     .start(); // Start the tutorial for this dropdown
             });
         };
 
+        // Add tutorial step for the "Logo" button
+        const logoStep = {
+            element: '#logo-btn',
+            intro: 'This is the logo button. Clicking it will take you back to the project hub.',
+            position: 'bottom'
+        };
+
+        // Function to start the tutorial for the logo button
+        const startLogoTutorial = () => {
+            return new Promise((resolve, reject) => {
+                introJs()
+                    .setOptions({
+                        steps: [logoStep],
+                        tooltipClass: 'introjs-tooltip'
+                    })
+                    .oncomplete(() => resolve()) // Resolve the promise when the tutorial is complete
+                    .onexit(() => reject()) // Reject the promise if the tutorial is exited
+                    .start();
+            });
+        };
+
         // Iterate through each dropdown and start its tutorial
         const runTutorial = async () => {
+            await startLogoTutorial();
             for (const dropdown of dropdowns) {
                 await startDropdownTutorial(dropdown);
             }
@@ -224,27 +274,3 @@ window.addEventListener('message', (event) => {
         runTutorial(); // Start the full tutorial
     }
 });
-
-
-/*
-window.addEventListener('message', async (event) => {
-    if (event.data.action === 'startHeaderButtonsTour') {
-        console.log("opening file button");
-        const file = document.getElementById('file');
-        console.log("file button", file);
-        const fileDropdown = document.getElementById('file').parentElement.querySelector(".header-dropdown-wrapper");
-        console.log("File dropdown:", fileDropdown);
-        fileDropdown.classList.toggle("open");
-        file.classList.toggle("open");
-        await new Promise((resolve) => setTimeout(resolve, 5000));
-        const fileSave = document.getElementById('file-save-as-btn');
-        const fileSaveDropdown = fileSave.parentElement.querySelector(".foldout-wrapper");
-        fileSaveDropdown.classList.toggle("open");
-        fileSave.classList.toggle("open");
-        await new Promise((resolve) => setTimeout(resolve, 5000));
-        fileDropdown.classList.remove("open");
-        file.classList.remove("open");
-
-    }
-});
-*/
