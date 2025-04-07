@@ -30,7 +30,9 @@
       modData.value[changeIndex] = valueElem.textContent;
       valueElem.dataset.saveContent = JSON.stringify(modData.value);
     });
-    
+    valueElem.addEventListener("click", () => {
+      moduleElem.classList.remove("selected");
+    });
     moduleElem.appendChild(valueElem);
 
     // Add the transparent overlay for drag detection.

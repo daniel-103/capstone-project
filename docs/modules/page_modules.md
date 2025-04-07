@@ -15,4 +15,9 @@ People like neatness and order. When moving modules, it is difficult to align mo
 For a more in-depth explanation of how snapping is done. For each selected module that is moved, its position is considered. There are three points which can be gotten using the module's size; the top left corner, the absolute center, and the bottom right corner. Then for each unselected module, the same three points are calculated. The distances between each point to each point are calculated for each direction, resulting in 9 distances per direction. The smallest distance is gotten for each direction and if it is below the snapping threshold distance, then the element is eligible to snap. The snap done by noting which type of snap the smallest distance is and apply the appriate offset along with the distance difference (which is the smallest distance.) 
 
 ## Risizing (future)
-Future feature
+Clicking on the edge of a module and dragging allows for the resizing of a module.
+
+## Adding/Deleting
+You can add text modules by right clicking, going to the add module option and selecting the text module. Doing so will add another module to the page, the same type as most modules (a module with a text editor inside it). 
+
+You can delete a module by pressing on it's border, then pressing backspace. This cannot be undone.

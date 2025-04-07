@@ -34,6 +34,10 @@ NOTE: This is still a work in progress due to us still actively trying to figure
 
 NOTE: This is still a work in progress. All we have for this button is theme switching for now
 
+#### Page Types
+- **Button ID:** `"file-project-types-btn`
+- **Functionality:** Opens the menu allowing user to view all page types and modify what page types are associated with the current project.
+
 ### 2. Edit
 The "Edit" button provides options for editing operations such as undo, redo, cut, copy, paste, find, and replace.
 

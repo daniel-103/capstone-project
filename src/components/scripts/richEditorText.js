@@ -28,6 +28,9 @@
     editorContainer.style.width = "100%";
     editorContainer.style.height = "100%";
     editorContainer.style.boxSizing = "border-box";
+    editorContainer.addEventListener("click", () => {
+      moduleElem.classList.remove("selected");
+    });
     moduleElem.appendChild(editorContainer);
   
     // Define Quill toolbar options (unchanged).
