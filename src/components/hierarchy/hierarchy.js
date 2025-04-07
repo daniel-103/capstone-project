@@ -122,7 +122,7 @@ document.getElementById('new-folder-btn').addEventListener('click', (event) => {
 // View Root as Root
 const toTopBtn = document.getElementById('to-root-btn')
 toTopBtn.addEventListener('click', (event) => {
-
+    seedHierarchy(projectId)
 })
 
 
@@ -130,7 +130,8 @@ toTopBtn.addEventListener('click', (event) => {
 // View Current as Root
 const toCurrentBtn = document.getElementById('to-current-btn')
 toCurrentBtn.addEventListener('click', (event) => {
-
+    const selectedFolder = document.getElementsByClassName('folder selected')[0];
+    seedHierarchy(selectedFolder.id)
 })
 
 
@@ -189,10 +190,10 @@ toggleFileViewBtn.addEventListener('click', (event) => {
 const hierarchy = document.getElementById('file-hierarchy');
 
 // Initialize the hierarchy by creating the root folder, then growing
-async function seedHierarchy() {
+async function seedHierarchy(rootId) {
     hierarchy.innerHTML = '';
-    if (window.top.DEBUG) console.log(`🛠 [2] Starting Hierarchy Construction. Fetching project root with id "${projectId}"...`);
-    window.top.db.get(projectId)
+    if (window.top.DEBUG) console.log(`🛠 [2] Starting Hierarchy Construction. Fetching project root with id "${rootId}"...`);
+    window.top.db.get(rootId)
         .then(object => {
             if (window.top.DEBUG) console.log(`✅ [2] Fetched project "${object.name}"`, object);
             const folder = document.createElement('div');
@@ -220,12 +221,12 @@ async function seedHierarchy() {
 
 const sec_hierarchy = document.getElementById('section-hierarchy');
 
-async function seedSecHierarchy() {
-    let projectData = await window.top.db.get(projectId);
+async function seedSecHierarchy(rootId) {
+    let projectData = await window.top.db.get(rootId);
     let entityId = projectData.childrenIds[0];   
 
     sec_hierarchy.innerHTML = '';
-    if (window.top.DEBUG) console.log(`🛠 [2] Starting Hierarchy Construction. Fetching project root with id "${projectId}"...`);
+    if (window.top.DEBUG) console.log(`🛠 [2] Starting Hierarchy Construction. Fetching project root with id "${rootId}"...`);
     window.top.db.get(entityId)
     .then(object => {
         if (window.top.DEBUG) console.log(`✅ [2] Fetched entity "${object.name}"`, object);
@@ -251,9 +252,7 @@ async function seedSecHierarchy() {
         
     })
 }
-/*
-seedHierarchy(projectId)
-*/
+
 const templateFoldersAndFiles = {
 	1: { folder: 'Short Story Project', files: ['story.txt', 'outline.txt', 'characters.txt'] },
 	2: { 
@@ -347,5 +346,6 @@ window.top.addEventListener("getSelectedFolder", async (event) => {
     });
 })
 
-seedHierarchy();
+
+seedHierarchy(projectId);
 seedSecHierarchy();
