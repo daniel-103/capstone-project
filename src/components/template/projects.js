@@ -206,7 +206,8 @@ async function initProjects() {
       input.className = 'rename-input';
       titleElement.replaceWith(input);
       input.focus();
-    
+      card.onclick = null; // Disable the card's onclick event
+
       // Handle renaming logic
       input.addEventListener('blur', async () => {
         const newName = input.value.trim();
@@ -312,7 +313,8 @@ async function initProjects() {
       input.className = 'rename-input';
       descriptionElement.replaceWith(input);
       input.focus();
-    
+      card.onclick = null; // Disable the card's onclick event
+
       // Temporarily hide the toolbar
       toolbar.style.visibility = 'hidden';
     
