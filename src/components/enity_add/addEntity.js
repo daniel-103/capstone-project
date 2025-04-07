@@ -21,7 +21,10 @@ async function initNewEntity(entityData) {
 }
 
 async function createNewEntity(newEntity) {
-
+    if (newEntity._id) {
+        newEntity._id = undefined;
+        newEntity._rev = undefined;
+    }
     const result = await window.top.db.post(newEntity);
     newEntity._rev = result.rev;
     newEntity._id = result.id;

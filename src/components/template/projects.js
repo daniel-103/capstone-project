@@ -1,4 +1,22 @@
-window.top.DEBUG = localStorage.getItem('DEBUG') == 'true'
+window.top.DEBUG = localStorage.getItem('DEBUG') == true
+//window.top.DEBUG = true;
+
+// Function to populate the "All Projects" dropdown with A-Z filtering
+function populateProjectDropdown(projects) {
+  const dropdownContent = document.getElementById("projectDropdown");
+  dropdownContent.innerHTML = ""; // Clear existing content
+
+  // Sort projects alphabetically by name
+  const sortedProjects = projects.sort((a, b) => a.name.localeCompare(b.name));
+
+  sortedProjects.forEach((project) => {
+    const projectLink = document.createElement("a");
+    projectLink.href = "#"; // You can update this to link to the project's page if needed
+    projectLink.textContent = project.name;
+    dropdownContent.appendChild(projectLink);
+  });
+}
+
 
 async function initProjects() {
   const date = new Date();
@@ -46,8 +64,14 @@ async function initProjects() {
   for (const project of projects) {
     const card = document.createElement('div');
     card.className = 'project-card';
+
+    // Check if the image is a data URL or a file path
+    const imageUrl = project.image.startsWith('data:') 
+      ? project.image // Use the data URL directly
+      : `../../assets/images/${project.image}`; // Construct the file path for regular images
+
     card.innerHTML = `
-      <div class="template-image" style="background-image: url('../../assets/images/${project.image}');"></div>
+      <div class="template-image" style="background-image: url('${imageUrl}');"></div>
       <div class="template-title">${project.name}</div>
       <div class="template-description">${project.description}</div>
 
@@ -59,8 +83,18 @@ async function initProjects() {
           <button title="About ${project.name}" class="btn-info">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32l64 0c17.7 0 32 14.3 32 32l0 224 32 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 512c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-192-32 0c-17.7 0-32-14.3-32-32z"/></svg>
           </button>
-          <button title="Rename ${project.name}" class="btn-rename">
+          <button title="Change Image for ${project.name}" class="btn-change-image">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM128 192c-17.67 0-32 14.33-32 32s14.33 32 32 32 32-14.33 32-32-14.33-32-32-32zm320 160L352 288l-96 128H64l128-160 96 128 64-96 96 128z"/>
+            </svg>
+          </button>
+          <button title="Rename Project Title for ${project.name}" class="btn-rename-title">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M.1 29.3C-1.4 47 11.7 62.4 29.3 63.9l8 .7C70.5 67.3 96 95 96 128.3L96 224l-32 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l32 0 0 95.7c0 33.3-25.5 61-58.7 63.8l-8 .7C11.7 449.6-1.4 465 .1 482.7s16.9 30.7 34.5 29.2l8-.7c34.1-2.8 64.2-18.9 85.4-42.9c21.2 24 51.2 40 85.4 42.9l8 .7c17.6 1.5 33.1-11.6 34.5-29.2s-11.6-33.1-29.2-34.5l-8-.7C185.5 444.7 160 417 160 383.7l0-95.7 32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-32 0 0-95.7c0-33.3 25.5-61 58.7-63.8l8-.7c17.6-1.5 30.7-16.9 29.2-34.5S239-1.4 221.3 .1l-8 .7C179.2 3.6 149.2 19.7 128 43.7c-21.2-24-51.2-40-85.4-42.9l-8-.7C17-1.4 1.6 11.7 .1 29.3z"/></svg>  
+          </button>
+          <button title="Rename Description for ${project.name}" class="btn-rename-description">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path d="M290.74 93.24a32 32 0 0 0-45.25 0l-224 224a32 32 0 0 0-8.19 13.7L.06 482.3a16 16 0 0 0 19.64 19.64l151.36-13.24a32 32 0 0 0 13.7-8.19l224-224a32 32 0 0 0 0-45.25ZM124.12 422.06l-92.18 8.06 8.06-92.18 176-176 84.12 84.12ZM478.33 33.67a96 96 0 0 0-135.66 0l-56.56 56.56 135.66 135.66 56.56-56.56a96 96 0 0 0 0-135.66ZM403.88 108.12l-84.12-84.12 33.94-33.94a64 64 0 0 1 90.5 90.5Z"/>
+            </svg>
           </button>
           <button title="Duplicate ${project.name}" class="btn-duplicate">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M288 448L64 448l0-224 64 0 0-64-64 0c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l224 0c35.3 0 64-28.7 64-64l0-64-64 0 0 64zm-64-96l224 0c35.3 0 64-28.7 64-64l0-224c0-35.3-28.7-64-64-64L224 0c-35.3 0-64 28.7-64 64l0 224c0 35.3 28.7 64 64 64z"/></svg>
@@ -91,9 +125,11 @@ async function initProjects() {
     const toolbar = card.querySelector('.toolbar')
     const openButton = card.querySelector('.btn-open');
     const infoButton = card.querySelector('.btn-info');
-    const renameButton = card.querySelector('.btn-rename');
+    const renameButton = card.querySelector('.btn-rename-title');
     const duplicateButton = card.querySelector('.btn-duplicate');
     const deleteButton = card.querySelector('.btn-delete');
+    const changeImageButton = card.querySelector('.btn-change-image');
+    const renameDescriptionButton = card.querySelector('.btn-rename-description');
 
     // Delete Confirmation div
     const confirmation = card.querySelector('.delete-confirmation');
@@ -123,25 +159,349 @@ async function initProjects() {
 		})
 
     // Open
+    openButton.addEventListener('click', async (event) => {
+      event.stopPropagation(); // Prevent triggering the card's onclick event
+
+      try {
+        if (window.top.DEBUG) console.log(`🛠 [5] Opening project "${project.name}"...`);
+        localStorage.setItem('projectId', project._id); // Save the project ID to localStorage
+        const windowIframe = window.parent.document.getElementById('window');
+        windowIframe.src = 'components/window/window.html'; // Navigate to the project workspace
+        if (window.top.DEBUG) console.log(`✅ [5] Project "${project.name}" opened.`);
+      } catch (error) {
+        if (window.top.DEBUG) console.error("Error opening project:", error);
+        alert("Couldn't open the project. Please try again.");
+      }
+    });
 
     // Info
+    infoButton.addEventListener('click', (event) => {
+      event.stopPropagation(); // Prevent triggering the card's onclick event
+
+      try {
+        if (window.top.DEBUG) console.log(`🛠 [6] Displaying info for project "${project.name}"...`);
+        alert(`
+          Project Name: ${project.name}
+          Description: ${project.description}
+          Created: ${new Date(project.date.created).toLocaleString()}
+          Last Updated: ${new Date(project.date.last).toLocaleString()}
+        `);
+        if (window.top.DEBUG) console.log(`✅ [6] Info displayed for project "${project.name}".`);
+      } catch (error) {
+        if (window.top.DEBUG) console.error("Error displaying project info:", error);
+        alert("Couldn't display project info. Please try again.");
+      }
+    });
 
     // Rename
-		renameButton.addEventListener('click', async (event) => {
-      console.log('rename')
-		})
+    renameButton.addEventListener('click', async (event) => {
+      event.stopPropagation(); // Prevent triggering the card's onclick event
+    
+      // Create an input field for renaming
+      const titleElement = card.querySelector('.template-title');
+      const currentName = titleElement.textContent;
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = currentName;
+      input.className = 'rename-input';
+      titleElement.replaceWith(input);
+      input.focus();
+    
+      // Handle renaming logic
+      input.addEventListener('blur', async () => {
+        const newName = input.value.trim();
+    
+        // Validate the input
+        if (!newName) {
+          alert('Project name cannot be empty.');
+          input.replaceWith(titleElement);
+          return;
+        }
+    
+        if (newName === currentName) {
+          input.replaceWith(titleElement);
+          return;
+        }
+    
+        try {
+          // Update the project in the database
+          if (window.top.DEBUG) console.log(`🛠 [3] Renaming project "${currentName}" to "${newName}"...`);
+          const updatedProject = { ...project, name: newName };
+          await window.top.db.put(updatedProject);
+    
+          // Update the UI
+          titleElement.textContent = newName;
+          input.replaceWith(titleElement);
+    
+          if (window.top.DEBUG) console.log(`✅ [3] Project renamed to "${newName}".`);
+          alert(`Project renamed to "${newName}".`);
+        } catch (error) {
+          if (window.top.DEBUG) console.log("❌ [3] Couldn't rename project:", error);
+          alert("Couldn't rename project. Please try again.");
+          input.replaceWith(titleElement);
+        }
+      });
+    
+      // Handle pressing Enter to confirm renaming
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          input.blur();
+        }
+      });
+    });
+
+    // Change Image
+    changeImageButton.addEventListener('click', async (event) => {
+      event.stopPropagation(); // Prevent triggering the card's onclick event
+
+      // Create a file input element
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'image/*'; // Accept only image files
+
+      // Trigger the file input dialog
+      fileInput.click();
+
+      // Handle file selection
+      fileInput.addEventListener('change', async () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        try {
+          if (window.top.DEBUG) console.log(`🛠 [7] Changing image for project "${project.name}"...`);
+
+          // Use FileReader to read the image file as a data URL
+          const reader = new FileReader();
+          reader.onload = () => {
+            // Update the UI with the selected image
+            const imageElement = card.querySelector('.template-image');
+            imageElement.style.backgroundImage = `url('${reader.result}')`;
+
+            // Optionally, update the project in the database with the data URL
+            const updatedProject = { ...project, image: reader.result };
+            window.top.db.put(updatedProject);
+
+            if (window.top.DEBUG) console.log(`✅ [7] Image changed for project "${project.name}".`);
+            alert(`Image updated successfully for project "${project.name}".`);
+          };
+
+          reader.onerror = () => {
+            if (window.top.DEBUG) console.error("Error reading the image file.");
+            alert("Couldn't read the selected image. Please try again.");
+          };
+
+          reader.readAsDataURL(file); // Read the file as a data URL
+        } catch (error) {
+          if (window.top.DEBUG) console.error("Error changing project image:", error);
+          alert("Couldn't change the project image. Please try again.");
+        }
+      });
+    });
+
+    // Rename Project Description
+    renameDescriptionButton.addEventListener('click', async (event) => {
+      event.stopPropagation(); // Prevent triggering the card's onclick event
+    
+      // Create an input field for renaming the description
+      const descriptionElement = card.querySelector('.template-description');
+      const toolbar = card.querySelector('.toolbar'); // Reference the toolbar
+      const currentDescription = descriptionElement.textContent;
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = currentDescription;
+      input.className = 'rename-input';
+      descriptionElement.replaceWith(input);
+      input.focus();
+    
+      // Temporarily hide the toolbar
+      toolbar.style.visibility = 'hidden';
+    
+      // Handle renaming logic
+      input.addEventListener('blur', async () => {
+        const newDescription = input.value.trim();
+    
+        // Validate the input
+        if (!newDescription) {
+          alert('Project description cannot be empty.');
+          input.replaceWith(descriptionElement);
+          toolbar.style.visibility = 'visible'; // Restore the toolbar
+          return;
+        }
+    
+        if (newDescription === currentDescription) {
+          input.replaceWith(descriptionElement);
+          toolbar.style.visibility = 'visible'; // Restore the toolbar
+          return;
+        }
+    
+        try {
+          // Update the project in the database
+          if (window.top.DEBUG) console.log(`🛠 [9] Renaming project description from "${currentDescription}" to "${newDescription}"...`);
+          const updatedProject = { ...project, description: newDescription };
+          await window.top.db.put(updatedProject);
+    
+          // Update the UI
+          descriptionElement.textContent = newDescription;
+          input.replaceWith(descriptionElement);
+    
+          if (window.top.DEBUG) console.log(`✅ [9] Project description renamed to "${newDescription}".`);
+          alert(`Project description updated to "${newDescription}".`);
+        } catch (error) {
+          if (window.top.DEBUG) console.error("Error renaming project description:", error);
+          alert("Couldn't update the project description. Please try again.");
+          input.replaceWith(descriptionElement);
+        } finally {
+          toolbar.style.visibility = 'visible'; // Restore the toolbar
+        }
+      });
+    
+      // Handle pressing Enter to confirm renaming
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          input.blur();
+        }
+      });
+    });
 
     // Duplicate
-		duplicateButton.addEventListener('click', async (event) => {
-      console.log('duplicate')
-		})
+    duplicateButton.addEventListener('click', async (event) => {
+      event.stopPropagation(); // Prevent triggering the card's onclick event
+
+      try {
+        if (!project || !project.name) {
+          alert("Invalid project data. Cannot duplicate.");
+          return;
+        }
+
+        if (window.top.DEBUG) console.log(`🛠 [4] Duplicating project "${project.name}"...`);
+
+        // Create a copy of the project with a new ID and updated timestamps
+        const { _id, _rev, ...projectData } = project; // Exclude _id and _rev
+        const newProject = {
+          ...projectData,
+          name: `${project.name} (Copy)`, // Append "Copy" to the name
+          childrenIds: [], // Initialize with an empty array
+          date: {
+            created: new Date(),
+            last: new Date()
+          }
+        };
+
+        // Save the new project to the database
+        const response = await window.top.db.post(newProject);
+
+        if (response.ok) {
+          const newProjectId = response.id; // Get the new project's ID
+          if (window.top.DEBUG) console.log(`✅ [4] Project "${project.name}" duplicated successfully with ID "${newProjectId}".`);
+
+          // Fetch and duplicate children
+          if (project.childrenIds && project.childrenIds.length > 0) {
+            if (window.top.DEBUG) console.log(`🛠 [4] Duplicating children of project "${project.name}"...`);
+
+            const newChildrenIds = [];
+            for (const childId of project.childrenIds) {
+              if (childId) { // Ensure childId is not null or undefined
+                const newChildId = await duplicateChild(childId, newProjectId);
+                if (newChildId) {
+                  newChildrenIds.push(newChildId);
+                }
+              }
+            }
+
+            // Fetch the latest version of the new project to get its _rev
+            const latestNewProject = await window.top.db.get(newProjectId);
+
+            // Update the new project's childrenIds
+            const updatedProject = {
+              ...latestNewProject, // Include the latest _rev
+              childrenIds: newChildrenIds
+            };
+            await window.top.db.put(updatedProject); // Save the updated project
+          }
+
+          alert(`Project "${project.name}" duplicated successfully.`);
+          location.reload(); // Reload the project hub to reflect the new project
+        } else {
+          throw new Error('Failed to duplicate project.');
+        }
+      } catch (error) {
+        if (window.top.DEBUG) console.error("Error duplicating project:", error);
+        alert("Couldn't duplicate project. Please try again.");
+      }
+    });
+
+    async function duplicateChild(childId, newParentId) {
+      try {
+        if (!childId || !newParentId) {
+          if (window.top.DEBUG) console.error("Invalid childId or newParentId. Skipping duplication.");
+          return null;
+        }
+
+        // Fetch the child document
+        const child = await window.top.db.get(childId);
+
+        if (!child || !child.name) {
+          if (window.top.DEBUG) console.error(`Invalid child data for ID "${childId}". Skipping duplication.`);
+          return null;
+        }
+
+        // Create a copy of the child with a new ID and updated parentId
+        const { _id, _rev, ...childData } = child; // Exclude _id and _rev
+        const newChild = {
+          ...childData,
+          parentId: newParentId, // Associate the child with the new parent project
+          date: {
+            created: new Date(),
+            last: new Date()
+          }
+        };
+
+        // Save the new child to the database
+        const response = await window.top.db.post(newChild);
+        if (response.ok) {
+          const newChildId = response.id; // Get the new child's ID
+          if (window.top.DEBUG) console.log(`✅ [4] Child "${child.name}" duplicated successfully with new ID "${newChildId}".`);
+
+          // Fetch the latest version of the new child to get its _rev
+          const latestNewChild = await window.top.db.get(newChildId);
+
+          // Recursively duplicate the child's children if it is a folder
+          if (child.type === 'folder' && Array.isArray(child.childrenIds) && child.childrenIds.length > 0) {
+            const newGrandChildrenIds = [];
+            for (const grandChildId of child.childrenIds) {
+              if (grandChildId) { // Ensure grandChildId is not null or undefined
+                const newGrandChildId = await duplicateChild(grandChildId, newChildId);
+                if (newGrandChildId) {
+                  newGrandChildrenIds.push(newGrandChildId);
+                }
+              }
+            }
+
+            // Update the new child's childrenIds
+            const updatedChild = {
+              ...latestNewChild, // Include the latest _rev
+              childrenIds: newGrandChildrenIds
+            };
+            await window.top.db.put(updatedChild); // Save the updated child
+          }
+
+          return newChildId; // Return the new child's ID
+        } else {
+          throw new Error(`Failed to duplicate child "${child.name}".`);
+        }
+      } catch (error) {
+        if (window.top.DEBUG) console.error(`Error duplicating child with ID "${childId}":`, error);
+        alert(`Couldn't duplicate child with ID "${childId}". Please try again.`);
+        return null;
+      }
+    }
 
     // Delete
     let state = 'closed';
     deleteButton.addEventListener('click', async (event) => {
       if (state === 'closed') {
         deleteButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M119.4 44.1c23.3-3.9 46.8-1.9 68.6 5.3l49.8 77.5-75.4 75.4c-1.5 1.5-2.4 3.6-2.3 5.8s1 4.2 2.6 5.7l112 104c2.9 2.7 7.4 2.9 10.5 .3s3.8-7 1.7-10.4l-60.4-98.1 90.7-75.6c2.6-2.1 3.5-5.7 2.4-8.8L296.8 61.8c28.5-16.7 62.4-23.2 95.7-17.6C461.5 55.6 512 115.2 512 185.1l0 5.8c0 41.5-17.2 81.2-47.6 109.5L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9L47.6 300.4C17.2 272.1 0 232.4 0 190.9l0-5.8c0-69.9 50.5-129.5 119.4-141z"/></svg>';
-        dropButtons([openButton, infoButton, renameButton, duplicateButton], '2.5rem')
+        dropButtons([openButton, infoButton, renameButton, duplicateButton, changeImageButton, renameDescriptionButton], '2.5rem')
         confirmation.style.transform = 'translateY(-2rem)';
         state = 'open';
         deleteButton.classList.add('active');
@@ -152,6 +512,7 @@ async function initProjects() {
               // TODO: Recursively delete all nested files and folders
               if (window.top.DEBUG) console.log(`✅ [2] Project "${project.name}" deleted.`);
               card.remove();
+              location.reload();
             })
           .catch(error => {
             if (window.top.DEBUG) console.log("❌ [2] Couldn't delete project:", error);
@@ -164,7 +525,7 @@ async function initProjects() {
     card.querySelector('.btn-delete-cancel').addEventListener('click', async (event) => {
       deleteButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>'
       dropButtons([])
-      unDropButtons([openButton, infoButton, renameButton, duplicateButton])
+      unDropButtons([openButton, infoButton, renameButton, duplicateButton, changeImageButton, renameDescriptionButton])
       confirmation.style.transform = 'translateY(0rem)';
       state = 'closed';
       deleteButton.classList.remove('active');
@@ -174,12 +535,16 @@ async function initProjects() {
     card.addEventListener('mouseleave', async (event) => {
       deleteButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>'
       dropButtons([])
-      unDropButtons([openButton, infoButton, renameButton, duplicateButton])
+      unDropButtons([openButton, infoButton, renameButton, duplicateButton, changeImageButton, renameDescriptionButton])
       confirmation.style.transform = 'translateY(0rem)';
       state = 'closed';
       deleteButton.classList.remove('active');
     })
   };
+
+  // Add hover event listener to populate the dropdown
+  const dropdownButton = document.querySelector(".dropbtn");
+  dropdownButton.addEventListener("mouseover", () => populateProjectDropdown(projects));
 }
 
 initProjects();

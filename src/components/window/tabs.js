@@ -11,25 +11,10 @@ window.top.pagePaths = {"character" : basePage, "relationship" : basePage, "text
 function runTabs() {
     const tabHeader = document.getElementById("tab-header");
     const pageWindow = document.getElementById("page-window");
-
-    addNewTab(`Tab 1`, startPagePath, tabHeader, pageWindow);
-
-    // initPlusButton(tabHeader, pageWindow);
 }
 
 window.defaultPagePath = defaultPagePath;
 window.addNewTab = addNewTab;
-
-// Plus button should be deprecated at some point now that the new file button in the hierarchy has been implemented.
-// function initPlusButton(tabHeader, pageWindow) {
-//     window.plusButton = document.createElement("button");
-//     plusButton.textContent = "+";
-//     plusButton.addEventListener("click", () => {
-//         addNewTab(`Tab ${tabs.length+1}`, defaultPagePath, tabHeader, pageWindow);
-//     });
-
-//     tabHeader.appendChild(plusButton);
-// }
 
 function createTab(index, tabHeader, pageWindow) {
     const currTab = window.top.tabs[index];
@@ -61,12 +46,8 @@ function createTab(index, tabHeader, pageWindow) {
     // Page associated with tab
     const iframe = document.createElement("iframe");
     iframe.id = "textEditorIframe";
-    // iframe.classList.add("import");
     iframe.src = currTab.path
     iframe.style.display = "none";
-    // iframe.style.width = "100%";
-    // iframe.style.height = "100%";
-    // iframe.style.border = "none";
 
     currTab.containerElem = tabContainer;
     currTab.closeElem = closeButton;

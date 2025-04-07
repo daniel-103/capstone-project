@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="modal.css">
         <link rel="stylesheet" href="../node_modules/intro.js/minified/introjs.min.css">
+        <link rel="stylesheet" href="./components/tutorials/tooltip.css">
     </head>
     <body>
         <div id="main">
@@ -21,7 +22,7 @@
                 </div>
                 <div id="header-options">
                     <div class="header-option">
-                        <button>File</button>
+                        <button id="file">File</button>
                         <div class="header-dropdown-wrapper">
                             <div class="header-dropdown">
                                 <button id="file-save-btn">Save</button>
@@ -39,11 +40,13 @@
                                 <button id="file-open-btn">Open</button>
                                 <div class="divider"></div>
                                 <button id="file-settings-btn">Settings</button>
+                                <div class="divider"></div>
+                                <button id="file-project-types-btn">Project Types</button>
                             </div>
                         </div>
                     </div>    
                     <div class="header-option">
-                        <button>Edit</button>
+                        <button id="edit">Edit</button>
                         <div class="header-dropdown-wrapper">
                             <div class="header-dropdown">
                                 <button id="edit-undo-btn">Undo&nbsp;&nbsp;&nbsp;&nbsp;    (Ctrl + Z)</button>
@@ -59,7 +62,7 @@
                         </div>
                     </div>
                     <div class="header-option">
-                        <button>View</button>
+                        <button id="view">View</button>
                         <div class="header-dropdown-wrapper">
                             <div class="header-dropdown">
                                 <button id="view-zoom-in-btn">Zoom In&nbsp;&nbsp;&nbsp;&nbsp; (Ctrl + Shift+&nbsp;&nbsp;+)</button>
@@ -69,7 +72,7 @@
                         </div>
                     </div>
                     <div class="header-option">
-                        <button>Insert</button>
+                        <button id="insert">Insert</button>
                         <div class="header-dropdown-wrapper">
                             <div class="header-dropdown">
                                 <button id="insert-image-btn">Image</button>
@@ -78,7 +81,7 @@
                         </div>
                     </div>
                     <div class="header-option">
-                        <button>Format</button>
+                        <button id="format">Format</button>
                         <div class="header-dropdown-wrapper">
                             <div class="header-dropdown">
                                 <button id="insert-header-btn">Insert Header</button>
@@ -89,7 +92,7 @@
                         </div>
                     </div>
                     <div class="header-option">
-                        <button>Tools</button>
+                        <button id="tools">Tools</button>
                         <div class="header-dropdown-wrapper">
                             <div class="header-dropdown">
                                 <button id="tools-spelling-btn">Spelling & Grammar</button>
@@ -163,5 +166,6 @@
     <script type="module" src="./components/text_editor/export.js"></script>
     <script src="redirect.js"></script>
     <script src="../node_modules/intro.js/minified/intro.min.js"></script>
+    <script type="module" src="../src/components/tutorials/headerButtonsTutorial.js"></script>
     <script src="couchCheck.js"></script>
 </html>

@@ -17,17 +17,20 @@ document.getElementById('new-file-btn').addEventListener('click',(event) => {
 
 const slideOut = document.getElementById('new-file-slide-out');
 window.top.db.get(projectId).then((project) => {
-    addNewFileOptions(JSON.parse(project.fileOptions), slideOut);
+    addNewFileOptions(JSON.parse(project.fileOptions));
 });
 
+window.top.addEventListener('updateFileOptions', (event) => {
+    addNewFileOptions(JSON.parse(event.detail.data));
+});
 
 document.addEventListener('mouseleave', (event) => {
     slideOut.classList.remove('open');
-})
+});
 
 slideOut.addEventListener('mouseleave', (event) => {
     slideOut.classList.remove('open');
-})
+});
 
 // New folder
 document.getElementById('new-folder-btn').addEventListener('click', (event) => {
