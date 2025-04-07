@@ -100,7 +100,7 @@ settingsButton.addEventListener("click", () => {
 const projectTypesButton = document.getElementById("file-project-types-btn");
 projectTypesButton.addEventListener("click", () => {
 	if (mainWindow.src.includes('template.html')) {
-		window.top.error('[ERROR] Can only view type settings for an open project.', 8);
+		window.top.notify('error', 'Can only view type settings for an open project.', 8);
 		return;
 	}
 	openOverlay("components/header-menus/pageTypes/pageTypes.html")
