@@ -158,6 +158,20 @@ async function initProjects() {
 			event.stopPropagation();
 		})
 
+    // Helper function to show notifications
+    function showNotification(message, type = 'error') {
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.textContent = message;
+
+      document.body.appendChild(notification);
+
+      // Automatically remove the notification after 3 seconds
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+
     // Open
     openButton.addEventListener('click', async (event) => {
       event.stopPropagation(); // Prevent triggering the card's onclick event
@@ -170,7 +184,7 @@ async function initProjects() {
         if (window.top.DEBUG) console.log(`✅ [5] Project "${project.name}" opened.`);
       } catch (error) {
         if (window.top.DEBUG) console.error("Error opening project:", error);
-        alert("Couldn't open the project. Please try again.");
+        showNotification("Couldn't open the project. Please try again.");
       }
     });
 
@@ -180,16 +194,33 @@ async function initProjects() {
 
       try {
         if (window.top.DEBUG) console.log(`🛠 [6] Displaying info for project "${project.name}"...`);
-        alert(`
-          Project Name: ${project.name}
-          Description: ${project.description}
-          Created: ${new Date(project.date.created).toLocaleString()}
-          Last Updated: ${new Date(project.date.last).toLocaleString()}
-        `);
+
+        // Create a modal for displaying project info
+        const modal = document.createElement('div');
+        modal.className = 'info-modal';
+        modal.innerHTML = `
+          <div class="info-modal-content">
+            <h3>Project Info</h3>
+            <p><strong>Project Name:</strong> ${project.name}</p>
+            <p><strong>Description:</strong> ${project.description}</p>
+            <p><strong>Created:</strong> ${new Date(project.date.created).toLocaleString()}</p>
+            <p><strong>Last Updated:</strong> ${new Date(project.date.last).toLocaleString()}</p>
+            <button class="info-close">Close</button>
+          </div>
+        `;
+        document.body.appendChild(modal);
+
+        const closeButton = modal.querySelector('.info-close');
+
+        // Close button logic
+        closeButton.addEventListener('click', () => {
+          document.body.removeChild(modal);
+        });
+
         if (window.top.DEBUG) console.log(`✅ [6] Info displayed for project "${project.name}".`);
       } catch (error) {
         if (window.top.DEBUG) console.error("Error displaying project info:", error);
-        alert("Couldn't display project info. Please try again.");
+        showNotification("Couldn't display project info. Please try again.");
       }
     });
 
@@ -233,7 +264,7 @@ async function initProjects() {
 
         // Validate the input
         if (!newName) {
-          alert('Project name cannot be empty.');
+          showNotification('Project name cannot be empty.');
           return;
         }
 
@@ -249,10 +280,10 @@ async function initProjects() {
 
           // Update the UI
           titleElement.textContent = newName;
-          alert(`Project renamed to "${newName}".`);
+          showNotification(`Project renamed to "${newName}"`, 'success');
         } catch (error) {
           console.error("Couldn't rename project:", error);
-          alert("Couldn't rename project. Please try again.");
+          showNotification("Couldn't rename project. Please try again.");
         } finally {
           document.body.removeChild(modal);
         }
@@ -291,18 +322,18 @@ async function initProjects() {
             window.top.db.put(updatedProject);
 
             if (window.top.DEBUG) console.log(`✅ [7] Image changed for project "${project.name}".`);
-            alert(`Image updated successfully for project "${project.name}".`);
+            showNotification(`Image updated successfully for project "${project.name}".`, 'success');
           };
 
           reader.onerror = () => {
             if (window.top.DEBUG) console.error("Error reading the image file.");
-            alert("Couldn't read the selected image. Please try again.");
+            showNotification("Couldn't read the selected image. Please try again.");
           };
 
           reader.readAsDataURL(file); // Read the file as a data URL
         } catch (error) {
           if (window.top.DEBUG) console.error("Error changing project image:", error);
-          alert("Couldn't change the project image. Please try again.");
+          showNotification("Couldn't change the project image. Please try again.");
         }
       });
     });
@@ -347,7 +378,7 @@ async function initProjects() {
 
         // Validate the input
         if (!newDescription) {
-          alert('Project description cannot be empty.');
+          showNotification('Project description cannot be empty.');
           return;
         }
 
@@ -363,10 +394,10 @@ async function initProjects() {
 
           // Update the UI
           descriptionElement.textContent = newDescription;
-          alert(`Project description updated to "${newDescription}".`);
+          showNotification(`Project description updated to "${newDescription}"`, 'success');
         } catch (error) {
           console.error("Couldn't update project description:", error);
-          alert("Couldn't update the project description. Please try again.");
+          showNotification("Couldn't update the project description. Please try again.");
         } finally {
           document.body.removeChild(modal);
         }
@@ -379,7 +410,7 @@ async function initProjects() {
 
       try {
         if (!project || !project.name) {
-          alert("Invalid project data. Cannot duplicate.");
+          showNotification("Invalid project data. Cannot duplicate.");
           return;
         }
 
@@ -429,14 +460,14 @@ async function initProjects() {
             await window.top.db.put(updatedProject); // Save the updated project
           }
 
-          alert(`Project "${project.name}" duplicated successfully.`);
           location.reload(); // Reload the project hub to reflect the new project
+          showNotification(`Project "${project.name}" duplicated successfully.`, 'success');
         } else {
           throw new Error('Failed to duplicate project.');
         }
       } catch (error) {
         if (window.top.DEBUG) console.error("Error duplicating project:", error);
-        alert("Couldn't duplicate project. Please try again.");
+        showNotification("Couldn't duplicate project. Please try again.");
       }
     });
 
@@ -501,7 +532,6 @@ async function initProjects() {
         }
       } catch (error) {
         if (window.top.DEBUG) console.error(`Error duplicating child with ID "${childId}":`, error);
-        alert(`Couldn't duplicate child with ID "${childId}". Please try again.`);
         return null;
       }
     }
@@ -522,7 +552,7 @@ async function initProjects() {
               // TODO: Recursively delete all nested files and folders
               if (window.top.DEBUG) console.log(`✅ [2] Project "${project.name}" deleted.`);
               card.remove();
-              location.reload();
+//              location.reload();
             })
           .catch(error => {
             if (window.top.DEBUG) console.log("❌ [2] Couldn't delete project:", error);
