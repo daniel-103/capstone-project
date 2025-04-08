@@ -4,8 +4,9 @@ const nodeGraphData = {
     type: 'file',
     fileType: 'nodeGraph',
     modules: [
-        { type: "nodeGraph", nodes: [],value: ['Relationship Map'],position: {x: '100', y: '0' }, scripts: ['../scripts/nodes.js'] },
-        //{ type: "nodes", }
+        { type: "nodeGraph",value: ['Relationship Map'],position: {x: '500', y: '0' }, scripts: ['../scripts/nodeGraphScript.js'] },
+
+        
     ],
     changes: ['Beginning'],
     changeIndex: 0

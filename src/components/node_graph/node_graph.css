@@ -10,7 +10,12 @@ html, body {
     background-clip: padding-box;
     overflow: hidden;
 }
-
+#lineCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
 /* .module {
     position: absolute,
 
