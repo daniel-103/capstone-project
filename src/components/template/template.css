@@ -203,3 +203,59 @@ svg {
   font-size: 1rem;
   font-weight: bold;
 }
+
+.rename-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.rename-modal-content {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+}
+
+.rename-modal-content h3 {
+  margin-bottom: 1rem;
+}
+
+.rename-input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.rename-modal-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rename-modal-actions button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.rename-modal-actions .rename-cancel {
+  background: #f44336;
+  color: #fff;
+}
+
+.rename-modal-actions .rename-confirm {
+  background: #4caf50;
+  color: #fff;
+}

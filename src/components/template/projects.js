@@ -196,57 +196,65 @@ async function initProjects() {
     // Rename
     renameButton.addEventListener('click', async (event) => {
       event.stopPropagation(); // Prevent triggering the card's onclick event
-    
-      // Create an input field for renaming
+
       const titleElement = card.querySelector('.template-title');
       const currentName = titleElement.textContent;
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.value = currentName;
-      input.className = 'rename-input';
-      titleElement.replaceWith(input);
-      input.focus();
-      card.onclick = null; // Disable the card's onclick event
 
-      // Handle renaming logic
-      input.addEventListener('blur', async () => {
+      // Create a modal for renaming
+      const modal = document.createElement('div');
+      modal.className = 'rename-modal';
+      modal.innerHTML = `
+        <div class="rename-modal-content">
+          <h3>Rename Project</h3>
+          <input type="text" class="rename-input" value="${currentName}" />
+          <div class="rename-modal-actions">
+            <button class="rename-cancel">Cancel</button>
+            <button class="rename-confirm">Rename</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      const input = modal.querySelector('.rename-input');
+      const cancelButton = modal.querySelector('.rename-cancel');
+      const confirmButton = modal.querySelector('.rename-confirm');
+
+      // Focus on the input field
+      input.focus();
+
+      // Cancel button logic
+      cancelButton.addEventListener('click', () => {
+        document.body.removeChild(modal);
+      });
+
+      // Confirm button logic
+      confirmButton.addEventListener('click', async () => {
         const newName = input.value.trim();
-    
+
         // Validate the input
         if (!newName) {
           alert('Project name cannot be empty.');
-          input.replaceWith(titleElement);
           return;
         }
-    
+
         if (newName === currentName) {
-          input.replaceWith(titleElement);
+          document.body.removeChild(modal);
           return;
         }
-    
+
         try {
           // Update the project in the database
-          if (window.top.DEBUG) console.log(`🛠 [3] Renaming project "${currentName}" to "${newName}"...`);
           const updatedProject = { ...project, name: newName };
           await window.top.db.put(updatedProject);
-    
+
           // Update the UI
           titleElement.textContent = newName;
-          input.replaceWith(titleElement);
-    
-          if (window.top.DEBUG) console.log(`✅ [3] Project renamed to "${newName}".`);
           alert(`Project renamed to "${newName}".`);
         } catch (error) {
-          if (window.top.DEBUG) console.log("❌ [3] Couldn't rename project:", error);
+          console.error("Couldn't rename project:", error);
           alert("Couldn't rename project. Please try again.");
-          input.replaceWith(titleElement);
-        }
-      });
-    
-      // Handle pressing Enter to confirm renaming
-      input.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-          input.blur();
+        } finally {
+          document.body.removeChild(modal);
         }
       });
     });
@@ -299,68 +307,68 @@ async function initProjects() {
       });
     });
 
-    // Rename Project Description
+    // Rename Description
     renameDescriptionButton.addEventListener('click', async (event) => {
       event.stopPropagation(); // Prevent triggering the card's onclick event
-    
-      // Create an input field for renaming the description
-      const descriptionElement = card.querySelector('.template-description');
-      const toolbar = card.querySelector('.toolbar'); // Reference the toolbar
-      const currentDescription = descriptionElement.textContent;
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.value = currentDescription;
-      input.className = 'rename-input';
-      descriptionElement.replaceWith(input);
-      input.focus();
-      card.onclick = null; // Disable the card's onclick event
 
-      // Temporarily hide the toolbar
-      toolbar.style.visibility = 'hidden';
-    
-      // Handle renaming logic
-      input.addEventListener('blur', async () => {
+      const descriptionElement = card.querySelector('.template-description');
+      const currentDescription = descriptionElement.textContent;
+
+      // Create a modal for renaming the description
+      const modal = document.createElement('div');
+      modal.className = 'rename-modal';
+      modal.innerHTML = `
+        <div class="rename-modal-content">
+          <h3>Rename Description</h3>
+          <textarea class="rename-input" rows="4">${currentDescription}</textarea>
+          <div class="rename-modal-actions">
+            <button class="rename-cancel">Cancel</button>
+            <button class="rename-confirm">Rename</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      const input = modal.querySelector('.rename-input');
+      const cancelButton = modal.querySelector('.rename-cancel');
+      const confirmButton = modal.querySelector('.rename-confirm');
+
+      // Focus on the input field
+      input.focus();
+
+      // Cancel button logic
+      cancelButton.addEventListener('click', () => {
+        document.body.removeChild(modal);
+      });
+
+      // Confirm button logic
+      confirmButton.addEventListener('click', async () => {
         const newDescription = input.value.trim();
-    
+
         // Validate the input
         if (!newDescription) {
           alert('Project description cannot be empty.');
-          input.replaceWith(descriptionElement);
-          toolbar.style.visibility = 'visible'; // Restore the toolbar
           return;
         }
-    
+
         if (newDescription === currentDescription) {
-          input.replaceWith(descriptionElement);
-          toolbar.style.visibility = 'visible'; // Restore the toolbar
+          document.body.removeChild(modal);
           return;
         }
-    
+
         try {
           // Update the project in the database
-          if (window.top.DEBUG) console.log(`🛠 [9] Renaming project description from "${currentDescription}" to "${newDescription}"...`);
           const updatedProject = { ...project, description: newDescription };
           await window.top.db.put(updatedProject);
-    
+
           // Update the UI
           descriptionElement.textContent = newDescription;
-          input.replaceWith(descriptionElement);
-    
-          if (window.top.DEBUG) console.log(`✅ [9] Project description renamed to "${newDescription}".`);
           alert(`Project description updated to "${newDescription}".`);
         } catch (error) {
-          if (window.top.DEBUG) console.error("Error renaming project description:", error);
+          console.error("Couldn't update project description:", error);
           alert("Couldn't update the project description. Please try again.");
-          input.replaceWith(descriptionElement);
         } finally {
-          toolbar.style.visibility = 'visible'; // Restore the toolbar
-        }
-      });
-    
-      // Handle pressing Enter to confirm renaming
-      input.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-          input.blur();
+          document.body.removeChild(modal);
         }
       });
     });
