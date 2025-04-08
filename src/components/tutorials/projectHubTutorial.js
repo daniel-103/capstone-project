@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const tourButton = document.getElementById('project-hub-tour-btn');
+    const tourButton = window.top.document.getElementById('help-tutorial-btn');
 
     // Attach the event listener to the button
     tourButton.addEventListener('click', function () {

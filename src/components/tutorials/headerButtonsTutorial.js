@@ -198,6 +198,22 @@ window.addEventListener('message', (event) => {
                         position: 'bottom'
                     }
                 ]
+            },
+            {
+                menuButton: document.getElementById('help'), // Help menu button
+                menuContent: document.getElementById('help').parentElement.querySelector(".header-dropdown-wrapper"), // Help dropdown content
+                steps: [
+                    {
+                        element: '#help',
+                        intro: "This is the Help menu. Click here to access tutorials and guidance for using the application.",
+                        position: 'bottom'
+                    },
+                    {
+                        element: '#help-tutorial-btn',
+                        intro: "Click here to start the tutorial and learn how to use the application.",
+                        position: 'bottom'
+                    }
+                ]
             }
         ];
 
