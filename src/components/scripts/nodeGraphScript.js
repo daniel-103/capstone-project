@@ -12,20 +12,37 @@
     const parentChildren = parentData.childrenIds
     console.log(parentChildren);
     let characters = [];
-    let relations = [['Name','Name'],['Tim','Tom'],['Tim','Tam']];
+    //let relations = [['Name','Name'],['Tim','Tom'],['Tim','Tam']];
+    let relations = [];
+    
     for (let i = 0;i < parentChildren.length;i++) {
         let curr = await window.top.db.get(parentChildren[i]);
         if (curr.fileType == "character") {
+            let charName = curr.modules[0].value[0];
             //console.log(curr.module[0]);
-            characters.push(curr.modules[0].value[0])
-            console.log(curr.modules[0].value[0]);
+            characters.push(charName);
+            //console.log(charName);
+            //console.log(curr.modules);
+            relations.push([charName,charName]);
+            if (curr.modules[5].value[0] != "") {
+              let charRel = curr.modules[5].value;
+              //console.log(charRel);
+              charRel.forEach(async relId => {
+                let relData = await window.top.db.get(relId[0]);
+                //console.log(relData);
+                let rels = relData.modules[1].value[0];
+                //console.log(rels);
+                let a = await window.top.db.get(rels[0]);
+                let b = await window.top.db.get(rels[1]);
+                
+                relations.push([a.modules[0].value[0],b.modules[0].value[0]]);
+              });
+            }
         }
     };
+    console.log(relations);
     characters.forEach((name, index) => {
-        // const newModule = { type: "node", value: ['${name}'], position: {x:'500px',y:'0px'}, scripts:['../scripts/nodesScript.js']};
-        // characterData.modules.push(newModule);
-        // window.top.db.put(characterData);
-        //console.log(characterData.modules);
+       
         const nodeGraphModule = document.createElement("div");
         nodeGraphModule.classList.add("module","text-module");
         // Get container dimensions
@@ -207,7 +224,7 @@
 
         });
       }
-      focusOnNode('Tim');
+      focusOnNode(characters[0]);
     
     
 
