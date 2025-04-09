@@ -3,7 +3,7 @@
     const entityData = JSON.parse(document.currentScript.getAttribute("data-characterData"));
     const container = document.querySelector(containerSelector);
     const modData = JSON.parse(document.currentScript.getAttribute("data-modData"));
-
+    console.log(entityData);
     // Create the outer module element.
     const moduleElem = document.createElement("div");
     moduleElem.classList.add("module", "text-module");
@@ -217,8 +217,9 @@
         
 
         window.top.db.find({
-          selector: { type: "file", fileType: "character" },
+          selector: { parentId: entityData.parentId, type: "file", fileType: "character" },
         }).then(result => {
+          
           const candidates = result;
           // Updates the suggestions based on the current input value.
           const updateSuggestions = () => {
@@ -304,6 +305,7 @@
       
           // Initialize suggestions.
           updateSuggestions();
+        
         }).catch(err => {
           console.error("Error fetching characters:", err);
         });
