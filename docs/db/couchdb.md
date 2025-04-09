@@ -28,7 +28,9 @@ Once CouchDB is running, you can access it by going to http://127.0.0.1:5984. If
 }
 ```
 
-You can access an interactive gui in your web browser by going to http://127.0.0.1:5984/_utils. From there, login with the admin credentials you submitted upon instalation, then navigate to the 'Databases' tab. In the top right, 'Create Database', give it a suitable name, leave it as 'Non-partitioned', and create the new database.
+
+> **No longer needed. The application creates the db for you now.** \
+ You can access an interactive gui in your web browser by going to http://127.0.0.1:5984/_utils. From there, login with the admin credentials you submitted upon instalation, then navigate to the 'Databases' tab. In the top right, 'Create Database', give it a suitable name, leave it as 'Non-partitioned', and create the new database.
 
 This is the bare minimum needed to sync with a local installation of CouchDB. To connect to a local installation of CouchDB with Skriptor, in Skriptor, go to settings and enter the information in the fields. It will construct a full URL from the pieces of information given. Similarly, it will parse a given full URL into its components. Either input method works, but be sure that the full URL is correct (as outlined in green) since it is the URL that is actually used. 
 
@@ -41,3 +43,24 @@ http://`username`:`password`@`hostname`:`port`/`dbname`
 - `dbname`: The name that was given to the created database within CouchDB.
 
 Like any service, CouchDB can be exposed to the internet and accessed from anywhere by forwarding its port in your router. Because there are many different types of routers and each has their own way of doing this, how to port forward will not be discused in further detail here. However, resources to do this are readily accesible on the internet.
+
+## CouchDB Actions
+- **Merge local and remote** \
+    Combines both databases, keeping only the most recent versions of all documents.
+- **Merge to local** \
+    Updates the local database with any newer versions from the remote database. The remote database is unchanged.
+- **Merge to remote** \
+    Updates the remote database with any newer versions from the local database. The local database is unchanged.
+- **Overwrite local with remote** \
+    Clears the local database then replicates the remote database to the local database.
+- **Overwrite remote with local** \
+    Clears the remote database then replicates the local database to the remote database.
+- **Clear local data** \
+    Clears the data from the local database.
+- **Clear remote data** \
+    Clears the data from the remote database.
+- **Delete remote database** \
+    Deletes the remote database.
+
+## Sync
+When a local and remote database are synced, they act as a single database, meaning they share the most recent version of all documents. This function acts as a constant "Merge local and remote" action every time an update is made to the document.
