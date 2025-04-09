@@ -18,6 +18,8 @@ For a more in-depth explanation of how snapping is done. For each selected modul
 Clicking on the edge of a module and dragging allows for the resizing of a module.
 
 ## Adding/Deleting
+The modules of a page are dynamic, and the number of modules on a page can be adjusted by the user.
+
 You can add text modules by right clicking, going to the add module option and selecting the text module. Doing so will add another module to the page, the same type as most modules (a module with a text editor inside it). 
 
 You can delete a module by pressing on it's border, then pressing backspace. This cannot be undone.
