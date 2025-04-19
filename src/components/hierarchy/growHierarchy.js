@@ -67,7 +67,7 @@ async function growHierarchy(parentFolder) {
             const file = document.createElement("li");
             file.classList.add("file");
             file.id = child._id;
-            file.innerHTML = `<div class="file-name">${childName}</div>`;
+            file.innerHTML = `${childName}`;
             file.addEventListener('click', () => {
                 if (!child.fileType) {
                     return;

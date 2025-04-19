@@ -179,8 +179,8 @@ ul.root {
     z-index: 9;
 }
 
-li > .folder-name::after,
-li > .file-name::after {
+li.file::after,
+li.folder::after {
     --line-thickness: 4;
 
     position: absolute;

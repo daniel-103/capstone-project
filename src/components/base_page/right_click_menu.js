@@ -3,7 +3,7 @@ const default_module = { type: "New Module",    value: ["{\"ops\":[{\"insert\":\
 // Create menu items with click IDs
 const formattedModuleTypes = Object.keys(moduleTypes).map(moduleType => ({
   label: moduleType,
-  clickId: moduleType
+  clickId: JSON.stringify({ action: moduleType })
 }));
 
 
@@ -18,7 +18,7 @@ window.addEventListener('contextmenu', (e) => {
     },
     {
       label: 'Save Page as Type',
-      clickId: "Add File Type"
+      clickId: JSON.stringify({ action: "Add File Type" })
     }
   ]));
 });
@@ -29,6 +29,12 @@ window.top.rightClickMenu.onMenuAction(async (actionId) => {
 });
 
 async function handleClick(actionId) {
+    try {
+      const info = JSON.parse(actionId);
+      actionId = info.action;
+    } catch (e) {
+      console.log(e);
+    }
     const urlParams = new URLSearchParams(window.location.search);
     const entityId = urlParams.get("id");
     let entityData = null;
@@ -49,7 +55,7 @@ async function handleClick(actionId) {
       addModuleEvent = new CustomEvent('add-module-event', {
           detail: { modulePath: moduleTypes[actionId] }
       });
-    } else {
+    } else if (actionId === "Add File Type") {
       addModuleEvent = new CustomEvent('add-type-event');
     }
 
