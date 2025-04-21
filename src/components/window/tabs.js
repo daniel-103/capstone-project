@@ -10,12 +10,14 @@ window.top.pagePaths = {"character" : basePage, "relationship" : basePage, "text
 
 function runTabs() {
     const tabHeader = document.getElementById("tab-header");
+    console.log(tabHeader);
     const pageWindow = document.getElementById("page-window");
 }
 
 window.defaultPagePath = defaultPagePath;
 window.addNewTab = addNewTab;
 window.top.removeTab = removeTab;
+window.top.updateTabName = updateTabName;
 
 function createTab(index, tabHeader, pageWindow) {
     const currTab = window.top.tabs[index];
@@ -148,6 +150,15 @@ function removeTab(index) {
         switchTab(window.top.currTabIndex);
     }
     
+}
+
+function updateTabName(id, newName) {
+    const index = window.top.tabs.findIndex((tab) => tab.id === id);
+
+    if (index != -1) {
+        window.top.tabs[index].title = newName;
+        window.top.tabs[index].containerElem.querySelector('button:first-child').textContent = newName;
+    }
 }
 
 document.addEventListener("DOMContentLoaded", runTabs);
