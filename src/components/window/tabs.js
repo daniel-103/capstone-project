@@ -1,6 +1,6 @@
 window.top.tabs = window.top.tabs || [];
 
-window.currTabIndex = 0
+window.top.currTabIndex = 0
 
 const defaultPagePath = "../default_page/default_page.html";
 const startPagePath = "../text_editor/text_editor.html";
@@ -15,6 +15,7 @@ function runTabs() {
 
 window.defaultPagePath = defaultPagePath;
 window.addNewTab = addNewTab;
+window.top.removeTab = removeTab;
 
 function createTab(index, tabHeader, pageWindow) {
     const currTab = window.top.tabs[index];
@@ -69,13 +70,18 @@ function createTab(index, tabHeader, pageWindow) {
 }
 
 function switchTab(index) {
-window.top.tabs[currTabIndex].iframeElem.style.display = "none";
-    window.top.tabs[currTabIndex].containerElem.classList.remove("active");
+    console.log(window.top.tabs, window.top.currTabIndex);
+    for (let i=0; i<window.top.tabs.length;i++) {
+        if (i==index) continue;
+        window.top.tabs[i].iframeElem.style.display = "none";
+        window.top.tabs[i].containerElem.classList.remove("active");
+    }
+    
 
     window.top.tabs[index].iframeElem.style.display = "block";
     window.top.tabs[index].containerElem.classList.add("active");
 
-    currTabIndex = index;
+    window.top.currTabIndex = index;
 }
 
 window.top.switchTabById = async (id) => {
@@ -134,12 +140,12 @@ function removeTab(index) {
     tabInfo.iframeElem.remove();
 
     window.top.tabs.splice(index, 1);
-
-    if (index <= currTabIndex) {
-        currTabIndex = Math.max(0, currTabIndex-1);
-    }
-    if (window.top.tabs.length > 0) {
-        switchTab(currTabIndex);
+    console.log("yabs: ", window.top.tabs, "index+tbin:0 ", index, window.top.currTabIndex);
+    if (index < window.top.currTabIndex) {
+        window.top.currTabIndex = Math.max(0, window.top.currTabIndex-1);
+    } else if (index == window.top.currTabIndex && window.top.tabs.length > 0) {
+        window.top.currTabIndex = Math.max(0, window.top.currTabIndex-1)
+        switchTab(window.top.currTabIndex);
     }
     
 }

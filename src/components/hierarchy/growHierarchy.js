@@ -18,6 +18,10 @@ async function growHierarchy(parentFolder) {
             return window.top.db.get(childId)
                 .then(child => {
                     if (window.top.DEBUG) console.log(`✅ [2.2] Fetched "${child.name?child.name:child.modules[0].value[0]}": `, child);
+                    if (child.error) {
+                        if (window.top.DEBUG) console.error(`❗ [2.2] Failed to fetch child with id "${childId}". Skipping...`, error);
+                        return null; // Prevent breaking the Promise.all chain
+                    }
                     return child;
                 })
                 .catch(error => {
@@ -29,15 +33,19 @@ async function growHierarchy(parentFolder) {
 
     // Filter out failed fetches (null values)
     const realChildren = children.filter(child => child !== null);
-
     // Sort: Folders first, then files; both alphabetically
     realChildren.sort((a, b) => {
-        const aName = a.name?a.name:a.modules[0].value[0];
-        const bName = b.name?b.name:b.modules[0].value[0];
-        if (a.type === b.type) {
-            return aName.localeCompare(bName); // Sort alphabetically
+        try {
+            const aName = a.name?a.name:a.modules[0].value[0];
+            const bName = b.name?b.name:b.modules[0].value[0];
+            if (a.type === b.type) {
+                return aName.localeCompare(bName); // Sort alphabetically
+            }
+            return a.type === "folder" ? -1 : 1; // Folders first
+        } catch(e) {
+            console.log(e);
         }
-        return a.type === "folder" ? -1 : 1; // Folders first
+        
     });
 
     for (const child of realChildren) {
@@ -61,12 +69,13 @@ async function growHierarchy(parentFolder) {
 
             if (child.childrenIds && child.childrenIds.length > 0) {
                 if (window.top.DEBUG) console.log(`🛠 [2.3] -> [2.1] Constructing hierarchy for ${childName}'s children...`);
-                await growHierarchy(child.childrenIds);
+                await growHierarchy(child);
             }
         } else if (child.type === 'file') {
             const file = document.createElement("li");
             file.classList.add("file");
             file.id = child._id;
+            file.parentId = parentFolder._id;
             file.innerHTML = `${childName}`;
             file.addEventListener('click', () => {
                 if (!child.fileType) {

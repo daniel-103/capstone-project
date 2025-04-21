@@ -211,7 +211,7 @@ async function get(id) {
         return await pouchDB.get(id);
     } catch (error) {
         console.log(error);
-        return { error: true, message: 'Could not read from database' };
+        return { error: true, message: 'Could not read from database', err: error };
     }
 }
 
@@ -221,7 +221,7 @@ async function getAll() {
         return result.rows.map(row => row.doc);
     } catch (error) {
         console.log(error);
-        return { error: true, message: 'Could not read from database' };
+        return { error: true, message: 'Could not read from database', err: error  };
     }
 }
 
