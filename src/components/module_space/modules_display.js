@@ -1,5 +1,3 @@
-export let currentZ = 1;
-
 export function displayModules(characterData, containerSelector) {
   const container = document.querySelector(containerSelector);
   container.innerHTML = "";
@@ -18,9 +16,4 @@ export function displayModules(characterData, containerSelector) {
       });
   });
   
-}
-
-export function bringToFront(moduleElem) {
-  currentZ++;
-  moduleElem.style.zIndex = currentZ;
 }

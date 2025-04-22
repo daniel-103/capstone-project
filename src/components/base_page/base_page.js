@@ -1,5 +1,4 @@
-import { displayModules, bringToFront, currentZ } from "../module_space/modules_display.js";
-import { displayChangesPanel, deleteChange, addNewChange } from "../module_space/module_changes.js";
+import { displayModules } from "../module_space/modules_display.js";
 import { setupSaveHandler } from "../module_space/page_save.js";
 import { moduleAdd } from "../module_space/module_add.js"
 import { moduleDelete } from "../module_space/module_delete.js";
@@ -27,7 +26,6 @@ async function init() {
     displayModules(entityData, "#page-container");
     addSelect();
     moduleDelete(entityData);
-    displayChangesPanel(entityData);
     setupSaveHandler(entityData, window.top.db);
   } catch (err) {
     console.error("Failed to fetch document:", err);

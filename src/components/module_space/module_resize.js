@@ -4,16 +4,19 @@ var resizingModuleData = null;
 function initModuleResize(moduleElem) {
   moduleElem.addEventListener("mousedown", function(e) {
     var rect = moduleElem.getBoundingClientRect();
+    console.log(rect, e);
     var threshold = 8; // pixels
     var onLeft   = (e.clientX - rect.left) < threshold;
     var onRight  = (rect.right - e.clientX) < threshold;
     var onTop    = (e.clientY - rect.top) < threshold;
     var onBottom = (rect.bottom - e.clientY) < threshold;
     
+    
+
     // If the click is near any border, start resizing.
     if (onLeft || onRight || onTop || onBottom) {
       e.stopPropagation();
-      startResizing(moduleElem, e, { onLeft, onRight, onTop, onBottom });
+      startResizing(moduleElem, rect, e, { onLeft, onRight, onTop, onBottom });
     }
   });
 
@@ -41,8 +44,7 @@ function initModuleResize(moduleElem) {
 }
 
 
-function startResizing(moduleElem, e, flags) {
-  var rect = moduleElem.getBoundingClientRect();
+function startResizing(moduleElem, rect, e, flags) {
   resizingModuleData = {
     module: moduleElem,
     startX: e.clientX,
@@ -53,6 +55,10 @@ function startResizing(moduleElem, e, flags) {
     startTop: rect.top,
     flags: flags,
   };
+
+  // account for some wierd bug that adjusts the width and height by 36 pixels
+  resizingModuleData.startWidth -= 36;
+  resizingModuleData.startHeight -= 36;
 }
 
 
@@ -63,27 +69,28 @@ function onModuleResizeMouseMove(e) {
   var newHeight = data.startHeight;
   var newLeft = data.startLeft;
   var newTop = data.startTop;
-  
+
   // Adjust horizontally.
   if (data.flags.onLeft) {
     newLeft = e.clientX;
     newWidth = (data.startLeft + data.startWidth) - newLeft;
   } else if (data.flags.onRight) {
-    newWidth = e.clientX - data.startLeft;
+    newWidth = e.clientX - data.startLeft - 32;
+
   }
-  
+
   // Adjust vertically.
   if (data.flags.onTop) {
     newTop = e.clientY ;
     newHeight = (data.startTop + data.startHeight) - newTop;
   } else if (data.flags.onBottom) {
-    newHeight = e.clientY  - data.startTop;
+    newHeight = e.clientY  - data.startTop - 32;
   }
   
   // Enforce minimum dimensions.
   newWidth = Math.max(newWidth, 30);
   newHeight = Math.max(newHeight, 30);
-  
+
   // Convert absolute position into coordinates relative to the container.
   var container = document.getElementById("page-container");
   var containerRect = container.getBoundingClientRect();
@@ -91,10 +98,15 @@ function onModuleResizeMouseMove(e) {
   var relativeTop = newTop - containerRect.top;
   
   // Apply new dimensions and position.
-  data.module.style.width = newWidth + "px";
-  data.module.style.height = newHeight + "px";
-  data.module.style.left = relativeLeft + "px";
-  data.module.style.top = relativeTop + "px";
+  if (newWidth > 30) {
+    data.module.style.width = newWidth + "px";
+    data.module.style.left = relativeLeft + "px";    
+  }
+
+  if (newHeight > 30) {
+    data.module.style.height = newHeight + "px";
+    data.module.style.top = relativeTop + "px";
+  }
 }
 
 

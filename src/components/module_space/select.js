@@ -1,7 +1,7 @@
 let modules;
 let selectedModules;
 let unselectedModules;
-
+let currentZ = 0;
 document.addEventListener("DOMContentLoaded", () => {
     initSelection();
 });
@@ -15,7 +15,7 @@ function initSelection() {
         element.addEventListener("mousedown", (event) => {
             // Only left-click
             if (event.button !== 0) return;
-
+            bringToFront(element);
             // If ctrl is held, toggle selection
             if (event.ctrlKey) {
                 element.classList.toggle("selected");
@@ -57,4 +57,8 @@ document.addEventListener('mousedown', (event) => {
 function initializeSnapping() {
     initSelection(); 
     initSnap();  
+}
+function bringToFront(moduleElem) {
+  currentZ++;
+  moduleElem.style.zIndex = currentZ;
 }

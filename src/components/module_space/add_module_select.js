@@ -16,7 +16,6 @@ function handleSelect(event) {
         }
      
         if (!module) return;
-        console.log("selected module: ", module);
 
         module.dataset.selected = "true";
     } else {
