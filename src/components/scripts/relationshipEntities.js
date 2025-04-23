@@ -180,6 +180,11 @@
         // Prevent multiple dropdowns.
         if (document.querySelector(".entity-dropdown")) return;
       
+        // Hide all existing children except the dropdown
+        Array.from(valueElem.children).forEach(child => {
+          child.style.display = 'none';
+        });
+
         // Create dropdown container.
         const dropdown = document.createElement("div");
         dropdown.className = "entity-dropdown";
@@ -188,8 +193,8 @@
           top: "0",
           left: "0",
           width: "100%",
-          background: "#fff",
-          border: "1px solid #ccc",
+          background: "transparent",
+          border: "none",
           zIndex: "1000",
           boxSizing: "border-box"
         });
@@ -198,18 +203,29 @@
         const input = document.createElement("input");
         input.type = "text";
         input.placeholder = "Type entity name...";
-        Object.assign(input.style, {
-          width: "100%",
-          boxSizing: "border-box"
-        });
+        input.style.cssText = `
+          height: 35px;
+          width: 95%;
+          box-sizing: border-box;
+          display: flex;
+          align-items: center;
+          padding: 0 10px;
+          cursor: pointer;
+          background-color: rgb(52, 52, 52);
+          color: white;
+          transition: background-color 0.3s, color 0.3s;
+          border-radius: 10px;
+        `;
         dropdown.appendChild(input);
       
         // Create suggestion container.
         const suggestionContainer = document.createElement("div");
         Object.assign(suggestionContainer.style, {
           maxHeight: "150px",
-          overflowY: "auto"
+          overflowY: "auto",
+          backgroundColor: "transparent"
         });
+        
         dropdown.appendChild(suggestionContainer);
       
         // Append dropdown into the same container as the "Add Entity" div.
@@ -236,10 +252,19 @@
               const name = doc.modules.find(m => m.type === "name").value[0];
               const suggestionItem = document.createElement("div");
               suggestionItem.textContent = name;
-              Object.assign(suggestionItem.style, {
-                padding: "5px",
-                cursor: "pointer"
-              });
+              suggestionItem.style.cssText = `
+                height: 35px;
+                width: 95%;
+                box-sizing: border-box;
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+                cursor: pointer;
+                background-color: rgb(52, 52, 52);
+                color: white;
+                transition: background-color 0.3s, color 0.3s;
+                border-radius: 10px;
+              `;
               suggestionItem.addEventListener("click", () => selectCandidate(doc));
               suggestionContainer.appendChild(suggestionItem);
             });
@@ -251,7 +276,7 @@
             modData.value.push(doc._id);
             const newItem = getItemDiv(doc._id, doc);
             
-            valueElem.insertBefore(newItem, newEntityDiv);
+            valueElem.appendChild(newItem);
             closeDropdown();
 
             modData.value[entityData.changeIndex].push(doc._id);
@@ -259,7 +284,6 @@
             relationIndex = doc.modules.findIndex(m => m.type === "relationships");
             doc.modules[relationIndex].value[0].push(entityData._id);
             window.top.db.put(doc);
-            
           };
       
           // Close and remove the dropdown.
@@ -268,11 +292,12 @@
               dropdown.parentNode.removeChild(dropdown);
             }
             document.removeEventListener("click", outsideClickListener);
+
+            // Restore all children's display
+            Array.from(valueElem.children).forEach(child => {
+              child.style.display = 'flex'; // Matches original display style
+            });
           };
-
-          const saveCharacter = (doc) => {
-
-          }
       
           // If the user clicks outside the dropdown, close it.
           const outsideClickListener = (ev) => {
