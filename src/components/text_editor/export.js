@@ -72,7 +72,7 @@ const exportPDF = async (settings) => {
     const ops = Array.isArray(delta) ? delta : delta.ops;
 
     if (ops.length === 0) {
-      alert('The text editor is empty. Please write something before exporting.');
+      showNotification('The text editor is empty. Please write something before exporting.');
       return;
     }
 
@@ -236,10 +236,11 @@ const exportPDF = async (settings) => {
     link.href = URL.createObjectURL(blob);
     link.download = 'document.pdf';
     link.click();
+    showNotification(`Successfully exported "${document.title}" as PDF.`);
     console.log('Export as PDF completed.');
   } catch (error) {
     console.error('Error exporting as PDF:', error);
-    alert('An error occurred while exporting the document. Please try again.');
+    showNotification('An error occurred while exporting the document. Please try again.');
   }
 };
 
@@ -258,7 +259,7 @@ const exportDOCX = async (settings) => {
     const delta = quill.getContents();
 
     if (delta.ops.length === 0) {
-      alert('The text editor is empty. Please write something before exporting.');
+      showNotification('The text editor is empty. Please write something before exporting.');
       return;
     }
 
@@ -316,10 +317,11 @@ const exportDOCX = async (settings) => {
     link.href = URL.createObjectURL(blob);
     link.download = 'document.docx';
     link.click();
+    showNotification(`Successfully exported "${document.title}" as DOCX.`);
     console.log('Export as DOCX completed.');
   } catch (error) {
     console.error('Error exporting as DOCX:', error);
-    alert('An error occurred while exporting the document. Please try again.');
+    showNotification('An error occurred while exporting the document. Please try again.');
   }
 };
 
@@ -357,30 +359,72 @@ window.top.document.getElementById('file-save-as-txt-btn').addEventListener('cli
     const delta = quill.getContents(); // Get Quill delta (text + formatting)
 
     if (delta.ops.length === 0) {
-      alert('The text editor is empty. Please write something before exporting.');
+      showNotification('The text editor is empty. Please write something before exporting.');
       return;
     }
 
     let textContent = '';
 
-    // Iterate over the delta and extract text
+    // Extract text from delta
     for (const op of delta.ops) {
       if (typeof op.insert === 'string') {
         textContent += op.insert;
       }
     }
 
-    const blob = new Blob([textContent], { type: 'text/plain' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'document.txt';
-    link.click();
-    console.log('Export as TXT completed.');
+    if ('showSaveFilePicker' in window) {
+      const options = {
+        suggestedName: 'document.txt',
+        types: [
+          {
+            description: 'Text Files',
+            accept: {
+              'text/plain': ['.txt'],
+            },
+          },
+        ],
+      };
+
+      const handle = await window.showSaveFilePicker(options);
+      const writable = await handle.createWritable();
+      await writable.write(textContent);
+      await writable.close();
+
+      // Extract the actual filename
+      const savedFileName = handle.name;
+
+      showNotification(`Successfully exported as "${savedFileName}".`);
+      console.log('Export as TXT completed.');
+    }
   } catch (error) {
     console.error('Error exporting as TXT:', error);
-    alert('An error occurred while exporting the document. Please try again.');
+    showNotification('An error occurred while exporting the document. Please try again.');
   }
 });
+
+
+// Utility function to display a notification
+const showNotification = (message) => {
+  const notificationArea = document.getElementById("notificationArea");
+  const notification = document.createElement("div");
+  notification.textContent = message;
+  notification.style.cssText = `
+    background: #4caf50;
+    color: white;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    animation: fadeOut 3s forwards;
+  `;
+  notificationArea.appendChild(notification);
+
+  // Remove the notification after 3 seconds
+  setTimeout(() => {
+    notificationArea.removeChild(notification);
+  }, 3000);
+};
+
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {

@@ -149,7 +149,7 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-
+/*
 // Zoom In & Zoom Out & Reset
 
 // Get buttons
@@ -157,8 +157,9 @@ const zoomInBtn = window.top.document.getElementById("view-zoom-in-btn");
 const zoomOutBtn = window.top.document.getElementById("view-zoom-out-btn");
 const resetZoomBtn = window.top.document.getElementById("view-reset-zoom-btn");
 
-// Get the editor container (adjust if needed)
-const editorContainer = document.querySelector(".editor-container");
+// Get the page window container (adjust if needed)
+const pageWindow = window.parent.document.getElementById("page-window");
+console.log(pageWindow);
 const editor = document.getElementById("editor");
 
 let currentZoom = 1; // Default zoom level
@@ -166,10 +167,16 @@ const zoomStep = 0.1; // Zoom step for each button click
 const maxZoom = 2; // Maximum zoom level
 const minZoom = 0.5; // Minimum zoom level
 
+// Ensure the pageWindow is scrollable
+pageWindow.style.overflow = "auto"; // Enable scrolling
+pageWindow.style.position = "relative"; // Ensure proper positioning
+
 // Function to apply zoom
 function applyZoom() {
-    editorContainer.style.transform = `scale(${currentZoom})`;
-    editorContainer.style.transformOrigin = "top left"; // Keep scaling consistent
+    pageWindow.style.transform = `scale(${currentZoom})`;
+    pageWindow.style.transformOrigin = "top left"; // Keep scaling consistent
+    pageWindow.style.width = `${100 / currentZoom}%`; // Adjust width to maintain scrollability
+    pageWindow.style.height = `${100 / currentZoom}%`; // Adjust height to maintain scrollability
 }
 
 // Zoom In
@@ -220,6 +227,7 @@ document.addEventListener("keydown", (event) => {
         }
     }
 });
+*/
 
 // Insert 
 // Image & Table

@@ -11,8 +11,17 @@ function populateProjectDropdown(projects) {
 
   sortedProjects.forEach((project) => {
     const projectLink = document.createElement("a");
-    projectLink.href = "#"; // You can update this to link to the project's page if needed
+    projectLink.href = "#"; // Prevent default navigation
     projectLink.textContent = project.name;
+
+    // Add click event to open the project
+    projectLink.addEventListener("click", (event) => {
+      event.preventDefault(); // Prevent default link behavior
+      localStorage.setItem("projectId", project._id); // Save the project ID to localStorage
+      const windowIframe = window.parent.document.getElementById("window");
+      windowIframe.src = "components/window/window.html"; // Navigate to the project workspace
+    });
+
     dropdownContent.appendChild(projectLink);
   });
 }
