@@ -1,6 +1,6 @@
 export const moduleAdd = (entityData, scriptPath, containerSelector) => {
     // Add module to entityData
-    const default_module = { type: "1",    value: ["{\"ops\":[{\"insert\":\"\\n\"}]}"],      position: { x: 500, y: 550 }, size: { width: "400px", height: "120px" }, scripts: ['../scripts/richEditorText.js']  };
+    const default_module = { name: "New Module", type: "1",    value: ["{\"ops\":[{\"insert\":\"\\n\"}]}"],      position: { x: 500, y: 550 }, size: { width: "400px", height: "120px" }, scripts: ['../scripts/richEditorText.js']  };
     default_module.scripts[0] = scriptPath;
     entityData.modules.push(default_module);
 

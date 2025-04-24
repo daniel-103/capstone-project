@@ -14,7 +14,6 @@ async function initPouchDB(path) {
         pouchDB = new PouchDB(path);
         return { message: 'Initialized local database' };
     } catch (error) {
-        // SHIT IS VERY FUCKED
         console.log(error);
         return { error: true, message: 'Could not create local database' };
     }

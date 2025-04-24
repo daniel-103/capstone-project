@@ -18,7 +18,9 @@
     // Create and insert module type element.
     const typeElem = document.createElement("div");
     typeElem.classList.add("module-type");
-    typeElem.textContent = modData.type;
+    typeElem.textContent = modData.name ? modData.name : modData.type;
+    typeElem.dataset.type = modData.type;
+    typeElem.contentEditable = "true";
     moduleElem.appendChild(typeElem);
 
     // Create and insert the module value element.

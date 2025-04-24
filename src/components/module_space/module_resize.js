@@ -4,7 +4,6 @@ var resizingModuleData = null;
 function initModuleResize(moduleElem) {
   moduleElem.addEventListener("mousedown", function(e) {
     var rect = moduleElem.getBoundingClientRect();
-    console.log(rect, e);
     var threshold = 8; // pixels
     var onLeft   = (e.clientX - rect.left) < threshold;
     var onRight  = (rect.right - e.clientX) < threshold;

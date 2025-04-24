@@ -3,16 +3,17 @@ export function setupSaveHandler(characterData, db) {
       if (!(event.ctrlKey && event.key === "s")) { return; }
       event.preventDefault();
       try {
-        const moduleElems = document.querySelectorAll(".module.text-module");
-        console.log(characterData);
+        const moduleElems = document.querySelectorAll(".module");
         moduleElems.forEach((elem) => {
           const valueElem = elem.querySelector(".module-value");
           const typeElem = elem.querySelector(".module-type");
-          const i = characterData.modules.findIndex(mod => mod.type === typeElem.textContent);
+          const i = characterData.modules.findIndex(mod => mod.type === typeElem.dataset.type);
           const xPos = parseInt(elem.style.left, 10) || 0;
           const yPos = parseInt(elem.style.top, 10) || 0;
           const width = elem.style.width;
           const height = elem.style.height;
+          
+          characterData.modules[i].name = typeElem.textContent;
           characterData.modules[i].value = JSON.parse(valueElem.dataset.saveContent);
           characterData.modules[i].position.x = xPos;
           characterData.modules[i].position.y = yPos;

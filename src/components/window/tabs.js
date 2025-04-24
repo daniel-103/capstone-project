@@ -10,7 +10,6 @@ window.top.pagePaths = {"character" : basePage, "relationship" : basePage, "text
 
 function runTabs() {
     const tabHeader = document.getElementById("tab-header");
-    console.log(tabHeader);
     const pageWindow = document.getElementById("page-window");
 }
 
@@ -72,7 +71,6 @@ function createTab(index, tabHeader, pageWindow) {
 }
 
 function switchTab(index) {
-    console.log(window.top.tabs, window.top.currTabIndex);
     for (let i=0; i<window.top.tabs.length;i++) {
         if (i==index) continue;
         window.top.tabs[i].iframeElem.style.display = "none";
