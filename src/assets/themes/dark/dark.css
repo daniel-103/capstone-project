@@ -231,4 +231,6 @@
 
     --menu-button-hover-color: var(--white1);
     --menu-button-hover-text-color: var(--black0);
+
+    --hierarchy-drop-target-color: rgba(169, 169, 169, 0.1);
 }

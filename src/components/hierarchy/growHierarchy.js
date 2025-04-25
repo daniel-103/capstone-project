@@ -54,6 +54,7 @@ async function growHierarchy(parentFolder) {
             const folder = document.createElement("li");
             folder.classList.add("folder");
             folder.id = child._id;
+            folder.dataset.parentId = child.parentId;
             folder.innerHTML = `
                 <div class="folder-name">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
@@ -76,7 +77,10 @@ async function growHierarchy(parentFolder) {
             file.classList.add("file");
             file.id = child._id;
             file.parentId = parentFolder._id;
+            file.dataset.parentId = parentFolder._id;
             file.innerHTML = `${childName}`;
+            file.draggable = true;
+            file.style.userSelect = 'none';
             file.addEventListener('click', () => {
                 if (!child.fileType) {
                     return;

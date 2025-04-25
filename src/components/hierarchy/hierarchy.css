@@ -21,6 +21,7 @@ html, body {
 
 .subcontainer {
     position: absolute;
+    width: calc(100% - 10px);
 }
 
 #section-hierarchy-container {
@@ -144,6 +145,8 @@ ul.root {
 
 .folder {
     position: relative;
+    margin: 0;
+    border: none;
     /* overflow: visible;
     height: auto; */
 }
@@ -310,6 +313,8 @@ li.folder::after {
 }
 
 .file {
+    margin: 0;
+    border: none;
     position: relative;
     padding-left: 1.25rem;
     cursor: pointer;
@@ -351,4 +356,8 @@ li.folder::after {
     color: inherit;
     font: inherit;
     cursor: text;
+}
+
+.drop-target {
+    background-color: var(--hierarchy-drop-target-color) !important;
 }

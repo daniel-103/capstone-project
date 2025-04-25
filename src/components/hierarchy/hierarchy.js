@@ -1,6 +1,7 @@
 import growHierarchy from "./growHierarchy.js";
 import addFolderClickEvent from "./addFolderClickEvent.js"
 import addNewFileOptions from "./addNewFileOptions.js";
+import setupDragAndDrop from "./dragAndDrop.js";
 
 const projectId = localStorage.getItem('projectId');
 if (window.top.DEBUG) console.log("in hierarchy.js current projectId: ", localStorage.getItem('projectId'));
@@ -349,3 +350,4 @@ window.top.addEventListener("getSelectedFolder", async (event) => {
 
 seedHierarchy(projectId);
 seedSecHierarchy();
+setupDragAndDrop();
