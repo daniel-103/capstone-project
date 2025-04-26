@@ -142,6 +142,11 @@ li {
     background-color: var(--hierarchy-file-hover-color);
 }
 
+.theme-btns {
+    display: inline-flex;
+    gap: 0.5rem;
+}
+
 #exit-btns {
     position: absolute;
     bottom: 1rem;

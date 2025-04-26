@@ -256,12 +256,47 @@ for (const item of document.querySelectorAll(".dropdown-menu li")) {
     })
 }
 
+const actionStatusElement = document.getElementById('action-status');
+function setActionStatus(status) {
+    switch (status.type) {
+        case "in_progress":
+            actionStatusElement.style.transition = '';
+            actionStatusElement.style.color = '';
+            break;
+
+        case "success":
+            actionStatusElement.style.transition = '';
+            actionStatusElement.style.color = 'rgba(64, 255, 64, 1)';
+            actionStatusElement.style.backgroundColor = 'rgba(64, 255, 64, 1)';
+            requestAnimationFrame(() => {
+                actionStatusElement.style.transition = 'background-color cubic-bezier(0,.5,0,1) 1s, color linear 3s';
+                actionStatusElement.style.color = 'transparent';
+                actionStatusElement.style.backgroundColor = 'transparent';
+            });
+            break;
+
+        case "fail":
+            actionStatusElement.style.transition = '';
+            actionStatusElement.style.color = 'red';
+            actionStatusElement.style.backgroundColor = 'red';
+            requestAnimationFrame(() => {
+                actionStatusElement.style.transition = 'background-color cubic-bezier(0,.5,0,1) 1s, color linear 3s';
+                actionStatusElement.style.color = 'transparent';
+                actionStatusElement.style.backgroundColor = 'transparent';
+            });
+            break;
+    }
+
+    actionStatusElement.innerHTML = status.msg;
+}
+
 // Start
 const actionBtn = document.getElementById('action-btn');
 actionBtn.addEventListener('click', async () => {
     const action = dropdownBtn.dataset.value;
     if (!action) {
-        window.top.notify('error', "An action must be selected.", 5);
+        // window.top.notify('error', "An action must be selected.", 5);
+        setActionStatus({ type: "fail", msg: "No action selected." })
         return;
     }
 
@@ -272,7 +307,9 @@ actionBtn.addEventListener('click', async () => {
                 window.top.notify('warning', "This action does nothing since the local database is always merged with the synced remote database", 5);
                 return;
             } else {
+                setActionStatus({ type: "in_progress", msg: "Merging..." })
                 response = await window.top.db.merge();
+                setActionStatus({ type: "success", msg: "Merged" })
             }
 
             break;
@@ -597,6 +634,13 @@ document.getElementById("theme-refresh-btn").addEventListener("click", () => {
             themeList.innerHTML = '';
             createList(themes, themeList);
         })
+});
+
+document.getElementById("theme-open-folder-btn").addEventListener("click", async () =>  {
+    const result = await window.top.electron.openThemes();
+    if (result.error) {
+        window.top.notify('error', result.message, 5)
+    }
 });
 
 document.getElementById('cancel-settings-btn').addEventListener("click", () => {

@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, shell } = require('electron');
 
 const path = require('path');
 const fs = require('fs');
@@ -150,3 +150,13 @@ function getThemes(dir) {
   }
   return results;
 }
+
+ipcMain.handle('openThemes', async () => {
+  const themesPath = path.join(__dirname, 'src/assets/themes');
+  if (fs.existsSync(themesPath)) {
+    shell.openPath(themesPath);
+  } else {
+    // create it then open
+    return { error: true, message: 'Folder does not exist' };
+  }
+})

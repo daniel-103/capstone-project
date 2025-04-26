@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld('electron', {
     getAppPath: () => ipcRenderer.invoke('get-app-path'),
     
     getThemes: () => ipcRenderer.invoke('getThemes'),
+    openThemes: () => ipcRenderer.invoke('openThemes'),
 });
 
 // Database methods

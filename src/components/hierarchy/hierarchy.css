@@ -21,7 +21,7 @@ html, body {
 
 .subcontainer {
     position: absolute;
-    width: calc(100% - 10px);
+    /* width: calc(100% - 10px); */
 }
 
 #section-hierarchy-container {
