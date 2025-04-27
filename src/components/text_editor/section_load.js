@@ -6,17 +6,7 @@ export async function loadSections(entityData) {
         
         const sections = entityData.sections;
         await recLoadSections(sections);
-        // for (const section of sections) {
         
-        //     createSection(section);
-            
-        //     if (section.children.length != 0) {
-        //         for (const subsection of section.children) {
-        //             createSection(subsection);
-                    
-        //         }
-        //     }
-        // }
 
     } catch (err) {
         console.error("Failed to load sections",err);
