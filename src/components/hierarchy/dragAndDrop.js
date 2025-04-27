@@ -57,6 +57,9 @@ function setupDragAndDrop() {
         const dragData = JSON.parse(e.dataTransfer.getData('text/plain'));
         const newParentId = currentDropTarget.id;
 
+        // update element
+        document.getElementById(dragData.id).parentId = newParentId;
+
         try {
         const [oldParent, newParent, dragEntity] = await Promise.all([
             window.top.db.get(dragData.parentId),
