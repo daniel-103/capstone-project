@@ -82,7 +82,7 @@ body {
 .text-module {
     border: 2px solid var(--default-page-module-border-color);
     border-radius: 0.75rem;
-    background-color: rgb(37, 36, 36);
+    background-color: var(--default-page-module-background-color);
     padding: 1rem;
     font-size: 1rem;
     color: var(--default-page-module-text-color);

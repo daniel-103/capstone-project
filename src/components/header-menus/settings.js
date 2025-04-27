@@ -427,7 +427,8 @@ actionBtn.addEventListener('click', async () => {
         window.top.notify('error', response.message, 5);
     }
 
-    window.top.notify('success', response.message, 5);
+    // Just commenting this out after adding action status
+    // window.top.notify('success', response.message, 5);
 })
 
 
