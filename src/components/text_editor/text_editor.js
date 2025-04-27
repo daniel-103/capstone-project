@@ -3,25 +3,16 @@ import { textToSpeech } from './multimedia.mjs';
 import { saveSections, getSections } from "./section_save.js";
 import { loadSections } from "./section_load.js";
 import getDoc from "./getTextDoc.js";
+import growSecHierarchy from "../hierarchy/growSecHierarchy.js";
 
 const sections = [];
-// Wee Woo Wee Woo Work in Progress Please be Patient
-// Not permanent solution to get the entityId for the current page
-// Saving and loading sections needed to be fixed to implement current page sections first
+
 const projectId = localStorage.getItem('projectId'); // Get the projectId 
-const projectData = await window.top.db.get(projectId); // Then the project data
-//const entityId = projectData.childrenIds[0]; // Temp solution to getting the writing page's entityId 
-//let entityData = await window.top.db.get(entityId);
-//console.log(entityData.sections);
-//console.log(entityData);
-//console.log(entityId);
+//const projectData = await window.top.db.get(projectId); // Then the project data
+
 // Get text data from database
-// Using urlParams not working for this, so its breaking saving text data and sections. Do not use atm
 const urlParams = new URLSearchParams(window.location.search);
-//console.log(urlParams);
 let entityId = urlParams.get("id");
-//console.log(entityId);
-//const entityId = currentPage;
 
 let initialTextData = "{\"ops\":[{\"insert\":\"123456789\\n\"}]}";
 if (!entityId) {
@@ -44,7 +35,7 @@ if (!entityId) {
 initialTextData = JSON.parse(initialTextData);
 
 class Section {
-  constructor(startInd,endInd, labelBox, lineElement, labelMoveTab, color, lineStyle, labelText) {
+  constructor(startInd,endInd, labelBox, lineElement, labelMoveTab, color, lineStyle, labelText,id) {
     this.startInd = startInd;
     this.endInd = endInd;
     this.labelBox = labelBox;
@@ -54,8 +45,8 @@ class Section {
     this.color = color;
     this.lineStyle = lineStyle;
     this.labelText = labelText;
-    
-    //this.parent = null;
+    this.id = id;
+    this.parentId = null;
   }
 
   updateLineHeight() {
@@ -133,7 +124,7 @@ class Section {
   }
 
   setParent(parentSection) {
-    //this.parent = parentSection;
+    this.parentId = parentSection.id;
     parentSection.children.push(this);
     console.log(`Subsection created under parent: ${parentSection.labelBox.textContent}`);
   }
@@ -273,6 +264,7 @@ if (sectionButton) {
 }
 
 export function createSection() {
+  let id;
   let dim;
   let color;
   let lineStyle;
@@ -283,6 +275,7 @@ export function createSection() {
     color = arguments[0].color;
     lineStyle = arguments[0].lineStyle;
     labelText = arguments[0].labelText;
+    id = arguments[0].id;
     console.log(arguments[0]);
     //console.log("Dim: ",dim);
   } else {
@@ -290,6 +283,7 @@ export function createSection() {
     color = 'black';
     lineStyle = 'dotted';
     labelText = 'Chapter';
+    id = Date.now();
   }
   const startInd = dim[0];
   const endInd = dim[1];
@@ -429,7 +423,8 @@ export function createSection() {
   lineContainer.appendChild(colorDropdown);
   lineContainer.appendChild(lineTypeDropdown);
   
-  const section = new Section(startInd, endInd, labelBox, lineElement, labelMoveTab, color, lineStyle, labelText);
+  
+  const section = new Section(startInd, endInd, labelBox, lineElement, labelMoveTab, color, lineStyle, labelText, id);
   // Check if the new section is inside an existing section (subsection)
   const parentSection = findParentSection(section);
   if (parentSection) {
@@ -444,7 +439,7 @@ export function createSection() {
   }
 
   makeDraggable(labelMoveTab, labelBox, section);
-
+  growSecHierarchyEvent(sections);
   quill.on('text-change', (delta, oldDelta, source) => {
     if (source === 'user') {
       
