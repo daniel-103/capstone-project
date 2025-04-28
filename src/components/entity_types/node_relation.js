@@ -1,6 +1,6 @@
 const projectId = localStorage.getItem('projectId');
 const nodeGraphData = {
-    parentId: projectId,
+    parentId: null,
     type: 'file',
     fileType: 'nodeGraph',
     modules: [
@@ -10,6 +10,7 @@ const nodeGraphData = {
     ],
     changes: ['Beginning'],
     changeIndex: 0
+    
        
 };
 
