@@ -85,7 +85,14 @@ async function growHierarchy(parentFolder) {
                 if (!child.fileType) {
                     return;
                 }
-                const pagePath = window.top.pagePaths[child.fileType] + "?id=" + encodeURIComponent(child._id);
+                
+                let pagePath;
+                if (child.fileType == 'nodeGraph') {
+                    pagePath = "../base_page/base_page.html" + "?id=" + encodeURIComponent(child._id);
+                } else {
+
+                    pagePath = window.top.pagePaths[child.fileType] + "?id=" + encodeURIComponent(child._id);
+                }
                 const pageWindow = window.parent.document.getElementById("page-window");
                 const tabHeader = window.parent.document.getElementById("tab-header");
                 console.log("path: ", pagePath);
