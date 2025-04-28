@@ -235,7 +235,7 @@
         
 
         window.top.db.find({
-          selector: { parentId: entityData.parentId, type: "file", fileType: "character" },
+          selector: { projectId: entityData.projectId, type: "file", fileType: "character" },
         }).then(result => {
           
           const candidates = result;
@@ -251,7 +251,7 @@
             });
             const suggestions = term ? filtered : filtered.slice(0, 5);
             suggestions.forEach(doc => {
-              const name = doc.modules.find(m => m.type === "name").value[0];
+              const name = doc.name ? doc.name : doc.modules.find(m => m.type === "name").value[0];
               const suggestionItem = document.createElement("div");
               suggestionItem.textContent = name;
               suggestionItem.style.cssText = `

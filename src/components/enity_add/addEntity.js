@@ -2,6 +2,7 @@ import attachToParent from "../entity_types/attachToParent.js";
 
 async function addEntity(path, entityData, parentId) {
     entityData.parentId = parentId;
+    entityData.projectId = localStorage.getItem('projectId');
     const newEntity = await initNewEntity(entityData);
     path = path + "?id=" + encodeURIComponent(newEntity._id);
 

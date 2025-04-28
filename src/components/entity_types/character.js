@@ -1,8 +1,10 @@
 const projectId = localStorage.getItem('projectId');
 const characterData = {
     parentId: null,
+    projectId: null,
     type: 'file',
     fileType: 'character',
+    name: "New Character",
     modules: [
         { type: "name",          value: ["Name"],   position: { x: 10, y: 77 },   size: { width: "104px", height: "40px" }, scripts: ['../scripts/text.js']  },
         { type: "backstory",     value: ["{\"ops\":[{\"insert\":\"Backstory\\n\"}]}"],       position: { x: 524, y: 77 },  size: { width: "400px", height: "140px" }, scripts: ['../scripts/richEditorText.js']  },
