@@ -3,6 +3,7 @@ const relationshipData = {
     parentId: null,
     type: 'file',
     fileType: 'relationship',
+    name: "New Relationship",
     modules: [
         { type: "name",      value: ['New Relationship'],  position: { x:  31, y:  62 }, size: { width: "200px", height: "40px" }, scripts: ['../scripts/text.js']   },
         { type: "entities",  value: [[]], position: { x: 465, y: 432 }, size: { width: "465px", height: "220px" }, scripts: ['../scripts/relationshipEntities.js']   },
