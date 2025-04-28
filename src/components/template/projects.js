@@ -1,5 +1,5 @@
 window.top.DEBUG = localStorage.getItem('DEBUG') == true
-//window.top.DEBUG = true;
+window.top.DEBUG = true;
 
 // Function to populate the "All Projects" dropdown with A-Z filtering
 function populateProjectDropdown(projects) {
@@ -270,31 +270,39 @@ async function initProjects() {
       // Confirm button logic
       confirmButton.addEventListener('click', async () => {
         const newName = input.value.trim();
-
-        // Validate the input
-        if (!newName) {
-          showNotification('Project name cannot be empty.');
-          return;
-        }
-
-        if (newName === currentName) {
+      
+        if (!newName || newName === currentName) {
           document.body.removeChild(modal);
           return;
         }
-
+      
         try {
-          // Update the project in the database
-          const updatedProject = { ...project, name: newName };
-          await window.top.db.put(updatedProject);
-
+          // Fetch the latest version of the project to avoid conflicts
+          const latestProject = await window.top.db.get(project._id);
+    
+          // Update the project with the new name
+          const updatedProject = {
+            ...latestProject,
+            name: newName,
+            date: {
+              ...latestProject.date,
+              last: new Date(), // Update the last updated date
+            },
+          };
+          await window.top.db.put(updatedProject); // Save to the database
+    
           // Update the UI
           titleElement.textContent = newName;
           showNotification(`Project renamed to "${newName}"`, 'success');
+          if (window.top.DEBUG) console.log(`✅ [7] Project renamed to "${newName}".`);
         } catch (error) {
           console.error("Couldn't rename project:", error);
-          showNotification("Couldn't rename project. Please try again.");
+          showNotification("Couldn't rename project. Please try again.", 'error');
         } finally {
-          document.body.removeChild(modal);
+          // Ensure the modal is removed
+          if (document.body.contains(modal)) {
+            document.body.removeChild(modal);
+          }
         }
       });
     });
@@ -327,9 +335,15 @@ async function initProjects() {
             imageElement.style.backgroundImage = `url('${reader.result}')`;
 
             // Optionally, update the project in the database with the data URL
-            const updatedProject = { ...project, image: reader.result };
+            const updatedProject = { 
+              ...project, 
+              image: reader.result, 
+              date: { 
+                ...project.date, 
+                last: new Date() // Update the last updated date
+              } 
+            };
             window.top.db.put(updatedProject);
-
             if (window.top.DEBUG) console.log(`✅ [7] Image changed for project "${project.name}".`);
             showNotification(`Image updated successfully for project "${project.name}".`, 'success');
           };
@@ -384,31 +398,39 @@ async function initProjects() {
       // Confirm button logic
       confirmButton.addEventListener('click', async () => {
         const newDescription = input.value.trim();
-
-        // Validate the input
-        if (!newDescription) {
-          showNotification('Project description cannot be empty.');
-          return;
-        }
-
-        if (newDescription === currentDescription) {
+      
+        if (!newDescription || newDescription === currentDescription) {
           document.body.removeChild(modal);
           return;
         }
-
+      
         try {
-          // Update the project in the database
-          const updatedProject = { ...project, description: newDescription };
-          await window.top.db.put(updatedProject);
-
+          // Fetch the latest version of the project to avoid conflicts
+          const latestProject = await window.top.db.get(project._id);
+    
+          // Update the project with the new description
+          const updatedProject = {
+            ...latestProject,
+            description: newDescription,
+            date: {
+              ...latestProject.date,
+              last: new Date(), // Update the last updated date
+            },
+          };
+          await window.top.db.put(updatedProject); // Save to the database
+    
           // Update the UI
           descriptionElement.textContent = newDescription;
-          showNotification(`Project description updated to "${newDescription}"`, 'success');
+          showNotification(`Description updated to "${newDescription}"`, 'success');
+          if (window.top.DEBUG) console.log(`✅ [7] Description updated to "${newDescription}".`);
         } catch (error) {
-          console.error("Couldn't update project description:", error);
-          showNotification("Couldn't update the project description. Please try again.");
+          console.error("Couldn't update description:", error);
+          showNotification("Couldn't update the description. Please try again.", 'error');
         } finally {
-          document.body.removeChild(modal);
+          // Ensure the modal is removed
+          if (document.body.contains(modal)) {
+            document.body.removeChild(modal);
+          }
         }
       });
     });
@@ -529,6 +551,7 @@ async function initProjects() {
 
             project_gallery.appendChild(newCard);
             showNotification(`Project "${updatedProject.name}" duplicated successfully.`, 'success');
+            if (window.top.DEBUG) console.log(`✅ [4] Project "${updatedProject.name}" duplicated successfully.`);
           }
         } else {
           throw new Error('Failed to duplicate project.');
@@ -545,15 +568,16 @@ async function initProjects() {
           if (window.top.DEBUG) console.error("Invalid childId or newParentId. Skipping duplication.");
           return null;
         }
-
+    
         // Fetch the child document
         const child = await window.top.db.get(childId);
-
-        if (!child || !child.name) {
-          if (window.top.DEBUG) console.error(`Invalid child data for ID "${childId}". Skipping duplication.`);
+    
+        // Validate child data
+        if (!child || !child.type) {
+          if (window.top.DEBUG) console.error(`Invalid child data for ID "${childId}". Skipping duplication. Data:`, child);
           return null;
         }
-
+    
         // Create a copy of the child with a new ID and updated parentId
         const { _id, _rev, ...childData } = child; // Exclude _id and _rev
         const newChild = {
@@ -564,16 +588,20 @@ async function initProjects() {
             last: new Date()
           }
         };
-
+    
+        // Handle specific fileType values
+        if (child.fileType === 'nodeGraph' || child.fileType === 'relationship') {
+          const { modules, changes, ...rest } = childData;
+          newChild.modules = [...modules]; // Duplicate modules
+          newChild.changes = [...changes]; // Duplicate changes
+        }
+    
         // Save the new child to the database
         const response = await window.top.db.post(newChild);
         if (response.ok) {
           const newChildId = response.id; // Get the new child's ID
-          if (window.top.DEBUG) console.log(`✅ [4] Child "${child.name}" duplicated successfully with new ID "${newChildId}".`);
-
-          // Fetch the latest version of the new child to get its _rev
-          const latestNewChild = await window.top.db.get(newChildId);
-
+          if (window.top.DEBUG) console.log(`✅ [4] Child "${child.fileType}" duplicated successfully with new ID "${newChildId}". Data:`, newChild);
+    
           // Recursively duplicate the child's children if it is a folder
           if (child.type === 'folder' && Array.isArray(child.childrenIds) && child.childrenIds.length > 0) {
             const newGrandChildrenIds = [];
@@ -585,18 +613,19 @@ async function initProjects() {
                 }
               }
             }
-
-            // Update the new child's childrenIds
+    
+            // Update the new folder's childrenIds
+            const latestNewChild = await window.top.db.get(newChildId); // Fetch the latest version of the new folder
             const updatedChild = {
               ...latestNewChild, // Include the latest _rev
               childrenIds: newGrandChildrenIds
             };
-            await window.top.db.put(updatedChild); // Save the updated child
+            await window.top.db.put(updatedChild); // Save the updated folder
           }
-
+    
           return newChildId; // Return the new child's ID
         } else {
-          throw new Error(`Failed to duplicate child "${child.name}".`);
+          throw new Error(`Failed to duplicate child "${child.fileType}".`);
         }
       } catch (error) {
         if (window.top.DEBUG) console.error(`Error duplicating child with ID "${childId}":`, error);
