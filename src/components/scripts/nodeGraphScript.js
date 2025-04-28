@@ -1,4 +1,3 @@
-
 (async function () {
   const containerSelector = document.currentScript.getAttribute("data-container");
   const characterData = JSON.parse(document.currentScript.getAttribute("data-characterData"));
