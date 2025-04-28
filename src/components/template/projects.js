@@ -1,5 +1,5 @@
 window.top.DEBUG = localStorage.getItem('DEBUG') == true
-window.top.DEBUG = true;
+//window.top.DEBUG = true;
 
 // Function to populate the "All Projects" dropdown with A-Z filtering
 function populateProjectDropdown(projects) {
