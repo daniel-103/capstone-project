@@ -52,12 +52,15 @@ const populatePopupContent = (format) => {
     // DOCX-specific settings
     settingsContent.innerHTML = `
       <div>
-        <label for="includeTOC">Include Table of Contents:</label>
-        <input type="checkbox" id="includeTOC" />
+        <label for="pageMargins">Page Margins (in mm):</label>
+        <input type="number" id="pageMargins" value="20" min="10" max="50" />
       </div>
       <div>
-        <label for="includeHeaderFooter">Include Header/Footer:</label>
-        <input type="checkbox" id="includeHeaderFooter" />
+        <label for="orientation">Orientation:</label>
+        <select id="orientation">
+          <option value="portrait">Portrait</option>
+          <option value="landscape">Landscape</option>
+        </select>
       </div>
     `;
   }
@@ -230,14 +233,29 @@ const exportPDF = async (settings) => {
     }
 
     // Save and download the PDF
-    const pdfBytes = await pdfDoc.save();
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'document.pdf';
-    link.click();
-    showNotification(`Successfully exported "${document.title}" as PDF.`);
-    console.log('Export as PDF completed.');
+    if ('showSaveFilePicker' in window) {
+      const options = {
+        suggestedName: 'document.pdf',
+        types: [
+          {
+            description: 'PDF Files',
+            accept: {
+              'application/pdf': ['.pdf'],
+            },
+          },
+        ],
+      };
+    
+      const handle = await window.showSaveFilePicker(options);
+      const writable = await handle.createWritable();
+      const pdfBytes = await pdfDoc.save(); // Assuming `pdfDoc` is the generated PDF document
+      await writable.write(pdfBytes);
+      await writable.close();
+    
+      const savedFileName = handle.name;
+      showNotification(`Successfully exported as "${savedFileName}".`);
+      console.log('Export as PDF completed.');
+    }
   } catch (error) {
     console.error('Error exporting as PDF:', error);
     showNotification('An error occurred while exporting the document. Please try again.');
@@ -276,6 +294,9 @@ const exportDOCX = async (settings) => {
       'monospace': 'Courier New'
     };
 
+    const pageMargin = settings.pageMargins || 20; // Default to 20mm
+    const isLandscape = settings.orientation === "landscape";
+
     let paragraphs = [];
 
     for (const op of delta.ops) {
@@ -306,19 +327,49 @@ const exportDOCX = async (settings) => {
     }
 
     const doc = new docx.Document({
-      sections: [{
-        properties: {},
-        children: paragraphs,
-      }],
+      sections: [
+        {
+          properties: {
+            page: {
+              margin: {
+                top: pageMargin * 56.7, // Convert mm to twips (1 mm = 56.7 twips)
+                bottom: pageMargin * 56.7,
+                left: pageMargin * 56.7,
+                right: pageMargin * 56.7,
+              },
+              size: {
+                orientation: isLandscape ? docx.PageOrientation.LANDSCAPE : docx.PageOrientation.PORTRAIT,
+              },
+            },
+          },
+          children: paragraphs,
+        },
+      ],
     });
 
-    const blob = await docx.Packer.toBlob(doc);
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'document.docx';
-    link.click();
-    showNotification(`Successfully exported "${document.title}" as DOCX.`);
-    console.log('Export as DOCX completed.');
+    if ('showSaveFilePicker' in window) {
+      const options = {
+        suggestedName: 'document.docx',
+        types: [
+          {
+            description: 'Word Documents',
+            accept: {
+              'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+            },
+          },
+        ],
+      };
+    
+      const handle = await window.showSaveFilePicker(options);
+      const writable = await handle.createWritable();
+      const blob = await docx.Packer.toBlob(doc); // Assuming `doc` is the generated DOCX document
+      await writable.write(blob);
+      await writable.close();
+    
+      const savedFileName = handle.name;
+      showNotification(`Successfully exported as "${savedFileName}".`);
+      console.log('Export as DOCX completed.');
+    }
   } catch (error) {
     console.error('Error exporting as DOCX:', error);
     showNotification('An error occurred while exporting the document. Please try again.');
@@ -340,9 +391,8 @@ exportConfirm.addEventListener('click', () => {
     settings.margins = parseInt(document.getElementById("margins").value, 10);
     exportPDF(settings);
   } else if (currentFormat === "DOCX") {
-    settings.includeTOC = document.getElementById("includeTOC").checked;
-    settings.includeHeaderFooter = document.getElementById("includeHeaderFooter").checked;
-    settings.orientation = "portrait"; // You can expand this for DOCX orientation if needed
+    settings.pageMargins = parseInt(document.getElementById("pageMargins").value, 10);
+    settings.orientation = document.getElementById("orientation").value;
     exportDOCX(settings);
   }
 
