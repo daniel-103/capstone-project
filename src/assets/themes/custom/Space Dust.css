@@ -27,7 +27,7 @@
     /* Apply colors */
 
     /* Hub */
-    --hub-background-color: var(--light-black);
+    --hub-background-color: transparent;
     --hub-header-text-color: var(--pink);
 
     --hub-card-color: rgba(0, 0, 0, 0.1);
@@ -47,17 +47,20 @@
 
     --hub-card-delete-confirmation-text-color: var(--white0);
 
-    /* Writing */
+
+
+    /* Background */
     --background-color: var(--light-black);
-    --background-icon-color: rgba(0, 0, 0, 0.25);
+    --background-icon-color: rgba(0, 0, 0, 0.15);
     --background-icon-scale: 0.75;
 
 
 
+    /* Header */
     --header-section-color: var(--black);
 
-    --header-logo-primary-color: var(--light-blue);
-    --header-logo-secondary-color: var(--pink);
+    --header-logo-primary-color: var(--light-blue); /* Not used? */
+    --header-logo-secondary-color: var(--pink);     /* Not used? */
 
     --header-button-color: transparent;
     --header-text-color: var(--pink);
@@ -80,6 +83,7 @@
     
 
 
+    /* Hierarchy */
     --left-panel-options-section-color: var(--black);
     --left-panel-options-button-color: transparent;
     --left-panel-options-icon-color: var(--magenta);
@@ -152,10 +156,13 @@
     --hierarchy-tree-horizontal-color: var(--purple);
     --hierarchy-tree-horizontal-thickness: 4;
     
-    --hierarchy-tree-hover-vertical-color: var(--magenta);
-    --hierarchy-tree-hover-vertical-thickness: 8;
-    --hierarchy-tree-hover-horizontal-color: var(--magenta);
-    --hierarchy-tree-hover-horizontal-thickness: 8;
+    --hierarchy-tree-hover-vertical-color: var(--magenta);      /* Not used? */
+    --hierarchy-tree-hover-vertical-thickness: 8;               /* Not used? */
+    --hierarchy-tree-hover-horizontal-color: var(--magenta);    /* Not used? */
+    --hierarchy-tree-hover-horizontal-thickness: 8;             /* Not used? */
+
+    /* Drop */
+    --hierarchy-drop-target-color: var(--light-black);
 
 
 
@@ -179,30 +186,30 @@
     --tab-active-icon-hover-color: red;
 
 
-    
-    /* Default Page (deprecated?)*/
-    --default-page-background-color: var(--black1);
-
-    --default-page-module-background-color: var(--black1);
-    --default-page-module-text-color: var(--grey);
-    --default-page-module-border-color: var(--light-blue);
-
-    --default-page-module-background-color-hover: var(--light-blue);
-    --default-page-module-text-color-hover: var(--black);
-    --default-page-module-border-color-hover: var(--light-blue);
-
-
 
     /* Page */
-    --page-background-color: var(--black);
-    --page-background-border-color: var(--black);
+    --page-background-color: transparent;
+    --page-background-border-color: var(--black);   /*Not used?*/
 
     --page-snap-line-color: var(--pink);
     --page-grid-color: var(--purple);
     --page-text-color: var(--grey);
-    --page-module-selected-color: var(--blue);
+    --page-module-selected-color: var(--blue);      /*Not used?*/
+
 
     
+    /* Modules */
+    --default-page-module-background-color: var(--black);
+    --default-page-module-text-color: var(--grey);
+    --default-page-module-border-color: var(--light-blue);
+
+    --default-page-module-background-color-hover: var(--light-black);
+    --default-page-module-text-color-hover: var(--grey);
+    --default-page-module-border-color-hover: var(--light-blue);
+
+    
+
+    /* Timeline (Not used) */
     --timeline-page-timeline-color: white;
     --compact-box-background-color: var(--magenta);
     --compact-box-border-color: var(--purple);
@@ -220,9 +227,9 @@
     --button-border-color: #666;
     
 
+
     /* Header Menus */
     --menu-background-color: var(--black);
-    /* --menu-background-color: rgba(0, 0, 0, 0.75); */
 
     --menu-section-title-color: var(--pink);
     --menu-section-color: var(--light-black);
@@ -254,8 +261,6 @@
 
     --menu-button-hover-color: var(--light-blue);
     --menu-button-hover-text-color: var(--black);
-
-    
 }
 
 /* import custom css here */

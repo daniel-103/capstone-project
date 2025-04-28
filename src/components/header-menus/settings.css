@@ -51,23 +51,6 @@
     max-width: 20rem;
 }
 
-#settings-theme-area button {
-    /* position: absolute; */
-    justify-self: end;
-    border: none;
-    cursor: pointer;
-    color: var(--hierarchy-open-folder-text-color);
-    background-color: var(--hierarchy-open-folder-color);
-    padding: 0.25rem;
-}
-
-#theme-section button:hover {
-    border: none;
-    cursor: pointer;
-    color: var(--hierarchy-open-folder-hover-text-color);
-    background-color: var(--hierarchy-open-folder-hover-color);
-}
-
 ul {
     padding: 0;
     margin: 0;

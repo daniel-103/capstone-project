@@ -1,4 +1,9 @@
 :root {
+    /* 
+    This theme is inspired by the GMK Hippo keyboard keycap set.
+    https://geekhack.org/index.php?topic=123873.0
+    */
+
     --black: #433e44;
     --grey0: #5b5358;
     --grey1: #727474;
@@ -27,16 +32,19 @@
 
     --hub-card-delete-confirmation-text-color: var(--white);
 
-    /* Header */
+
+
+    /* Background */
     --background-color: var(--black);
     --background-icon-color: transparent;
     --background-icon-scale: 0;
 
 
+    /* Header */
     --header-section-color: var(--black);
 
-    --header-logo-primary-color: var(--white);     /* Implement later */
-    --header-logo-secondary-color: var(--pink);   /* Implement later */
+    --header-logo-primary-color: var(--white);  /* Not used? */
+    --header-logo-secondary-color: var(--pink); /* Not used? */
 
     --header-button-color: transparent;
     --header-text-color: var(--pink);
@@ -132,13 +140,17 @@
     --hierarchy-tree-horizontal-color: var(--pink);
     --hierarchy-tree-horizontal-thickness: 2;
     
-    --hierarchy-tree-hover-vertical-color: var(--white);      /* Not used? */
-    --hierarchy-tree-hover-vertical-thickness: 8;               /* Not used? */
-    --hierarchy-tree-hover-horizontal-color: var(--white);    /* Not used? */
-    --hierarchy-tree-hover-horizontal-thickness: 8;             /* Not used? */
+    --hierarchy-tree-hover-vertical-color: var(--white);    /* Not used? */
+    --hierarchy-tree-hover-vertical-thickness: 8;           /* Not used? */
+    --hierarchy-tree-hover-horizontal-color: var(--white);  /* Not used? */
+    --hierarchy-tree-hover-horizontal-thickness: 8;         /* Not used? */
+
+    /* Drop */
+    --hierarchy-drop-target-color: var(--grey0);
 
 
 
+    /* Tabs */
     --tab-section-color: var(--black);
 
     --tab-color: var(--grey0);
@@ -147,7 +159,7 @@
 
     --tab-hover-color: var(--grey1);
     --tab-hover-text-color: var(--white);
-    --tab-icon-hover-color: var(--white);
+    --tab-icon-hover-color: red;
 
     --tab-active-color: var(--pink);
     --tab-active-text-color: var(--black);
@@ -155,13 +167,22 @@
 
     --tab-active-hover-color: var(--pink);
     --tab-active-hover-text-color: var(--grey0);
-    --tab-active-icon-hover-color: var(--grey0);
+    --tab-active-icon-hover-color: red;
 
 
 
-    /*Pages*/
-    --default-page-background-color: var(--black);
+    /* Page */
+    --page-background-color: var(--black);
+    --page-background-border-color: red;    /*Not used?*/
+    
+    --page-snap-line-color: var(--white);
+    --page-grid-color: var(--white);
+    --page-text-color: var(--white);
+    --page-module-selected-color: #0078d7;  /*Not used?*/
 
+
+
+    /* Modules */
     --default-page-module-background-color: var(--black);
     --default-page-module-text-color: var(--white);
     --default-page-module-border-color: var(--pink);
@@ -171,17 +192,8 @@
     --default-page-module-border-color-hover: var(--white);
 
 
-    --page-background-color: var(--black); /*Not used?*/
-    --page-background-border-color: red; /*Not used?*/
-    
-    --page-snap-line-color: var(--white);
-    --page-grid-color: var(--white);
-    --page-text-color: var(--white);
-    --page-module-selected-color: #0078d7; /*Not used?*/
 
-
-
-    /*Not used?*/
+    /* Timeline (Not used) */
     --timeline-page-timeline-color: white;
     --compact-box-background-color: rgb(69, 45, 137);
     --compact-box-border-color: rgb(204, 0, 0);

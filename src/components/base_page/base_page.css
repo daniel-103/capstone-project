@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background-color: var(--default-page-background-color);
+    background-color: var(--page-background-color);
 }
 
 #page {

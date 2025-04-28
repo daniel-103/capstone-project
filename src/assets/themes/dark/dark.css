@@ -159,7 +159,7 @@
 
 
 
-    --default-page-background-color: var(--black0);
+    --page-background-color: var(--black0);
 
     --default-page-module-background-color: var(--black1);
     --default-page-module-text-color: var(--white1);

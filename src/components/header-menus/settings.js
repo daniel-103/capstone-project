@@ -136,7 +136,7 @@ document.getElementById('connect-url-btn').addEventListener('click', async () =>
 
     // some weird stuff was happening here 
     await setConnectionStatus('connected');
-    window.top.notify('success', `${res.message}`, 5);
+    // window.top.notify('success', `${res.message}`, 5);
     localStorage.setItem('CouchDBURL', url.href);
 })
 
@@ -196,7 +196,7 @@ async function setConnectionStatus(status) {
                 }
                 localStorage.removeItem('CouchDBURL');
                 await setConnectionStatus('not connected');
-                window.top.notify('success', `${r.message}`, 5);
+                // window.top.notify('success', `${r.message}`, 5);
                 disconnectBtn.remove();
             })
 
@@ -213,7 +213,7 @@ async function setConnectionStatus(status) {
             connectionStatusElement.style.color = '';
 
             // unsync
-            if (synced) {
+            if (localStorage.getItem('synced') == 'true') {
                 setSyncStatus('unsyncing');
                 const r = await window.top.db.unsync();
                 if (r.error) {
@@ -225,7 +225,7 @@ async function setConnectionStatus(status) {
 
                 localStorage.setItem('synced', false);
                 setSyncStatus('not synced');
-                window.top.notify('success', `${r.message}`, 5);
+                // window.top.notify('success', `${r.message}`, 5);
                 document.getElementById('unsync-btn')?.remove();
             }
 
@@ -300,18 +300,18 @@ actionBtn.addEventListener('click', async () => {
         return;
     }
 
+    synced = localStorage.getItem('synced') == 'true';
     let response;
     switch (action) {
         case 'merge':
             if (synced) {
                 window.top.notify('warning', "This action does nothing since the local database is always merged with the synced remote database", 5);
                 return;
-            } else {
-                setActionStatus({ type: "in_progress", msg: "Merging..." })
-                response = await window.top.db.merge();
-                setActionStatus({ type: "success", msg: "Merged" })
             }
 
+            setActionStatus({ type: "in_progress", msg: "Merging..." });
+            response = await window.top.db.merge();
+            setActionStatus({ type: "success", msg: "Merged" });
             break;
 
         case 'mergeToPouch':
@@ -319,7 +319,10 @@ actionBtn.addEventListener('click', async () => {
                 window.top.notify('warning', "This action does nothing since the local database is always merged with the synced remote database", 5);
                 return;
             }
+
+            setActionStatus({ type: "in_progress", msg: "Merging to Local..." });
             response = await window.top.db.mergeToPouch();
+            setActionStatus({ type: "success", msg: "Merged to Local" });
             break;
             
         case 'mergeToCouch':
@@ -328,7 +331,9 @@ actionBtn.addEventListener('click', async () => {
                 return;
             }
 
+            setActionStatus({ type: "in_progress", msg: "Merging to Remote..." });
             response = await window.top.db.mergeToCouch();
+            setActionStatus({ type: "success", msg: "Merged to Remote" });
             break;
             
         case 'overwritePouch':
@@ -350,7 +355,9 @@ actionBtn.addEventListener('click', async () => {
                 return;
             }
 
+            setActionStatus({ type: "in_progress", msg: "Overwritting Local..." });
             response = await window.top.db.replicateToPouch();
+            setActionStatus({ type: "success", msg: "Overwrote Local" });
             break;
     
         case 'overwriteCouch':
@@ -372,7 +379,9 @@ actionBtn.addEventListener('click', async () => {
                 return;
             }
             
+            setActionStatus({ type: "in_progress", msg: "Overwritting Remote..." });
             response = await window.top.db.replicateToCouch();
+            setActionStatus({ type: "success", msg: "Overwrote Remote" });
             break;
         
         case 'clearPouch':
@@ -383,7 +392,9 @@ actionBtn.addEventListener('click', async () => {
                 return;
             }
 
+            setActionStatus({ type: "in_progress", msg: "Clearing Local..." });
             response = await window.top.db.clearPouch()
+            setActionStatus({ type: "success", msg: "Cleared Local..." });
             break;
         
         case 'clearCouch':
@@ -394,7 +405,9 @@ actionBtn.addEventListener('click', async () => {
                 return;
             }
 
+            setActionStatus({ type: "in_progress", msg: "Clearing Remote..." });
             response = await window.top.db.clearCouch()
+            setActionStatus({ type: "success", msg: "Cleared Remote..." });
             break;
 
         case 'deleteCouch':
@@ -405,14 +418,15 @@ actionBtn.addEventListener('click', async () => {
                 return;
             }
 
+            setActionStatus({ type: "in_progress", msg: "Deleted Remote..." });
             await setConnectionStatus('disconnecting');
             response = await window.top.db.deleteCouch();
             localStorage.removeItem('CouchDBURL');
             await setConnectionStatus('not connected');
             // window.top.notify('success', `${r.message}`, 5);
             document.getElementById('disconnect-url-btn')?.remove();
+            setActionStatus({ type: "success", msg: "Deleted Remote..." });
             
-
             break;
 
         default:
@@ -466,7 +480,7 @@ function setSyncStatus(status) {
                 setSyncStatus('synced');
                 localStorage.setItem('synced', true);
                 syncBtn.remove();
-                window.top.notify('success', `${r.message}`, 5);
+                // window.top.notify('success', `${r.message}`, 5);
             })
 
             document.getElementById('sync-buttons').appendChild(syncBtn);
@@ -507,7 +521,7 @@ function setSyncStatus(status) {
                 }
                 localStorage.setItem('synced', false);
                 setSyncStatus('not synced');
-                window.top.notify('success', `${r.message}`, 5);
+                // window.top.notify('success', `${r.message}`, 5);
                 unsyncBtn.remove();
             })
 
@@ -549,7 +563,7 @@ function setSyncStatus(status) {
 
 // set up the connection status visuals and url if already linked
 const url = localStorage.getItem('CouchDBURL');
-const synced = localStorage.getItem('synced') == 'true';
+let synced = localStorage.getItem('synced') == 'true';
 if (url) {
     setConnectionStatus('connected');
 

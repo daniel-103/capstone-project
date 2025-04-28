@@ -6,7 +6,7 @@ html, body {
     position: relative;
     width: 100%;
     height: 100vh;
-    background-color: var(--default-page-background-color);
+    background-color: var(--page-background-color);
     background-clip: padding-box;
     overflow: hidden;
 }

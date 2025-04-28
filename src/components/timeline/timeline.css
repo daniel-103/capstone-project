@@ -14,7 +14,7 @@ body {
     position: relative;
     width: 90%;
     height: 400px;
-    background-color: var(--default-page-background-color);
+    background-color: var(--page-background-color);
     overflow: visible; 
   }
   
