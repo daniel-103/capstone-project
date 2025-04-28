@@ -1,0 +1,238 @@
+:root {
+    --black: #433e44;
+    --grey0: #5b5358;
+    --grey1: #727474;
+    --pink: #f1bdc8;
+    --white: white;
+
+
+
+    /* Hub */
+    --hub-background-color: var(--black);
+    --hub-header-text-color: var(--pink);
+    --hub-card-color: var(--grey0);
+    --hub-card-title-text-color: var(--pink);
+    --hub-card-desc-text-color: var(--white);
+
+    --hub-card-hover-color: var(--pink);
+    --hub-card-title-text-hover-color: var(--white);
+    --hub-card-desc-text-hover-color: var(--white);
+
+    --hub-card-options-section-color: var(--pink);
+    --hub-card-options-button-color: var(--black);
+    --hub-card-options-icon-color: var(--white);
+
+    --hub-card-options-button-hover-color: var(--white);
+    --hub-card-options-icon-hover-color: var(--black);
+
+    --hub-card-delete-confirmation-text-color: var(--white);
+
+    /* Header */
+    --background-color: var(--black);
+    --background-icon-color: transparent;
+    --background-icon-scale: 0;
+
+
+    --header-section-color: var(--black);
+
+    --header-logo-primary-color: var(--white);     /* Implement later */
+    --header-logo-secondary-color: var(--pink);   /* Implement later */
+
+    --header-button-color: transparent;
+    --header-text-color: var(--pink);
+
+    --header-button-hover-color: var(--pink);
+    --header-hover-text-color: var(--black);
+
+    --header-dropdown-color: var(--grey0);
+    --header-dropdown-text-color: var(--pink);
+
+    --header-dropdown-hover-color: var(--pink);
+    --header-dropdown-hover-text-color: var(--black);
+
+    --header-dropdown-divider-color: var(--grey1);
+
+    --header-window-controls-color: transparent;
+    --header-window-controls-icon-color: var(--pink);
+    --header-window-controls-hover-color: var(--pink);
+    --header-window-controls-icon-hover-color: var(--black);
+
+
+
+    /* Hierarchy */
+    --left-panel-options-section-color: var(--black);
+    --left-panel-options-button-color: transparent;
+    --left-panel-options-icon-color: var(--pink);
+    --left-panel-options-button-hover-color: var(--pink);
+    --left-panel-options-icon-hover-color:var(--black);
+
+
+
+    --left-panel-slideout-section-color: var(--black);
+    --left-panel-slideout-text-color: var(--pink);
+    --left-panel-slideout-button-color: var(--grey0);
+    --left-panel-slideout-text-hover-color: var(--grey0);
+    --left-panel-slideout-button-hover-color: var(--pink);
+
+
+
+    --hierarchy-section-color: var(--black);
+
+    /* Folder */
+    --hierarchy-folder-color: transparent;
+    --hierarchy-folder-text-color: var(--pink);
+    --hierarchy-folder-icon-color: var(--pink);
+    
+    --hierarchy-folder-hover-color: var(--grey0);
+    --hierarchy-folder-hover-text-color: var(--pink);
+    --hierarchy-folder-hover-icon-color: var(--pink);
+
+    /* Open */
+    --hierarchy-open-folder-color: var(--grey0);
+    --hierarchy-open-folder-text-color: var(--pink);
+    --hierarchy-open-folder-icon-color: var(--pink);
+    
+    --hierarchy-open-folder-hover-color: var(--grey1);
+    --hierarchy-open-folder-hover-text-color: var(--pink);
+    --hierarchy-open-folder-hover-icon-color: var(--pink);
+
+    /* Selected */
+    --hierarchy-selected-folder-color: var(--black);
+    --hierarchy-selected-folder-text-color: var(--pink);
+    --hierarchy-selected-folder-icon-color: var(--white);
+
+    --hierarchy-selected-folder-hover-color: var(--grey0);
+    --hierarchy-selected-folder-hover-text-color: var(--pink);
+    --hierarchy-selected-folder-hover-icon-color: var(--white);
+
+    /* Selected and Open */
+    --hierarchy-selected-open-folder-color: var(--grey0);
+    --hierarchy-selected-open-folder-text-color: var(--pink);
+    --hierarchy-selected-open-folder-icon-color: var(--white);
+    
+    --hierarchy-selected-open-folder-hover-color: var(--grey1);
+    --hierarchy-selected-open-folder-hover-text-color: var(--pink);
+    --hierarchy-selected-open-folder-hover-icon-color: var(--white);
+
+    /* New */
+    --hierarchy-new-folder-color: var(--black);
+    --hierarchy-new-folder-text-color: var(--pink);
+    --hierarchy-new-folder-icon-color: var(--pink);
+
+    /* File */
+    --hierarchy-file-color: transparent;
+    --hierarchy-file-text-color: var(--white);
+
+    --hierarchy-file-hover-color: var(--grey0);
+    --hierarchy-file-hover-text-color: var(--white);
+
+    /* Tree */
+    --hierarchy-tree-vertical-color: var(--pink);
+    --hierarchy-tree-vertical-thickness: 2;
+    --hierarchy-tree-horizontal-color: var(--pink);
+    --hierarchy-tree-horizontal-thickness: 2;
+    
+    --hierarchy-tree-hover-vertical-color: var(--white);      /* Not used? */
+    --hierarchy-tree-hover-vertical-thickness: 8;               /* Not used? */
+    --hierarchy-tree-hover-horizontal-color: var(--white);    /* Not used? */
+    --hierarchy-tree-hover-horizontal-thickness: 8;             /* Not used? */
+
+
+
+    --tab-section-color: var(--black);
+
+    --tab-color: var(--grey0);
+    --tab-text-color: var(--pink);
+    --tab-icon-color: var(--pink);
+
+    --tab-hover-color: var(--grey1);
+    --tab-hover-text-color: var(--white);
+    --tab-icon-hover-color: var(--white);
+
+    --tab-active-color: var(--pink);
+    --tab-active-text-color: var(--black);
+    --tab-active-icon-color: var(--black);
+
+    --tab-active-hover-color: var(--pink);
+    --tab-active-hover-text-color: var(--grey0);
+    --tab-active-icon-hover-color: var(--grey0);
+
+
+
+    /*Pages*/
+    --default-page-background-color: var(--black);
+
+    --default-page-module-background-color: var(--black);
+    --default-page-module-text-color: var(--white);
+    --default-page-module-border-color: var(--pink);
+
+    --default-page-module-background-color-hover: var(--black);
+    --default-page-module-text-color-hover: var(--white);
+    --default-page-module-border-color-hover: var(--white);
+
+
+    --page-background-color: var(--black); /*Not used?*/
+    --page-background-border-color: red; /*Not used?*/
+    
+    --page-snap-line-color: var(--white);
+    --page-grid-color: var(--white);
+    --page-text-color: var(--white);
+    --page-module-selected-color: #0078d7; /*Not used?*/
+
+
+
+    /*Not used?*/
+    --timeline-page-timeline-color: white;
+    --compact-box-background-color: rgb(69, 45, 137);
+    --compact-box-border-color: rgb(204, 0, 0);
+    --expanded-box-background-color: rgb(69, 45, 137);
+    --expanded-box-border-color: rgb(204, 0, 0);
+
+    --options-bg-color: #2d2f33;   
+    --options-text-color: #f0f0f0;    
+    --options-border-color: #444;      
+    --options-highlight-color: #6db5ff;
+    
+    --options-input-bg: #3b3e43;
+    --options-input-text: #ffffff;
+    --options-hover-bg: #45494f;
+    --button-border-color: #666;
+
+
+
+    /* Header Menus */
+    --menu-background-color: var(--black);
+
+    --menu-section-title-color: var(--pink);
+    --menu-section-color: var(--grey0);
+    --menu-section-text-color: var(--pink);
+
+    --menu-subsection-title-color: var(--pink);
+    --menu-subsection-color: var(--black);
+    --menu-subsection-text-color: var(--white);
+
+    --menu-entry-color: var(--grey0);
+    --menu-entry-text-color: var(--pink);
+
+    --menu-select-color: var(--grey0);
+    --menu-select-text-color: var(--pink);
+
+    --menu-select-hover-color: var(--pink);
+    --menu-select-hover-text-color: var(--grey0);
+    
+    
+    --menu-select-option-color: var(--grey0);
+    --menu-select-option-text-color: var(--pink);
+
+    --menu-select-option-hover-color: var(--pink);
+    --menu-select-option-hover-text-color: var(--black);
+
+
+    --menu-button-color: var(--grey0);
+    --menu-button-text-color: var(--pink);
+
+    --menu-button-hover-color: var(--pink);
+    --menu-button-hover-text-color: var(--grey0);
+
+    --hierarchy-drop-target-color: var(--grey0);
+}

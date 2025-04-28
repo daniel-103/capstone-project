@@ -7,14 +7,29 @@ body {
     position: relative;
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    overflow: scroll;
+}
+
+#page::-webkit-scrollbar {
+    display: none;
 }
 
 #grid {
+    display: block;
     position: absolute;
     width: 100%;
     height: 100%;
-    pointer-events: none; 
+
+    background-size: 100px 100px;
+    background-image:
+        linear-gradient(to right, var(--page-grid-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--page-grid-color) 1px, transparent 1px);
+
+    mask: radial-gradient(circle 0px at 50% 50%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+
+    transition: mask 1s ease-out;
+
+    pointer-events: none;
 }
 
 
@@ -86,6 +101,13 @@ body {
     padding: 1rem;
     font-size: 1rem;
     color: var(--default-page-module-text-color);
+    transition: border 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.text-module:hover {
+    border: 2px solid var(--default-page-module-border-color-hover);
+    background-color: var(--default-page-module-background-color-hover);
+    color: var(--default-page-module-text-color-hover);
 }
 
 .module-type {
@@ -114,13 +136,13 @@ body {
     pointer-events: none;
 }
 
-.module.selected {
+/* .module.selected {
     outline: 2px dashed rgba(255, 255, 0, 0.7); 
     outline-offset: -4px; 
-}
+} */
 
 .snap-line {
     position: absolute;
-    background-color: red;
+    background-color: var(--page-snap-line-color);
     z-index: 9999;
 }

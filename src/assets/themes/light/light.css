@@ -143,20 +143,20 @@
 
     --tab-section-color: var(--white0);
 
-    --tab-button-color: var(--white1);
+    --tab-color: var(--white1);
     --tab-text-color: var(--black1);
     --tab-icon-color: var(--black1);
 
-    --tab-button-hover-color: var(--white2);
-    --tab-button-hover-text-color: var(--black0);
+    --tab-hover-color: var(--white2);
+    --tab-hover-text-color: var(--black0);
     --tab-icon-hover-color: var(--black0);
 
-    --tab-active-button-color: var(--white2);
+    --tab-active-color: var(--white2);
     --tab-active-text-color: var(--black1);
     --tab-active-icon-color: var(--black1);
 
-    --tab-active-button-hover-color: var(--white2);
-    --tab-active-button-hover-text-color: var(--black0);
+    --tab-active-hover-color: var(--white2);
+    --tab-active-hover-text-color: var(--black0);
     --tab-active-icon-hover-color: var(--black0);
 
 

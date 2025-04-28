@@ -89,15 +89,15 @@ span.badge[contenteditable]:empty:focus::before {
 .dropdown-btn {
     /* font-size: 1rem; */
     padding: 0.25rem;
-    color: var(--menu-select-option-text-color);
-    background-color: var(--menu-select-option-color);
+    color: var(--menu-select-text-color);
+    background-color: var(--menu-select-color);
     border: none;
     cursor: pointer;
 }
 
 .dropdown-btn:hover {
-    color: var(--menu-select-option-hover-text-color);
-    background-color: var(--menu-select-option-hover-color);
+    color: var(--menu-select-hover-text-color);
+    background-color: var(--menu-select-hover-color);
 }
 
 .dropdown-menu {
@@ -113,14 +113,14 @@ span.badge[contenteditable]:empty:focus::before {
 .dropdown-menu li {
     font-size: 0.75rem;
     padding: 0.25rem;
-    color: var(--menu-button-text-color);
-    background-color: var(--menu-button-color);
+    color: var(--menu-select-option-text-color);
+    background-color: var(--menu-select-option-color);
     cursor: pointer;
 }
 
 .dropdown-menu li:hover {
-    color: var(--menu-button-hover-text-color);
-    background-color: var(--menu-button-hover-color);
+    color: var(--menu-select-option-hover-text-color);
+    background-color: var(--menu-select-option-hover-color);
 }
 
 

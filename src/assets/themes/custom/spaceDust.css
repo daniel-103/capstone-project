@@ -162,20 +162,20 @@
     /* Tabs */
     --tab-section-color: transparent;
 
-    --tab-button-color: var(--black);
+    --tab-color: var(--black);
     --tab-text-color: var(--magenta);
     --tab-icon-color: var(--magenta);
 
-    --tab-button-hover-color: var(--purple);
-    --tab-button-hover-text-color: var(--black);
+    --tab-hover-color: var(--purple);
+    --tab-hover-text-color: var(--black);
     --tab-icon-hover-color: red;
 
-    --tab-active-button-color: var(--magenta);
+    --tab-active-color: var(--magenta);
     --tab-active-text-color: var(--black);
     --tab-active-icon-color: var(--black);
 
-    --tab-active-button-hover-color: var(--magenta);
-    --tab-active-button-hover-text-color: var(--black);
+    --tab-active-hover-color: var(--magenta);
+    --tab-active-hover-text-color: var(--black);
     --tab-active-icon-hover-color: red;
 
 

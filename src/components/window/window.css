@@ -64,7 +64,7 @@ body {
     border-top-right-radius: 0.75rem;
 
     color: var(--tab-text-color);
-    background-color: var(--tab-button-color);
+    background-color: var(--tab-color);
     border: none;
 
     user-select: none;
@@ -73,15 +73,15 @@ body {
 }
 
 .tab:hover {
-    background-color: var(--tab-button-hover-color);
+    background-color: var(--tab-hover-color);
 }
 
 .tab.active {
-    background-color: var(--tab-active-button-color);
+    background-color: var(--tab-active-color);
 }
 
 .tab.active:hover {
-    background-color: var(--tab-active-button-hover-color);
+    background-color: var(--tab-active-hover-color);
 }
 
 .tab button {
@@ -97,7 +97,7 @@ body {
 }
 
 .tab:hover button {
-    color: var(--tab-button-hover-text-color);
+    color: var(--tab-hover-text-color);
 }
 
 .tab.active button {
@@ -105,7 +105,7 @@ body {
 }
 
 .tab.active:hover button {
-    color: var(--tab-active-button-hover-text-color);
+    color: var(--tab-active-hover-text-color);
 }
 
 .tab > button > svg {
