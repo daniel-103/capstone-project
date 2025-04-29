@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Attach the event listener to the button
     tourButton.addEventListener('click', function () {
         // Start the tutorial for the parent window
+        mainPageTutorial();
+    });
+
+    function mainPageTutorial() {
         introJs().setOptions({
             steps: [
                 {
@@ -26,10 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const hierarchyIframe = document.getElementById('hierarchyIframe');
             hierarchyIframe.contentWindow.postMessage({ action: 'startHierarchyTour' }, '*');
         }).start();
-    });
+    }
 
     // Listen for messages from the iframes
     window.addEventListener('message', (event) => {
+        console.log('Message received M:', event.data);
         if (event.data.action === 'hierarchyTourComplete') {
             // Start the Text Editor tutorial after the Hierarchy tutorial is complete
             const textEditorIframe = document.getElementById('textEditorIframe');

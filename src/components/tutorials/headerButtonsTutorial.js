@@ -1,3 +1,5 @@
+import { completeTutorials } from '../tutorials/firstTimeUsers.js';
+
 window.addEventListener('message', (event) => {
     if (event.data.action === 'startHeaderButtonsTour') {
         const dropdowns = [
@@ -285,6 +287,9 @@ window.addEventListener('message', (event) => {
             for (const dropdown of dropdowns) {
                 await startDropdownTutorial(dropdown);
             }
+            
+            // Call completeTutorials when the tutorial is finished
+            completeTutorials();
         };
 
         runTutorial(); // Start the full tutorial

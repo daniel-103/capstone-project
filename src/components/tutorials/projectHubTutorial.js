@@ -53,25 +53,33 @@ function startFirstUserTutorial() {
             }
         ]
     }).oncomplete(() => {
-        // Find and click the "Autobiography" template
-        const autobiographyTemplate = Array.from(document.querySelectorAll('#templateGallery .template-card'))
-            .find(card => card.querySelector('.template-title')?.textContent.trim().toLowerCase() === 'autobiography project');
-        console.log('Autobiography Template:', autobiographyTemplate);
-        if (autobiographyTemplate) {
-            console.log('Clicking the "Autobiography" template...');
-            autobiographyTemplate.click();
-        } else {
-            console.error('The "Autobiography" template was not found in the template gallery!');
+        // Select all template cards
+        const templateCards = document.querySelectorAll('.template-card');
+
+        // Find the specific card with the title "Empty Project"
+        const emptyProjectCard = Array.from(templateCards).find(card => {
+            const titleElement = card.querySelector('.template-title');
+            return titleElement && titleElement.textContent.trim() === 'Empty Project';
+        });
+
+        // Click the specific card if it exists
+        if (emptyProjectCard) {
+            emptyProjectCard.click();
         }
+
+        // Notify the parent window that the project hub tutorial for first user is complete
+//        console.log('window: ', window.top.document.getElementById('window'));
+//        window.top.document.getElementById('window').contentWindow.postMessage({ action: 'startprojectHubTutorialFirstUsersComplete' }, '*');
+//        window.parent.postMessage({ action: 'startprojectHubTutorialFirstUsersComplete' }, '*');
+        window.parent.postMessage({ action: 'startprojectHubTutorialFirstUsersComplete' }, '*');
+        console.log('sending message to start main page tutorial for first-time users...');
     }).start();
 }
 
 // Listen for messages from other scripts
 window.addEventListener('message', (event) => {
-    if (event.data.action === 'startTutorial' && event.data.script === 'projectHubTutorial.js') {
+    if (event.data.action === 'startprojectHubTutorialFirstUsers') {
         console.log('Starting Project Hub Tutorial via message...');
         startFirstUserTutorial();
-    } else {
-        console.warn('Unrecognized message received:', event.data);
     }
 });
