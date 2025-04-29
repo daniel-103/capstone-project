@@ -3,13 +3,15 @@
 window.addEventListener('contextmenu', async (e) => {
   e.preventDefault();
   let menu = null;
+  const parent = e.target.parentNode;
+  const grandParent = parent.parentNode;
   
   if (e.target.className === "file") {
     menu = getFileMenu(e);
-  } else if (Array.from(e.target.parentNode.classList).includes("folder")) {
-    menu = await getFolderMenu(e.target.parentNode);
-  } else if (Array.from(e.target.parentNode.parentNode.classList).includes("folder")) {
-    menu = await getFolderMenu(e.target.parentNode.parentNode);
+  } else if (Array.from(parent.classList).includes("folder")) {
+    menu = await getFolderMenu(parent);
+  } else if (Array.from(grandParent.classList).includes("folder")) {
+    menu = await getFolderMenu(grandParent);
   }
   
   if (menu) window.top.rightClickMenu.show(menu);
@@ -30,7 +32,7 @@ async function getFolderMenu(target) {
 
   const folder = await window.top.db.get(target.id);
   console.log(folder);
-  if (folder.childrenIds.length == 0) {
+  if (folder.childrenIds.length == 0 && !Array.from(target.classList).includes("root")) {
     menu.push({
       label: 'Delete',
       clickId: JSON.stringify({
