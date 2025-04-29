@@ -206,6 +206,14 @@
     --default-page-module-background-color-hover: var(--light-black);
     --default-page-module-text-color-hover: var(--grey);
     --default-page-module-border-color-hover: var(--light-blue);
+    
+    --default-page-selected-module-background-color: var(--black);
+    --default-page-selected-module-text-color: var(--grey);
+    --default-page-selected-module-border-color: var(--pink);
+
+    --default-page-selected-module-background-color-hover: var(--light-black);
+    --default-page-selected-module-text-color-hover: var(--grey);
+    --default-page-selected-module-border-color-hover: var(--pink);
 
     
 

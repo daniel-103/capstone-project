@@ -1,7 +1,5 @@
 const SNAP_THRESHOLD = 20;
 const GRID_SIZE = 50;
-const GRID_COLOR = 'rgba(0, 0, 0, 0.1)';
-const GRID_THICKNESS = 1;
 const RADIUS_SCALER = 1;
 const RADIUS_EXTRA = 50;
 
@@ -29,6 +27,7 @@ function initSnap() {
     // stop dragging
     document.addEventListener('mouseup', async (event) => {
         isDragging = false;
+        document.body.style.userSelect = "";
 
         // update positions of modules
         if (!selectedModules) return;
@@ -65,6 +64,7 @@ function initSnap() {
             isDragging = true;
             initialMouseX = event.clientX;
             initialMouseY = event.clientY;
+            document.body.style.userSelect = "none";
         }
     });
 }
@@ -179,7 +179,7 @@ function onMouseMove(event) {
             snapLine.classList.add('snap-line');
             snapLine.style.left = `${lineY.x}px`;
             snapLine.style.top = `${Math.min(lineY.y1, lineY.y2)}px`;
-            snapLine.style.width = `1px`;
+            snapLine.style.width = `3px`;
             snapLine.style.height = `${Math.abs(lineY.y1 - lineY.y2)}px`;
             page.appendChild(snapLine);
         }
@@ -190,7 +190,7 @@ function onMouseMove(event) {
             snapLine.style.left = `${Math.min(lineX.x1, lineX.x2)}px`;
             snapLine.style.top = `${lineX.y}px`;
             snapLine.style.width = `${Math.abs(lineX.x1 - lineX.x2)}px`;
-            snapLine.style.height = `1px`;
+            snapLine.style.height = `3px`;
             page.appendChild(snapLine);
         }
 

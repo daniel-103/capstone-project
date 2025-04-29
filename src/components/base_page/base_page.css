@@ -17,8 +17,8 @@ body {
 #grid {
     display: block;
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 1000%;
+    height: 1000%;
 
     background-size: 100px 100px;
     background-image:
@@ -95,19 +95,36 @@ body {
 }
 
 .text-module {
-    border: 2px solid var(--default-page-module-border-color);
+    box-shadow: inset 0 0 0 2px var(--default-page-module-border-color);
+    box-sizing: content-box;
     border-radius: 0.75rem;
     background-color: var(--default-page-module-background-color);
     padding: 1rem;
     font-size: 1rem;
     color: var(--default-page-module-text-color);
-    transition: border 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    transition: box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.module-value::-webkit-scrollbar {
+    display: none;
 }
 
 .text-module:hover {
-    border: 2px solid var(--default-page-module-border-color-hover);
+    box-shadow: inset 0 0 0 2px var(--default-page-module-border-color-hover);
     background-color: var(--default-page-module-background-color-hover);
     color: var(--default-page-module-text-color-hover);
+}
+
+.module.selected {
+    box-shadow: inset 0 0 0 2px var(--default-page-selected-module-border-color);
+    background-color: var(--default-page-selected-module-background-color);
+    color: var(--default-page-selected-module-text-color);
+}
+
+.module.selected:hover {
+    box-shadow: inset 0 0 0 2px var(--default-page-selected-module-border-color-hover);
+    background-color: var(--default-page-selected-module-background-color-hover);
+    color: var(--default-page-selected-module-text-color-hover);
 }
 
 .module-type {
@@ -136,13 +153,12 @@ body {
     pointer-events: none;
 }
 
-/* .module.selected {
-    outline: 2px dashed rgba(255, 255, 0, 0.7); 
-    outline-offset: -4px; 
-} */
-
 .snap-line {
     position: absolute;
     background-color: var(--page-snap-line-color);
     z-index: 9999;
+}
+
+.ql-toolbar {
+    background-color: white;
 }

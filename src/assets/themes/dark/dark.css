@@ -28,16 +28,20 @@
 
     --hub-card-delete-confirmation-text-color: var(--white0);
 
-    /* Writing */
+
+
+    /* Background */
     --background-color: var(--black0);
     --background-icon-color: transparent;
     --background-icon-scale: 0;
 
 
+
+    /* Header */
     --header-section-color: var(--black1);
 
-    --header-logo-primary-color: var(--white0);     /* Implement later */
-    --header-logo-secondary-color: var(--white1);   /* Implement later */
+    --header-logo-primary-color: var(--white0);     /* Not used? */
+    --header-logo-secondary-color: var(--white1);   /* Not used? */
 
     --header-button-color: transparent;
     --header-text-color: var(--white0);
@@ -60,6 +64,7 @@
 
 
 
+    /* Hierarchy */
     --left-panel-options-section-color: var(--black1);
     --left-panel-options-button-color: transparent;
     --left-panel-options-icon-color: var(--white0);
@@ -132,13 +137,18 @@
     --hierarchy-tree-horizontal-color: var(--black2);
     --hierarchy-tree-horizontal-thickness: 2;
     
-    --hierarchy-tree-hover-vertical-color: var(--white0);      /* Not used? */
-    --hierarchy-tree-hover-vertical-thickness: 8;               /* Not used? */
-    --hierarchy-tree-hover-horizontal-color: var(--white0);    /* Not used? */
-    --hierarchy-tree-hover-horizontal-thickness: 8;             /* Not used? */
+    --hierarchy-tree-hover-vertical-color: var(--white0);   /* Not used? */
+    --hierarchy-tree-hover-vertical-thickness: 8;           /* Not used? */
+    --hierarchy-tree-hover-horizontal-color: var(--white0); /* Not used? */
+    --hierarchy-tree-hover-horizontal-thickness: 8;         /* Not used? */
 
 
 
+    /* Drop */
+
+
+
+    /* Tabs */
     --tab-section-color: var(--black0);
 
     --tab-color: var(--black1);
@@ -147,7 +157,7 @@
 
     --tab-hover-color: var(--black2);
     --tab-hover-text-color: var(--white0);
-    --tab-icon-hover-color: var(--white0);
+    --tab-icon-hover-color: red;
 
     --tab-active-color: var(--black2);
     --tab-active-text-color: var(--white1);
@@ -155,21 +165,11 @@
 
     --tab-active-hover-color: var(--black2);
     --tab-active-hover-text-color: var(--white0);
-    --tab-active-icon-hover-color: var(--white0);
+    --tab-active-icon-hover-color: red;
 
 
 
-    --page-background-color: var(--black0);
-
-    --default-page-module-background-color: var(--black1);
-    --default-page-module-text-color: var(--white1);
-    --default-page-module-border-color: var(--white1);
-
-    --default-page-module-background-color-hover: var(--black2);
-    --default-page-module-text-color-hover: var(--white0);
-    --default-page-module-border-color-hover: var(--white0);
-
-
+    /* Page */
     --page-background-color: var(--black0);
     --page-background-border-color: red;
     
@@ -178,7 +178,29 @@
     --page-text-color: var(--white0);
     --page-module-selected-color: #0078d7;
 
+
+
     
+    /* Modules */
+    --default-page-module-background-color: var(--black1);
+    --default-page-module-text-color: var(--white1);
+    --default-page-module-border-color: var(--white1);
+
+    --default-page-module-background-color-hover: var(--black2);
+    --default-page-module-text-color-hover: var(--white0);
+    --default-page-module-border-color-hover: var(--white0);
+    
+    --default-page-selected-module-background-color: var(--black1);
+    --default-page-selected-module-text-color: var(--white0);
+    --default-page-selected-module-border-color: var(--white0);
+
+    --default-page-selected-module-background-color-hover: var(--black2);
+    --default-page-selected-module-text-color-hover: var(--white0);
+    --default-page-selected-module-border-color-hover: var(--white0);
+
+
+    
+    /* Timeline (Not used) */
     --timeline-page-timeline-color: white;
     --compact-box-background-color: rgb(69, 45, 137);
     --compact-box-border-color: rgb(204, 0, 0);
@@ -199,7 +221,6 @@
 
     /* Header Menus */
     --menu-background-color: var(--black0);
-    /* --menu-background-color: rgba(0, 0, 0, 0.75); */
 
     --menu-section-title-color: var(--white0);
     --menu-section-color: var(--black1);

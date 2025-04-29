@@ -189,6 +189,14 @@
     --default-page-module-text-color-hover: var(--black0);
     --default-page-module-border-color-hover: var(--black0);
 
+    --default-page-selected-module-background-color: var(--white1);
+    --default-page-selected-module-text-color: var(--black0);
+    --default-page-selected-module-border-color: var(--black0);
+
+    --default-page-selected-module-background-color-hover: var(--white2);
+    --default-page-selected-module-text-color-hover: var(--black0);
+    --default-page-selected-module-border-color-hover: var(--black0);
+
 
     
     /* Timeline (Not used) */
