@@ -69,6 +69,10 @@ document.getElementById('connect-url-btn').addEventListener('click', async () =>
         return;
     }
 
+    if (localStorage.getItem('CouchDBURL') != url.href) {
+        await setConnectionStatus('disconnecting');
+    }
+
     await setConnectionStatus('connecting');
 
     // test url
@@ -84,7 +88,6 @@ document.getElementById('connect-url-btn').addEventListener('click', async () =>
         if (!response.ok) {
             switch (response.status) {
                 case 404:
-                    console.log('[1]')
                     const res = await fetch(`${url.origin}${url.pathname}`, {
                         method: "PUT",
                         headers: {
@@ -93,21 +96,19 @@ document.getElementById('connect-url-btn').addEventListener('click', async () =>
                     });
                     console.log(res)
                     if (!res.ok) {
-                        window.top.notify('error', `${response.status} (${response.statusText}) after trying to create remote database`, 10);
+                        window.top.notify('error', `${response.statusText} (${response.status}) after trying to create remote database`, 10);
                     }
                     window.top.notify('info', `No remote database "${url.pathname.replace("/", "")}" was found but one with the same name was created for you.`, 10);
                     break;
             
                 default:
-                    console.log('[2]')
                     await setConnectionStatus('not connected');
-                    window.top.notify('error', `${response.status} (${response.statusText})`, 5);
+                    window.top.notify('error', `${response.statusText} (${response.status})`, 5);
                     console.log(response);
                     return;
             }            
         }
     } catch (error) {
-        console.log('[3]')
         window.top.notify('error', "Could not connect to host.", 5);
         await setConnectionStatus('not connected');
         console.log(error);
@@ -293,7 +294,15 @@ function setActionStatus(status) {
 // Start
 const actionBtn = document.getElementById('action-btn');
 actionBtn.addEventListener('click', async () => {
-    const action = dropdownBtn.dataset.value;
+    const response = await takeActionRegardingThatIndividual(dropdownBtn.dataset.value)
+
+    if (response.error) {
+        window.top.notify('error', response.message, 5);
+    }
+})
+    
+async function takeActionRegardingThatIndividual(action) {
+    console.log(action)
     if (!action) {
         // window.top.notify('error', "An action must be selected.", 5);
         setActionStatus({ type: "fail", msg: "No action selected." })
@@ -320,7 +329,7 @@ actionBtn.addEventListener('click', async () => {
                 return;
             }
 
-            setActionStatus({ type: "in_progress", msg: "Merging to Local..." });
+            setActionStatus({ type: "in_progress", msg: "Downloading..." });
             response = await window.top.db.mergeToPouch();
             setActionStatus({ type: "success", msg: "Merged to Local" });
             break;
@@ -331,64 +340,67 @@ actionBtn.addEventListener('click', async () => {
                 return;
             }
 
-            setActionStatus({ type: "in_progress", msg: "Merging to Remote..." });
+            setActionStatus({ type: "in_progress", msg: "Uploading..." });
             response = await window.top.db.mergeToCouch();
             setActionStatus({ type: "success", msg: "Merged to Remote" });
             break;
             
         case 'overwritePouch':
+            if (synced) {
+                window.top.notify('warning', "You cannot overwrite while synced.", 5);
+                return;
+            }
+
             if (!passedConfirmation.overwritePouch) {
                 window.top.notify('warning', "This action will perminantly delete all local project data. (Click again to confirm)", 5);
-                passedConfirmation = {};
-                passedConfirmation.overwritePouch = true;
+                passedConfirmation = { overwritePouch: true};
                 return;
             }
 
-            if (synced) {
-                try {
-                    await window.top.db.unsync();
-                    response = await window.top.db.replicateToPouch();
-                    await window.top.db.sync();
-                } catch (error) {
-                    response = { error: true, message: "oopsiee" };
-                }
-                return;
-            }
+            // this is brokey so dont use
+            // response = await window.top.db.replicateToPouch(); 
 
-            setActionStatus({ type: "in_progress", msg: "Overwritting Local..." });
-            response = await window.top.db.replicateToPouch();
+            // my shitass patch
+            passedConfirmation = { clearPouch: true };
+            response = await takeActionRegardingThatIndividual('clearPouch');
+            if (response.error) break;
+            response = await takeActionRegardingThatIndividual('mergeToPouch');
+            if (response.error) break;
+
             setActionStatus({ type: "success", msg: "Overwrote Local" });
+            response = {}   // no need for response message bc it's no longer used
             break;
     
         case 'overwriteCouch':
-            if (!passedConfirmation.overwriteCouch) {
-                window.top.notify('warning', "This action will perminantly delete all remote project data (Click again to confirm)", 5);
-                passedConfirmation = {};
-                passedConfirmation.overwriteCouch = true;
+            if (synced) {
+                window.top.notify('warning', "You cannot overwrite while synced.", 5);
                 return;
             }
 
-            if (synced) {
-                try {
-                    await window.top.db.unsync();
-                    response = await window.top.db.replicateToCouch();
-                    await window.top.db.sync();
-                } catch (error) {
-                    response = { error: true, message: "oopsiee" };
-                }
+            if (!passedConfirmation.overwriteCouch) {
+                window.top.notify('warning', "This action will perminantly delete all remote project data (Click again to confirm)", 5);
+                passedConfirmation = { overwriteCouch: true };
                 return;
             }
-            
-            setActionStatus({ type: "in_progress", msg: "Overwritting Remote..." });
-            response = await window.top.db.replicateToCouch();
+
+            // this is brokey too so still dont use
+            // response = await window.top.db.replicateToCouch();
+
+            // shitass patch 2 : electric boogaloo
+            passedConfirmation = { clearCouch: true };
+            response = await takeActionRegardingThatIndividual('clearCouch');
+            if (response.error) break;
+            response = await takeActionRegardingThatIndividual('mergeToCouch');
+            if (response.error) break;
+
             setActionStatus({ type: "success", msg: "Overwrote Remote" });
+            response = {}   // no need for response message bc it's no longer used
             break;
         
         case 'clearPouch':
             if (!passedConfirmation.clearPouch) {
                 window.top.notify('warning', "This action will perminantly delete all project data in the local database (Click again to confirm)", 5);
-                passedConfirmation = {};
-                passedConfirmation.clearPouch = true;
+                passedConfirmation = { clearPouch: true };
                 return;
             }
 
@@ -400,8 +412,7 @@ actionBtn.addEventListener('click', async () => {
         case 'clearCouch':
             if (!passedConfirmation.clearCouch) {
                 window.top.notify('warning', "This action will perminantly delete all project data in the remote database (Click again to confirm)", 5);
-                passedConfirmation = {};
-                passedConfirmation.clearCouch = true;
+                passedConfirmation = { clearCouch: true };
                 return;
             }
 
@@ -413,8 +424,7 @@ actionBtn.addEventListener('click', async () => {
         case 'deleteCouch':
             if (!passedConfirmation.deleteCouch) {
                 window.top.notify('warning', "This action will perminantly delete the remote database and all project data in it (Click again to confirm)", 5);
-                passedConfirmation = {};
-                passedConfirmation.deleteCouch = true;
+                passedConfirmation = { deleteCouch: true };
                 return;
             }
 
@@ -437,13 +447,8 @@ actionBtn.addEventListener('click', async () => {
 
     passedConfirmation = {};
 
-    if (response.error) {
-        window.top.notify('error', response.message, 5);
-    }
-
-    // Just commenting this out after adding action status
-    // window.top.notify('success', response.message, 5);
-})
+    return response;
+}
 
 
 
