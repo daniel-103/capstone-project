@@ -69,3 +69,9 @@ Feel free to message me if you think you know where these are from or are just i
 10. Valley of Gods' Blood and Earth Flame *(nearly impossible, you're insane)*  
 *Hint: "When we were young..."*  
 *And you have a 0.0001% chance you know this one. How'd I get this data? ¯\\\_(ツ)_/¯ It is real data though!*
+
+## Right Click Options
+By right clicking on a file or folder you will see rename and delte options. These are used to rename and delete files and folders. Folders can only be deleted if they do not have any children. Renaming and deleting with change the open tabs accordingly, changing their name or closing them if the associated file is deleted.
+
+## Dragging and Dropping
+By clicking and dragging a file, users are able to move them to different locations within the same projct.

@@ -3,12 +3,15 @@
     const characterData = JSON.parse(document.currentScript.getAttribute("data-characterData"));
     const modData = JSON.parse(document.currentScript.getAttribute("data-modData"));
     const container = document.querySelector(containerSelector);
+    const styles = getComputedStyle(window.top.document.documentElement);
   
     // Create the outer module element.
     const moduleElem = document.createElement("div");
     moduleElem.classList.add("module", "text-module", "rich-text");
     moduleElem.style.left = (modData.position.x || 0) + "px";
     moduleElem.style.top = (modData.position.y || 0) + "px";
+    moduleElem.style.backgroundColor = styles.getPropertyValue("--default-page-module-background-color").trim();
+    console.log(moduleElem.style.backgroundColor, styles)
     moduleElem.dataset.moduleKey = modData.type;
     moduleElem.style.width = modData.size?.width || "200px";
     moduleElem.style.height = modData.size?.height || "100px";
@@ -35,7 +38,7 @@
     });
     moduleElem.appendChild(editorContainer);
   
-    // Define Quill toolbar options (unchanged).
+    // Define Quill toolbar options
     const toolbarOptions = [
       ['bold', 'italic', 'underline', 'strike'],
       [{ list: 'ordered' }, { list: 'bullet' }],
