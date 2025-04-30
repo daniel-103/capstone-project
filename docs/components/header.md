@@ -126,6 +126,12 @@ The "Tools" button provides various tools to enhance the document.
 - **Button ID:** `tools-word-count-btn`
 - **Functionality:** Counts the number of words in the document and displays the result.
 
+### 7. Help
+The "Help" button provides access to tutorials and guidance for using the application.
+
+#### Start Tutorial
+- **Button ID:** `help-tutorial-btn`
+- **Functionality:** Starts an interactive tutorial that guides the user through the application's features and functionality.
 ---
 
 # Custom Right-Click Context Menu

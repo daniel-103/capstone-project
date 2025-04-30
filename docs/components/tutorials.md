@@ -82,11 +82,27 @@ This tutorial explains the features of the Text Editor.
 - **Main Editor**: "This is the main editor where you can write and edit your content."
 - **AI Assistant**: "This is the AI Assistant, SkripMancer. Use it to generate ideas or get writing suggestions."
 
+## 6. `firstTimeUsers.js`
+
+### Purpose
+This tutorial set is designed specifically for first-time users to guide them through the application's core features and functionality.
+
+### Key Features
+- Automatically detects first-time users and initiates the tutorial sequence.
+- Guides users through the Project Hub, File Hierarchy, and Text Editor.
+- Ensures users understand how to navigate and use the application's main components.
+
+### Example Steps
+- **Project Hub**: "Welcome to Skriptor! This is the Project Hub, where you can manage your projects."
+- **File Hierarchy**: "This is the File Hierarchy. It displays your project's file structure."
+- **Text Editor**: "This is the main editor where you can write and edit your content."
+
 ---
 
 ## General Notes
 - All tutorials use the `introJs` library for interactive guidance.
 - Tutorials are triggered by specific actions or buttons, such as the "Start Tutorial" button in the Help menu.
 - Each tutorial is modular and can be extended with additional steps as needed.
+- The first-time user tutorial is triggered automatically if no prior tutorial completion is detected in `localStorage`.
 
 For more details, refer to the respective tutorial files in the `/src/components/tutorials` folder.
