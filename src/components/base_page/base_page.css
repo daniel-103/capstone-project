@@ -158,7 +158,6 @@ body {
     word-break: break-word; 
 }
 
-
 .module-border-drag-region {
     position: absolute;
     top: 0;
@@ -177,5 +176,5 @@ body {
 }
 
 .ql-toolbar {
-    background-color: white;
+    background-color: var(--toolbar-color);
 }

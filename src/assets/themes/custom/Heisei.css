@@ -12,7 +12,7 @@
     --hub-background-color: var(--red);
     --hub-header-text-color: var(--tan);
     
-    --hub-card-color: var(--purple);
+    --hub-card-color: var(--gold);
     --hub-card-title-text-color: var(--white);
     --hub-card-desc-text-color: var(--tan);
 
@@ -20,12 +20,12 @@
     --hub-card-title-text-hover-color: var(--white);
     --hub-card-desc-text-hover-color: var(--white);
 
-    --hub-card-options-section-color: var(--red);
-    --hub-card-options-button-color: var(--dark-purple);
-    --hub-card-options-icon-color: var(--white);
+    --hub-card-options-section-color: var(--purple);
+    --hub-card-options-button-color: var(--red);
+    --hub-card-options-icon-color: var(--tan);
 
-    --hub-card-options-button-hover-color: var(--white);
-    --hub-card-options-icon-hover-color: var(--purple);
+    --hub-card-options-button-hover-color: var(--red);
+    --hub-card-options-icon-hover-color: var(--white);
 
     --hub-card-delete-confirmation-text-color: var(--white);
 
@@ -171,13 +171,9 @@
 
     /* Page */
     --page-background-color: var(--dark-purple);
-    --page-background-border-color: red;
     
-    --page-snap-line-color: red;
-    --page-grid-color: var(--white);
-    --page-text-color: var(--white);
-    --page-module-selected-color: #0078d7;
-
+    --page-snap-line-color: var(--gold);
+    --page-grid-color: var(--gold);
 
 
     
@@ -205,6 +201,13 @@
     --default-page-editing-module-background-color-hover: var(--red);
     --default-page-editing-module-text-color-hover: var(--white);
     --default-page-editing-module-border-color-hover: var(--white);
+
+
+
+    /* Text Editor */
+    --text-editor-color: var(--red);
+    --text-editor-text-color: var(--white);
+    --toolbar-color: var(--tan);
 
 
     

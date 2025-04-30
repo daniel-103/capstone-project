@@ -189,12 +189,9 @@
 
     /* Page */
     --page-background-color: transparent;
-    --page-background-border-color: var(--black);   /*Not used?*/
 
     --page-snap-line-color: var(--pink);
     --page-grid-color: var(--purple);
-    --page-text-color: var(--grey);
-    --page-module-selected-color: var(--blue);      /*Not used?*/
 
 
     
@@ -222,6 +219,13 @@
     --default-page-editing-module-background-color-hover: var(--light-black);
     --default-page-editing-module-text-color-hover: var(--grey);
     --default-page-editing-module-border-color-hover: var(--pink);
+
+
+    
+    /* Text Editor */
+    --text-editor-color: var(--black);
+    --text-editor-text-color: var(--grey);
+    --toolbar-color: var(--light-blue);
 
     
 
