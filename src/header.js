@@ -163,11 +163,13 @@ function applyZoom() {
     appRoot.style.transformOrigin = "top left"; // Keep scaling consistent
 
     // Adjust the size of the root element to maintain scrollability
-    appRoot.style.width = `${100 / currentZoom}%`;
-    appRoot.style.height = `${100 / currentZoom}%`;
+    appRoot.style.width = `${100 * currentZoom}%`;
+    appRoot.style.height = `${100 * currentZoom}%`;
 
     // Ensure the body is scrollable
-    body.style.overflow = "auto"; // Enable scrolling for the body
+	console.log(body);
+    body.style.overflowX = "auto"; // Enable horizontal scrolling
+    body.style.overflowY = "auto"; // Enable vertical scrolling
     appRoot.style.overflow = "visible"; // Ensure the root element doesn't clip content
 }
 
