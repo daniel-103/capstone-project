@@ -454,7 +454,7 @@ window.top.document.getElementById('file-save-as-txt-btn').addEventListener('cli
 
 
 // Utility function to display a notification
-const showNotification = (message) => {
+export const showNotification = (message) => {
   const notificationArea = document.getElementById("notificationArea");
   const notification = document.createElement("div");
   notification.textContent = message;

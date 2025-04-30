@@ -4,6 +4,7 @@ import { saveSections, getSections } from "./section_save.js";
 import { loadSections } from "./section_load.js";
 import getDoc from "./getTextDoc.js";
 import growSecHierarchy from "../hierarchy/growSecHierarchy.js";
+import { showNotification } from './export.js';
 
 const sections = [];
 
@@ -629,8 +630,30 @@ document.addEventListener("keydown", async (event) => {
         saveSections(sections,entityData);
         entityData = await window.top.db.get(entityId); // Must refresh entityData or _rev will be outdated
         saveTextDocument(entityData,JSON.stringify(quill.getContents()));
+        showNotification('File saved!');
       } catch (err) {
         console.error("Failed to fetch document:", err);
+      }
+  }
+});
+
+window.addEventListener("message", async (event) => {
+  console.log('Message received (text_editor.js):', event.data);
+  if (event.data.action === "save-document") {
+      if (!entityId) {
+          console.error("No entity ID in URL.");
+      } else {
+          try {
+              let entityData = await window.top.db.get(entityId); // Refresh entityData
+              saveSections(sections, entityData);
+              entityData = await window.top.db.get(entityId); // Refresh again
+              saveTextDocument(entityData, JSON.stringify(quill.getContents()));
+              showNotification('File saved!');
+//              window.top.notify("success", "File saved successfully!", 5); // Notify user
+          } catch (err) {
+              console.error("Failed to save document:", err);
+//              window.top.notify("error", "Failed to save the file.", 8); // Notify user
+          }
       }
   }
 });

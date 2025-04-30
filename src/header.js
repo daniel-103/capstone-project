@@ -76,6 +76,26 @@ redirectButton.addEventListener('click', () => {
 
 // File
 //      Save
+const saveButton = document.getElementById("file-save-btn");
+
+saveButton.addEventListener("click", () => {
+	// Access the 'window' iframe
+	const windowIframe = document.getElementById("window");
+
+	if (windowIframe && windowIframe.contentWindow) {
+		// Access the 'textEditorIframe' inside the 'window' iframe
+		const textEditorIframe = windowIframe.contentWindow.document.getElementById("textEditorIframe");
+
+		if (textEditorIframe) {
+			// Now you can interact with the 'textEditorIframe'
+			textEditorIframe.contentWindow.postMessage({ action: "save-document" }, "*");
+		} else {
+			console.error("textEditorIframe not found inside the window iframe.");
+		}
+	} else {
+		console.error("window iframe not found or inaccessible.");
+	}
+});
 
 // 		Save as
 const exportButton = document.getElementById("file-save-as-btn")
