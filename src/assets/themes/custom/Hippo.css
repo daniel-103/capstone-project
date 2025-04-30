@@ -198,6 +198,14 @@
     --default-page-selected-module-background-color-hover: var(--black);
     --default-page-selected-module-text-color-hover: var(--white);
     --default-page-selected-module-border-color-hover: var(--white);
+    
+    --default-page-editing-module-background-color: var(--black);
+    --default-page-editing-module-text-color: var(--white);
+    --default-page-editing-module-border-color: var(--white);
+    
+    --default-page-editing-module-background-color-hover: var(--black);
+    --default-page-editing-module-text-color-hover: var(--white);
+    --default-page-editing-module-border-color-hover: var(--white);
 
 
 

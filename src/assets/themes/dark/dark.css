@@ -88,7 +88,7 @@
     --hierarchy-folder-text-color: var(--white0);
     --hierarchy-folder-icon-color: var(--white2);
     
-    --hierarchy-folder-hover-color: var(--black2);  /**/
+    --hierarchy-folder-hover-color: var(--black2);
     --hierarchy-folder-hover-text-color: var(--white0);
     --hierarchy-folder-hover-icon-color: var(--white2);
 
@@ -145,6 +145,7 @@
 
 
     /* Drop */
+    --hierarchy-drop-target-color: var(--black2);
 
 
 
@@ -197,6 +198,14 @@
     --default-page-selected-module-background-color-hover: var(--black2);
     --default-page-selected-module-text-color-hover: var(--white0);
     --default-page-selected-module-border-color-hover: var(--white0);
+    
+    --default-page-editing-module-background-color: var(--black1);
+    --default-page-editing-module-text-color: var(--white0);
+    --default-page-editing-module-border-color: var(--white0);
+
+    --default-page-editing-module-background-color-hover: var(--black2);
+    --default-page-editing-module-text-color-hover: var(--white0);
+    --default-page-editing-module-border-color-hover: var(--white0);
 
 
     
@@ -233,11 +242,11 @@
     --menu-entry-color: var(--black2);
     --menu-entry-text-color: var(--white0);
 
-    --menu-select-color: var(--purple);
-    --menu-select-text-color: var(--black1);
+    --menu-select-color: var(--black1);
+    --menu-select-text-color: var(--white1);
 
-    --menu-select-hover-color: var(--black2);
-    --menu-select-hover-text-color: var(--black1);
+    --menu-select-hover-color: var(--white1);
+    --menu-select-hover-text-color: var(--black0);
     
     
     --menu-select-option-color: var(--black1);

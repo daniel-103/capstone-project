@@ -19,6 +19,7 @@ button {
     background-color: var(--menu-button-color);
     transition: all 0.2s ease;
     width: fit-content;
+    cursor: pointer;
 }
 
 button:hover {

@@ -45,7 +45,7 @@
 
 
 #theme-section {
-    background-color: var(--hierarchy-section-color);
+    /* background-color: var(--menu-subsection-color); */
     overflow: auto;
     padding: 0.5rem;
     max-width: 20rem;
@@ -58,6 +58,7 @@ ul {
 
 li {
     list-style-type: none;
+    cursor: pointer;
 }
 
 .folder > ul {
@@ -96,6 +97,7 @@ li {
     color: var(--hierarchy-folder-text-color);
     background-color: var(--hierarchy-folder-color);
     transition: all 0.2s ease;
+    font-weight: bold;
 }
 
 .folder:hover > p {

@@ -10,7 +10,7 @@
     moduleElem.classList.add("module", "text-module", "rich-text");
     moduleElem.style.left = (modData.position.x || 0) + "px";
     moduleElem.style.top = (modData.position.y || 0) + "px";
-    moduleElem.style.backgroundColor = styles.getPropertyValue("--default-page-module-background-color").trim();
+    // moduleElem.style.backgroundColor = styles.getPropertyValue("--default-page-module-background-color").trim();
     console.log(moduleElem.style.backgroundColor, styles)
     moduleElem.dataset.moduleKey = modData.type;
     moduleElem.style.width = modData.size?.width || "200px";
@@ -80,13 +80,15 @@
     // Show the toolbar when the editor container is clicked.
     editorContainer.addEventListener("click", function (e) {
       if (quillToolbar) quillToolbar.style.display = "block";
-      e.stopPropagation();
+      moduleElem.classList.add('editing')
+      // e.stopPropagation();
     });
   
     // Hide the toolbar when clicking outside the editor container.
     document.addEventListener("click", function (e) {
       if (!editorContainer.contains(e.target)) {
         if (quillToolbar) quillToolbar.style.display = "none";
+        moduleElem.classList.remove('editing');
       }
     });
   

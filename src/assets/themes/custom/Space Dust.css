@@ -214,6 +214,14 @@
     --default-page-selected-module-background-color-hover: var(--light-black);
     --default-page-selected-module-text-color-hover: var(--grey);
     --default-page-selected-module-border-color-hover: var(--pink);
+    
+    --default-page-editing-module-background-color: var(--black);
+    --default-page-editing-module-text-color: var(--grey);
+    --default-page-editing-module-border-color: var(--pink);
+
+    --default-page-editing-module-background-color-hover: var(--light-black);
+    --default-page-editing-module-text-color-hover: var(--grey);
+    --default-page-editing-module-border-color-hover: var(--pink);
 
     
 
