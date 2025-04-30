@@ -237,8 +237,7 @@ li.folder::after {
 
     fill: var(--hierarchy-folder-icon-color);
 
-    transition: transform 0.2s ease;
-    transition: fill 0.2s ease;
+    transition: transform 0.2s ease, fill 0.2s ease;
 }
 
 
@@ -246,11 +245,13 @@ li.folder::after {
 .folder.open > .folder-name {
     color: var(--hierarchy-open-folder-text-color);
     background-color: var(--hierarchy-open-folder-color);
+    transition: all 0.2s ease;
 }
 
 .folder.open > .folder-name > svg {
     transform: rotate(90deg);
     fill: var(--hierarchy-open-folder-icon-color);
+    transition: all 0.2s ease;
 }
 
 .folder.open:hover > .folder-name {
@@ -266,10 +267,12 @@ li.folder::after {
 .folder.selected > .folder-name {
     color: var(--hierarchy-selected-folder-text-color);
     background-color: var(--hierarchy-selected-folder-color);
+    transition: all 0.2s ease;
 }
 
 .folder.selected > .folder-name > svg {
     fill: var(--hierarchy-selected-folder-icon-color);
+    transition: all 0.2s ease;
 }
 
 .folder.selected:hover > .folder-name {
@@ -285,10 +288,12 @@ li.folder::after {
 .folder.selected.open > .folder-name {
     color: var(--hierarchy-selected-open-folder-text-color);
     background-color: var(--hierarchy-selected-open-folder-color);
+    transition: all 0.2s ease;
 }
 
 .folder.selected.open > .folder-name > svg {
     fill: var(--hierarchy-selected-open-folder-icon-color);
+    transition: all 0.2s ease;
 }
 
 .folder.selected.open:hover > .folder-name {
@@ -320,6 +325,7 @@ li.folder::after {
     cursor: pointer;
     color: var(--hierarchy-file-text-color);
     background-color: var(--hierarchy-file-color);
+    transition: all 0.2s ease;
 }
 
 .file:hover {

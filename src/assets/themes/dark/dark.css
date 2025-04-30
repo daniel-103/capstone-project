@@ -87,7 +87,8 @@
     --hierarchy-folder-color: transparent;
     --hierarchy-folder-text-color: var(--white0);
     --hierarchy-folder-icon-color: var(--white2);
-    
+
+    --hierarchy-folder-hover-color: var(--black2);  /**/
     --hierarchy-folder-hover-color: var(--black2);
     --hierarchy-folder-hover-text-color: var(--white0);
     --hierarchy-folder-hover-icon-color: var(--white2);
@@ -96,7 +97,7 @@
     --hierarchy-open-folder-color: var(--black2);
     --hierarchy-open-folder-text-color: var(--white0);
     --hierarchy-open-folder-icon-color: var(--white1);
-    
+
     --hierarchy-open-folder-hover-color: var(--white2);
     --hierarchy-open-folder-hover-text-color: var(--white0);
     --hierarchy-open-folder-hover-icon-color: var(--white1);
@@ -114,7 +115,7 @@
     --hierarchy-selected-open-folder-color: var(--black2);
     --hierarchy-selected-open-folder-text-color: var(--white0);
     --hierarchy-selected-open-folder-icon-color: var(--white0);
-    
+
     --hierarchy-selected-open-folder-hover-color: var(--white2);
     --hierarchy-selected-open-folder-hover-text-color: var(--white0);
     --hierarchy-selected-open-folder-hover-icon-color: var(--white0);
@@ -136,7 +137,7 @@
     --hierarchy-tree-vertical-thickness: 2;
     --hierarchy-tree-horizontal-color: var(--black2);
     --hierarchy-tree-horizontal-thickness: 2;
-    
+
     --hierarchy-tree-hover-vertical-color: var(--white0);   /* Not used? */
     --hierarchy-tree-hover-vertical-thickness: 8;           /* Not used? */
     --hierarchy-tree-hover-horizontal-color: var(--white0); /* Not used? */
@@ -173,7 +174,7 @@
     /* Page */
     --page-background-color: var(--black0);
     --page-background-border-color: red;
-    
+
     --page-snap-line-color: red;
     --page-grid-color: var(--white0);
     --page-text-color: var(--white0);
@@ -181,7 +182,7 @@
 
 
 
-    
+
     /* Modules */
     --default-page-module-background-color: var(--black1);
     --default-page-module-text-color: var(--white1);
@@ -190,7 +191,7 @@
     --default-page-module-background-color-hover: var(--black2);
     --default-page-module-text-color-hover: var(--white0);
     --default-page-module-border-color-hover: var(--white0);
-    
+
     --default-page-selected-module-background-color: var(--black1);
     --default-page-selected-module-text-color: var(--white0);
     --default-page-selected-module-border-color: var(--white0);
@@ -208,7 +209,7 @@
     --default-page-editing-module-border-color-hover: var(--white0);
 
 
-    
+
     /* Timeline (Not used) */
     --timeline-page-timeline-color: white;
     --compact-box-background-color: rgb(69, 45, 137);
@@ -220,7 +221,7 @@
     --options-text-color: #f0f0f0;    
     --options-border-color: #444;      
     --options-highlight-color: #6db5ff;
-    
+
     --options-input-bg: #3b3e43;
     --options-input-text: #ffffff;
     --options-hover-bg: #45494f;
@@ -242,13 +243,17 @@
     --menu-entry-color: var(--black2);
     --menu-entry-text-color: var(--white0);
 
+    --menu-select-color: var(--purple);
+    --menu-select-text-color: var(--black1);
     --menu-select-color: var(--black1);
     --menu-select-text-color: var(--white1);
 
+    --menu-select-hover-color: var(--black2);
+    --menu-select-hover-text-color: var(--black1);
     --menu-select-hover-color: var(--white1);
     --menu-select-hover-text-color: var(--black0);
-    
-    
+
+
     --menu-select-option-color: var(--black1);
     --menu-select-option-text-color: var(--white1);
 

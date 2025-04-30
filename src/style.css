@@ -80,8 +80,7 @@ p {
     color: var(--header-text-color);
     -webkit-app-region: no-drag;
     
-    transition: color 0.2s ease;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 #logo button {

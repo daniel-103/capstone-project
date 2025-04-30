@@ -1,0 +1,265 @@
+:root {
+    --white: #FFFFFF;
+    --tan: #e9c98d;
+    --gold: #dc9950;
+    --red: #a44c43;
+    --purple: #392e4e;
+    --dark-purple: #261f2d;
+
+
+
+    /* Hub */
+    --hub-background-color: var(--red);
+    --hub-header-text-color: var(--tan);
+    
+    --hub-card-color: var(--purple);
+    --hub-card-title-text-color: var(--white);
+    --hub-card-desc-text-color: var(--tan);
+
+    --hub-card-hover-color: var(--tan);
+    --hub-card-title-text-hover-color: var(--white);
+    --hub-card-desc-text-hover-color: var(--white);
+
+    --hub-card-options-section-color: var(--red);
+    --hub-card-options-button-color: var(--dark-purple);
+    --hub-card-options-icon-color: var(--white);
+
+    --hub-card-options-button-hover-color: var(--white);
+    --hub-card-options-icon-hover-color: var(--purple);
+
+    --hub-card-delete-confirmation-text-color: var(--white);
+
+
+
+    /* Background */
+    --background-color: var(--dark-purple);
+    --background-icon-color: transparent;
+    --background-icon-scale: 0;
+
+
+
+    /* Header */
+    --header-section-color: var(--gold);
+
+    --header-logo-primary-color: var(--white);     /* Not used? */
+    --header-logo-secondary-color: var(--tan);   /* Not used? */
+
+    --header-button-color: transparent;
+    --header-text-color: var(--purple);
+
+    --header-button-hover-color: var(--tan);
+    --header-hover-text-color: var(--purple);
+
+    --header-dropdown-color: var(--purple);
+    --header-dropdown-text-color: var(--tan);
+
+    --header-dropdown-hover-color: var(--tan);
+    --header-dropdown-hover-text-color: var(--purple);
+
+    --header-dropdown-divider-color: var(--gold);
+
+    --header-window-controls-color: var(--red);
+    --header-window-controls-icon-color: var(--tan);
+    --header-window-controls-hover-color: var(--tan);
+    --header-window-controls-icon-hover-color: var(--red);
+
+
+
+    /* Hierarchy */
+    --left-panel-options-section-color: var(--gold);
+    --left-panel-options-button-color: var(--red);
+    --left-panel-options-icon-color: var(--tan);
+    --left-panel-options-button-hover-color: var(--red);
+    --left-panel-options-icon-hover-color:var(--white);
+
+
+
+    --left-panel-slideout-section-color: var(--purple);
+    --left-panel-slideout-text-color: var(--tan);
+    --left-panel-slideout-button-color: var(--purple);
+    --left-panel-slideout-text-hover-color: var(--purple);
+    --left-panel-slideout-button-hover-color: var(--tan);
+
+
+
+    --hierarchy-section-color: var(--red);
+
+    /* Folder */
+    --hierarchy-folder-color: transparent;
+    --hierarchy-folder-text-color: var(--tan);
+    --hierarchy-folder-icon-color: var(--tan);
+    
+    --hierarchy-folder-hover-color: var(--tan);
+    --hierarchy-folder-hover-text-color: var(--red);
+    --hierarchy-folder-hover-icon-color: var(--gold);
+
+    /* Open */
+    --hierarchy-open-folder-color: var(--tan);
+    --hierarchy-open-folder-text-color: var(--dark-purple);
+    --hierarchy-open-folder-icon-color: var(--gold);
+    
+    --hierarchy-open-folder-hover-color: var(--tan);
+    --hierarchy-open-folder-hover-text-color: var(--red);
+    --hierarchy-open-folder-hover-icon-color: var(--gold);
+
+    /* Selected */
+    --hierarchy-selected-folder-color: transparent;
+    --hierarchy-selected-folder-text-color: var(--tan);
+    --hierarchy-selected-folder-icon-color: var(--white);
+
+    --hierarchy-selected-folder-hover-color: var(--tan);
+    --hierarchy-selected-folder-hover-text-color: var(--red);
+    --hierarchy-selected-folder-hover-icon-color: var(--white);
+
+    /* Selected and Open */
+    --hierarchy-selected-open-folder-color: var(--tan);
+    --hierarchy-selected-open-folder-text-color: var(--dark-purple);
+    --hierarchy-selected-open-folder-icon-color: var(--white);
+    
+    --hierarchy-selected-open-folder-hover-color: var(--tan);
+    --hierarchy-selected-open-folder-hover-text-color: var(--red);
+    --hierarchy-selected-open-folder-hover-icon-color: var(--white);
+
+    /* New */
+    --hierarchy-new-folder-color: var(--purple);
+    --hierarchy-new-folder-text-color: var(--white);
+    --hierarchy-new-folder-icon-color: var(--gold);
+
+    /* File */
+    --hierarchy-file-color: transparent;
+    --hierarchy-file-text-color: var(--tan);
+
+    --hierarchy-file-hover-color: var(--red);
+    --hierarchy-file-hover-text-color: var(--white);
+
+    /* Tree */
+    --hierarchy-tree-vertical-color: var(--gold);
+    --hierarchy-tree-vertical-thickness: 2;
+    --hierarchy-tree-horizontal-color: var(--tan);
+    --hierarchy-tree-horizontal-thickness: 2;
+    
+    --hierarchy-tree-hover-vertical-color: var(--white);   /* Not used? */
+    --hierarchy-tree-hover-vertical-thickness: 8;           /* Not used? */
+    --hierarchy-tree-hover-horizontal-color: var(--white); /* Not used? */
+    --hierarchy-tree-hover-horizontal-thickness: 8;         /* Not used? */
+
+    /* Drop */
+    --hierarchy-drop-target-color: var(--red);
+
+
+
+    /* Tabs */
+    --tab-section-color: var(--gold);
+
+    --tab-color: var(--red);
+    --tab-text-color: var(--tan);
+    --tab-icon-color: var(--tan);
+
+    --tab-hover-color: var(--red);
+    --tab-hover-text-color: var(--tan);
+    --tab-icon-hover-color: red;
+
+    --tab-active-color: var(--tan);
+    --tab-active-text-color: var(--dark-purple);
+    --tab-active-icon-color: var(--dark-purple);
+
+    --tab-active-hover-color: var(--tan);
+    --tab-active-hover-text-color: var(--purple);
+    --tab-active-icon-hover-color: red;
+
+
+
+    /* Page */
+    --page-background-color: var(--dark-purple);
+    --page-background-border-color: red;
+    
+    --page-snap-line-color: red;
+    --page-grid-color: var(--white);
+    --page-text-color: var(--white);
+    --page-module-selected-color: #0078d7;
+
+
+
+    
+    /* Modules */
+    --default-page-module-background-color: var(--red);
+    --default-page-module-text-color: var(--tan);
+    --default-page-module-border-color: var(--tan);
+
+    --default-page-module-background-color-hover: var(--red);
+    --default-page-module-text-color-hover: var(--tan);
+    --default-page-module-border-color-hover: var(--white);
+    
+    --default-page-selected-module-background-color: var(--tan);
+    --default-page-selected-module-text-color: var(--red);
+    --default-page-selected-module-border-color: var(--red);
+
+    --default-page-selected-module-background-color-hover: var(--tan);
+    --default-page-selected-module-text-color-hover: var(--red);
+    --default-page-selected-module-border-color-hover: var(--white);
+    
+    --default-page-editing-module-background-color: var(--red);
+    --default-page-editing-module-text-color: var(--white);
+    --default-page-editing-module-border-color: var(--tan);
+
+    --default-page-editing-module-background-color-hover: var(--red);
+    --default-page-editing-module-text-color-hover: var(--white);
+    --default-page-editing-module-border-color-hover: var(--white);
+
+
+    
+    /* Timeline (Not used) */
+    --timeline-page-timeline-color: white;
+    --compact-box-background-color: rgb(69, 45, 137);
+    --compact-box-border-color: rgb(204, 0, 0);
+    --expanded-box-background-color: rgb(69, 45, 137);
+    --expanded-box-border-color: rgb(204, 0, 0);
+
+    --options-bg-color: #2d2f33;   
+    --options-text-color: #f0f0f0;    
+    --options-border-color: #444;      
+    --options-highlight-color: #6db5ff;
+    
+    --options-input-bg: #3b3e43;
+    --options-input-text: #ffffff;
+    --options-hover-bg: #45494f;
+    --button-border-color: #666;
+
+
+
+    /* Header Menus */
+    --menu-background-color: var(--dark-purple);
+
+    --menu-section-title-color: var(--white);
+    --menu-section-color: var(--purple);
+    --menu-section-text-color: var(--tan);
+
+    --menu-subsection-title-color: var(--white);
+    --menu-subsection-color: var(--red);
+    --menu-subsection-text-color: var(--gold);
+
+    --menu-entry-color: var(--red);
+    --menu-entry-text-color: var(--white);
+
+    --menu-select-color: var(--purple);
+    --menu-select-text-color: var(--tan);
+
+    --menu-select-hover-color: var(--tan);
+    --menu-select-hover-text-color: var(--dark-purple);
+    
+    
+    --menu-select-option-color: var(--purple);
+    --menu-select-option-text-color: var(--tan);
+
+    --menu-select-option-hover-color: var(--tan);
+    --menu-select-option-hover-text-color: var(--purple);
+
+
+    --menu-button-color: var(--purple);
+    --menu-button-text-color: var(--tan);
+
+    --menu-button-hover-color: var(--tan);
+    --menu-button-hover-text-color: var(--dark-purple);
+
+    --hierarchy-drop-target-color: rgba(169, 169, 169, 0.1);
+}
