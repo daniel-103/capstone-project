@@ -71,7 +71,7 @@ class Section {
     let lineContainer = this.labelBox.parentElement;
     console.log(lineContainer.children[3]);
     lineContainer.children[3].style.top = `${newTopPosition}px`;
-    //lineContainer.children[4].style.top = `${parseInt(colorDropdown.style.top) + parseInt(colorDropdown.style.height)+ 5}px`;
+    lineContainer.children[4].style.top = `${newTopPosition + 25}px`;
     console.log(colorDropdown);
 
     console.log("Updated Section:", {
@@ -347,54 +347,45 @@ export function createSection() {
   // Add the "|" symbol
   labelMoveTab.textContent = '-';
 
-  // Create a color dropdown button
-  const colorDropdown = document.createElement('select');
+  // Create a color input button
+  const colorDropdown = document.createElement('input');
+  colorDropdown.type = 'color';
   colorDropdown.id = 'colorDropdown';
-  colorDropdown.style.position = 'relative';
+  colorDropdown.value = '#000000'; // Default color in hex (black)
+  colorDropdown.style.position = 'absolute';
   colorDropdown.style.top = `${labelTop}px`; // Align with labelBox
   colorDropdown.style.left = `${parseInt(labelBox.style.left) + parseInt(labelBox.style.width)}px`; // Place next to labelBox
-  colorDropdown.style.width = '25px'; // Small square dropdown
+  colorDropdown.style.width = '25px'; // Small square input
   colorDropdown.style.height = '22px'; // Match labelBox height
   colorDropdown.style.border = '1px solid black';
+  colorDropdown.style.borderRadius = '50%';
   colorDropdown.style.padding = '0';
   colorDropdown.style.cursor = 'pointer';
-  colorDropdown.style.backgroundColor = 'black'; // Default color
+  colorDropdown.style.backgroundColor = '#000000'; // Default color
   colorDropdown.style.zIndex = '100';
-  // Define color options
-  const colors = [
-    "black", "red", "lightblue", "green", "orange", "lightpurple",
-    "yellow", "cyan", "magenta", "gray", "brown", "pink",
-    "lime", "teal", "navy", "gold", "silver", "maroon",
-    "olive", "indigo", "violet", "turquoise", "beige"
-  ];
 
-  // Populate dropdown with color choices
-  colors.forEach(color => {
-    let option = document.createElement('option');
-    option.value = color;
-    option.style.backgroundColor = color; // Set background color of option
-    option.textContent = " "; // Empty text so only color is shown
-    //option.style.position = 'absolute';
-    colorDropdown.appendChild(option);
-  });
-
-  // Change line color & dropdown background when selecting a color
-  colorDropdown.addEventListener('change', () => {
+  // Change line color and update background when a color is picked
+  colorDropdown.addEventListener('input', () => {
     lineElement.style.borderColor = colorDropdown.value;
-    colorDropdown.style.backgroundColor = colorDropdown.value; // Change dropdown to selected color
+    colorDropdown.style.backgroundColor = colorDropdown.value;
     section.color = colorDropdown.value;
   });
+
+  // Replace the old dropdown with the new picker in the DOM
+  // For example, if you were appending the dropdown before:
+  document.body.appendChild(colorDropdown);
 
 
   // Create a line type dropdown button
   const lineTypeDropdown = document.createElement('select');
   lineTypeDropdown.id = 'lineTypeDropdown';
-  lineTypeDropdown.style.position = 'relative';
+  lineTypeDropdown.style.position = 'absolute';
   lineTypeDropdown.style.top = `${parseInt(colorDropdown.style.top) + parseInt(colorDropdown.style.height)+ 5}px`; // Below the color dropdown
-  lineTypeDropdown.style.left = `${parseInt(labelBox.style.left) + parseInt(labelBox.style.width) - 25}px`; // Same left position
+  lineTypeDropdown.style.left = `${parseInt(labelBox.style.left) + parseInt(labelBox.style.width)}px`; // Same left position
   lineTypeDropdown.style.width = '25px'; // Slightly wider for line type selection
   lineTypeDropdown.style.height = '22px'; // Match height of color dropdown
   lineTypeDropdown.style.border = '1px solid black';
+  lineTypeDropdown.style.borderRadius = '50%';
   lineTypeDropdown.style.padding = '0';
   lineTypeDropdown.style.cursor = 'pointer';
   lineTypeDropdown.style.backgroundColor = 'white'; // Default background
@@ -440,7 +431,7 @@ export function createSection() {
   }
 
   makeDraggable(labelMoveTab, labelBox, section);
-  growSecHierarchyEvent(sections);
+  
   quill.on('text-change', (delta, oldDelta, source) => {
     if (source === 'user') {
       
@@ -449,8 +440,7 @@ export function createSection() {
     }
   });
   console.log(sections);
-  //saveSections(sections);
-  //getSections();
+
 }
 
 function findParentSection(newSection) {
