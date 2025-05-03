@@ -84,7 +84,7 @@
 
     const getItemDiv = (id, newEntityData) => {
       const nameModule = newEntityData.modules.find(m => m.type === "name");
-      const name = (nameModule && nameModule.value && nameModule.value[0]) || "no name";
+      const name = newEntityData.name ? newEntityData.name : (nameModule && nameModule.value && nameModule.value[0]) || "no name";
       const relationshipModule = newEntityData.modules.find(m => m.type === "relationships");
       const itemDiv = document.createElement("div");
       itemDiv.textContent = name;
@@ -251,6 +251,7 @@
             });
             const suggestions = term ? filtered : filtered.slice(0, 5);
             suggestions.forEach(doc => {
+              console.log(doc);
               const name = doc.name ? doc.name : doc.modules.find(m => m.type === "name").value[0];
               const suggestionItem = document.createElement("div");
               suggestionItem.textContent = name;

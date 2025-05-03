@@ -18,8 +18,6 @@ function handleSelect(event) {
         if (!module) return;
 
         module.dataset.selected = "true";
-    } else {
-        console.log("no region")
-    }
+    } 
 }
 

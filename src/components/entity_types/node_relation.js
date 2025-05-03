@@ -3,6 +3,7 @@ const nodeGraphData = {
     parentId: null,
     type: 'file',
     fileType: 'nodeGraph',
+    name: 'Graph',
     modules: [
         { type: "nodeGraph",value: ['Relationship Map'],position: {x: '500', y: '0' }, scripts: ['../scripts/nodeGraphScript.js'] },
 
