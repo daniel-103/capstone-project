@@ -216,7 +216,16 @@ const quill = new Quill('#editor', {
           audioModal.style.display = "block";
 
           const quillContent = quill.getText().trim();
-          const audioUrl = await textToSpeech(quillContent);
+          let audioUrl;
+
+          // Get the highlighted text
+          const range = quill.getSelection();
+          const highlightedText = range ? quill.getText(range.index, range.length).trim() : '';
+          if (highlightedText) {
+            audioUrl = await textToSpeech(highlightedText);
+          } else {
+            audioUrl = await textToSpeech(quillContent);
+          }
           audioSource.src = audioUrl;
           audio.load();
           audio.style.display = "block";

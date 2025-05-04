@@ -68,84 +68,90 @@ html, body {
     top: 50px;
     left: calc(50% + 600px);
     width: 300px; /* Adjust the width as needed */
-    height: 600px; /* Adjust the height as needed */
     z-index: 1000;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ccc;
-    border-radius: 10px; /* Rounded corners */
-    overflow: auto;
-    resize: both; /* Make the modal resizable */
-    min-width: 200px; /* Minimum width */
-    min-height: 200px; /* Minimum height */
+    background-color: #fff; /* Clean white background */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 12px; /* Smooth rounded corners */
+    overflow: hidden; /* Prevent content overflow */
+    resize: both; /* Allow resizing */
+    min-width: 300px; /* Minimum width */
+    min-height: 300px; /* Minimum height */
 }
 
 .ai-assistant-modal-header {
-    padding: 10px;
-    background-color: #4CAF50; /* Green bsackground */
-    color: white; /* White text */
-    cursor: move; /* Cursor change to indicate draggable */
-    border-top-left-radius: 10px; /* Rounded corners for the header */
-    border-top-right-radius: 10px; /* Rounded corners for the header */
-    user-select: none;
-}
-
-.ai-assistant-modal-content {
+    padding: 15px;
+    background-color: #4CAF50; /* Green header for distinction */
+    color: #fff; /* White text for contrast */
+    font-size: 1.2rem; /* Larger font size for readability */
+    font-weight: bold; /* Emphasize header text */
+    cursor: move; /* Indicate draggable header */
+    border-top-left-radius: 12px; /* Match modal corners */
+    border-top-right-radius: 12px; /* Match modal corners */
+    user-select: none; /* Prevent text selection */
     display: flex;
-    flex-direction: column;
-    height: calc(100% - 40px); /* Adjust height to account for header */
-    padding: 20px;
-    overflow: auto; /* Ensure content is scrollable if it overflows */
+    justify-content: space-between; /* Space between title and close button */
+    align-items: center;
 }
 
 .ai-assistant-modal-close-modal {
     align-self: flex-end;
     cursor: pointer;
-    font-size: 20px;
-    color: #aaa;
+    font-size: 22px;
+    color: #9e9d9d;
     transition: color 0.3s;
 }
 
-.ai-assistant-modal-close-modal:hover,
-.ai-assistant-modal-close-modal:focus {
-    color: black;
-    text-decoration: none;
+.ai-assistant-modal-close-modal:hover {
+    color: #fff; /* White color on hover */
 }
 
-#ai-assistant-modal textarea {
-    width: 100%;
-    height: 100px;
-    margin-bottom: 10px;
-}
-
-#ai-assistant-modal button {
-    align-self: flex-end;
-    background-color: #4CAF50; /* Green background */
-    border: none; /* Remove borders */
-    color: white; /* White text */
-    padding: 10px 20px; /* Some padding */
-    text-align: center; /* Centered text */
-    text-decoration: none; /* Remove underline */
-    display: inline-block; /* Make the container inline-block */
-    font-size: 16px; /* Increase font size */
-    margin: 4px 2px; /* Some margin */
-    cursor: pointer; /* Pointer/hand icon */
-    border-radius: 12px; /* Rounded corners */
-    transition: background-color 0.3s; /* Smooth transition */
-}
-
-#ai-assistant-modal button:hover {
-    background-color: #45a049; /* Darker green on hover */
+.ai-assistant-modal-content {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px; /* Add spacing between elements */
+    max-height: 400px; /* Limit height for better usability */
+    overflow-y: auto; /* Enable scrolling if content overflows */
+    font-family: 'Arial', sans-serif; /* Clean font */
+    color: #333; /* Neutral text color */
 }
 
 #ai-response {
     flex: 1;
-    overflow-y: auto;
-    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9; /* Light background for response area */
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    overflow-y: auto; /* Enable scrolling for long responses */
+    font-size: 0.95rem; /* Slightly smaller font size */
+    color: #444; /* Neutral text color */
 }
 
 #ai-input {
-    margin-bottom: 10px;
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 1rem; /* Readable font size */
+    resize: none; /* Disable resizing */
+}
+
+#ai-assistant-modal button {
+    align-self: flex-end;
+    background-color: #4CAF50; /* Green button for positive action */
+    border: none; /* Remove borders */
+    color: #fff; /* White text */
+    padding: 10px 20px; /* Add padding */
+    font-size: 1rem; /* Readable font size */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+#ai-assistant-modal button:hover {
+    background-color: #45a049; /* Darker green on hover */
 }
 
 .research-modal {
@@ -166,20 +172,62 @@ html, body {
 
 .research-modal-header {
     padding: 15px;
-    background-color: #2196F3; /* Green bsackground */
-    color: white; /* White text */
-    cursor: move; /* Cursor change to indicate draggable */
+    background-color: #2196F3; /* Blue background for distinction */
+    color: #fff; /* White text for contrast */
+    font-size: 1.2rem; /* Match font size with AI assistant modal */
+    font-weight: bold; /* Emphasize header text */
+    cursor: move; /* Indicate draggable header */
     border-top-left-radius: 15px; /* Rounded corners for the header */
     border-top-right-radius: 15px; /* Rounded corners for the header */
-    user-select: none;
+    user-select: none; /* Prevent text selection */
+    display: flex;
+    justify-content: space-between; /* Space between title and close button */
+    align-items: center; /* Center-align content vertically */
 }
 
 .research-modal-content {
-    display: flex;
-    flex-direction: column;
-    height: calc(100% - 50px); /* Adjust height to account for header */
-    padding: 25px;
-    overflow: auto; /* Ensure content is scrollable if it overflows */
+    background-color: #f9f9f9; /* Light background for better readability */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Add some spacing inside the modal */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    font-family: 'Arial', sans-serif; /* Clean font */
+    color: #333; /* Dark text for contrast */
+    max-width: 600px; /* Limit the width for better layout */
+    margin: 0 auto; /* Center the content */
+    text-align: center; /* Center-align text */
+}
+
+.research-modal-content input[type="text"] {
+    width: 80%; /* Make the input field responsive */
+    padding: 10px; /* Add padding for better usability */
+    margin: 10px 0; /* Space around the input */
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 1rem; /* Readable font size */
+}
+
+.research-modal-content button {
+    background-color: #007BFF; /* Primary button color */
+    color: #fff; /* White text */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Add padding */
+    margin: 5px; /* Space between buttons */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 1rem; /* Readable font size */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.research-modal-content button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.research-modal-content span {
+    font-size: 1.2rem; /* Slightly larger close button */
+    color: #999; /* Subtle color */
+    cursor: pointer; /* Pointer cursor */
+    float: right; /* Align to the right */
+    margin-top: -10px; /* Adjust position */
 }
 
 .research-modal-close-modal {
@@ -192,7 +240,7 @@ html, body {
 
 .research-modal-close-modal:hover,
 .research-modal-close-modal:focus {
-    color: #555;
+    color: #fff;
     text-decoration: none;
 }
 
@@ -215,12 +263,17 @@ html, body {
 
 .audio-player-modal-header {
     padding: 15px;
-    background-color: #f33a21; /* Green bsackground */
-    color: white; /* White text */
-    cursor: move; /* Cursor change to indicate draggable */
+    background-color: #f33a21; /* Distinct red background for Text-to-Speech modal */
+    color: #fff; /* White text for contrast */
+    font-size: 1.2rem; /* Match font size with AI Assistant and Research modals */
+    font-weight: bold; /* Emphasize header text */
+    cursor: move; /* Indicate draggable header */
     border-top-left-radius: 15px; /* Rounded corners for the header */
     border-top-right-radius: 15px; /* Rounded corners for the header */
-    user-select: none;
+    user-select: none; /* Prevent text selection */
+    display: flex;
+    justify-content: space-between; /* Space between title and close button */
+    align-items: center; /* Center-align content vertically */
 }
 
 .audio-player-modal-content {
@@ -241,6 +294,6 @@ html, body {
 
 .audio-player-modal-close-modal:hover,
 .audio-player-modal-close-modal:focus {
-    color: #6b6a6a;
+    color: #fff;
     text-decoration: none;
 }
