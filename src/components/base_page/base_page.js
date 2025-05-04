@@ -18,7 +18,10 @@ async function init() {
   try {
     entityData = await window.top.db.get(entityId);
 
-    const moduleAddHandler = (e) => moduleAdd(entityData, e.detail.modulePath, "#page-container");
+    const moduleAddHandler = (e) => {
+      if (!e.detail.entityId || e.detail.entityId !== entityData._id) return;
+      moduleAdd(entityData, e.detail.modulePath, "#page-container");
+    }
     const addFileOptionHandler = async (e) => {
       if (!e.detail.entityId || e.detail.entityId !== entityData._id) return;
       const newEntityData = await window.top.db.get(entityId);

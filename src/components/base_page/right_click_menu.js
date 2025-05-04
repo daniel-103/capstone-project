@@ -1,10 +1,6 @@
 const moduleTypes = {'text editor' : '../scripts/richEditorText.js'};
 const default_module = { type: "New Module",    value: ["{\"ops\":[{\"insert\":\"\\n\"}]}"],      position: { x: 500, y: 550 }, size: { width: "400px", height: "120px" }, scripts: ['../scripts/richEditorText.js']  };
-// Create menu items with click IDs
-const formattedModuleTypes = Object.keys(moduleTypes).map(moduleType => ({
-  label: moduleType,
-  clickId: JSON.stringify({ action: moduleType })
-}));
+
 
 
 // Handle right-clicks
@@ -13,6 +9,12 @@ window.addEventListener('contextmenu', (e) => {
 
   const activeTab = window.top.tabs.find(tab => tab.containerElem.classList.contains("active"));
   const entityId = activeTab.id;
+
+  // Create menu items with click IDs
+  const formattedModuleTypes = Object.keys(moduleTypes).map(moduleType => ({
+    label: moduleType,
+    clickId: JSON.stringify({ action: moduleType, fileId: entityId })
+  }));
   
   window.top.rightClickMenu.show(JSON.stringify([
     {
@@ -57,7 +59,7 @@ async function handleClick(actionId) {
     // Define event based off what was clicked
     if (Object.keys(moduleTypes).includes(actionId)) {
       addModuleEvent = new CustomEvent('add-module-event', {
-          detail: { modulePath: moduleTypes[actionId] }
+          detail: { modulePath: moduleTypes[actionId], entityId: info.fileId }
       });
     } else if (actionId === "Add File Type") {
       if (!info) return;
