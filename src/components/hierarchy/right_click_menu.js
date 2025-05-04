@@ -125,12 +125,12 @@ async function handleClick(actionId) {
     };
 
     // Event handlers
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') saveName();
+    input.addEventListener('keydown', async (e) => {
+      if (e.key === 'Enter') await saveName();
       if (e.key === 'Escape') fileElement.textContent = originalName;
     });
 
-    input.addEventListener('blur', saveName);
+    input.addEventListener('blur',  async (e) => saveName());
   } else if (actionId ==="delete-file") {
     // remove the tab is it exists
     const tabIndex = window.top.tabs.findIndex(tab => tab.id === entityId);

@@ -19,7 +19,10 @@ async function init() {
     entityData = await window.top.db.get(entityId);
 
     const moduleAddHandler = (e) => moduleAdd(entityData, e.detail.modulePath, "#page-container");
-    const addFileOptionHandler = (e) => addFileOption(entityData);
+    const addFileOptionHandler = async (e) => {
+      const newEntityData = await window.top.db.get(entityId);
+      addFileOption(newEntityData);
+    }
     window.addEventListener("add-module-event", moduleAddHandler)
     window.addEventListener("add-type-event", addFileOptionHandler)
 

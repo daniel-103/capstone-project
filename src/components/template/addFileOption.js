@@ -16,6 +16,7 @@ async function addFileOption(entityData) {
     }
 
     const newName = entityData.name ? entityData.name : entityData.modules[0].value[0];
+    console.log(entityData);
     const newType = {
         id: `btn-new-${newName.toLowerCase().replace(/\s+/g, '-')}`,
         title: `Create a new ${newName} Page`,
