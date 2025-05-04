@@ -1,6 +1,6 @@
 const templateData = {
     name: 'Empty Project',
-    image: '../../assets/images/Short Story.jpg',
+    image: '../../assets/images/empty.jpg',
     description: 'Start from scratch',
     files: [
         {
