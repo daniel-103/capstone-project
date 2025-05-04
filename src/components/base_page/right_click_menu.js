@@ -10,6 +10,9 @@ const formattedModuleTypes = Object.keys(moduleTypes).map(moduleType => ({
 // Handle right-clicks
 window.addEventListener('contextmenu', (e) => {
   e.preventDefault();
+
+  const activeTab = window.top.tabs.find(tab => tab.containerElem.classList.contains("active"));
+  const entityId = activeTab.id;
   
   window.top.rightClickMenu.show(JSON.stringify([
     {
@@ -18,7 +21,7 @@ window.addEventListener('contextmenu', (e) => {
     },
     {
       label: 'Save Page as Type',
-      clickId: JSON.stringify({ action: "Add File Type" })
+      clickId: JSON.stringify({ action: "Add File Type", fileId: entityId})
     }
   ]));
 });
@@ -29,8 +32,9 @@ window.top.rightClickMenu.onMenuAction(async (actionId) => {
 });
 
 async function handleClick(actionId) {
+    let info = null;
     try {
-      const info = JSON.parse(actionId);
+      info = JSON.parse(actionId);
       actionId = info.action;
     } catch (e) {
       console.log(e);
@@ -56,7 +60,10 @@ async function handleClick(actionId) {
           detail: { modulePath: moduleTypes[actionId] }
       });
     } else if (actionId === "Add File Type") {
-      addModuleEvent = new CustomEvent('add-type-event');
+      if (!info) return;
+      addModuleEvent = new CustomEvent('add-type-event', {
+        detail: { entityId: info.fileId }
+      });
     }
 
     if (addModuleEvent) {

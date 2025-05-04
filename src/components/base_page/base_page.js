@@ -20,6 +20,7 @@ async function init() {
 
     const moduleAddHandler = (e) => moduleAdd(entityData, e.detail.modulePath, "#page-container");
     const addFileOptionHandler = async (e) => {
+      if (!e.detail.entityId || e.detail.entityId !== entityData._id) return;
       const newEntityData = await window.top.db.get(entityId);
       addFileOption(newEntityData);
     }
