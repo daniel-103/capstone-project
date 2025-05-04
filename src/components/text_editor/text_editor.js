@@ -295,9 +295,9 @@ export function createSection() {
   // Create a line element in the left container
   const lineElement = document.createElement('div');
   lineElement.style.position = 'absolute';
-  lineElement.style.top = `${topPosition}px`; // Align the top of the line with the top of the selection
+  lineElement.style.top = `${topPosition - 20}px`; // Align the top of the line with the top of the selection
   lineElement.style.left = '120px'; // A slight left margin
-  lineElement.style.width = '1045px'; // Line width
+  lineElement.style.width = '1150px'; // Line width
   //lineElement.style.backgroundColor = 'red'; // Line color
   lineElement.style.margin = '10px';
   lineElement.style.borderStyle = lineStyle;
