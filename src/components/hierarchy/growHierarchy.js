@@ -81,7 +81,7 @@ async function growHierarchy(parentFolder) {
             file.innerHTML = `${childName}`;
             file.draggable = true;
             file.style.userSelect = 'none';
-            file.addEventListener('click', () => {
+            file.addEventListener('click', async () => {
                 if (!child.fileType) {
                     return;
                 }
@@ -95,9 +95,11 @@ async function growHierarchy(parentFolder) {
                 }
                 const pageWindow = window.parent.document.getElementById("page-window");
                 const tabHeader = window.parent.document.getElementById("tab-header");
+                const updatedChild = await window.top.db.get(child._id);
+                const updatedChildName = updatedChild.name?updatedChild.name:updatedChild.modules[0].value[0];
                 console.log("path: ", pagePath);
 
-                window.parent.addNewTab(childName, pagePath, tabHeader, pageWindow);
+                window.parent.addNewTab(updatedChildName, pagePath, tabHeader, pageWindow);
             });
 
             document.getElementById(child.parentId).querySelector('.folder-items').appendChild(file);
