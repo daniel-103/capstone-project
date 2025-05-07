@@ -28,7 +28,7 @@ const run = async () => {
     try {
         aiResponse.innerHTML = "⏳ Thinking..."; // Show loading state
 
-        const client = await Client.connect("junu3343/ChatGPT");
+        const client = await Client.connect("yuntian-deng/ChatGPT");
 
         const quillContent = quill.getText().trim();
 
@@ -45,16 +45,15 @@ const run = async () => {
         `;
         console.log(prompt);
         // Set a timeout to reject the request if it takes too long
-        const result = await client.predict("/chat", { 		
-            message: prompt, 		
-            max_tokens: 512, 		
+        const result = await client.predict("/predict", { 		
+            inputs: prompt, 				
             temperature: 0.7, 		
             top_p: 0.95, 
         })
         console.log(result);
 
         // Extract and display AI response
-        const aiReply = result.data[0] || "⚠️ No response received.";
+        const aiReply = result.data[0][0][1] || "⚠️ No response received.";
         aiResponse.innerHTML = aiReply;
     } catch (error) {
         console.error("AI Assistant Error:", error);
