@@ -4,7 +4,7 @@
 async function init() {
     if (!localStorage.getItem('theme')) {
         const appPath = await window.electron.getAppPath();
-        localStorage.setItem('theme', `${appPath}/src/assets/themes/dark/dark.css`)
+        localStorage.setItem('theme', `${appPath}/src/assets/themes/dark/Dark.css`)
     }
 } 
 
